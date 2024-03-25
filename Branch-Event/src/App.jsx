@@ -1,34 +1,44 @@
 import './App.css';
-import yrgoLogo from './assets/Logos/yrgo-text.jpg';
 import { calendarIcon, arrow, location, clock, lowOP } from './assets/Icons';
+import yrgoLogo from './assets/Logos/yrgo-text.jpg';
 import Draggable from './components/Draggable/Draggable';
+import Gradient from './components/Gradient/Gradient.jsx';
+import Join_btn from './components/Join-btn/Join.btn.jsx';
+import Date_box from './components/Date-box/Date-box.jsx';
+import Logo from './components/Logo-large/Logo.jsx';
+import Main_header from './components/Header/Main_header.jsx';
+import Box from './components/Box/Box.jsx';
 
 function App() {
   //const date = new Date().toLocaleDateString();
+  /* Alternative text??:
+    Welcome to Industry Mingle Times, the ideal platform for discovering top-notch interns or 
+    internship opportunities in the fields of Web Development or Digital Design!
+  */
   const date = '24 APRIL 15:00-17:00';
 
   return (
     <>
       <div className="main">
 
-        <div className="date-box">
+        <Date_box className="date-box">
           <img src={calendarIcon} alt="Calendar" />
           <span>{date}</span>
-        </div>
+        </Date_box>
 
         <div className="divider">
 
-          <div className="logo-large">
+          <Logo className="logo-large">
             <img src={yrgoLogo} alt="Yrgo Logo" />
-          </div>
+          </Logo>
 
-          <div className="main-header default-font">
-          <h1>
-            <span style={{ fontWeight: 'bold' }}>WELCOME TO </span>
-            <span style={{ fontWeight: 'normal' }}>INDUSTRY MINGLE TIMES</span>
-          </h1>
+          <Main_header className="main-header default-font">
+            <h1>
+              <span style={{ fontWeight: 'bold' }}>WELCOME TO </span>
+              <span style={{ fontWeight: 'normal' }}>INDUSTRY MINGLE TIMES</span>
+            </h1>
             <p>Perfect place for you to find the perfect intern or internship within Web development or Digital Design!</p>
-          </div>
+          </Main_header>
 
         </div>
 
@@ -42,14 +52,14 @@ function App() {
               </div>
 
               <div className="drag-info">
-                <div className='box location default-font'>
+                <Box className='box location default-font'>
                   <img src={location} alt="location-icon" />
                   <p>Lindholmspiren 3, 417 56 Göteborg</p>
-                </div>
-                <div className='box time default-font'>
+                </Box>
+                <Box className='box time default-font'>
                   <img className='clock' src={clock} alt="clock-icon" />
                   <p>Wednesday 24 April - 15:00-17:00</p>
-                </div>
+                </Box>
               </div>
 
               <div className='drag-more default-font'>
@@ -71,10 +81,8 @@ function App() {
           
         </Draggable>
         
-        <button className='btn-white default-font'>
-            Join the Event
-        </button>
-        <div className='gradient-filter'></div>
+        <Join_btn className='btn-white default-font'>Join the Event</Join_btn>
+        <Gradient className="gradient-filter"/>
       </div>
       
     </>
