@@ -2,32 +2,33 @@ import React, { useRef, useEffect, useState } from 'react';
 import Dragg from 'react-draggable';
 
 function Draggable(props) {
-    const [maxTop, setMaxTop] = useState(0);
+    const [maxTop, setMaxTop] = useState(0);    
     const draggableRef = useRef(null);
-
+    
     useEffect(() => {
         const calculateMaxTop = () => {
             if (draggableRef.current) {
-                const cardHeight = draggableRef.current.offsetHeight;
+                const cardRect = draggableRef.current.getBoundingClientRect();
                 const viewportHeight = window.innerHeight;
+                let cardHeight = cardRect.height;
                 setMaxTop(viewportHeight - cardHeight);
             }
         };
         calculateMaxTop();
-
+    
         window.addEventListener('resize', calculateMaxTop);
     
         return () => {
             window.removeEventListener('resize', calculateMaxTop);
         };
     }, []);
+
+ 
+
   return (
-    <Dragg axis="y" bounds={{ top: 0, bottom: maxTop }}>
+    <Dragg axis="y" bounds={{ top: -maxTop - 150, bottom:  0}}>
       <div ref={draggableRef} className="dragg-card">
-        {props.children}
-        <button className='btn-white default-font'>
-            Join the Event
-        </button>
+        {props.children}        
       </div>
     </Dragg>
   );

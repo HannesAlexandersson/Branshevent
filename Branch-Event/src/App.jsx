@@ -66,9 +66,14 @@ function App() {
               </div>           
 
             </div>
+            <img className="bottom-logo" src={lowOP} alt="yrgo logo offset" />
           </div>
           
         </Draggable>
+        
+        <button className='btn-white default-font'>
+            Join the Event
+        </button>
       </div>
       
     </>

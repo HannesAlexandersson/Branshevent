@@ -68,11 +68,13 @@
 
 /*--------dragable card-----------*/
 .dragg-card{
-    height: 21.625rem;
+    /* height: 21.625rem; retracted*/
+    
 }
 .draggable-card{
     position: relative;
 
+    height: 44.3125rem;
     color: var(--secondary-font-clr);
     background-color: var(--secondary-BG);
     border-radius: 1.5rem 1.5rem 0 0;
@@ -117,26 +119,26 @@
 .bottom-text{
 
 }
-.btn-white{
-    position: absolute;
-    bottom: 4rem;/*10px*/
+.btn-white {
+    position: fixed;
+    bottom: 0.225rem;
     left: 50%;
     transform: translateX(-50%);
-
-
     z-index: 99;
-    align-self: center;
+    /* align-self: center; */
     display: inline-flex;
     padding: 1rem;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
     gap: 0.5rem;
     border: none;
     text-transform: uppercase;
-
-
     background-color: var(--default-BG);
     color: var(--default-font-clr);
     border-radius: 3.5rem;
-   /*  width: 10rem; */
+    /* width: 10rem; */
+}
+.bottom-logo {
+    position: absolute;
+    transform: translateX(90%) translateY(-50%);
 }
