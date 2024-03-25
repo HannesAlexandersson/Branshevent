@@ -1,0 +1,142 @@
+.main{
+    margin-top: 0.225rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    overflow: hidden;
+}
+.date-box{
+    background-color: var(--secondary-accent);
+    color: var(--secondary-font-clr);
+    /*-----*/
+    display: inline-flex;
+    height: 1.25rem;
+    padding: 16px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    border-radius: 56px;
+    /*-----*/
+}
+.logo-large{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 2.5rem 1.5rem 2.5rem 1.5rem;
+    width: 21.37306rem;
+    height: 5.19981rem;
+}
+
+.divider{
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+.main-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    margin-right: 2.5rem;
+    margin-left: 2.125rem; 
+}
+.main-header > h1{
+    font-size: 34px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.main-header > h1 b {
+    font-weight: bold;
+}
+.main-header > p{
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 120% */
+    letter-spacing: 0.15px;
+
+    margin-top: 0;
+}
+
+/*--------dragable card-----------*/
+.dragg-card{
+    height: 21.625rem;
+}
+.draggable-card{
+    position: relative;
+
+    color: var(--secondary-font-clr);
+    background-color: var(--secondary-BG);
+    border-radius: 1.5rem 1.5rem 0 0;
+    box-shadow: 0px -4px 10px 0px rgba(0, 0, 0, 0.25);
+}
+.dragg-wrapper {
+    margin: 0 1.5rem 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    
+}
+.drag-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.drag-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.box{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    align-self: stretch;
+}
+
+.box > p{
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; /* 150% */
+    letter-spacing: 0.00938rem;
+}
+
+.drag-more{
+
+}
+.bottom-text{
+
+}
+.btn-white{
+    position: absolute;
+    bottom: 4rem;/*10px*/
+    left: 50%;
+    transform: translateX(-50%);
+
+
+    z-index: 99;
+    align-self: center;
+    display: inline-flex;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    text-transform: uppercase;
+
+
+    background-color: var(--default-BG);
+    color: var(--default-font-clr);
+    border-radius: 3.5rem;
+   /*  width: 10rem; */
+}

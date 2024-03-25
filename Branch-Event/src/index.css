@@ -1,0 +1,20 @@
+/*
+* Global stylesheet
+*/
+:root{
+  --default-BG: #FFF;
+  --secondary-BG: #F52A3B;
+  --primary-accent: #E51336;
+  
+  --secondary-accent: #001A52;
+
+  --default-font-clr: #000;
+  --secondary-font-clr:#FFF;
+}
+body{
+  margin: 0;
+}
+.default-font{
+  font-family: 'Inter', sans-serif;
+}
+
