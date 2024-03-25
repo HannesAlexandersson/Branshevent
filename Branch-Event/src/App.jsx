@@ -74,6 +74,7 @@ function App() {
         <button className='btn-white default-font'>
             Join the Event
         </button>
+        <div className='gradient-filter'></div>
       </div>
       
     </>

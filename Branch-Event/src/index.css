@@ -13,6 +13,7 @@
 }
 body{
   margin: 0;
+  overflow: hidden;
 }
 .default-font{
   font-family: 'Inter', sans-serif;
