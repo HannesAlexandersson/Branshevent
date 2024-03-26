@@ -26,7 +26,7 @@ function Draggable(props) {
  
 
   return (
-    <Dragg axis="y" bounds={{ top: -maxTop - 150, bottom:  0}}>
+    <Dragg axis="y" bounds={{ top: -maxTop - 200, bottom:  0}}>
       <div ref={draggableRef} className="dragg-card">
         {props.children}        
       </div>

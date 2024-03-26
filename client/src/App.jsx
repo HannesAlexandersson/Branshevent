@@ -1,5 +1,5 @@
 import './App.css';
-import { calendarIcon, arrow, location, clock, lowOP } from './assets/Icons';
+import { calendarIcon, location, clock, lowOP } from './assets/Icons';
 import yrgoLogo from './assets/Logos/yrgo-text.jpg';
 import Draggable from './components/Draggable/Draggable';
 import Gradient from './components/Gradient/Gradient.jsx';
