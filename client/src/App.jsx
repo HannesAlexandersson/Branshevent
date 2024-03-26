@@ -1,5 +1,5 @@
 import './App.css';
-import { calendarIcon, arrow, location, clock, lowOP } from './assets/Icons';
+import { calendarIcon, location, clock, lowOP } from './assets/Icons';
 import yrgoLogo from './assets/Logos/yrgo-text.jpg';
 import Draggable from './components/Draggable/Draggable';
 import Gradient from './components/Gradient/Gradient.jsx';
@@ -21,7 +21,7 @@ function App() {
     <>
       <div className="main">
 
-        <Date_box className="date-box">
+        <Date_box className="date-box default-font">
           <img src={calendarIcon} alt="Calendar" />
           <span>{date}</span>
         </Date_box>
@@ -42,13 +42,14 @@ function App() {
 
         </div>
 
-        <Draggable>
+        <Draggable>          
           <div className='draggable-card'>
+            <div className="white-divider"></div>
+
             <div className='dragg-wrapper'>
 
               <div className='drag-header default-font'>
-                <h2>Where & When?</h2>
-                <img src={arrow} className='arrow-icon' alt="arrow-up icon" />
+                <h2>Where & When?</h2>                
               </div>
 
               <div className="drag-info">
