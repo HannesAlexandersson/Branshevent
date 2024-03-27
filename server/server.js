@@ -8,6 +8,5 @@ const port = 3000;
 server.use('/company/', companyRoutes);
 
 server.listen(port, () => {
-    console.log('Server is running');
+    console.log(`Server is running on ${port}`);
 });
-
