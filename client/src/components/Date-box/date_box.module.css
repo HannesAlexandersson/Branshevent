@@ -1,0 +1,13 @@
+.date_box{
+    display: flex;
+    height: 1rem;
+    padding: 1rem 1.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;    
+    color: var(--secondary-accent);   
+    border: 1px solid var(--secondary-accent);
+    border-radius: 3.5rem;
+    font-family: var(--default-font);
+}

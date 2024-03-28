@@ -1,9 +1,10 @@
 import Props from 'prop-types';
+import style from './gradient.module.css';
 
 function Gradient(props){
 
     return(
-        <div className={props.className}></div>
+        <div className={style.gradient}></div>
     );
 }
 

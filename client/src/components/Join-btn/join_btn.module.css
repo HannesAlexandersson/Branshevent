@@ -1,0 +1,30 @@
+.btn {
+    /*Positioning*/
+    z-index: 99;   
+    position: fixed;
+    transform: translateX(-50%);    
+    bottom: 1.5rem;
+    left: 50%;
+    /*margins & paddings*/
+    padding: 1rem;
+    min-width: 10.0625rem;
+    /*Display propertys*/
+    display: flex;
+    justify-content: center;
+    align-items: center;        
+    gap: 0.5rem;
+    /*Border*/
+    border: none;    
+    border-radius: 22.5rem;    
+    /*Text*/
+    font-family: var(--default-font);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem; 
+    letter-spacing: 0.07813rem;
+    text-transform: uppercase;
+    /*Colors*/
+    background-color: var(--default-BG);
+    color: var(--secondary-accent);
+}
