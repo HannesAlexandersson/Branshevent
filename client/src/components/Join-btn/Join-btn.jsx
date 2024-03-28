@@ -1,9 +1,11 @@
 import Props from 'prop-types';
+import style from './join_btn.module.css';
 
-function Join_btn({className, ...props}){
+
+function Join_btn({ ...props }){
 
     return(
-        <button className={className}>
+        <button className={style.btn}>
             {props.children}
         </button>
     );

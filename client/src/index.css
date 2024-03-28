@@ -2,18 +2,20 @@
 * Global stylesheet
 */
 :root{
+  /*Colors*/
   --default-BG: #FFF;
   --secondary-BG: #F52A3B;
-  --primary-accent: #E51336;
-  
+  --primary-accent: #E51336;  
   --secondary-accent: #001A52;
-
   --default-font-clr: #000;
   --secondary-font-clr:#FFF;
+  /*Fonts*/
+  --default-font: 'Inter', sans-serif;
 }
 body{
   margin: 0;
   overflow: hidden;
+  font-family: 'Inter', sans-serif;
 }
 .default-font{
   font-family: 'Inter', sans-serif;
