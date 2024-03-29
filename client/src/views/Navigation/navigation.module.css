@@ -20,7 +20,7 @@
 }
 .dropdown_menu {
     position: absolute;
-    top: 100%;
+    top: 99%;
     left: 0;
 
     background: var(--Grey-100);
@@ -32,7 +32,7 @@
     flex-direction: column;
     gap: 1rem;
     list-style: none;
-    box-shadow: 0px -14px 54px 0px rgba(0, 0, 0, 0.12);
+   /*  box-shadow: 0px -14px 54px 0px rgba(0, 0, 0, 0.12);  Its causing a weird effect, gives the margins another darker colour, check with designers if should keep*/
     padding:1rem;
     width: 15rem;
 }
