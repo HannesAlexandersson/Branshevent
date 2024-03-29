@@ -5,10 +5,17 @@
   /*Colors*/
   --default-BG: #FFF;
   --secondary-BG: #F52A3B;
+
   --primary-accent: #E51336;  
   --secondary-accent: #001A52;
+
   --default-font-clr: #000;
   --secondary-font-clr:#FFF;
+  --Grey-20: #E8E8E8;
+  --Grey-80: #333;
+  --Grey-100: #1B1B1B;
+
+  --btn-font-clr: #2B2B2B;
   /*Fonts*/
   --default-font: 'Inter', sans-serif;
 }
@@ -20,4 +27,7 @@ body{
 .default-font{
   font-family: 'Inter', sans-serif;
 }
-
+a{
+  cursor: pointer;
+  text-decoration: none;
+}

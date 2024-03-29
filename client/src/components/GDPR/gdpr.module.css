@@ -1,0 +1,46 @@
+.container{   
+    display: flex;
+    width: 21.375rem;
+    padding: 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;   
+}
+.checkboxLabel{
+    display: flex;
+}
+.checkboxLabel input {   
+    cursor: pointer;
+    width: 3rem;
+    color: var(--Grey-100);
+}
+.checkboxLabel input[type="checkbox"]:checked {   
+    background-color: black !important;
+}
+
+
+
+.gdpr_text{
+    margin-left: .125rem;
+    color: var(--default-font-clr);    
+    font-family: var(--default-font);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem; 
+    letter-spacing: 0.07813rem;
+    text-transform: uppercase;
+}
+.gdpr_link{
+    margin:auto;
+    color: var(--default-font-clr);
+    /* Overline */
+    font-family: var(--default-font);
+    font-size: 0.625rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem; /* 160% */
+    letter-spacing: 0.09375rem;
+    text-decoration-line: underline;
+    text-transform: uppercase;
+}

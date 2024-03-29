@@ -3,4 +3,5 @@ Project with DD
 
 
 // dependecies:
-//react draggable,
+//react draggable, npm install react-draggable,
+//react routing, npm install react-router-dom,
