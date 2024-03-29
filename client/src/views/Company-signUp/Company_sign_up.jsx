@@ -9,9 +9,10 @@ import styles from './company_sign_up.module.css';
 function Company_sign_up(){
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
+    
 
     const handleSubmit = (event) => {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault(); // stop default form submission so we can handle it ourselfs
        
 
         // enter the path to the next page here when its finished
@@ -23,6 +24,8 @@ function Company_sign_up(){
     };
 
     const isNextButtonDisabled = !isChecked;
+
+    
 
     return(
         <>

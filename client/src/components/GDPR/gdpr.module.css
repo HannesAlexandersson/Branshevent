@@ -12,20 +12,13 @@
 .checkboxLabel input {   
     cursor: pointer;
     width: 3rem;
+    color: var(--Grey-100);
+}
+.checkboxLabel input[type="checkbox"]:checked {   
+    background-color: black !important;
 }
 
-/* .checkboxLabel input:checked ~ .checkmark:after {
-    content: "";
-    position: absolute;
-    display: block;
-    left: 9px;
-    top: 5px;
-    width: 6px;
-    height: 12px;
-    border: solid #000;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-} */
+
 
 .gdpr_text{
     margin-left: .125rem;

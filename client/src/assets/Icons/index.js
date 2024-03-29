@@ -5,3 +5,4 @@ export { default as clock } from './clock.png';
 export { default as lowOP } from './yrgo-lowOpacity.png';
 export { default as backArrow } from './item_arrow-back.svg';
 export { default as nextArrow } from './item_arrow-forward.svg';
+export { default as close } from './close.svg';

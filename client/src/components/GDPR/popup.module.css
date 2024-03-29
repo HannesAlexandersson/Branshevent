@@ -1,0 +1,98 @@
+.wrapper{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.4375rem;
+    
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+   
+   
+    /* padding: 1.5rem;    */
+    padding: 20.5rem;/*debugging remove*/
+    
+
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.8));/*its a filter that makes the blurred background a little darker at the top and lighter at the bottom*/
+    /* background-color: rgba(255, 255, 255, 0.8);  */
+    backdrop-filter: blur(5px); /*blur the background*/
+}
+.container{
+    background: var(--Grey-80);
+    border-radius: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+    width: 21.375rem;
+    height: 30.625rem;
+
+    overflow-y: auto; 
+    overflow-x: hidden;
+
+    padding: 1rem;
+}
+.title_container{
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem;
+
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+
+    color: var(--secondary-font-clr);
+}
+.title_container > h5{
+   
+    /* H5 */
+    font-family: var(--default-font);
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.5rem; /* 100% */
+    letter-spacing: 0.01125rem;
+}
+
+.text_container{
+    font-family: var(--default-font);
+    color: var(--secondary-font-clr);
+}
+.text_container p span{   
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem; /* 125% */
+    letter-spacing: 0.03125rem;
+}
+
+
+.btn{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0.5rem;
+
+    width: 10.0625rem;    
+    height: calc(1rem + (1rem + 1rem));
+    min-width: 10.0625rem;
+    padding: 1rem;
+
+    border-radius: 22.5rem;
+    
+
+    border: none;
+
+    background: var(--secondary-BG); 
+    color: var(--secondary-font-clr);
+    font-family: var(--default-font);    
+}
+
+.closeButton{
+    background: var(--Grey-80);
+    border: none;
+}
