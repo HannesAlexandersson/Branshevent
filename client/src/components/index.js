@@ -9,3 +9,4 @@ export { default as Divider } from './Divider/Divider.jsx';
 export { default as Details } from './Details/Details.jsx';
 export { default as Bottom } from './Bottom/Bottom.jsx';
 export { default as Bottom_logo } from './Bottom-logo/Bottom_logo.jsx';
+export { default as Dragg_header } from './Dragg-header/Dragg_header';
