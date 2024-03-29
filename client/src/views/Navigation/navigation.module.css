@@ -8,13 +8,26 @@
 
     background: var(--Grey-100);
     color: var(--secondary-font-clr);
+
+    position: relative;
 }
 .hamburger{
     background: var(--Grey-100);
     color: var(--secondary-font-clr);
     border: none;
-    font-size: 3rem;
+    font-size: 3rem;    
+}
+.dropdown_menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    background: var(--Grey-100);
+    color: var(--secondary-font-clr);
     
+  }
+.dropDown_list{
+    list-style: none;
 }
 .title_container{
     text-align: center;
