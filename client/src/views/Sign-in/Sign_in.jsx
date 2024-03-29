@@ -26,7 +26,7 @@ function Sign_in(){
                 <div className={styles.footer_btn_wrapper}>
                     <button className={styles.back_btn}>
                         <img src={backArrow} />
-                        BACK
+                        <p>BACK</p>
                     </button>
                 </div>
 
