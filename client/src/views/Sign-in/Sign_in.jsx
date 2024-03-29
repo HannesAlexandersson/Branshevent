@@ -19,8 +19,8 @@ function Sign_in(){
                         <p>I am a…</p>
                     </div>
                     <div className={styles.content_btn_wrapper}>
-                        <button className={styles.content_btn}>STUDENT</button>
-                        <button className={styles.content_btn}>COMPANY</button>
+                        <Link className={styles.content_btn} to="#">STUDENT</Link>
+                        <Link className={styles.content_btn} to="/company-signup">COMPANY</Link>
                     </div>
                 </div>
 
