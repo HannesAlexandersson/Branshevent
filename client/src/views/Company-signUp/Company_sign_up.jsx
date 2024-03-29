@@ -20,11 +20,11 @@ function Company_sign_up(){
     };
 
     const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
+        setIsChecked(!isChecked);        
     };
 
     const isNextButtonDisabled = !isChecked;
-
+    console.log(isNextButtonDisabled);
     
 
     return(
@@ -50,7 +50,17 @@ function Company_sign_up(){
                     </Link>
 
                     
-                    <button className={`${styles.next_btn} ${styles.btn}`} onClick={handleSubmit} disabled={isNextButtonDisabled}>                        
+                    <button 
+                        className={`${styles.next_btn} ${styles.btn}`}                       
+                        onClick={() => {
+                            console.log('click');
+                            if (!isChecked) {
+                                alert("You must read and agree to the GDPR before continuing."); // if the user havent agreed to gdpr we show an alert
+                            } else {
+                                handleSubmit(); // else we can go ahead and handle the form submission
+                            }
+                        }}
+                    >                        
                         <p>NEXT STEP</p>
                         <img src={nextArrow} />
                     </button>

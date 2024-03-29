@@ -63,3 +63,7 @@
     text-transform: uppercase;
     text-decoration: none;
 }
+
+input:focus {
+    outline: none; /*remove the weird orange "border" that appear when typing in the input field*/
+}

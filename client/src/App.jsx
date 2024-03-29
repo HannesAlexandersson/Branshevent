@@ -5,12 +5,7 @@ import Company_sign_up from './views/Company-signUp/Company_sign_up.jsx';
 import Error from './views/Error/Error.jsx';
 import './App.css';
 
-/*
 
-
-        <Route path="/login" element={<Login />} />
-        errorElement: <ErrorPage />,
-*/
 
 
 function App() {  

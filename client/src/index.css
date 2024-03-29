@@ -27,4 +27,7 @@ body{
 .default-font{
   font-family: 'Inter', sans-serif;
 }
-
+a{
+  cursor: pointer;
+  text-decoration: none;
+}
