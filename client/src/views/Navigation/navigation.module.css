@@ -1,7 +1,8 @@
 .main_nav{
     display: flex;    
-    height: 7.125rem;
-    padding: 1.5rem 1.5rem 0rem 1.5rem;
+    height: calc(7.125rem - (1.5rem + 1.5rem));
+    
+    padding: 1.5rem;
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;

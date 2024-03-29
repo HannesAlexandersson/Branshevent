@@ -1,13 +1,16 @@
 import Props from 'prop-types';
+import { Link } from 'react-router-dom';
 import style from './join_btn.module.css';
 
 
 function Join_btn({ ...props }){
 
     return(
-        <button className={style.btn}>
-            {props.children}
-        </button>
+        <Link to="/sign-in">
+            <button className={style.btn}>
+                {props.children}
+            </button>
+        </Link>
     );
 }
 

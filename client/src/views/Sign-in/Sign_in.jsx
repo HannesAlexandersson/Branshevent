@@ -1,4 +1,5 @@
 import { backArrow } from '../../assets/Icons/index.js';
+import { Link } from 'react-router-dom';
 import Nav from '../../views/Navigation/Navigation.jsx';
 import styles from './sign_in.module.css';
 
@@ -24,10 +25,12 @@ function Sign_in(){
                 </div>
 
                 <div className={styles.footer_btn_wrapper}>
-                    <button className={styles.back_btn}>
-                        <img src={backArrow} />
-                        <p>BACK</p>
-                    </button>
+                    <Link to="/">
+                        <button className={styles.back_btn}>
+                            <img src={backArrow} />
+                            <p>BACK</p>
+                        </button>
+                    </Link>
                 </div>
 
             </div>

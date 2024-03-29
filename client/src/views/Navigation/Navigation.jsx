@@ -23,7 +23,7 @@ function Navigation(){
           <ul className={styles.dropDown_list}>
             <li><img src={home}/>Home</li>
             <li><img src={event}/>Event info</li>
-            <li><img src={yrgo}/>Yrgo</li>
+            <li><img src={yrgo}/>YRGO</li>
             <li><img src={account}/>Account</li>
           </ul>
         </div>
