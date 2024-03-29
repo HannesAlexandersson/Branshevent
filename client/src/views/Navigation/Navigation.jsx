@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { home, event, account, yrgo } from '../../assets/Icons/dropdownicons/index.js';
 import styles from './navigation.module.css';
 import Ylogo from '../../assets/Logos/yrgo-logoRed.svg';
 
@@ -20,9 +21,10 @@ function Navigation(){
             {isDropdownOpen && (
         <div className={styles.dropdown_menu}>     
           <ul className={styles.dropDown_list}>
-            <li>links here 1</li>
-            <li>links here 2</li>
-            <li>links here 3</li>
+            <li><img src={home}/>Home</li>
+            <li><img src={event}/>Event info</li>
+            <li><img src={yrgo}/>Yrgo</li>
+            <li><img src={account}/>Account</li>
           </ul>
         </div>
       )}
