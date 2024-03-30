@@ -1,5 +1,6 @@
 .main_container{
-    margin-top: 0.225rem;
+  /*   margin-top: 8.225rem; */
+    margin-top: 0.225rem; /*I dont know what happend, one day the app was broken*/
     display: flex;
     flex-direction: column;
     justify-content: center;

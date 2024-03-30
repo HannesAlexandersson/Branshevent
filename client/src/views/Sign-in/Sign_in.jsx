@@ -1,17 +1,28 @@
+import React, { useState } from 'react';
 import { backArrow } from '../../assets/Icons/index.js';
 import { Link } from 'react-router-dom';
-import Nav from '../../views/Navigation/Navigation.jsx';
+import Nav from '../Navigation/Navigation.jsx';
+import Progressbar from '../../components/Progress-bar/Progressbar.jsx';
 import styles from './sign_in.module.css';
 
 
 
+
 function Sign_in(){
+    const [currentStep, setCurrentStep] = useState(1);
+    const totalSteps = 4;
+
+    const handleNextStep = () => {
+        if (currentStep < totalSteps) {
+            setCurrentStep(currentStep + 1); 
+        }
+    };
 
     return(
         <>
             <Nav/>
             <div className={styles.main}>
-                <div className={styles.progress_bar}>PROGRESSBAR HERE</div>
+                <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
                 <div className={styles.content_wrapper}>
                     <div className={styles.content_text}>
@@ -19,8 +30,8 @@ function Sign_in(){
                         <p>I am a…</p>
                     </div>
                     <div className={styles.content_btn_wrapper}>
-                        <Link className={styles.content_btn} to="#">STUDENT</Link>
-                        <Link className={styles.content_btn} to="/company-signup">COMPANY</Link>
+                        <Link onClick={handleNextStep} className={styles.content_btn} to="#">STUDENT</Link>
+                        <Link onClick={handleNextStep} className={styles.content_btn} to="/company-signup">COMPANY</Link>
                     </div>
                 </div>
 
