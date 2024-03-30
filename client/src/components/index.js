@@ -10,3 +10,7 @@ export { default as Details } from './Details/Details.jsx';
 export { default as Bottom } from './Bottom/Bottom.jsx';
 export { default as Bottom_logo } from './Bottom-logo/Bottom_logo.jsx';
 export { default as Dragg_header } from './Dragg-header/Dragg_header';
+export { default as White_btn } from './White-btn/White_btn.jsx';
+export { default as Red_btn } from './Red-btn/Red_btn.jsx';
+export { default as Company_description } from './Company-description/Company_description.jsx';
+export { default as Progressbar } from './Progress-bar/Progressbar.jsx';

@@ -24,6 +24,7 @@ function Navigation(){
       '/': 'Home',
       '/sign-in': 'SIGN IN',
       '/company-signup': 'COMPANY SIGN-UP',
+      '/company-description': 'COMPANY SIGN-UP',
     }    
 
     useEffect(() => {

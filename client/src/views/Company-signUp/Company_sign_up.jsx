@@ -6,6 +6,8 @@ import Progressbar from '../../components/Progress-bar/Progressbar.jsx';
 import Form from '../../components/Company-form/Company_signup_form.jsx';
 import Gdpr from '../../components/GDPR/Gdpr.jsx';
 import styles from './company_sign_up.module.css';
+import Red_btn from '../../components/Red-btn/Red_btn.jsx';
+import White_btn from '../../components/White-btn/White_btn.jsx';
 
 function Company_sign_up(){
     const navigate = useNavigate();
@@ -15,14 +17,13 @@ function Company_sign_up(){
     
 
     const handleSubmit = (event) => {
-        event.preventDefault(); // stop default form submission so we can handle it ourselfs
-       
+        event.preventDefault(); // stop default form submission so we can handle it ourselfs, Here we need to add formhandling, like validation and zanitation of the form data adn then send to db       
 
         if (currentStep < totalSteps) {//add 1 to the progressbar prop
             setCurrentStep(currentStep + 1); 
         }
-        // enter the path to the next page here when its finished
-        navigate('/');
+        
+        navigate('/company-description');
     };
 
     const handleCheckboxChange = () => {
@@ -49,27 +50,26 @@ function Company_sign_up(){
 
                 <div className={styles.footer_btn_wrapper}>
                     <Link to="/sign-in">
-                        <button className={`${styles.back_btn} ${styles.btn}`}>
+                        <White_btn>
                             <img src={backArrow} />
                             <p>BACK</p>
-                        </button>
+                        </White_btn>
                     </Link>
 
                     
-                    <button 
-                        className={`${styles.next_btn} ${styles.btn}`}                       
-                        onClick={() => {
+                    <Red_btn                                                
+                        onClick={(e) => {
                             console.log('click');
                             if (!isChecked) {
                                 alert("You must read and agree to the GDPR before continuing."); // if the user havent agreed to gdpr we show an alert
                             } else {
-                                handleSubmit(); // else we can go ahead and handle the form submission
+                                handleSubmit(e); // else we can go ahead and handle the form submission
                             }
                         }}
                     >                        
                         <p>NEXT STEP</p>
                         <img src={nextArrow} />
-                    </button>
+                    </Red_btn>
                     
                 </div>
             </div>
