@@ -2,6 +2,7 @@ import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import { Link, useNavigate, } from 'react-router-dom';
 import { useState } from 'react';
 import Nav from '../../views/Navigation/Navigation.jsx';
+import Progressbar from '../../components/Progress-bar/Progressbar.jsx';
 import Form from '../../components/Company-form/Company_signup_form.jsx';
 import Gdpr from '../../components/GDPR/Gdpr.jsx';
 import styles from './company_sign_up.module.css';
@@ -9,12 +10,17 @@ import styles from './company_sign_up.module.css';
 function Company_sign_up(){
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
+    const [currentStep, setCurrentStep] = useState(2);
+    const totalSteps = 4;
     
 
     const handleSubmit = (event) => {
         event.preventDefault(); // stop default form submission so we can handle it ourselfs
        
 
+        if (currentStep < totalSteps) {//add 1 to the progressbar prop
+            setCurrentStep(currentStep + 1); 
+        }
         // enter the path to the next page here when its finished
         navigate('/');
     };
@@ -31,7 +37,7 @@ function Company_sign_up(){
         <>
             <Nav />
             <div className={styles.main}>
-            <div className={styles.progress_bar}>PROGRESSBAR HERE</div>
+            <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
                 <Form id="companySignupForm" handleSubmit={handleSubmit}/>                
 
