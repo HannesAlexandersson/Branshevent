@@ -14,3 +14,7 @@ export { default as White_btn } from './White-btn/White_btn.jsx';
 export { default as Red_btn } from './Red-btn/Red_btn.jsx';
 export { default as Company_description } from './Company-description/Company_description.jsx';
 export { default as Progressbar } from './Progress-bar/Progressbar.jsx';
+export { default as Skip_btn } from './Skip-btn/Skip_btn.jsx';
+export { default as TagsSelector } from './Tag-selector/Tag_selector.jsx';
+export { default as Student_form } from './Student-form/Student_form.jsx';
+export { default as Gdpr } from './GDPR/Gdpr.jsx';

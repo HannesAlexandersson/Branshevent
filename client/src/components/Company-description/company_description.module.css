@@ -12,9 +12,9 @@
 }
 .inputfield{
     display: flex;
-    width: 21.375rem;
+    width: 19.25rem;
     height: 6rem;
-    min-width: 21.375rem;
+    min-width: 19.25rem;
     padding: 1rem;
     align-items: flex-start;
     gap: 0.5rem;
@@ -48,7 +48,7 @@
     gap: 0.5rem;
     align-self: stretch;
     justify-content: flex-start;
-    margin-left: 1rem;
+    margin-left: 2rem;
 }
 .date_icon{
 
@@ -86,7 +86,7 @@
 
 .checkboxWrapper{
     display: flex;
-    margin: 0 .275rem 0 .275rem;
+    margin: 0 .275rem 0 1.275rem;
 }
 .checkboxInput{
     width: 10%;

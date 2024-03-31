@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, } from 'react-router-dom';
-import { Red_btn, White_btn, Progressbar, Company_description } from '../../components/index.js';
+import { Red_btn, White_btn, Progressbar, Company_description, Skip_btn, } from '../../components/index.js';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import Nav from '../Navigation/Navigation.jsx';
 import styles from './company_second_stage.module.css';
@@ -24,7 +24,7 @@ function Company_second_stage(){
 
                 <div className={styles.btn_container}>
                     <div className={styles.skip_wrapper}>
-                        <button className={styles.skip_btn}>SKIP</button>
+                        <Skip_btn />
                     </div>
 
                     <div className={styles.footer_btn_wrapper}>
@@ -34,11 +34,12 @@ function Company_second_stage(){
                                     <p>BACK</p>
                                 </White_btn>
                         </Link>
-
-                        <Red_btn>                        
-                            <p>NEXT STEP</p>
-                            <img src={nextArrow} />
-                        </Red_btn>
+                        <Link to="/company-work">
+                            <Red_btn>                        
+                                <p>NEXT STEP</p>
+                                <img src={nextArrow} />
+                            </Red_btn>
+                        </Link>
                     </div>
                 </div>
             </div>

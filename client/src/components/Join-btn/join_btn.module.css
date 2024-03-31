@@ -1,6 +1,6 @@
 .btn {
     /*Positioning*/
-    z-index: 99;   
+    z-index: 101;   
     position: fixed;
     transform: translateX(-50%);    
     bottom: 1.5rem;

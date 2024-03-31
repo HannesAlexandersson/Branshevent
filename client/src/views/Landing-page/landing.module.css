@@ -1,5 +1,6 @@
 .main_container{
   /*   margin-top: 8.225rem; */
+  
     margin-top: 0.225rem; /*I dont know what happend, one day the app was broken*/
     display: flex;
     flex-direction: column;
@@ -13,6 +14,7 @@
     flex-direction: column;
     gap: 1.25rem;
 }
+
 
 /*--------dragable card start -----------*/ /*We cant lift out the css to the module before deconstructing the component more. its "should/could have" when or if we get the time*/
 .draggable_container{

@@ -1,6 +1,6 @@
 .main_nav{
     display: flex;    
-    height: calc(7.125rem - (1.5rem + 1.5rem));
+    height: calc(4.37rem - (1.5rem + 1.5rem));
     
     padding: 1.5rem;
     justify-content: space-between;
@@ -16,7 +16,8 @@
     background: var(--Grey-100);
     color: var(--secondary-font-clr);
     border: none;
-    font-size: 3rem;    
+    font-size: 3rem; 
+    width: 3rem;
 }
 .dropdown_menu {
     position: absolute;
@@ -43,17 +44,17 @@
     gap: 1rem;
 }
 .title_container{
-    text-align: center;
-   
+    text-align: center;   
     font-family:var(--default-font);
 }
-.nav_title > p{
-   
-   
+.nav_title > p{   
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 400;
     line-height: 1rem; 
     letter-spacing: 0.07813rem;
     text-transform: uppercase;
+}
+.nav_logo{
+    width: 3rem;
 }
