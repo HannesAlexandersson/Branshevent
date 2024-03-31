@@ -10,10 +10,13 @@ function Draggable(props) {
     const calculateMaxTop = () => {
       if (draggableRef.current) {
         const cardRect = draggableRef.current.getBoundingClientRect();  //get the position of the card, where it is on the viewport
-        const viewportHeight = window.innerHeight;  // Get the height of the viewport       
+        const viewportHeight = window.innerHeight;  // Get the height of the viewport  
+        const totalCardHeight = cardRect.height; //get total card height     
         const visibleCardHeight = Math.max(0, viewportHeight - cardRect.top); //calculate the diff from the position of the top of the card in relation to the viewport to know huw far we should be able to drag the card       
-        const finalHeight = visibleCardHeight + (visibleCardHeight / 4); // we need little "extra" space at the bottom, roughly a fourth of the visible card height
-        setMaxTop(-finalHeight);  // Calculate the maximum top position based on viewport and element height
+        const notVisiblePart = totalCardHeight - visibleCardHeight;//get how the height of the not visivle part of the card
+        //const finalHeight = visibleCardHeight + (visibleCardHeight / 4); // we need little "extra" space at the bottom, roughly a fourth of the visible card height
+       console.log(`view: ${viewportHeight} visible: ${visibleCardHeight} final: ${notVisiblePart}`)
+        setMaxTop(-notVisiblePart - (visibleCardHeight / 2));  // Calculate the maximum top position based on viewport and element height
       }
     };
     calculateMaxTop();  // initiate the calculateMaxTop function 

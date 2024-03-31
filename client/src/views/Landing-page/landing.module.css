@@ -1,5 +1,6 @@
 .main_container{
   /*   margin-top: 8.225rem; */
+  
     margin-top: 0.225rem; /*I dont know what happend, one day the app was broken*/
     display: flex;
     flex-direction: column;
@@ -14,11 +15,13 @@
     gap: 1.25rem;
 }
 
+
 /*--------dragable card start -----------*/ /*We cant lift out the css to the module before deconstructing the component more. its "should/could have" when or if we get the time*/
 .draggable_container{
     background-color: var(--secondary-BG);
     height: 50%;
     border-radius: 1.5rem 1.5rem 0 0;
+    position: relative;
     /*We just need a empty parent div for the draggable cards boundrys to be set to this and not the body*/
 }
 .draggable_card{

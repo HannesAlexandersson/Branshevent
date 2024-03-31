@@ -25,13 +25,13 @@
     align-items: flex-start;
 }
 .inputField{
-    width: 21.25rem;
+    width: 19.25rem;
     padding: 1rem;
     border-radius: 22.5rem;
     border: none;
     background: var(--Grey-80);
     color: var(--Grey-20);
-
+    max-width: 19.25rem;
     font-family: var(--default-font);
     font-size: 1rem;
     font-style: normal;

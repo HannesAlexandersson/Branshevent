@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './progressbar.module.css';
 
 const Progressbar = ({ currentStep, totalSteps }) => {
-  const steps = [];
-
-  
+  const steps = []; 
 
   // we loop through every step in the "question line" and on each step we check if the user have answered the questions or not
   for (let i = 1; i <= totalSteps; i++) {

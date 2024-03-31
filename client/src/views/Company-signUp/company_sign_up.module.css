@@ -5,18 +5,20 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    gap: 2rem;
+    gap: 1rem;
 }
-
-
-
-
-
 .footer_btn_wrapper{
     display: flex;
     flex-direction: row;
 }
-.btn{
+input:focus {
+    outline: none; /*remove the weird orange "border" that appear when typing in the input field*/
+}
+
+
+
+/*-----------SAVE FOR REFERENCE, BUTTON IS NOW THEIR OWN COMPONENT-------------------*/
+/* .btn{
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -29,23 +31,23 @@
 
     border-radius: 22.5rem;
     font-family: var(--default-font);
-}
-.back_btn{   
+} */
+/* .back_btn{   
     border: 1px solid var(--secondary-BG);
     background: var(--default-BG);       
-}
-.back_btn > p{
+} */
+/* .back_btn > p{
     color: var(--btn-font-clr);
     text-align: center;    
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 1rem; /* 114.286% */
+    line-height: 1rem; 
     letter-spacing: 0.07813rem;
     text-transform: uppercase;
     text-decoration: none;
-}
-.next_btn{
+} */
+/* .next_btn{
    
     border: none;
 
@@ -58,12 +60,8 @@
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 1rem; /* 114.286% */
+    line-height: 1rem; 
     letter-spacing: 0.07813rem;
     text-transform: uppercase;
     text-decoration: none;
-}
-
-input:focus {
-    outline: none; /*remove the weird orange "border" that appear when typing in the input field*/
-}
+} */

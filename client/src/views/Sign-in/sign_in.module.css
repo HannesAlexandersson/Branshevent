@@ -17,8 +17,13 @@
 /* MAIN CONTENT STARTS */
 .content_wrapper{
     display: flex;
-    width: 21.375rem;
-    height: 30.8125rem;
+   /*  width: 21.375rem;  TO WIDE ON PRODUCTION ASK DESIGN*/
+    /* height: 30.8125rem;  TO BIG? HIDES THE BACK BUTTON ASK DESIGN*/
+  
+    width: 19.375rem;
+    /* height: 17.8125rem; */
+    height: 20.8125rem;
+    padding: 3rem 1rem 2rem 1rem; /*mayby*/
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -60,7 +65,8 @@
     background-color: var(--secondary-BG);
     border-radius: 3.5rem;
     border: none;
-    width: calc(12.625rem + (1.5rem + 1.5rem));
+    /* width: calc(12.625rem + (1.5rem + 1.5rem)); */
+    width: calc(10.625rem + (1.5rem + 1.5rem));
     padding: 1rem 1.5rem;
 
 

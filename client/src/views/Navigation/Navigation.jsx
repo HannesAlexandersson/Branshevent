@@ -24,6 +24,11 @@ function Navigation(){
       '/': 'Home',
       '/sign-in': 'SIGN IN',
       '/company-signup': 'COMPANY SIGN-UP',
+      '/company-description': 'COMPANY SIGN-UP',
+      '/company-work': 'COMPANY SIGN-UP',
+      '/student-signup': 'STUDENT SIGN-UP',
+      '/student-description': 'STUDENT SIGN-UP',
+      '/student-work': 'STUDENT SIGN-UP',
     }    
 
     useEffect(() => {
@@ -41,7 +46,7 @@ function Navigation(){
             <div className={styles.title_container}>
                 <p className={styles.nav_title}>{pageTitle}</p>
             </div>
-            <img src={Ylogo} alt="yrgo logo small" />
+            <img src={Ylogo} alt="yrgo logo small" className={styles.nav_logo}/>
             {isDropdownOpen && (
         <div className={styles.dropdown_menu}>     
           <ul className={styles.dropDown_list}>
