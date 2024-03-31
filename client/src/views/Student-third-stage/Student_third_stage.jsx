@@ -3,15 +3,15 @@ import { Link, useNavigate, } from 'react-router-dom';
 import { Progressbar,Red_btn, White_btn, Skip_btn, TagsSelector, } from '../../components/index.js';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import Nav from '../Navigation/Navigation';
-import style from './company_signup_third.module.css';
+import style from './student_third.module.css';
 
-function Company_third(){
+function Student_third_stage(){
     // we keep track of the checkboxes with this useState hook
     const [selectedLocation, setSelectedLocation] = useState('');
     //we keep track of the progrssbar with this hook
     const [currentStep, setCurrentStep] = useState(4);
     const totalSteps = 4;
-  
+
     //progressbar
     if (currentStep < totalSteps) {//add 1 to the progressbar prop
         setCurrentStep(currentStep + 1); 
@@ -19,8 +19,9 @@ function Company_third(){
     //checkboxes
     const handleCheckboxChange = (event) => {
         setSelectedLocation(event.target.value);
-      };
-     
+    };
+
+
     return(
         <>
             <Nav />
@@ -28,17 +29,13 @@ function Company_third(){
 
                 <Progressbar currentStep={currentStep} totalSteps={totalSteps} />    
 
-                <div className={style.content_container}>
-
-
-                    
+                <div className={style.content_container}>               
 
                     
-                    <TagsSelector who="we" className={style.tag_selector}/>
-                      
+                    <TagsSelector who="I" className={style.tag_selector}/>
 
                     <div className={style.location_container}>
-                        <p>We work...</p>
+                        <p>I work...</p>
                         <div className={style.checkBox_wrapper}>
                             <label className={style.location_row}>
                                 <input className={style.checkBox}
@@ -76,7 +73,7 @@ function Company_third(){
                     </div>
 
                     <div className={style.footer_btn_wrapper}>
-                        <Link to="/company-description">
+                        <Link to="/student-description">
                                 <White_btn>
                                     <img src={backArrow} />
                                     <p>BACK</p>
@@ -94,9 +91,7 @@ function Company_third(){
                 </div>
             </div>
         </>
-
     );
 }
 
-
-export default Company_third
+export default Student_third_stage

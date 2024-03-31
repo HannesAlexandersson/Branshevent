@@ -78,7 +78,7 @@ function Student_second_stage(){
                                     <p>BACK</p>
                                 </White_btn>
                         </Link>
-                        <Link to="#">
+                        <Link to="/student-work">
                             <Red_btn>                        
                                 <p>NEXT STEP</p>
                                 <img src={nextArrow} />

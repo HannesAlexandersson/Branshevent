@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Landing, Sign_in, Company_sign_up, Company_second_stage, Company_signup_third, Student_signup_firststage, Student_second_stage, } from './views/index.js';
+import { Landing, Sign_in, Company_sign_up, Company_second_stage, Company_signup_third, Student_signup_firststage, Student_second_stage, Student_third_stage, } from './views/index.js';
 import Error from './views/Error/Error.jsx';
 import './App.css';
 
@@ -20,6 +20,7 @@ function App() {
 
         <Route path="/student-signup" element={<Student_signup_firststage />} />
         <Route path="/student-description" element={<Student_second_stage />} />
+        <Route path="/student-work" element={<Student_third_stage />} />
         
 
         {/* Fallback routes for handling errors */}       

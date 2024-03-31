@@ -28,6 +28,7 @@ function Navigation(){
       '/company-work': 'COMPANY SIGN-UP',
       '/student-signup': 'STUDENT SIGN-UP',
       '/student-description': 'STUDENT SIGN-UP',
+      '/student-work': 'STUDENT SIGN-UP',
     }    
 
     useEffect(() => {

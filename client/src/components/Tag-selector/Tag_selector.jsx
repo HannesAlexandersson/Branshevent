@@ -31,7 +31,7 @@ function TagsSelector(props) {
   return (
     <div className={props.className}>
         <div className={style.header}>
-            <p>How do we work?</p>
+            <p>How do {props.who} work?</p>
         </div>
         <div className={style.category_buttons}>
             {tagsData.map((category) => (
