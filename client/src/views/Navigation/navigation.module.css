@@ -23,7 +23,7 @@
     position: absolute;
     top: 99%;
     left: 0;
-
+    z-index: 99;
     background: var(--Grey-100);
     color: var(--secondary-font-clr);
     

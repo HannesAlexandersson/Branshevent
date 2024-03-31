@@ -54,7 +54,7 @@ function Student_second_stage(){
                         onChange={handleCheckboxChange}
                         className={style.checkboxInput}
                     />
-                    <label htmlFor="checkbox" className={style.checkbox_text}>I don&apost know when my LIA-period is yet</label>
+                    <label htmlFor="checkbox" className={style.checkbox_text}>I don't know when my LIA-period is yet</label>
             
                 </div>
 

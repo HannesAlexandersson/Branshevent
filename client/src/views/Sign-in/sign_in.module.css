@@ -21,7 +21,8 @@
     /* height: 30.8125rem;  TO BIG? HIDES THE BACK BUTTON ASK DESIGN*/
   
     width: 19.375rem;
-    height: 17.8125rem;
+    /* height: 17.8125rem; */
+    height: 20.8125rem;
     padding: 3rem 1rem 2rem 1rem; /*mayby*/
     flex-direction: column;
     justify-content: center;
