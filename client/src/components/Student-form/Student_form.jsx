@@ -1,9 +1,21 @@
+import { useState } from 'react';
 import White_btn from '../White-btn/White_btn';
 import Props from 'prop-types';
 import styles from './student_form.module.css';
 
 function Student_form({ handleSubmit }){
+    const [isWebDeveloperSelected, setIsWebDeveloperSelected] = useState(false);
+    const [isDesignerSelected, setIsDesignerSelected] = useState(false);
 
+    const handleWebDeveloperClick = () => {
+        setIsWebDeveloperSelected(true);
+        setIsDesignerSelected(false); // Deselect designer
+    };
+
+    const handleDesignerClick = () => {
+        setIsDesignerSelected(true);
+        setIsWebDeveloperSelected(false); // Deselect web developer
+    };
 
     return(
         <>
@@ -12,13 +24,19 @@ function Student_form({ handleSubmit }){
            </div>
 
            <div className={styles.btn_wrapper}>
-                <White_btn>
+                <button
+                    className={`${isWebDeveloperSelected ? styles.selected : ''} ${styles.btn}`} 
+                    onClick={handleWebDeveloperClick}
+                >
                     <p>WEB DEVELOPER</p>
-                </White_btn>
+                </button>
 
-                <White_btn>
+                <button
+                    className={`${isDesignerSelected ? styles.selected : ''} ${styles.btn}`}
+                    onClick={handleDesignerClick}
+                >
                     <p>DESIGNER</p>
-                </White_btn>
+                </button>
            </div>
 
            <div className={styles.form_container}>

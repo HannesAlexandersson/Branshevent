@@ -5,5 +5,5 @@ export { default as Company_signup_third } from './Company-signup-thirdstage/Com
 export { default as Nav } from './Navigation/Navigation.jsx';
 export { default as Sign_in } from './Sign-in/Sign_in.jsx';
 export { default as Student_signup_firststage } from './Student-signup-first/Student_signup_firststage.jsx';
-
+export { default as Student_second_stage } from './Student-secondStage/Student_second_stage.jsx';
 

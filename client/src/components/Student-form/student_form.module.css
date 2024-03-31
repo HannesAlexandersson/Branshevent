@@ -34,3 +34,27 @@
     align-items: flex-start;
     margin-bottom: 1rem;
 }
+.btn{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0.5rem;
+
+    width: 10.0625rem;    
+    height: calc(1rem + (1rem + 1rem));
+    min-width: 10.0625rem;
+    padding: 1rem;
+
+    border-radius: 22.5rem;
+    font-family: var(--default-font);
+
+    border: 1px solid var(--secondary-BG);
+    background: var(--default-BG);       
+}
+.selected{
+    border: 1px solid var(--secondary-BG);
+
+    background: var(--secondary-BG); 
+    color: var(--secondary-font-clr);
+    font-family: var(--default-font);    
+}
