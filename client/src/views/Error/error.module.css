@@ -1,0 +1,49 @@
+.error_container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .ladybug{
+    rotate: 90deg;
+    width: 17px;
+  }
+  .roach{
+    width: 10%;
+    rotate: 90deg;
+  }
+  .ladybug_cont {
+   
+    position: absolute;
+    z-index: 99;
+    color: black;
+    top: calc(46% - 20px);
+    left: 0;
+    width: 40px;
+    height: 40px;
+   
+    animation: ladybugWalk 15s linear infinite;
+  }
+  .roach_cont{
+    position: absolute;
+    z-index: 99;
+    color: black;
+    top: calc(10%); 
+    left: -10px; 
+    width: 40px;
+    height: 40px;
+     
+    animation: ladybugWalk 5s linear infinite;
+  }
+  
+  @keyframes ladybugWalk {
+    0% {
+      transform: translateX(-50px); 
+    }
+    100% {
+      transform: translateX(calc(100% + 50px));
+    }
+  }

@@ -87,6 +87,7 @@
     background: var(--secondary-BG); 
     color: var(--secondary-font-clr);
     font-family: var(--default-font);    
+    margin-bottom: 4rem;
 }
 
 .closeButton{

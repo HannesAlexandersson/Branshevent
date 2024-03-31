@@ -1,9 +1,14 @@
+.header{
+    align-self: flex-start;
+    padding-left:1rem;
+    margin-top: 1.5rem;
+}
 .form{
     display: flex;
-    height: 21.625rem;
+    height: 17.4375rem;
     flex-direction: column;
-    justify-content: space-between;
     align-items: flex-start;
+    gap: 1rem;
 }
 .inputField{
     width: 19.25rem;
@@ -19,4 +24,13 @@
     font-weight: 400;
     line-height: 1.25rem; /* 125% */
     letter-spacing: 0.03125rem;
+}
+
+.btn_wrapper{
+    display: flex;
+    flex-direction: row;
+    width: 21.375rem;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
 }

@@ -21,6 +21,7 @@
     background-color: var(--secondary-BG);
     height: 50%;
     border-radius: 1.5rem 1.5rem 0 0;
+    position: relative;
     /*We just need a empty parent div for the draggable cards boundrys to be set to this and not the body*/
 }
 .draggable_card{

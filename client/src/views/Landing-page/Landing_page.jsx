@@ -52,49 +52,52 @@ function Landing_page(){
           </div>
 
           <div className={styles.draggable_container}>
-          <Draggable>          
-            <div className={styles.draggable_card}>
+            <Draggable>          
+              <div className={styles.draggable_card}>
 
-              <Divider/>        
+                <Divider/>        
 
-              <div className={styles.dragg_wrapper}>
+                <div className={styles.dragg_wrapper}>
 
-                <Dragg_header>
-                  Where & When?
-                </Dragg_header>
+                  <Dragg_header>
+                    Where & When?
+                  </Dragg_header>
 
-                <div className={styles.drag_info}>
+                  <div className={styles.drag_info}>
 
-                  <Box>
-                    <img className={styles.location} src={map_marker} alt="location-icon" />
-                    <p>Lindholmspiren 3, 417 56 Göteborg</p>
-                  </Box>
-                  <Box>
-                    <img className={styles.clock} src={clock} alt="clock-icon" />
-                    <p>Wednesday 24 April - 15:00-17:00</p>
-                  </Box>
-                  
+                    <Box>
+                      <img className={styles.location} src={map_marker} alt="location-icon" />
+                      <p>Lindholmspiren 3, 417 56 Göteborg</p>
+                    </Box>
+                    <Box>
+                      <img className={styles.clock} src={clock} alt="clock-icon" />
+                      <p>Wednesday 24 April - 15:00-17:00</p>
+                    </Box>
+                    
+                  </div>
+
+                  <Details>
+                    <h2>Event details</h2>
+                    <p>
+                        Welcome to Yrgo&apos;s mingle-event to find future coworkers or interns during the LIA-period. 
+                        You will be able to meet Web-developers and Digital Designers from Yrgo who want to show 
+                        you what they have worked with during the year, and we hope you find a match.
+                    </p>
+                  </Details>
+
+                  <Bottom>
+                    <p>The Web-developers and Digital Designers welcome you!</p>
+                  </Bottom>           
+
                 </div>
-
-                <Details>
-                  <h2>Event details</h2>
-                  <p>
-                      Welcome to Yrgo&apos;s mingle-event to find future coworkers or interns during the LIA-period. 
-                      You will be able to meet Web-developers and Digital Designers from Yrgo who want to show 
-                      you what they have worked with during the year, and we hope you find a match.
-                  </p>
-                </Details>
-
-                <Bottom>
-                  <p>The Web-developers and Digital Designers welcome you!</p>
-                </Bottom>           
-
+                <Bottom_logo src={lowOP} alt="yrgo logo offset" />
+                
+                
               </div>
-              <Bottom_logo src={lowOP} alt="yrgo logo offset" />
               
-            </div>
-            
-          </Draggable>
+            </Draggable>
+          
+          
 
           </div>
 
