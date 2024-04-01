@@ -11,11 +11,9 @@ function Company_third(){
     //we keep track of the progrssbar with this hook
     const [currentStep, setCurrentStep] = useState(4);
     const totalSteps = 4;
-  
-    //progressbar
-    if (currentStep < totalSteps) {//add 1 to the progressbar prop
-        setCurrentStep(currentStep + 1); 
-    }
+   
+    
+    
     //checkboxes
     const handleCheckboxChange = (event) => {
         setSelectedLocation(event.target.value);
@@ -83,10 +81,16 @@ function Company_third(){
                                 </White_btn>
                         </Link>
                         <Link to="#">
-                            <Red_btn>                        
-                                <p>NEXT STEP</p>
-                                <img src={nextArrow} />
-                            </Red_btn>
+                        <Red_btn
+                            onClick={() => {
+                                if (currentStep < totalSteps) {
+                                    setCurrentStep(currentStep + 1); 
+                                }
+                            }}
+                        >                        
+                            <p>NEXT STEP</p>
+                            <img src={nextArrow} />
+                        </Red_btn>
                         </Link>
                     </div>
                 </div>

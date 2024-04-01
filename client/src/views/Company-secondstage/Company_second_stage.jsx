@@ -10,9 +10,8 @@ function Company_second_stage(){
     const [currentStep, setCurrentStep] = useState(3);
     const totalSteps = 4;
 
-    if (currentStep < totalSteps) {//add 1 to the progressbar prop
-        setCurrentStep(currentStep + 1); 
-    }
+    
+    
 
     return(
         <>
@@ -35,10 +34,16 @@ function Company_second_stage(){
                                 </White_btn>
                         </Link>
                         <Link to="/company-work">
-                            <Red_btn>                        
-                                <p>NEXT STEP</p>
-                                <img src={nextArrow} />
-                            </Red_btn>
+                        <Red_btn
+                            onClick={() => {
+                                if (currentStep < totalSteps) {
+                                    setCurrentStep(currentStep + 1); //increase the progessbar with 1
+                                }
+                            }}
+                        >                        
+                            <p>NEXT STEP</p>
+                            <img src={nextArrow} />
+                        </Red_btn>
                         </Link>
                     </div>
                 </div>

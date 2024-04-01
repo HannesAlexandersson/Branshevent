@@ -20,6 +20,7 @@ function Company_sign_up(){
         event.preventDefault(); // stop default form submission so we can handle it ourselfs, Here we need to add formhandling, like validation and zanitation of the form data adn then send to db       
 
         if (currentStep < totalSteps) {//add 1 to the progressbar prop
+            console.log(`firsttage expected 2: ${currentStep}`);
             setCurrentStep(currentStep + 1); 
         }
         
@@ -58,11 +59,10 @@ function Company_sign_up(){
 
                     
                     <Red_btn                                                
-                        onClick={(e) => {
-                            console.log('click');
+                        onClick={(e) => {                            
                             if (!isChecked) {
                                 alert("You must read and agree to the GDPR before continuing."); // if the user havent agreed to gdpr we show an alert
-                            } else {
+                            } else {                                
                                 handleSubmit(e); // else we can go ahead and handle the form submission
                             }
                         }}

@@ -12,10 +12,7 @@ function Student_third_stage(){
     const [currentStep, setCurrentStep] = useState(4);
     const totalSteps = 4;
 
-    //progressbar
-    if (currentStep < totalSteps) {//add 1 to the progressbar prop
-        setCurrentStep(currentStep + 1); 
-    }
+    
     //checkboxes
     const handleCheckboxChange = (event) => {
         setSelectedLocation(event.target.value);
@@ -68,25 +65,31 @@ function Student_third_stage(){
                     </div>
 
                     <div className={style.btn_container}>
-                    <div className={style.skip_wrapper}>
-                        <Skip_btn />
-                    </div>
+                        <div className={style.skip_wrapper}>
+                            <Skip_btn />
+                        </div>
 
-                    <div className={style.footer_btn_wrapper}>
-                        <Link to="/student-description">
-                                <White_btn>
-                                    <img src={backArrow} />
-                                    <p>BACK</p>
-                                </White_btn>
-                        </Link>
-                        <Link to="#">
-                            <Red_btn>                        
-                                <p>NEXT STEP</p>
-                                <img src={nextArrow} />
-                            </Red_btn>
-                        </Link>
+                        <div className={style.footer_btn_wrapper}>
+                            <Link to="/student-description">
+                                    <White_btn>
+                                        <img src={backArrow} />
+                                        <p>BACK</p>
+                                    </White_btn>
+                            </Link>
+                            <Link to="#">
+                                <Red_btn
+                                    onClick={() => {
+                                        if (currentStep < totalSteps) {
+                                            setCurrentStep(currentStep + 1); 
+                                        }
+                                    }}
+                                >                        
+                                    <p>NEXT STEP</p>
+                                    <img src={nextArrow} />
+                                </Red_btn>
+                            </Link>
+                        </div>
                     </div>
-                </div>
 
                 </div>
             </div>

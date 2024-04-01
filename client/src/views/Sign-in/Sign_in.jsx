@@ -14,6 +14,7 @@ function Sign_in(){
 
     const handleNextStep = () => {
         if (currentStep < totalSteps) {
+            console.log(`signin expected 1: ${currentStep}`);
             setCurrentStep(currentStep + 1); 
         }
     };

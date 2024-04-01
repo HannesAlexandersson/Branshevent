@@ -8,13 +8,11 @@ import style from './student_secondstage.module.css';
 function Student_second_stage(){    
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
-    const [currentStep, setCurrentStep] = useState(2);
+    const [currentStep, setCurrentStep] = useState(3);
     const totalSteps = 4;
     const placeholderText = "A short description about you";
 
-    if (currentStep < totalSteps) {//add 1 to the progressbar prop
-        setCurrentStep(currentStep + 1); 
-    }
+   
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
@@ -79,10 +77,16 @@ function Student_second_stage(){
                                 </White_btn>
                         </Link>
                         <Link to="/student-work">
-                            <Red_btn>                        
-                                <p>NEXT STEP</p>
-                                <img src={nextArrow} />
-                            </Red_btn>
+                        <Red_btn
+                            onClick={() => {
+                                if (currentStep < totalSteps) {
+                                    setCurrentStep(currentStep + 1); // Increment currentStep if it's less than totalSteps
+                                }
+                            }}
+                        >                        
+                            <p>NEXT STEP</p>
+                            <img src={nextArrow} />
+                        </Red_btn>
                         </Link>
                     </div>
                 </div>

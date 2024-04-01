@@ -5,7 +5,7 @@ import styles from './progressbar.module.css';
 const Progressbar = ({ currentStep, totalSteps }) => {
   const steps = []; 
 
-  // we loop through every step in the "question line" and on each step we check if the user have answered the questions or not
+  // we loop through totalSteps, if i is less or equal to the currentstep thats passed as prop it gets the css class "completed" adn the steps over gets default class
   for (let i = 1; i <= totalSteps; i++) {
     const isCompleted = i <= currentStep;
     steps.push(
