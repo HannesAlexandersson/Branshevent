@@ -13,7 +13,15 @@ function Company_second_stage(){
     const [isChecked, setIsChecked] = useState(false);
     const [startDate, setStartDate] = useState(null); 
     const [endDate, setEndDate] = useState(null);
+    const navigate = useNavigate();
+   
     
+    const formatDate = (date) => {
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${month}/${day}/${year}`;
+    };
 
     
     const handleNextStep = () => {
@@ -29,8 +37,12 @@ function Company_second_stage(){
         sessionStorage.setItem('companyDescription', sanitizedDescription);
         // Save start and end dates to session storage
         if (startDate && endDate) {
-            sessionStorage.setItem('startDate', startDate.toISOString()); 
-            sessionStorage.setItem('endDate', endDate.toISOString()); 
+            console.log(startDate);
+            const formattedStartDate = formatDate(startDate);
+            console.log(formattedStartDate);
+            const formattedEndDate = formatDate(endDate);
+            sessionStorage.setItem('startDate', formattedStartDate); 
+            sessionStorage.setItem('endDate', formattedEndDate);
         } else {
             alert('Please select both start and end dates.');
             return;
@@ -41,9 +53,14 @@ function Company_second_stage(){
             sessionStorage.setItem('noInterns', 'true');
         }
        
-        // add 1 to the progressbar        
-        if (currentStep < totalSteps) {
-            setCurrentStep(currentStep + 1); //increase the progress bar with 1
+       // Only navigate if all validation checks pass
+        if (description.trim() !== '' && startDate && endDate) {
+            // add 1 to the progress bar
+            if (currentStep < totalSteps) {
+                setCurrentStep(currentStep + 1);
+            }
+
+            navigate('/company-work');
         }
     };
 
@@ -66,13 +83,17 @@ function Company_second_stage(){
                     handleDescriptionChange={handleDescriptionChange}
                     isChecked={isChecked}
                     handleCheckboxChange={handleCheckboxChange}
-                    startDate={startDate} 
-                    endDate={endDate}                    
+                    startDate={startDate}
+                    endDate={endDate}
+                    setStartDate={setStartDate} 
+                    setEndDate={setEndDate}                
                 />
 
                 <div className={styles.btn_container}>
                     <div className={styles.skip_wrapper}>
-                        <Skip_btn />
+                        <Link to='/company-work'>
+                            <Skip_btn />
+                        </Link>
                     </div>
 
                     <div className={styles.footer_btn_wrapper}>
@@ -83,17 +104,17 @@ function Company_second_stage(){
                                 </White_btn>
                         </Link>
 
-                        <Link to="/company-work">
+                        
                         <Red_btn onClick={handleNextStep} >                        
                             <p>NEXT STEP</p>
                             <img src={nextArrow} />
                         </Red_btn>
-                        </Link>
+                        
                     </div>
                 </div>
             </div>
         </>
     );
 }
-
+{/* <Link to="/company-work"></Link> */}
 export default Company_second_stage

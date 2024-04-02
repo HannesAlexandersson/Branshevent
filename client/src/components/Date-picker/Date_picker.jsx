@@ -12,7 +12,7 @@ function StartDate_picker({ onSelectStartDate, ...props}) {
         onSelectStartDate(date);
     };
 
-    const handleCalendarClose = () => console.log(`startdate: ${date}`);    
+     
     const Red_button = forwardRef(({ value, onClick }, ref) => (
         <button className={styles.red_button} onClick={onClick} ref={ref}>
           {props.children}
@@ -23,7 +23,7 @@ function StartDate_picker({ onSelectStartDate, ...props}) {
         selected={date}
         dateFormat="MM/dd/yyyy"
         onChange={handleStartDateChange}
-        onCalendarClose={handleCalendarClose}    
+            
         popperClassName="some-custom-class"
         popperPlacement="top-start"    
         customInput={<Red_button />}

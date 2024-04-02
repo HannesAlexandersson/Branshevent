@@ -12,7 +12,7 @@ function EndDate_picker({ onSelectEndDate, ...props}) {
         onSelectEndDate(endDate); // Pass selected end date to parent component
     };
 
-    const handleCalendarClose = () => console.log(`enddate: ${endDate}`);    
+        
     
     const White_button = forwardRef(({ value, onClick }, ref) => (
         <button className={style.white_button} onClick={onClick} ref={ref}>
@@ -24,7 +24,7 @@ function EndDate_picker({ onSelectEndDate, ...props}) {
         selected={endDate}
         dateFormat="MM/dd/yyyy"
         onChange={handleEndDateChange}
-        onCalendarClose={handleCalendarClose}
+        
         popperClassName="some-custom-class"
         popperPlacement="top-start"
         customInput={<White_button />}

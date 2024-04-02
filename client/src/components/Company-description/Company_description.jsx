@@ -1,29 +1,28 @@
 import { useState } from 'react';
 import validator from 'validator'; //for url validation
-import sanitizeHtml from 'sanitize-html'; //to sanitize the userinputted url
+/* import sanitizeHtml from 'sanitize-html'; */ //to sanitize the userinputted url
 import { pencil, calendarIcon, add, close } from '../../assets/Icons/index.js';
 import { White_btn, Red_btn, StartDate_picker, EndDate_picker, } from '../index.js';
 import 'react-datepicker/dist/react-datepicker.css'
 import style from './company_description.module.css';
 
-function Company_description({ description, handleDescriptionChange, isChecked, handleCheckboxChange }) {   
+function Company_description({ description, handleDescriptionChange, isChecked, handleCheckboxChange, startDate, endDate, setStartDate, setEndDate }) {   
     const placeholderText = "A short description about your company";   
-    const [endDate, setEndDate] = useState(null);
-    const [startDate, setStartDate] = useState(null);
+    
     const [showInputField, setShowInputField] = useState(false); 
     const [onlineProfile, setOnlineProfile] = useState(''); 
     const [errorMessage, setErrorMessage] = useState('');
 
     // Function to handle the selected end date
     const handleEndDateSelect = (endDate) => {
-        setEndDate(endDate); 
-        
+        setEndDate(endDate); // Update endDate state using the setEndDate prop
     };
+    
     // Function to handle the selected start date
     const handleStartDateSelect = (startDate) => {
-        setStartDate(startDate); 
-       
+        setStartDate(startDate); // Update startDate state using the setStartDate prop
     };
+
 
 
     // Function to handle adding an online profile
@@ -35,9 +34,9 @@ function Company_description({ description, handleDescriptionChange, isChecked, 
     // Function to handle submitting the online profile
     const handleSubmitOnlineProfile = () => {
         if (validator.isURL(onlineProfile)) {
-            // Sanitize the URL if needed
-            const sanitizedUrl = sanitizeHtml(onlineProfile);
-            // Proceed with the sanitized URL
+            
+            const sanitizedUrl = onlineProfile.trim();
+            // save the url to the session
             sessionStorage.setItem('onlineProfile', sanitizedUrl);
             // Reset input field and hide the popup
             setOnlineProfile('');
