@@ -8,7 +8,7 @@ import styles from './landing.module.css';
 function Landing_page(){
   const location = useLocation();  
   const date = '24 APRIL 15:00-17:00';
-
+  sessionStorage.clear();//clear session
   useEffect(() => {
     // We only want to have overflow hidden on the landing page so:
     const isLandingPage = location.pathname === '/'; // check to see if we are on the landing page or not

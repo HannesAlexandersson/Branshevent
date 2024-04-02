@@ -2,10 +2,11 @@ import React from 'react';
 import Props from 'prop-types';
 import styles from './company_signup_form.module.css';
 
-function Company_signup_form() {
+function Company_signup_form({ handleChange }) {
     const sanitizeInput = (value) => {       
         return value.trim();
-      };
+    };
+   
     return (
         <div className={styles.container}>
             <h2>Contact Person</h2>
@@ -19,7 +20,7 @@ function Company_signup_form() {
                     placeholder="Company Name" 
                     required 
                     className={styles.inputField} 
-                    onChange={(e) => { e.target.value = sanitizeInput(e.target.value); }}
+                    onChange={(e) => handleChange('companyName', sanitizeInput(e.target.value))}
                 />
             </div>
             <div className={styles.form_group}>
@@ -32,7 +33,7 @@ function Company_signup_form() {
                     minLength="2" 
                     maxLength="50" 
                     className={styles.inputField} 
-                    onChange={(e) => { e.target.value = sanitizeInput(e.target.value); }}
+                    onChange={(e) => handleChange('firstName', sanitizeInput(e.target.value))}
                 />
             </div>
             <div className={styles.form_group}>
@@ -45,7 +46,7 @@ function Company_signup_form() {
                     minLength="2" 
                     maxLength="50" 
                     className={styles.inputField} 
-                    onChange={(e) => { e.target.value = sanitizeInput(e.target.value); }}
+                    onChange={(e) => handleChange('lastName', sanitizeInput(e.target.value))}
                 />
             </div>
             <div className={styles.form_group}>
@@ -56,7 +57,7 @@ function Company_signup_form() {
                     placeholder="Email" 
                     required 
                     className={styles.inputField} 
-                    onChange={(e) => { e.target.value = sanitizeInput(e.target.value); }}
+                    onChange={(e) => handleChange('email', sanitizeInput(e.target.value))}
                 />
             </div>
             <div className={styles.form_group}>
@@ -68,7 +69,7 @@ function Company_signup_form() {
                     required 
                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
                     className={styles.inputField} 
-                    onChange={(e) => { e.target.value = sanitizeInput(e.target.value); }}
+                    onChange={(e) => handleChange('phoneNumber', sanitizeInput(e.target.value))}
                 />                
             </div>
                 

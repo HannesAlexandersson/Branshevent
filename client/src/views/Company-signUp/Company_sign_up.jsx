@@ -30,17 +30,15 @@ function Company_sign_up(){
         // Retrieve sanitized and validated form data
         const { companyName, firstName, lastName, email, phoneNumber } = formData;
 
+
+        if (currentStep < totalSteps) {//add 1 to the progressbar prop           
+            setCurrentStep(currentStep + 1); 
+        }
+       
+           
         // Save company data to session storage
         sessionStorage.setItem('companyData', JSON.stringify(formData));
 
-
-
-
-        if (currentStep < totalSteps) {//add 1 to the progressbar prop
-            console.log(`firsttage expected 2: ${currentStep}`);
-            setCurrentStep(currentStep + 1); 
-        }
-    
         navigate('/company-description');//route the user to the next step
     };
 
@@ -51,8 +49,7 @@ function Company_sign_up(){
     const isNextButtonDisabled = !isChecked;
     console.log(isNextButtonDisabled);
     
-    const handleChange = (event) => {
-        const { name, value } = event.target;
+    const handleChange = (name, value) => {
         // Update form data state with sanitized input value
         setFormData(prevData => ({
             ...prevData,
@@ -67,10 +64,8 @@ function Company_sign_up(){
             <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
                 <Form 
-                    id="companySignupForm"
-                    formData={formData} 
-                    handleChange={handleChange} 
-                    handleSubmit={handleSubmit} 
+                    id="companySignupForm"                    
+                    handleChange={handleChange}                     
                     />                
 
                 
