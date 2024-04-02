@@ -6,7 +6,8 @@ import yrgoLogo from '../../assets/Logos/yrgo-text.jpg';
 import styles from './landing.module.css';
 
 function Landing_page(){
-  const location = useLocation();
+  const location = useLocation();  
+  const date = '24 APRIL 15:00-17:00';
 
   useEffect(() => {
     // We only want to have overflow hidden on the landing page so:
@@ -23,7 +24,10 @@ function Landing_page(){
     };
   }, [location]);
 
-  const date = '24 APRIL 15:00-17:00';
+  
+  const handleJoinEvent = () => {
+    sessionStorage.setItem('isSessionActive', true); // Set session variable
+  };
 
   return (
     
@@ -101,7 +105,7 @@ function Landing_page(){
 
           </div>
 
-          <Join_btn>Join the Event</Join_btn>
+          <Join_btn onClick={handleJoinEvent}>Join the Event</Join_btn>
           <Gradient/>
 
           

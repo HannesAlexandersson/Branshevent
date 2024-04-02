@@ -18,3 +18,5 @@ export { default as Skip_btn } from './Skip-btn/Skip_btn.jsx';
 export { default as TagsSelector } from './Tag-selector/Tag_selector.jsx';
 export { default as Student_form } from './Student-form/Student_form.jsx';
 export { default as Gdpr } from './GDPR/Gdpr.jsx';
+export { default as StartDate_picker } from './Date-picker/Date_picker.jsx';
+export { default as EndDate_picker } from './Date-picker/End_date.jsx';

@@ -14,17 +14,34 @@ function Company_sign_up(){
     const [isChecked, setIsChecked] = useState(false);
     const [currentStep, setCurrentStep] = useState(2);
     const totalSteps = 4;
+    const [formData, setFormData] = useState({
+        companyName: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: ''
+    });
+
     
 
     const handleSubmit = (event) => {
-        event.preventDefault(); // stop default form submission so we can handle it ourselfs, Here we need to add formhandling, like validation and zanitation of the form data adn then send to db       
+        event.preventDefault(); // stop default form submission so we can handle it ourselfs       
+
+        // Retrieve sanitized and validated form data
+        const { companyName, firstName, lastName, email, phoneNumber } = formData;
+
+        // Save company data to session storage
+        sessionStorage.setItem('companyData', JSON.stringify(formData));
+
+
+
 
         if (currentStep < totalSteps) {//add 1 to the progressbar prop
             console.log(`firsttage expected 2: ${currentStep}`);
             setCurrentStep(currentStep + 1); 
         }
-        
-        navigate('/company-description');
+    
+        navigate('/company-description');//route the user to the next step
     };
 
     const handleCheckboxChange = () => {
@@ -34,6 +51,14 @@ function Company_sign_up(){
     const isNextButtonDisabled = !isChecked;
     console.log(isNextButtonDisabled);
     
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        // Update form data state with sanitized input value
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: value.trim() 
+        }));
+    };
 
     return(
         <>
@@ -41,7 +66,12 @@ function Company_sign_up(){
             <div className={styles.main}>
             <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
-                <Form id="companySignupForm" handleSubmit={handleSubmit}/>                
+                <Form 
+                    id="companySignupForm"
+                    formData={formData} 
+                    handleChange={handleChange} 
+                    handleSubmit={handleSubmit} 
+                    />                
 
                 
                     <Gdpr
