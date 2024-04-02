@@ -1,0 +1,10 @@
+.divider {
+    top: .75rem;
+    position: relative;
+    margin: 0 auto;
+    width: 30%;
+    height: .45rem;
+    background-color: var(--secondary-font-clr);
+    border-radius: 1.5rem;
+    margin-bottom: 1.75rem;    
+}

@@ -1,10 +1,11 @@
 import Props from 'prop-types';
+import style from './main_header.module.css';
 
 function Main_header(props){
 
     return(
 
-        <div className={props.className}>
+        <div className={style.main_header}>
             {props.children}
         </div>
     );

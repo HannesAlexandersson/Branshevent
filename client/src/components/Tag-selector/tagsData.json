@@ -1,0 +1,22 @@
+[
+    {
+      "title": "Design   ",
+      "tags": ["Illustrator", "After Effects", "Figma", "InDesign", "Photoshop", 
+      "DaVinci Resolve", "Sketch", "Adobe XD", "CorelDRAW", "Affinity Designer", 
+      "Canva", "GIMP", "Inkscape", "Procreate", "Adobe Premiere Pro", "Final Cut Pro", 
+      "Adobe Lightroom", "Cinema 4D", "Blender", "Autodesk SketchBook"]
+    },
+    {
+      "title": " Web   ",
+      "tags": ["HTML", "CSS", "JavaScript", "Laravel", "React", 
+      "WordPress", "Tailwind CSS", "TypeScript", "SQL", "Node.js", 
+      "Express.js", "Angular", "Vue.js", "Django", "Flask", "Bootstrap", 
+      "Sass", "Less", "GraphQL", "RESTful API", "MongoDB", "MySQL", 
+      "PostgreSQL", "SQLite", "Redis", "Webpack", "Babel", "Git", "GitHub", 
+      "Bitbucket", "Jira", "Trello", "Slack"]
+    },
+    {
+      "title": " Other Preferences ",
+      "tags": ["Visual Studio Code", "Sublime Text", "Atom", "IntelliJ IDEA", "Eclipse", "NetBeans", "Heroku", "AWS", "Google Cloud Platform", "Microsoft Azure", "Docker", "Kubernetes", "Jenkins", "Travis CI", "CircleCI", "Continuous Integration", "Continuous Deployment"]
+    }
+  ]

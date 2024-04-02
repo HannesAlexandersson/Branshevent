@@ -1,0 +1,9 @@
+.gradient {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2.2rem;
+    background: linear-gradient(to top,#F52A3B, transparent);
+    
+  }

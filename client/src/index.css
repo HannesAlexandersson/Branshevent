@@ -2,20 +2,40 @@
 * Global stylesheet
 */
 :root{
+  /*Colors*/
   --default-BG: #FFF;
   --secondary-BG: #F52A3B;
-  --primary-accent: #E51336;
-  
+
+  --primary-accent: #E51336;  
   --secondary-accent: #001A52;
 
   --default-font-clr: #000;
   --secondary-font-clr:#FFF;
+  --Grey-20: #E8E8E8;
+  --Grey-40: #B5B5B5;
+  --Grey-60:#4B4B4B;
+  --Grey-80: #333;
+  --Grey-100: #1B1B1B;
+
+  --Blue-40: #CCD1DC;
+  --Blue-80: #334875;
+
+  --btn-font-clr: #2B2B2B;
+  /*Fonts*/
+  --default-font: 'Inter', sans-serif;
 }
 body{
   margin: 0;
-  overflow: hidden;
+  /* overflow: hidden; */ /**/
+  font-family: 'Inter', sans-serif;
 }
 .default-font{
   font-family: 'Inter', sans-serif;
 }
-
+a{
+  cursor: pointer;
+  text-decoration: none;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
