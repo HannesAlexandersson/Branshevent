@@ -1,5 +1,6 @@
 import express from 'express';
 import companyRoutes from './company.js';
+import studentRoutes from './student.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
@@ -20,6 +21,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json())
 
 server.use('/company/', companyRoutes);
+server.use('/student/', studentRoutes);
 
 server.listen(port, () => {
     console.log(`Server is running on ${port}`);

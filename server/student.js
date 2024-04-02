@@ -10,7 +10,7 @@ router.get('/all', (req, res) => {
     const query = 'SELECT * FROM Student';
   
     db.all(query, [], (err, rows) => {
-      if (err) {
+      if(err) {
         console.error(err.message);
         return res.status(500).json({ error: 'Internal Server Error' });
       }
@@ -25,7 +25,7 @@ router.get('/:studentId', (req, res) => {
   const query = 'SELECT * FROM Student WHERE id = ?';
 
   db.get(query, [studentId], (err, rows) => {
-    if (err) {
+    if(err) {
       console.error(err.message);
       return res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -40,13 +40,12 @@ router.post('/login', (req, res) => {
   const email = req.body.email;
   const query = 'SELECT * FROM Student WHERE email = ?';
 
-  console.log(email, req.body);
   db.get(query, [email], (err, result) => {
     if(err){
       console.log(err.message);
-      return res.status(500).json({error : 'Internal Error Error'});
+      return res.status(500).json({ error : 'Internal Server Error' });
     }
-    if (!result) {
+    if(!result) {
       console.log('Login fail : No student found');
       return res.status(403).json({ error: 'Email or password incorrect' });
     } else {
@@ -54,6 +53,23 @@ router.post('/login', (req, res) => {
       return res.status(200).send(result);
     }
   });
+})
+
+
+//registration
+router.post('/registration', (req, res) => {
+    const { first_name, last_name, email, password } = req.body;
+    const query = 'INSERT INTO Student (first_name, last_name, email, password) VALUES (?, ?, ?, ?)';
+
+    console.log(password);
+    db.run(query, [first_name, last_name, email, password], function(err) {
+        if(err){
+            console.log(err.message);
+            return res.status(500).json({ error : 'Internal Server Error' });
+        }
+        console.log('Registration successfull')
+        return res.status(200).json({ id: this.lastID });
+    });
 })
 
 export default router;
