@@ -13,6 +13,7 @@ function Company_third(){
     const [currentStep, setCurrentStep] = useState(4);
     const totalSteps = 4;
    
+    //handle the selected tags
     const handleSaveSelectedTags = (tagsData) => {
         setSelectedTags(tagsData);
       };
@@ -74,9 +75,9 @@ function Company_third(){
                     </div>
 
                     <div className={style.btn_container}>
-                    <div className={style.skip_wrapper}>
-                        <Skip_btn />
-                    </div>
+                        <div className={style.skip_wrapper}>
+                            <Skip_btn />
+                        </div>
 
                     <div className={style.footer_btn_wrapper}>
                         <Link to="/company-description">

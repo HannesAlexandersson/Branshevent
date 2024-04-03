@@ -6,12 +6,17 @@ import Nav from '../Navigation/Navigation';
 import style from './student_third.module.css';
 
 function Student_third_stage(){
+    const [selectedTags, setSelectedTags] = useState([]);
     // we keep track of the checkboxes with this useState hook
     const [selectedLocation, setSelectedLocation] = useState('');
     //we keep track of the progrssbar with this hook
     const [currentStep, setCurrentStep] = useState(4);
     const totalSteps = 4;
-
+    
+    //handle the selected tags
+    const handleSaveSelectedTags = (tagsData) => {
+        setSelectedTags(tagsData);
+      };
     
     //checkboxes
     const handleCheckboxChange = (event) => {
@@ -29,10 +34,15 @@ function Student_third_stage(){
                 <div className={style.content_container}>               
 
                     
-                    <TagsSelector who="I" className={style.tag_selector}/>
+                    <TagsSelector 
+                        who="I" 
+                        className={style.tag_selector}
+                        onSaveSelectedTags={handleSaveSelectedTags}
+                        selectedTags={selectedTags}
+                    />
 
                     <div className={style.location_container}>
-                        <p>I work...</p>
+                        <p>I want to work...</p>
                         <div className={style.checkBox_wrapper}>
                             <label className={style.location_row}>
                                 <input className={style.checkBox}
@@ -81,7 +91,15 @@ function Student_third_stage(){
                                     onClick={() => {
                                         if (currentStep < totalSteps) {
                                             setCurrentStep(currentStep + 1); 
+                                            const selectedTags = props.selectedTags;
+                                            if (selectedTags.length > 0) {
+                                                // Save selectedTags to session storage
+                                                sessionStorage.setItem('selectedTags', JSON.stringify(selectedTags));
+                                            }
+                                        // Save the selected checkbox value to session storage
+                                        sessionStorage.setItem('selectedLocation', selectedLocation);
                                         }
+                                        
                                     }}
                                 >                        
                                     <p>NEXT STEP</p>
