@@ -1,12 +1,12 @@
 
 
 function SendDataToServer(userData) {
-    fetch('/test', { // Change this to the correct endpoint path
+    fetch('http://localhost:3000/data', { 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(userData) // Ensure userData is JSON-stringified
+        body: JSON.stringify(userData) 
     })
     .then(response => {
         if (response.ok) {
