@@ -29,6 +29,7 @@ function Navigation(){
       '/student-signup': 'STUDENT SIGN-UP',
       '/student-description': 'STUDENT SIGN-UP',
       '/student-work': 'STUDENT SIGN-UP',
+      '/test-to-DB': 'Test to database',
     }    
 
     useEffect(() => {

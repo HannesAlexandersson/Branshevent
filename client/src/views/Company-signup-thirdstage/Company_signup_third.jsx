@@ -86,7 +86,7 @@ function Company_third(){
                                     <p>BACK</p>
                                 </White_btn>
                         </Link>
-                        <Link to="#">
+                        <Link to="/test-to-DB">
                         <Red_btn
                             onClick={() => {
                                 if (currentStep < totalSteps) {
