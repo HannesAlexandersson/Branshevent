@@ -56,4 +56,20 @@ router.post('/login', (req, res) => {
   });
 })
 
+//registration
+router.post('/registration', (req, res) => {
+  const { company_name, first_name, last_name, phone, email, password } = req.body;
+  const query = 'INSERT INTO Company (company_name, first_name, last_name, phone, email, password) VALUES (?, ?, ?, ?)';
+
+  console.log(password);
+  db.run(query, [company_name, first_name, last_name, phone, email, password], function(err) {
+      if(err){
+          console.log(err.message);
+          return res.status(500).json({ error : 'Internal Server Error' });
+      }
+      console.log('Registration successfull')
+      return res.status(200).json({ id: this.lastID });
+  });
+})
+
 export default router;

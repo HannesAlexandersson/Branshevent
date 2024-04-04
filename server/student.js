@@ -58,11 +58,11 @@ router.post('/login', (req, res) => {
 
 //registration
 router.post('/registration', (req, res) => {
-    const { first_name, last_name, email, password } = req.body;
-    const query = 'INSERT INTO Student (first_name, last_name, email, password) VALUES (?, ?, ?, ?)';
+    const { first_name, last_name, email, password, phone } = req.body;
+    const query = 'INSERT INTO Student (first_name, last_name, email, password, phone) VALUES (?, ?, ?, ?, ?)';
 
     console.log(password);
-    db.run(query, [first_name, last_name, email, password], function(err) {
+    db.run(query, [first_name, last_name, email, password, phone], function(err) {
         if(err){
             console.log(err.message);
             return res.status(500).json({ error : 'Internal Server Error' });
