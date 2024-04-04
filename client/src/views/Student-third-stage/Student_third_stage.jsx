@@ -86,20 +86,18 @@ function Student_third_stage(){
                                         <p>BACK</p>
                                     </White_btn>
                             </Link>
-                            <Link to="#">
+                            <Link to="/test-to-DB">
                                 <Red_btn
                                     onClick={() => {
-                                        if (currentStep < totalSteps) {
-                                            setCurrentStep(currentStep + 1); 
-                                            const selectedTags = props.selectedTags;
-                                            if (selectedTags.length > 0) {
-                                                // Save selectedTags to session storage
-                                                sessionStorage.setItem('selectedTags', JSON.stringify(selectedTags));
-                                            }
+                                        // Save selectedTags to session storage
+                                        sessionStorage.setItem('selectedTags', JSON.stringify(selectedTags));
+                                                                                
                                         // Save the selected checkbox value to session storage
                                         sessionStorage.setItem('selectedLocation', selectedLocation);
-                                        }
-                                        
+
+                                        if (currentStep < totalSteps) {
+                                            setCurrentStep(currentStep + 1);                                        
+                                        }                                        
                                     }}
                                 >                        
                                     <p>NEXT STEP</p>

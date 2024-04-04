@@ -5,7 +5,7 @@ import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import Nav from '../Navigation/Navigation';
 import style from './company_signup_third.module.css';
 
-function Company_third(){
+function Company_third() {
     const [selectedTags, setSelectedTags] = useState([]);
     // we keep track of the checkboxes with this useState hook
     const [selectedLocation, setSelectedLocation] = useState('');
@@ -14,13 +14,13 @@ function Company_third(){
     const totalSteps = 4;
    
     //handle the selected tags
-    const handleSaveSelectedTags = (tagsData) => {
+    const handleSaveSelectedTags = (tagsData) => {        
         setSelectedTags(tagsData);
       };
     
     //checkboxes
-    const handleCheckboxChange = (event) => {
-        setSelectedLocation(event.target.value);
+    const handleCheckboxChange = (event) => {        
+        setSelectedLocation(event.target.value);        
       };
      
     return(
@@ -88,17 +88,17 @@ function Company_third(){
                         </Link>
                         <Link to="/test-to-DB">
                         <Red_btn
-                            onClick={() => {
+                            onClick={() => {                               
+                                // Save selectedTags to session storage
+                                sessionStorage.setItem('selectedTags', JSON.stringify(selectedTags));
+                                
+                                // Save the selected checkbox value to session storage
+                                sessionStorage.setItem('selectedLocation', selectedLocation);
+
                                 if (currentStep < totalSteps) {
-                                    setCurrentStep(currentStep + 1); 
-                                    const selectedTags = props.selectedTags;
-                                    if (selectedTags.length > 0) {
-                                        // Save selectedTags to session storage
-                                        sessionStorage.setItem('selectedTags', JSON.stringify(selectedTags));
+                                    setCurrentStep(currentStep + 1);                                     
                                     }
-                                     // Save the selected checkbox value to session storage
-                                    sessionStorage.setItem('selectedLocation', selectedLocation);
-                                }
+                               
                             }}
                         >                        
                             <p>NEXT STEP</p>

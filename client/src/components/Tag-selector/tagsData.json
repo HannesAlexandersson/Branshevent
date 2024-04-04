@@ -17,6 +17,6 @@
     },
     {
       "title": " Other Preferences ",
-      "tags": ["Visual Studio Code", "Sublime Text", "Atom", "IntelliJ IDEA", "Eclipse", "NetBeans", "Heroku", "AWS", "Google Cloud Platform", "Microsoft Azure", "Docker", "Kubernetes", "Jenkins", "Travis CI", "CircleCI", "Continuous Integration", "Continuous Deployment"]
+      "tags": ["Github", "Visual Studio Code", "Sublime Text", "Atom", "IntelliJ IDEA", "Eclipse", "NetBeans", "Heroku", "AWS", "Google Cloud Platform", "Microsoft Azure", "Docker", "Kubernetes", "Jenkins", "Travis CI", "CircleCI", "Continuous Integration", "Continuous Deployment"]
     }
   ]

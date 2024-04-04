@@ -8,20 +8,25 @@ function Test() {
 
         if (userRole === 'student') {
             const studentFormData = JSON.parse(sessionStorage.getItem('studentData'));
-            const occupation = sessionStorage.getItem('occupation');
-            const startDate = sessionStorage.getItem('startDate');
-            const endDate = sessionStorage.getItem('endDate');
+            const studentOccupation = sessionStorage.getItem('occupation');
+            const studentStartDate = sessionStorage.getItem('startDate');
+            const studentEndDate = sessionStorage.getItem('endDate');
             const studentDescription = sessionStorage.getItem('studentDescription');
-            const onlineProfiles = sessionStorage.getItem('onlineProfile');
+            const studentOnlineProfiles = sessionStorage.getItem('onlineProfile');
+            const studentTagsData = JSON.parse(sessionStorage.getItem('selectedTags'));
+            const studentWorkLocation = sessionStorage.getItem('selectedLocation');
             const noDates = sessionStorage.getItem('noDates') !== null ? sessionStorage.getItem('noDates') : false;
 
             const studentData = {
+                userRole,
                 studentFormData,
-                occupation,
-                startDate,
-                endDate,
+                studentOccupation,
+                studentStartDate,
+                studentEndDate,
                 studentDescription,
-                onlineProfiles,
+                studentOnlineProfiles,
+                studentTagsData,
+                studentWorkLocation,
                 noDatesSelected: noDates,
             };
 
@@ -32,14 +37,19 @@ function Test() {
             const companyStartDate = sessionStorage.getItem('startDate');
             const companyEndDate = sessionStorage.getItem('endDate');
             const companyOnlineProfile = sessionStorage.getItem('onlineProfile');
+            const companyTagsData = JSON.parse(sessionStorage.getItem('selectedTags'));
+            const companyWorkLocation = sessionStorage.getItem('selectedLocation');
             const noInterns = sessionStorage.getItem('noInterns') !== null ? sessionStorage.getItem('noInterns') : false;
 
             const companyData = {
+                userRole,
                 companyFormData,
                 companyDescription,
                 companyStartDate,
                 companyEndDate,
                 companyOnlineProfile,
+                companyTagsData,
+                companyWorkLocation,
                 noInterns,
             };
            
