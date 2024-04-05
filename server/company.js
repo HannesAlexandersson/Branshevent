@@ -36,9 +36,9 @@ router.get('/:companyId', (req, res) => {
 
 //login
 router.post('/login', (req, res) => {
-  //const password = req.body.password;
+  const password = req.body.password;
   const email = req.body.email;
-  const query = 'SELECT * FROM Company WHERE email = ?';
+  const query = 'SELECT * FROM Company WHERE email = ? AND password = ?';
 
   console.log(email, req.body);
   db.get(query, [email], (err, result) => {
@@ -58,11 +58,11 @@ router.post('/login', (req, res) => {
 
 //registration
 router.post('/registration', (req, res) => {
-  const { company_name, first_name, last_name, phone, email, password } = req.body;
-  const query = 'INSERT INTO Company (company_name, first_name, last_name, phone, email, password) VALUES (?, ?, ?, ?)';
+  const { company_name, first_name, last_name, phone_number, email, password } = req.body;
+  const query = 'INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password) VALUES (?, ?, ?, ?)';
 
   console.log(password);
-  db.run(query, [company_name, first_name, last_name, phone, email, password], function(err) {
+  db.run(query, [company_name, first_name, last_name, phone_number, email, password], function(err) {
       if(err){
           console.log(err.message);
           return res.status(500).json({ error : 'Internal Server Error' });
