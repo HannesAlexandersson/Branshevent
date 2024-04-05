@@ -1,0 +1,55 @@
+.address_wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.title{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: .275rem;
+}
+.title > h2{
+    color: var(--Blue-80);   
+    font-family: var(--default-font);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; 
+    letter-spacing: 0.00625rem;
+
+    margin: 0;
+}
+.input_container{
+    display: flex;
+    width: 21.375rem;
+    min-width: 21.375rem;
+   
+    
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1.275rem;
+    
+}
+.input{
+    
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    flex: 1 0 0;
+    overflow: hidden;
+    color: var(--Grey-40);
+    text-overflow: ellipsis;
+    /* Body 2 */
+    font-family: var(--default-font);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem; 
+    letter-spacing: 0.03125rem;
+
+    padding: 1rem;
+    height: 4.5rem;
+    background: var(--Grey-80);
+    border-radius: 1.5rem;
+    whiteSpace: pre-line;
+}

@@ -8,9 +8,11 @@ import styles from './company_second_stage.module.css';
 
 function Company_second_stage(){
     const [currentStep, setCurrentStep] = useState(3);
-    const totalSteps = 4;
+    const totalSteps = 7;
     const [description, setDescription] = useState('');
-    const [isChecked, setIsChecked] = useState(false);
+    const [isDatePendingChecked, setIsDatePendingChecked] = useState(false);
+    const [isContinuousChecked, setIsContinuousChecked] = useState(false);
+    const [isNotLookingChecked, setIsNotLookingChecked] = useState(false);
     const [startDate, setStartDate] = useState(null); 
     const [endDate, setEndDate] = useState(null);
     const navigate = useNavigate();
@@ -49,8 +51,14 @@ function Company_second_stage(){
         }
 
         // Save checkbox state to session storage
-        if (isChecked) {
+        if (isNotLookingChecked) {
             sessionStorage.setItem('noInterns', 'true');
+        }
+        if(isDatePendingChecked){
+            sessionStorage.setItem('applicationDatePending', 'true');
+        }
+        if(isContinuousChecked){
+            sessionStorage.setItem('haveOpenings', 'true')
         }
        
        // Only navigate if all validation checks pass
@@ -68,8 +76,23 @@ function Company_second_stage(){
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
     };
-    const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
+    //only 1 checkbox can be checked, if the user checks another the others gets put in false state
+    const handleDatePendingChange = () => {
+        setIsDatePendingChecked(true);
+        setIsContinuousChecked(false);
+        setIsNotLookingChecked(false);
+    };
+
+    const handleContinuousChange = () => {
+        setIsDatePendingChecked(false);
+        setIsContinuousChecked(true);
+        setIsNotLookingChecked(false);
+    };
+
+    const handleNotLookingChange = () => {
+        setIsDatePendingChecked(false);
+        setIsContinuousChecked(false);
+        setIsNotLookingChecked(true);
     };
 
     return(
@@ -81,8 +104,12 @@ function Company_second_stage(){
                 <Company_description 
                     description={description}
                     handleDescriptionChange={handleDescriptionChange}
-                    isChecked={isChecked}
-                    handleCheckboxChange={handleCheckboxChange}
+                    handleDatePendingChange={handleDatePendingChange}
+                    isDatePendingChecked={isDatePendingChecked}
+                    handleContinuousChange={handleContinuousChange}
+                    isContinuousChecked={isContinuousChecked}
+                    handleNotLookingChange={handleNotLookingChange}
+                    isNotLookingChecked={isNotLookingChecked}
                     startDate={startDate}
                     endDate={endDate}
                     setStartDate={setStartDate} 
@@ -97,7 +124,7 @@ function Company_second_stage(){
                     </div>
 
                     <div className={styles.footer_btn_wrapper}>
-                        <Link to="/company-signup">
+                        <Link to="/company-account">
                                 <White_btn>
                                     <img src={backArrow} />
                                     <p>BACK</p>
@@ -116,7 +143,7 @@ function Company_second_stage(){
         </>
     );
 }
-{/* <Link to="/company-work"></Link> */}
+
 export default Company_second_stage
 
 

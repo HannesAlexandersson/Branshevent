@@ -4,15 +4,20 @@ import { Progressbar,Red_btn, White_btn, Skip_btn, TagsSelector, } from '../../c
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import Nav from '../Navigation/Navigation';
 import style from './company_signup_third.module.css';
+import Address from '../../components/Address/Address.jsx';
 
 function Company_third() {
+    const [companyAddress, setCompanyAddress] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
     // we keep track of the checkboxes with this useState hook
     const [selectedLocation, setSelectedLocation] = useState('');
     //we keep track of the progrssbar with this hook
     const [currentStep, setCurrentStep] = useState(4);
-    const totalSteps = 4;
+    const totalSteps = 7;
    
+    const handleAddressChange = (newAddress) => {
+        setCompanyAddress(newAddress);
+    }
     //handle the selected tags
     const handleSaveSelectedTags = (tagsData) => {        
         setSelectedTags(tagsData);
@@ -74,6 +79,8 @@ function Company_third() {
                         </div>
                     </div>
 
+                    <Address onAddressChange={handleAddressChange} />
+
                     <div className={style.btn_container}>
                         <div className={style.skip_wrapper}>
                             <Skip_btn />
@@ -86,7 +93,7 @@ function Company_third() {
                                     <p>BACK</p>
                                 </White_btn>
                         </Link>
-                        <Link to="/test-to-DB">
+                        <Link to="/company-summary">
                         <Red_btn
                             onClick={() => {                               
                                 // Save selectedTags to session storage
@@ -94,6 +101,9 @@ function Company_third() {
                                 
                                 // Save the selected checkbox value to session storage
                                 sessionStorage.setItem('selectedLocation', selectedLocation);
+
+                                //save address to sessionstorage
+                                sessionStorage.setItem('companyAddress', companyAddress);
 
                                 if (currentStep < totalSteps) {
                                     setCurrentStep(currentStep + 1);                                     

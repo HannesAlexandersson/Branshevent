@@ -13,7 +13,7 @@ function Company_sign_up(){
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
     const [currentStep, setCurrentStep] = useState(2);
-    const totalSteps = 4;
+    const totalSteps = 7;
     const [formData, setFormData] = useState({
         companyName: '',
         firstName: '',
@@ -39,7 +39,7 @@ function Company_sign_up(){
         // Save company data to session storage
         sessionStorage.setItem('companyData', JSON.stringify(formData));
 
-        navigate('/company-description');//route the user to the next step
+        navigate('/company-account');//route the user to the next step
     };
 
     const handleCheckboxChange = () => {

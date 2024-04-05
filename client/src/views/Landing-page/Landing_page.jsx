@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { calendarIcon, map_marker, clock, lowOP } from '../../assets/Icons';
-import { Draggable, Gradient, Join_btn, Date_box, Logo, Main_header, Box, Divider, Details, Bottom, Bottom_logo, Dragg_header, } from '../../components';
+import {  map_marker, clock, lowOP } from '../../assets/Icons';
+import { Draggable, Gradient, Join_btn, Logo, Main_header, Box, Divider, Details, Bottom, Bottom_logo, Dragg_header, Navbar_landing, } from '../../components';
 import yrgoLogo from '../../assets/Logos/yrgo-text.jpg';
 import styles from './landing.module.css';
 
 function Landing_page(){
   const location = useLocation();  
-  const date = '24 APRIL 15:00-17:00';
+  
   sessionStorage.clear();//clear session
   useEffect(() => {
     // We only want to have overflow hidden on the landing page so:
@@ -32,12 +32,10 @@ function Landing_page(){
   return (
     
       <>
+        <Navbar_landing />
         <div className={styles.main_container}>
 
-          <Date_box>
-            <img src={calendarIcon} alt="Calendar" />
-            <span>{date}</span>
-          </Date_box>
+          
 
           <div className={styles.header_container}>
 

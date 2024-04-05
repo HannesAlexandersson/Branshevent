@@ -1,0 +1,101 @@
+.online_profile_wrapper{
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    justify-content: space-around;
+}
+
+.online_profile_btn{
+    width: 100%;
+    display: flex;
+    height: 3rem;
+    min-width: 10.0625rem;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+.image_icon{
+    display: flex;
+    width: 30%;
+    align-self: stretch;
+    justify-content: center;
+    align-items: center;
+    min-width: 1rem;
+    border-radius: 22.5rem;
+}
+.online_profile_btn > p{
+    color: var(--btn-font-clr);
+    text-align: center;    
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem; /* 114.286% */
+    letter-spacing: 0.07813rem;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.popup{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.4375rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+    /* padding: 1.5rem;    */
+    padding: 20.5rem;/*debugging remove*/
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.8));/*its a filter that makes the blurred background a little darker at the top and lighter at the bottom*/
+    /* background-color: rgba(255, 255, 255, 0.8);  */
+    backdrop-filter: blur(20px); /*blur the background*/
+   
+}
+.onlineProfile_input{
+    isplay: flex;
+    width: 19.25rem;
+    height: 1rem;
+    min-width: 19.25rem;
+    padding: 1rem;
+    align-items: flex-start;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    border-radius: 1.5rem;
+    background: var(--Grey-80);
+    font-family: var(--default-font);
+    color: var(--secondary-font-clr);
+}
+.onlineProfile_input::placeholder{
+    font-family: var(--default-font);
+    overflow: hidden;
+    color: var(--Grey-40);
+    text-overflow: ellipsis;
+    white-space: nowrap;   
+   
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem; 
+    letter-spacing: 0.03125rem;
+}
+.online_btns_wrapper{
+    display: flex;
+    flex-direction: row;
+    gap: .285rem;
+}
+.btn_wrap{
+    display: flex;
+}
+.add{
+    width: 40%;
+    min-width: 3rem;
+}
+.item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

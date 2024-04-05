@@ -102,6 +102,13 @@
 .checkboxWrapper{
     display: flex;
     margin: 0 .275rem 0 1.275rem;
+    flex-direction: column;
+    align-items: baseline;
+    gap: .5rem;
+}
+.check_cont{
+    display: flex;
+    gap: .295rem;
 }
 .checkboxInput{
     width: 10%;
