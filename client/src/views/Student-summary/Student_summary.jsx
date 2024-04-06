@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Progressbar, Red_btn, White_btn } from '../../components';
+import { Progressbar, Red_btn, Spacer_bottom, White_btn } from '../../components';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import { Nav } from '../index.js';
 import style from './student_summary.module.css';
@@ -12,16 +12,16 @@ function Student_summary(){
 
     const studentData = [];
 
-    const studentFormData = JSON.parse(sessionStorage.getItem('studentData'));
-    const studentDescription = sessionStorage.getItem('studentDescription');
-    const studentUsername = sessionStorage.getItem('username');
-   
     let liaStartdate = sessionStorage.getItem("startDate");
     let liaEnddate = sessionStorage.getItem("endDate");    
     const hasDates = liaStartdate && liaEnddate;
-    
-  
-        
+
+    let studentFormData;
+    if( sessionStorage.getItem('studentData') !== null){
+    studentFormData = JSON.parse(sessionStorage.getItem('studentData'));
+    }
+    const studentDescription = sessionStorage.getItem('studentDescription');
+    const studentUsername = sessionStorage.getItem('username');       
    
    const studentOrientation = sessionStorage.getItem('occupation');
    const studentOnlineProfiles = JSON.parse(sessionStorage.getItem('onlineProfiles'));
@@ -74,23 +74,23 @@ function Student_summary(){
                         <div className={style.num_one_text}>
                             <div className={style.comp_name}>
                                 <h2>Profession</h2>
-                                <h3>{studentOrientation}</h3>
+                                {studentOrientation ? <h3>{studentOrientation}</h3> : <h3>Not registred</h3>}
                             </div>
                             <div className={style.comp_name}>
                                 <h2>First name</h2>
-                                <h3>{studentFormData.firstName}</h3>
+                                {studentFormData.firstName ? <h3>{studentFormData.firstName}</h3> : <h3>Not registred</h3>}
                             </div>
                             <div className={style.comp_name}>
                                 <h2>Last name</h2>
-                                <h3>{studentFormData.lastName}</h3>
+                                {studentFormData.lastName ? <h3>{studentFormData.lastName}</h3> : <h3>Not registred</h3>}
                             </div>
                             <div className={style.comp_name}>
                                 <h2>Email (and sign in username)</h2>
-                                <h3>{studentFormData.email}</h3>
+                                {studentFormData.email ? <h3>{studentFormData.email}</h3> : <h3>Not registred</h3>}
                             </div>
                             <div className={style.comp_name}>
                                 <h2>Phone number</h2>
-                                <h3>{studentFormData.phoneNumber}</h3>
+                                {studentFormData.phoneNumber ?  <h3>{studentFormData.phoneNumber}</h3> : <h3>Not registred</h3>}                               
                             </div>
                             
                         </div>
@@ -104,7 +104,7 @@ function Student_summary(){
                         <div className={style.num_one_text}>
                             <div className={style.comp_name}>
                                 <h2>This is me</h2>
-                                <h3 className={style.descr_box}>{studentDescription}</h3>
+                                <h3 className={style.descr_box}>{studentDescription ? studentDescription : 'Not registred'}</h3>
                             </div>
 
                             
@@ -117,9 +117,10 @@ function Student_summary(){
                             <div className={style.comp_name}>
                                 <h2>Online profile</h2>
                                 <div className={style.profile_container}>
-                                    {studentOnlineProfiles.map((profile, index) => (
-                                            <p key={index}>{profile}</p>
-                                        ))}
+                                {studentOnlineProfiles ? (studentOnlineProfiles.map((profile, index) => (                                    
+                                    <p key={index}>{profile}</p>
+                                    ))
+                                ) : ( <p>Not set</p>  )}
                                 </div>
                             </div>
                             <div className={style.comp_name}>
@@ -137,19 +138,25 @@ function Student_summary(){
                         <div className={style.num_one_text}>
                             <div className={style.comp_name}>
                                 <h2>How do I want to work?</h2>
-                            <div className={style.tag_container}>
-                                {studentTags.tags.map((tag, index) => (
-                                                <p key={index} className={style.tag}>{tag}</p>
-                                            ))}
-                            </div>
+                                <div className={style.tag_container}>
+                                    {studentTags.tags ? (
+                                        studentTags.tags.map((tag, index) => (
+                                        <p key={index} className={style.tag}>{tag}</p>
+                                        ))
+                                    ) : (
+                                        <p>Not set</p>
+                                    )}
+                                </div>
                             </div>
                             <div className={style.comp_name}>
                                 <h2>Where do I want to work?</h2>
-                                <h3>{studentLocation}</h3>
+                                {studentLocation ? <h3>{studentLocation}</h3> : <h3>Not registred</h3>}                                
                             </div>
                                                         
                         </div>
                     </div>
+
+                    <Spacer_bottom />
 
                 <div className={style.footer_buttons}>
                    <Link to="/student-work">
@@ -166,7 +173,7 @@ function Student_summary(){
                         </Red_btn>
                     
                 </div>
-                </div>
+            </div>
         </>
     );
 }

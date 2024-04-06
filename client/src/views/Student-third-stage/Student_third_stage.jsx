@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, } from 'react-router-dom';
-import { Progressbar,Red_btn, White_btn, Skip_btn, TagsSelector, } from '../../components/index.js';
+import { Progressbar,Red_btn, White_btn, Skip_btn, TagsSelector, Spacer_bottom, } from '../../components/index.js';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import Nav from '../Navigation/Navigation';
 import style from './student_third.module.css';
@@ -106,6 +106,9 @@ function Student_third_stage(){
                                 </Red_btn>
                             </Link>
                         </div>
+
+                        <Spacer_bottom />
+                        
                     </div>
 
                 </div>

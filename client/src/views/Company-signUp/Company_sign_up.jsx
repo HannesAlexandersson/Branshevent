@@ -8,6 +8,7 @@ import Gdpr from '../../components/GDPR/Gdpr.jsx';
 import styles from './company_sign_up.module.css';
 import Red_btn from '../../components/Red-btn/Red_btn.jsx';
 import White_btn from '../../components/White-btn/White_btn.jsx';
+import { Spacer_bottom } from '../../components/index.js';
 
 function Company_sign_up(){
     const navigate = useNavigate();
@@ -99,6 +100,8 @@ function Company_sign_up(){
                     </Red_btn>
                     
                 </div>
+
+                <Spacer_bottom />
             </div>
         </>
     );

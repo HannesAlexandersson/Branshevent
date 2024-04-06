@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Nav from '../Navigation/Navigation.jsx';
 import Progressbar from '../../components/Progress-bar/Progressbar.jsx';
 import styles from './sign_in.module.css';
+import { Spacer_bottom } from '../../components/index.js';
 
 
 function Sign_in(){
@@ -37,6 +38,8 @@ function Sign_in(){
                     </div>
                 </div>
 
+                <Spacer_bottom />
+
                 <div className={styles.footer_btn_wrapper}>
                     <Link to="/">
                         <button className={styles.back_btn}>
@@ -45,7 +48,7 @@ function Sign_in(){
                         </button>
                     </Link>
                 </div>
-
+                <Spacer_bottom />
             </div>
         </>
     );

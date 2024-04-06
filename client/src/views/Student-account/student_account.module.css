@@ -95,15 +95,11 @@
 
 .footer_btn_wrapp{
     display: flex;
-    flex-direction: row;
-    position: fixed;
-    left: 0;
-    bottom: 8rem;
+    flex-direction: row;    
     width: 100%;
     justify-content: center;
     align-items: center;
-    align-content: center;
-    /* margin-top: 12rem; */
+    align-content: center;   
     gap: .5rem;
 }
 input:focus {

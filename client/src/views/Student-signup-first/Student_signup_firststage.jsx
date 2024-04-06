@@ -1,7 +1,7 @@
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import { Link, useNavigate, } from 'react-router-dom';
 import { useState } from 'react';
-import { Progressbar, Student_form, Gdpr, White_btn, Red_btn,  } from '../../components';
+import { Progressbar, Student_form, Gdpr, White_btn, Red_btn, Spacer_bottom,  } from '../../components';
 import { Nav, } from '../index.js';
 import styles from './student_signup.module.css';
 
@@ -154,6 +154,8 @@ function Student_signup_firststage(){
                     </Red_btn>
                     
                 </div>
+
+                <Spacer_bottom />
             </div>
         </>
     );
