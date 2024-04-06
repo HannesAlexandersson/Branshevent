@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {  map_marker, clock, lowOP } from '../../assets/Icons';
-import { Draggable, Gradient, Join_btn, Logo, Main_header, Box, Divider, Details, Bottom, Bottom_logo, Dragg_header, Navbar_landing, } from '../../components';
+import { Draggable, Gradient, Join_btn, Logo, Main_header, Box, Divider, Details, Bottom, Bottom_logo, Dragg_header, Navbar_landing, Spacer_bottom, } from '../../components';
 import yrgoLogo from '../../assets/Logos/yrgo-text.jpg';
 import styles from './landing.module.css';
 
@@ -97,7 +97,7 @@ function Landing_page(){
                 </div>
                 
               </div>
-              
+              <Spacer_bottom />
             </Draggable> 
           
         </div>
