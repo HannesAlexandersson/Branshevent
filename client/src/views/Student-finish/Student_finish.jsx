@@ -62,6 +62,7 @@ function Student_finish(){
                 </div>
 
                 <Spacer_bottom />
+                <Spacer_bottom />
                 <div className={style.logo_bottom}>
                     <img src={Yrgotransred} alt="yrgo logo red, semi-transparent" />
                 </div>
