@@ -49,7 +49,7 @@
    
 }
 
-
+/*DATE START*/
 .date_wrapper{
     display: flex;
     height: 1.5625rem;
@@ -58,6 +58,17 @@
     align-self: stretch;
     justify-content: flex-start;
     margin-left: 2rem;
+}
+.date_return_text_wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+.date_return_text{
+    font-family: var(--default-font);
+    color: var(--default-font-clr);
+    font-size: .775em;
+    padding: .175rem;
 }
 .date_icon{
 
@@ -93,6 +104,8 @@
     text-transform: uppercase;
 }
 
+/*CHECKBOX START*/
+
 .checkboxWrapper{
     display: flex;
     margin: 0 .275rem 0 1.275rem;
@@ -111,12 +124,85 @@
     letter-spacing: 0.07813rem;
     text-transform: uppercase;
 }
+/*CHECKBOX ENDS*/
 
 
+
+/*ONLINE PROFILE START*/
 .online_profile_btn{
     width: 100%;
+
+    
+}
+.online_profile_btn > p{
+    color: var(--btn-font-clr);
+    text-align: center;    
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem; /* 114.286% */
+    letter-spacing: 0.07813rem;
+    text-transform: uppercase;
+    text-decoration: none;
 }
 
+.popup{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.4375rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+    /* padding: 1.5rem;    */
+    padding: 20.5rem;/*debugging remove*/
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.8));/*its a filter that makes the blurred background a little darker at the top and lighter at the bottom*/
+    /* background-color: rgba(255, 255, 255, 0.8);  */
+    backdrop-filter: blur(20px); /*blur the background*/
+   
+}
+.onlineProfile_input{
+    display: flex;
+    width: 19.25rem;
+    height: 6rem;
+    min-width: 19.25rem;
+    padding: 1rem;
+    align-items: flex-start;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    border-radius: 1.5rem;
+    background: var(--Grey-80);
+    font-family: var(--default-font);
+    color: var(--secondary-font-clr);
+}
+.onlineProfile_input::placeholder{
+    font-family: var(--default-font);
+    overflow: hidden;
+    color: var(--Grey-40);
+    text-overflow: ellipsis;
+    white-space: nowrap;   
+   
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem; 
+    letter-spacing: 0.03125rem;
+}
+.online_btns_wrapper{
+    display: flex;
+    flex-direction: row;
+    gap: .285rem;
+}
+/*ONLINE PROFILE ENDS*/
+
+
+
+
+/*FOOTER BTNS START*/
 .btn_container{
     display: flex;
     flex-direction: column;

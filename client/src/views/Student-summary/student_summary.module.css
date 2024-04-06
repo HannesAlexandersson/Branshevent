@@ -1,0 +1,132 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h2, h3 {
+    margin: 0;
+}
+.red_ball{
+    display: flex;
+    width: 1.875rem;
+    height: 1.875rem;
+    padding: 0.5rem;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    border-radius: 22.5rem;
+    background: var(--primary-accent);
+
+    color: var(--secondary-font-clr);
+    font-family: var(--default-font);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem; /* 125% */
+    letter-spacing: 0.03125rem;
+}
+.review_title{
+    display: flex;
+}
+.review_title > h2{
+    color: var( --default-font-clr);    
+    font-family: var(--default-font);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; 
+    letter-spacing: 0.00938rem;
+}
+
+.container, .container_last{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   
+    gap: .5rem;
+    margin-top: 2.5rem;
+}
+.container_last{
+    margin-bottom: 8rem;
+    width: 75%;
+}
+.num_one_text{
+    display: flex;
+    padding: 0rem 0.5rem;
+    align-items: flex-start;
+    gap: 0.5rem;
+    align-self: stretch;
+    flex-direction: column;
+}
+.comp_name{
+
+}
+.comp_name > h2{
+    color: var(--Blue-80);
+    /* Subtitle 2 */
+    font-family: var(--default-font);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; /* 171.429% */
+    letter-spacing: 0.00625rem;
+}
+.comp_name > h3{
+    color: var(--default-font-clr);
+
+    /* Body 2 */
+    font-family: var(--default-font);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem; /* 125% */
+    letter-spacing: 0.03125rem;
+}
+.descr_box{
+    background-color: var(--Grey-20);
+    border-radius: 1.5rem;
+    display: flex;   
+    min-width: 65vw;
+    padding: 1rem;
+    align-items: flex-start;
+}
+.tag{
+    display: flex;
+    padding: 0.5rem ;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 22.5rem;
+    border: 1px solid var(--secondary-BG);
+
+    
+    font-family: var(--default-font);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem; 
+    letter-spacing: 0.07813rem;
+    text-transform: uppercase;
+
+    margin: 0.2rem;
+
+    color: var(--secondary-font-clr);
+    background-color: var(--secondary-BG);
+    border: 1px solid var(--secondary-BG);
+}
+
+
+.footer_buttons{
+    display: flex;/*make visible again after debuggin done*/
+    flex-direction: row;
+    gap: .5rem;
+    justify-content: center;
+    position: fixed;
+    bottom: 4%;
+    left: 50%;
+    transform: translateX(-50%);
+}

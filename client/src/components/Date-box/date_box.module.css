@@ -1,14 +1,17 @@
+
 .date_box{
-    
     display: flex;
-    height: 1rem;
-    padding: 1rem 1.5rem;
-    justify-content: center;
+    width: 12.5625rem;  
+    width: calc(12.5625rem - (.5rem));  
+    padding: 0.25rem 0rem;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    gap: 1rem;
-    flex-shrink: 0;    
-    color: var(--secondary-accent);   
-    border: 1px solid var(--secondary-accent);
+    flex-shrink: 0;
+
+    color: var(--Blue-100);   
+    border: 1px solid var(--Blue-100);
     border-radius: 3.5rem;
-    font-family: var(--default-font);
+
+    gap: .275rem;
 }

@@ -6,16 +6,18 @@ import Nav from '../Navigation/Navigation';
 import style from './student_third.module.css';
 
 function Student_third_stage(){
+    const [selectedTags, setSelectedTags] = useState([]);
     // we keep track of the checkboxes with this useState hook
     const [selectedLocation, setSelectedLocation] = useState('');
     //we keep track of the progrssbar with this hook
-    const [currentStep, setCurrentStep] = useState(4);
-    const totalSteps = 4;
-
-    //progressbar
-    if (currentStep < totalSteps) {//add 1 to the progressbar prop
-        setCurrentStep(currentStep + 1); 
-    }
+    const [currentStep, setCurrentStep] = useState(5);
+    const totalSteps = 7;
+    
+    //handle the selected tags
+    const handleSaveSelectedTags = (tagsData) => {
+        setSelectedTags(tagsData);
+      };
+    
     //checkboxes
     const handleCheckboxChange = (event) => {
         setSelectedLocation(event.target.value);
@@ -24,18 +26,24 @@ function Student_third_stage(){
 
     return(
         <>
-            <Nav />
             <div className={style.main}>
+                
+            <Nav />
 
                 <Progressbar currentStep={currentStep} totalSteps={totalSteps} />    
 
                 <div className={style.content_container}>               
 
                     
-                    <TagsSelector who="I" className={style.tag_selector}/>
+                    <TagsSelector 
+                        who="I" 
+                        className={style.tag_selector}
+                        onSaveSelectedTags={handleSaveSelectedTags}
+                        selectedTags={selectedTags}
+                    />
 
                     <div className={style.location_container}>
-                        <p>I work...</p>
+                        <p>I want to work...</p>
                         <div className={style.checkBox_wrapper}>
                             <label className={style.location_row}>
                                 <input className={style.checkBox}
@@ -68,25 +76,37 @@ function Student_third_stage(){
                     </div>
 
                     <div className={style.btn_container}>
-                    <div className={style.skip_wrapper}>
-                        <Skip_btn />
-                    </div>
+                        <div className={style.skip_wrapper}>
+                            <Skip_btn />
+                        </div>
 
-                    <div className={style.footer_btn_wrapper}>
-                        <Link to="/student-description">
-                                <White_btn>
-                                    <img src={backArrow} />
-                                    <p>BACK</p>
-                                </White_btn>
-                        </Link>
-                        <Link to="#">
-                            <Red_btn>                        
-                                <p>NEXT STEP</p>
-                                <img src={nextArrow} />
-                            </Red_btn>
-                        </Link>
+                        <div className={style.footer_btn_wrapper}>
+                            <Link to="/student-description">
+                                    <White_btn>
+                                        <img src={backArrow} />
+                                        <p>BACK</p>
+                                    </White_btn>
+                            </Link>
+                            <Link to="/student-summary">
+                                <Red_btn
+                                    onClick={() => {
+                                        // Save selectedTags to session storage
+                                        sessionStorage.setItem('selectedTags', JSON.stringify(selectedTags));
+                                                                                
+                                        // Save the selected checkbox value to session storage
+                                        sessionStorage.setItem('selectedLocation', selectedLocation);
+
+                                        if (currentStep < totalSteps) {
+                                            setCurrentStep(currentStep + 1);                                        
+                                        }                                        
+                                    }}
+                                >                        
+                                    <p>NEXT STEP</p>
+                                    <img src={nextArrow} />
+                                </Red_btn>
+                            </Link>
+                        </div>
                     </div>
-                </div>
 
                 </div>
             </div>

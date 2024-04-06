@@ -24,11 +24,18 @@ function Navigation(){
       '/': 'Home',
       '/sign-in': 'SIGN IN',
       '/company-signup': 'COMPANY SIGN-UP',
+      '/company-account': 'COMPANY SIGN-UP',
       '/company-description': 'COMPANY SIGN-UP',
       '/company-work': 'COMPANY SIGN-UP',
+      '/company-summary': 'COMPANY SUMMARY',
+      '/company-finish': 'COMPANY FINISH',
       '/student-signup': 'STUDENT SIGN-UP',
+      '/student-account': 'STUDENT SIGN-UP',
       '/student-description': 'STUDENT SIGN-UP',
       '/student-work': 'STUDENT SIGN-UP',
+      '/student-summary': 'STUDENT SUMMARY',
+      '/student-finish': 'STUDENT FINISH',
+      '/test-to-DB': 'Test to database',
     }    
 
     useEffect(() => {

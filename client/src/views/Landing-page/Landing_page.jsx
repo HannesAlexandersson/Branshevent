@@ -1,39 +1,41 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { calendarIcon, map_marker, clock, lowOP } from '../../assets/Icons';
-import { Draggable, Gradient, Join_btn, Date_box, Logo, Main_header, Box, Divider, Details, Bottom, Bottom_logo, Dragg_header, } from '../../components';
+import {  map_marker, clock, lowOP } from '../../assets/Icons';
+import { Draggable, Gradient, Join_btn, Logo, Main_header, Box, Divider, Details, Bottom, Bottom_logo, Dragg_header, Navbar_landing, } from '../../components';
 import yrgoLogo from '../../assets/Logos/yrgo-text.jpg';
 import styles from './landing.module.css';
 
 function Landing_page(){
-  const location = useLocation();
-
+  const location = useLocation();  
+  
+  sessionStorage.clear();//clear session
   useEffect(() => {
     // We only want to have overflow hidden on the landing page so:
     const isLandingPage = location.pathname === '/'; // check to see if we are on the landing page or not
     // Apply the class if we are on the landing page, and remove it when we are not.  
-    if (isLandingPage) {
+   /*  if (isLandingPage) {
       document.body.classList.add('overflow-hidden');
     } else {
       document.body.classList.remove('overflow-hidden');
-    }
+    } */
     // default is to remove the overflow hidden property
     return () => {
       document.body.classList.remove('overflow-hidden');
     };
   }, [location]);
 
-  const date = '24 APRIL 15:00-17:00';
+  
+  const handleJoinEvent = () => {
+    sessionStorage.setItem('isSessionActive', true); // Set session variable
+  };
 
   return (
     
       <>
         <div className={styles.main_container}>
+        <Navbar_landing />
 
-          <Date_box>
-            <img src={calendarIcon} alt="Calendar" />
-            <span>{date}</span>
-          </Date_box>
+          
 
           <div className={styles.header_container}>
 
@@ -51,7 +53,7 @@ function Landing_page(){
 
           </div>
 
-          <div className={styles.draggable_container}>
+          
             <Draggable>          
               <div className={styles.draggable_card}>
 
@@ -90,22 +92,20 @@ function Landing_page(){
                   </Bottom>           
 
                 </div>
-                <Bottom_logo src={lowOP} alt="yrgo logo offset" />
-                
+                <div className={styles.Bottom_logo}>
+                  <Bottom_logo src={lowOP} alt="yrgo logo offset" />
+                </div>
                 
               </div>
               
-            </Draggable>
-          
-          
-
-          </div>
-
-          <Join_btn>Join the Event</Join_btn>
-          <Gradient/>
-
+            </Draggable> 
           
         </div>
+
+        <div className={styles.join}>
+          <Join_btn onClick={handleJoinEvent}>Join the Event</Join_btn>
+        </div>
+        <Gradient/>
       
       </>
   )
