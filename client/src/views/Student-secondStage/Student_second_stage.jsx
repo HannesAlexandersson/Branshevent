@@ -1,20 +1,20 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import validator from 'validator';
-import { calendarIcon, add, backArrow, nextArrow } from '../../assets/Icons/index.js';
-import { Progressbar, White_btn, Red_btn, Skip_btn, StartDate_picker, EndDate_picker  } from '../../components';
+import { calendarIcon, add, backArrow, nextArrow, image } from '../../assets/Icons/index.js';
+import { Progressbar, White_btn, Red_btn, Skip_btn, StartDate_picker, EndDate_picker, Onlineprofile  } from '../../components';
 import { Nav, } from '../index.js';
 import 'react-datepicker/dist/react-datepicker.css'
 import style from './student_secondstage.module.css';
 
 function Student_second_stage(){       
     const [isChecked, setIsChecked] = useState(false);
-    const [currentStep, setCurrentStep] = useState(3);
+    const [currentStep, setCurrentStep] = useState(4);
     const [description, setDescription] = useState('');    
     const [startDate, setStartDate] = useState(null); 
     const [endDate, setEndDate] = useState(null);
     const navigate = useNavigate();
-    const totalSteps = 4;
+    const totalSteps = 7;
     const placeholderText = "A short description about you";   
 
     const handleCheckboxChange = () => {
@@ -23,9 +23,7 @@ function Student_second_stage(){
 
     //'''''''''''''''''''''
 
-    const [showInputField, setShowInputField] = useState(false); 
-    const [onlineProfile, setOnlineProfile] = useState(''); 
-    const [errorMessage, setErrorMessage] = useState('');
+   
 
     // Function to handle the selected end date
     const handleEndDateSelect = (endDate) => {
@@ -37,30 +35,6 @@ function Student_second_stage(){
         setStartDate(startDate); // Update startDate state using the setStartDate prop
     };
 
-    // Function to handle adding an online profile
-    const handleAddOnlineProfile = () => {
-        console.log('Button clicked');
-        setShowInputField(true); 
-    };
-
-    // Function to handle submitting the online profile
-    const handleSubmitOnlineProfile = () => {
-        if (validator.isURL(onlineProfile)) {
-            
-            const sanitizedUrl = onlineProfile.trim();
-            // save the url to the session
-            sessionStorage.setItem('onlineProfile', sanitizedUrl);
-            // Reset input field and hide the popup
-            setOnlineProfile('');
-            setShowInputField(false);
-        } else {
-            setErrorMessage('Please enter a valid URL.');
-        }
-    };
-
-    const handleCancelOnlineProfile = () => {
-        setShowInputField(false); // Hide the input field when "Cancel" is clicked
-    };
     //format the date input the format we want
     const formatDate = (date) => {
         const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -115,10 +89,9 @@ function Student_second_stage(){
     
     return(
         <>
-
-            <Nav />
-
              <div className={style.main}>
+             <Nav />
+
                 <Progressbar currentStep={currentStep} totalSteps={totalSteps}/>
 
 
@@ -154,30 +127,8 @@ function Student_second_stage(){
                     <label htmlFor="checkbox" className={style.checkbox_text}>I don&apos;t know when my LIA-period is yet</label>
             
                 </div>
-
-                {showInputField && (
-                    <div className={style.popup}>
-                        <input
-                            className={style.onlineProfile_input}
-                            type="text"
-                            placeholder="Enter online profile URL"
-                            value={onlineProfile}
-                            onChange={(e) => setOnlineProfile(e.target.value)}
-                        />
-                        <div className={style.online_btns_wrapper}>
-                            <Red_btn onClick={handleSubmitOnlineProfile}>Submit</Red_btn>
-                            <Red_btn onClick={handleCancelOnlineProfile}>Cancel</Red_btn>
-                        </div>
-                    </div>
-                    )}
-                <div className={style.online_profile_wrapper}>
-                    <White_btn className={style.online_profile_btn} onClick={handleAddOnlineProfile}>
-                        <img src={add} alt="Add Icon" />
-                        <p>Add online profile</p>
-                    </White_btn>                
-                </div>
-
-
+                <Onlineprofile />
+             
                 <div className={style.btn_container}>
                     <div className={style.skip_wrapper}>
                         <Link to='/student-work'>
@@ -186,7 +137,7 @@ function Student_second_stage(){
                     </div>
 
                     <div className={style.footer_btn_wrapper}>
-                        <Link to="/student-signup">
+                        <Link to="/student-account">
                                 <White_btn>
                                     <img src={backArrow} />
                                     <p>BACK</p>
@@ -208,5 +159,64 @@ function Student_second_stage(){
         </>
     );
 }
+//KEEP FOR REFERENCE A LITTLE WHILE UNTIL WE KNOW THE ONLINE COMPONENT WORKS FLAWLESS
+/*  const [showInputField, setShowInputField] = useState(false); 
+    const [onlineProfile, setOnlineProfile] = useState('');  
+    const [errorMessage, setErrorMessage] = useState('');*/
+/* 
+    // Function to handle adding an online profile
+    const handleAddOnlineProfile = () => {
+        console.log('Button clicked');
+        setShowInputField(true); 
+    };
 
+    // Function to handle submitting the online profile
+    const handleSubmitOnlineProfile = () => {
+        if (validator.isURL(onlineProfile)) {
+            
+            const sanitizedUrl = onlineProfile.trim();
+            // save the url to the session
+            sessionStorage.setItem('onlineProfile', sanitizedUrl);
+            // Reset input field and hide the popup
+            setOnlineProfile('');
+            setShowInputField(false);
+        } else {
+            setErrorMessage('Please enter a valid URL.');
+        }
+    };
+
+    const handleCancelOnlineProfile = () => {
+        setShowInputField(false); // Hide the input field when "Cancel" is clicked
+    }; */
+/*
+   {showInputField && (
+                    <div className={style.popup}>
+                        <input
+                            className={style.onlineProfile_input}
+                            type="text"
+                            placeholder="Enter online profile URL"
+                            value={onlineProfile}
+                            onChange={(e) => setOnlineProfile(e.target.value)}
+                        />
+                        <div className={style.online_btns_wrapper}>
+                            <Red_btn onClick={handleSubmitOnlineProfile}>Submit</Red_btn>
+                            <Red_btn onClick={handleCancelOnlineProfile}>Cancel</Red_btn>
+                        </div>
+                    </div>
+                    )}
+                <div className={style.online_profile_wrapper}>
+                    <White_btn className={style.online_profile_btn} onClick={handleAddOnlineProfile}>
+                        <img src={add} alt="Add Icon" />
+                        <p>Add online profile</p>
+                    </White_btn>          
+
+                    <White_btn className={style.image_icon}>
+                        <img src={add} alt="add Icon" />
+                        <img src={image} alt="image icon small" />
+                    </White_btn>      
+                </div>
+
+
+
+*/
 export default Student_second_stage

@@ -4,9 +4,9 @@ import { Nav } from '../index';
 import { Yrgotransred } from '../../assets/Logos/index';
 import { backArrow, nextArrow, locationBlack, clockBlack } from '../../assets/Icons/index';
 import { Progressbar, Red_btn, White_btn } from '../../components';
-import style from './company_finish.module.css';
+import style from './student_finish.module.css';
 
-function Company_finish(){
+function Student_finish(){
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(7);
     const totalSteps = 7;
@@ -17,8 +17,7 @@ function Company_finish(){
         navigate('#');
     }
     return(
-        <>
-            
+        <>            
             <div className={style.main}>
 
             <Nav />
@@ -50,7 +49,7 @@ function Company_finish(){
 
                 <div className={style.footer_buttons}>
                     <Red_btn onClick={handleNextStep} className={style.red}>
-                        <p>browse companies</p>
+                        <p>who is coming?</p>
                         <img src={nextArrow} />
                     </Red_btn>
                     <Link to="/company-summary" >
@@ -64,10 +63,8 @@ function Company_finish(){
                 <div className={style.logo_bottom}>
                     <img src={Yrgotransred} alt="yrgo logo red, semi-transparent" />
                 </div>
-
             </div>
         </>
     );
 }
-
-export default Company_finish
+export default Student_finish

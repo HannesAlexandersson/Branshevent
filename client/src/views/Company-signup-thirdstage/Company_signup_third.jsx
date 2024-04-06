@@ -12,7 +12,7 @@ function Company_third() {
     // we keep track of the checkboxes with this useState hook
     const [selectedLocation, setSelectedLocation] = useState('');
     //we keep track of the progrssbar with this hook
-    const [currentStep, setCurrentStep] = useState(4);
+    const [currentStep, setCurrentStep] = useState(5);
     const totalSteps = 7;
    
     const handleAddressChange = (newAddress) => {
@@ -30,8 +30,9 @@ function Company_third() {
      
     return(
         <>
-            <Nav />
+            
             <div className={style.main}>
+            <Nav />
 
                 <Progressbar currentStep={currentStep} totalSteps={totalSteps} />    
 

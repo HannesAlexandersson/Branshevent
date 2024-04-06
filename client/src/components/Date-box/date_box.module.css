@@ -1,7 +1,8 @@
 
 .date_box{
     display: flex;
-    width: 12.5625rem;    
+    width: 12.5625rem;  
+    width: calc(12.5625rem - (.5rem));  
     padding: 0.25rem 0rem;
     flex-direction: column;
     justify-content: space-between;

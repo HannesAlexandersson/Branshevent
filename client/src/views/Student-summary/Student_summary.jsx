@@ -3,62 +3,59 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Progressbar, Red_btn, White_btn } from '../../components';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import { Nav } from '../index.js';
-import style from './company_summary.module.css';
+import style from './student_summary.module.css';
 
-function Company_summary(){
+function Student_summary(){
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(6);
     const totalSteps = 7;
-    const companyData = [];
 
-    const companyUsername = sessionStorage.getItem('username');
-    const companyPassword = sessionStorage.getItem('password');
-    const companyFormData = JSON.parse(sessionStorage.getItem('companyData'));
-    const companyDescription = sessionStorage.getItem('companyDescription');
-    const companyAddress = sessionStorage.getItem('companyAddress');
-    let applicationStartdate;
-    let applicationEnddate;
-   if(sessionStorage.getItem("startDate") !== null){
-        applicationStartdate = sessionStorage.getItem("startDate");
-   }else {
-        applicationStartdate = 'No application date';
-   }
-   if(sessionStorage.getItem("endDate") !== null){
-        applicationEnddate = sessionStorage.getItem("endDate");
-   }else{
-        applicationEnddate = 'No application end date';
-   }
-   const compOnlineProfiles = JSON.parse(sessionStorage.getItem('onlineProfiles'));
-   const companyTags = JSON.parse(sessionStorage.getItem('selectedTags'));
-   const companyLocation = sessionStorage.getItem('selectedLocation');
+    const studentData = [];
+
+    const studentFormData = JSON.parse(sessionStorage.getItem('studentData'));
+    const studentDescription = sessionStorage.getItem('studentDescription');
+    const studentUsername = sessionStorage.getItem('username');
+   
+    let liaStartdate = sessionStorage.getItem("startDate");
+    let liaEnddate = sessionStorage.getItem("endDate");    
+    const hasDates = liaStartdate && liaEnddate;
+    
+  
+        
+   
+   const studentOrientation = sessionStorage.getItem('occupation');
+   const studentOnlineProfiles = JSON.parse(sessionStorage.getItem('onlineProfiles'));
+   const studentTags = JSON.parse(sessionStorage.getItem('selectedTags'));
+   const studentLocation = sessionStorage.getItem('selectedLocation');
+   const studentPassword = sessionStorage.getItem('password');
 
    const handleNextStep = () => {
-    const companyData = [
-        companyFormData,
-        { onlineProfiles: compOnlineProfiles },
-        { companyDescription },
-        { applicationStartdate },
-        { applicationEnddate },        
-        companyTags,
-        { companyLocation },
-        { username: companyUsername },
-        { password: companyPassword }, 
+    const studentData = [
+        studentFormData,
+        { orientation: studentOrientation },
+        { onlineProfiles: studentOnlineProfiles },
+        { studentDescription },
+        { liaStartdate },
+        { liaEnddate },        
+        studentTags,
+        { studentLocation },
+        { username: studentUsername },
+        { password: studentPassword },
     ];
 
-    sessionStorage.setItem('companyData', JSON.stringify(companyData));
+    sessionStorage.setItem('studentData', JSON.stringify(studentData));
      
     if (currentStep < totalSteps) {
         setCurrentStep(currentStep + 1);
     }
-    navigate('/company-finish');
+    navigate('/student-finish');
    } 
   
     return(
         <>
-           
-                <div className={style.main}>
+            <div className={style.main}>
 
-                <Nav />
+            <Nav />
 
                     <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
@@ -66,7 +63,7 @@ function Company_summary(){
 
                     <div className={style.container}>
                         <div className={style.review_title}>
-                            <h2>Review and confirm company information</h2>
+                            <h2>Review and confirm student information</h2>
                         </div>
 
 
@@ -76,29 +73,26 @@ function Company_summary(){
 
                         <div className={style.num_one_text}>
                             <div className={style.comp_name}>
-                                <h2>Company name</h2>
-                                <h3>{companyFormData.companyName}</h3>
+                                <h2>Profession</h2>
+                                <h3>{studentOrientation}</h3>
                             </div>
                             <div className={style.comp_name}>
                                 <h2>First name</h2>
-                                <h3>{companyFormData.firstName}</h3>
+                                <h3>{studentFormData.firstName}</h3>
                             </div>
                             <div className={style.comp_name}>
                                 <h2>Last name</h2>
-                                <h3>{companyFormData.lastName}</h3>
+                                <h3>{studentFormData.lastName}</h3>
                             </div>
                             <div className={style.comp_name}>
                                 <h2>Email (and sign in username)</h2>
-                                <h3>{companyFormData.email}</h3>
+                                <h3>{studentFormData.email}</h3>
                             </div>
                             <div className={style.comp_name}>
                                 <h2>Phone number</h2>
-                                <h3>{companyFormData.phoneNumber}</h3>
+                                <h3>{studentFormData.phoneNumber}</h3>
                             </div>
-                            <div className={style.comp_name}>
-                                <h2>Address</h2>
-                                <h3>{companyAddress}</h3>
-                            </div>
+                            
                         </div>
                     </div>
 
@@ -109,17 +103,21 @@ function Company_summary(){
 
                         <div className={style.num_one_text}>
                             <div className={style.comp_name}>
-                                <h2>This is us</h2>
-                                <h3 className={style.descr_box}>{companyDescription}</h3>
+                                <h2>This is me</h2>
+                                <h3 className={style.descr_box}>{studentDescription}</h3>
                             </div>
+
+                            
                             <div className={style.comp_name}>
                                 <h2>Application Dates</h2>
-                                <h3>Start: {applicationStartdate} End: {applicationEnddate}</h3>
+                                {hasDates ? (<h3>Start: {liaStartdate} End: {liaEnddate}</h3>) : (<h3>I don&apos;t know when my LIA is</h3>)}                            
                             </div>
+
+
                             <div className={style.comp_name}>
                                 <h2>Online profile</h2>
                                 <div className={style.profile_container}>
-                                    {compOnlineProfiles.map((profile, index) => (
+                                    {studentOnlineProfiles.map((profile, index) => (
                                             <p key={index}>{profile}</p>
                                         ))}
                                 </div>
@@ -138,24 +136,23 @@ function Company_summary(){
 
                         <div className={style.num_one_text}>
                             <div className={style.comp_name}>
-                                <h2>How do we work?</h2>
+                                <h2>How do I want to work?</h2>
                             <div className={style.tag_container}>
-                                {companyTags.tags.map((tag, index) => (
+                                {studentTags.tags.map((tag, index) => (
                                                 <p key={index} className={style.tag}>{tag}</p>
                                             ))}
                             </div>
                             </div>
                             <div className={style.comp_name}>
-                                <h2>Where do we work?</h2>
-                                <h3>{companyLocation}</h3>
+                                <h2>Where do I want to work?</h2>
+                                <h3>{studentLocation}</h3>
                             </div>
-                            
-                            
+                                                        
                         </div>
                     </div>
 
                 <div className={style.footer_buttons}>
-                   <Link to="/company-work">
+                   <Link to="/student-work">
                         <White_btn>
                             <img src={backArrow} />
                             <p>BACK</p>
@@ -174,4 +171,4 @@ function Company_summary(){
     );
 }
 
-export default Company_summary
+export default Student_summary

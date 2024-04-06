@@ -58,9 +58,11 @@ function Company_sign_up(){
     };
 
     return(
-        <>
-            <Nav />
+        <>            
             <div className={styles.main}>
+
+            <Nav />
+            
             <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
                 <Form 

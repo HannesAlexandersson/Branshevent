@@ -1,16 +1,14 @@
 .main_nav{
-    display: flex;    
+    display: flex;
     height: calc(4.37rem - (1.5rem + 1.5rem));
-    
     padding: 1.5rem;
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
-
     background: var(--default-BG);
     color: var(--Grey-100);
-
-    position: relative;
+   
+    width: calc(100% - (3rem));
 }
 .hamburger{
     background: var(--default-BG);

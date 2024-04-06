@@ -20,9 +20,10 @@ function Sign_in(){
     };
 
     return(
-        <>
-            <Nav/>
+        <>            
             <div className={styles.main}>
+
+            <Nav/>
                 <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
                 <div className={styles.content_wrapper}>

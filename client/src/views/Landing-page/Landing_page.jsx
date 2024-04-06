@@ -13,11 +13,11 @@ function Landing_page(){
     // We only want to have overflow hidden on the landing page so:
     const isLandingPage = location.pathname === '/'; // check to see if we are on the landing page or not
     // Apply the class if we are on the landing page, and remove it when we are not.  
-    if (isLandingPage) {
+   /*  if (isLandingPage) {
       document.body.classList.add('overflow-hidden');
     } else {
       document.body.classList.remove('overflow-hidden');
-    }
+    } */
     // default is to remove the overflow hidden property
     return () => {
       document.body.classList.remove('overflow-hidden');
@@ -32,8 +32,8 @@ function Landing_page(){
   return (
     
       <>
-        <Navbar_landing />
         <div className={styles.main_container}>
+        <Navbar_landing />
 
           
 
@@ -53,7 +53,7 @@ function Landing_page(){
 
           </div>
 
-          <div className={styles.draggable_container}>
+          
             <Draggable>          
               <div className={styles.draggable_card}>
 
@@ -92,22 +92,20 @@ function Landing_page(){
                   </Bottom>           
 
                 </div>
-                <Bottom_logo src={lowOP} alt="yrgo logo offset" />
-                
+                <div className={styles.Bottom_logo}>
+                  <Bottom_logo src={lowOP} alt="yrgo logo offset" />
+                </div>
                 
               </div>
               
-            </Draggable>
-          
-          
-
-          </div>
-
-          <Join_btn onClick={handleJoinEvent}>Join the Event</Join_btn>
-          <Gradient/>
-
+            </Draggable> 
           
         </div>
+
+        <div className={styles.join}>
+          <Join_btn onClick={handleJoinEvent}>Join the Event</Join_btn>
+        </div>
+        <Gradient/>
       
       </>
   )

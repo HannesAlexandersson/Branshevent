@@ -7,11 +7,11 @@ const dataRouter = express.Router();
 
 
 //special CORS settings for dataroutes
-/* export const dataCorsOptions = {
+export const dataCorsOptions = {
     origin: '*',
     methods: ['GET', 'POST'],
   };
- */
+
 
 
 //the tags from db
@@ -28,7 +28,9 @@ getAllTags((err, tags) => {
 });
 
 //apply the cors options to the datarouter
-/* dataRouter.use(cors(dataCorsOptions)); */
+dataRouter.use(cors(dataCorsOptions));
+
+
 //test endpoint for post request from client
 dataRouter.post('/data', (req, res) => {
     const userData = req.body;    

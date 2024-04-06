@@ -93,7 +93,7 @@
 }
 
 
-.footer_btn_container{
+.footer_btn_wrapp{
     display: flex;
     flex-direction: row;
     position: fixed;

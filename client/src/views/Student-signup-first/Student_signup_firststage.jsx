@@ -9,7 +9,7 @@ function Student_signup_firststage(){
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
     const [currentStep, setCurrentStep] = useState(2);
-    const totalSteps = 4;
+    const totalSteps = 7;
     const [occupation, setOccupation] = useState(null);
     const [formData, setFormData] = useState({
         firstName: '',
@@ -47,7 +47,7 @@ function Student_signup_firststage(){
 
             // Save occupation to session storage
             sessionStorage.setItem('occupation', occupation);
-            navigate('/student-description');
+            navigate('/student-account');
         }else {
             // Display error popup
             setShowPopup(true);
@@ -116,9 +116,9 @@ function Student_signup_firststage(){
 
     
     return(
-        <>
-            <Nav />
+        <>           
             <div className={styles.main}>
+            <Nav />
                 <Progressbar currentStep={currentStep} totalSteps={totalSteps}/>
             
 

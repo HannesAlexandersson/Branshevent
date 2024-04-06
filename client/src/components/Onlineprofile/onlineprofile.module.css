@@ -88,6 +88,7 @@
 }
 .btn_wrap{
     display: flex;
+    gap: .5rem;
 }
 .add{
     width: 40%;

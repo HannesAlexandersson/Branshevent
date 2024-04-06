@@ -30,6 +30,7 @@ body{
   margin: 0;
   /* overflow: hidden; */ /**/
   font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
 }
 .default-font{
   font-family: 'Inter', sans-serif;

@@ -75,9 +75,10 @@ function Company_account(){
     
     return(
         <>
-            <Nav />
-
+            
             <div className={styles.main}>
+
+            <Nav />
 
             <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
@@ -154,7 +155,7 @@ function Company_account(){
 
             </div>
 
-            <div className={styles.footer_btn_wrapper}>
+            <div className={styles.footer_btn_container}>
                 <Link to="/company-signup">
                     <White_btn>
                         <img src={backArrow} />

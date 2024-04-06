@@ -1,11 +1,7 @@
 .btn {
     /*Positioning*/
-    z-index: 999;   
-    position: fixed;
-    transform: translateX(-50%);    
-    bottom: 1.5rem;/*THIS IS THE ORIGINAL VALUE */
-    /* bottom: 7rem; */ /*TEST THE BUTTON IS TO FAR DOWN IN PRODUCTION?? DOESNT SHOW IN DEVELOPMENT??!!*/
-    left: 50%;
+   
+    
     /*margins & paddings*/
     padding: 1rem;
     min-width: 10.0625rem;

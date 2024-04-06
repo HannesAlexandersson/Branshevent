@@ -7,7 +7,7 @@ import styles from './company_second_stage.module.css';
 
 
 function Company_second_stage(){
-    const [currentStep, setCurrentStep] = useState(3);
+    const [currentStep, setCurrentStep] = useState(4);
     const totalSteps = 7;
     const [description, setDescription] = useState('');
     const [isDatePendingChecked, setIsDatePendingChecked] = useState(false);
@@ -97,8 +97,11 @@ function Company_second_stage(){
 
     return(
         <>
-            <Nav />
+            
             <div className={styles.main}>
+
+            <Nav />
+            
                 <Progressbar currentStep={currentStep} totalSteps={totalSteps} />                
                 
                 <Company_description 

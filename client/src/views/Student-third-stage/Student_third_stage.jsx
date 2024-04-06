@@ -10,8 +10,8 @@ function Student_third_stage(){
     // we keep track of the checkboxes with this useState hook
     const [selectedLocation, setSelectedLocation] = useState('');
     //we keep track of the progrssbar with this hook
-    const [currentStep, setCurrentStep] = useState(4);
-    const totalSteps = 4;
+    const [currentStep, setCurrentStep] = useState(5);
+    const totalSteps = 7;
     
     //handle the selected tags
     const handleSaveSelectedTags = (tagsData) => {
@@ -26,8 +26,9 @@ function Student_third_stage(){
 
     return(
         <>
-            <Nav />
             <div className={style.main}>
+                
+            <Nav />
 
                 <Progressbar currentStep={currentStep} totalSteps={totalSteps} />    
 
@@ -86,7 +87,7 @@ function Student_third_stage(){
                                         <p>BACK</p>
                                     </White_btn>
                             </Link>
-                            <Link to="/test-to-DB">
+                            <Link to="/student-summary">
                                 <Red_btn
                                     onClick={() => {
                                         // Save selectedTags to session storage
