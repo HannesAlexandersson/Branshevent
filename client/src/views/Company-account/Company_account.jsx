@@ -2,7 +2,7 @@ import { backArrow, nextArrow, closeRed, checkmarg, gren } from '../../assets/Ic
 import { Link, useNavigate, } from 'react-router-dom';
 import { useState } from 'react';
 import { Nav, } from '../index.js'
-import { Progressbar, Red_btn, White_btn } from '../../components/index.js';
+import { Progressbar, Red_btn, Spacer_bottom, White_btn } from '../../components/index.js';
 import styles from './company_account.module.css';
 
 function Company_account(){
@@ -154,6 +154,7 @@ function Company_account(){
 
 
             </div>
+            <Spacer_bottom />
 
             <div className={styles.footer_btn_container}>
                 <Link to="/company-signup">
@@ -169,7 +170,7 @@ function Company_account(){
                     <img src={nextArrow} />
                 </Red_btn>
             </div>                         
-
+        <Spacer_bottom />
         </>
     );
 }

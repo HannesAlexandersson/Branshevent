@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import validator from 'validator';
 import { calendarIcon, add, backArrow, nextArrow, image } from '../../assets/Icons/index.js';
-import { Progressbar, White_btn, Red_btn, Skip_btn, StartDate_picker, EndDate_picker, Onlineprofile  } from '../../components';
+import { Progressbar, White_btn, Red_btn, Skip_btn, StartDate_picker, EndDate_picker, Onlineprofile, Spacer_bottom  } from '../../components';
 import { Nav, } from '../index.js';
 import 'react-datepicker/dist/react-datepicker.css'
 import style from './student_secondstage.module.css';
@@ -136,6 +136,8 @@ function Student_second_stage(){
                         </Link>
                     </div>
 
+                   
+
                     <div className={style.footer_btn_wrapper}>
                         <Link to="/student-account">
                                 <White_btn>
@@ -152,6 +154,8 @@ function Student_second_stage(){
                         </Red_btn>
                         
                     </div>
+
+                    <Spacer_bottom />
                 </div>
 
 

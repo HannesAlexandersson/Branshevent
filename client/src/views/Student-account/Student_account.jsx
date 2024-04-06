@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Nav, } from '../index.js';
-import { Progressbar, White_btn, Red_btn } from '../../components';
+import { Progressbar, White_btn, Red_btn, Spacer_bottom } from '../../components';
 import { backArrow, nextArrow, closeRed, checkmarg, gren } from '../../assets/Icons/index.js';
 import styles from './student_account.module.css';
 
@@ -149,7 +149,7 @@ function Student_account(){
             
         </form>                
 
-
+        <Spacer_bottom />
 
         <div className={styles.footer_btn_wrapp}>
             <Link to="/student-signup">
@@ -166,7 +166,9 @@ function Student_account(){
             </Red_btn>
         </div>
 
-        </div>
+    </div>
+
+    <Spacer_bottom />
 
                                  
         

@@ -3,7 +3,7 @@ import { Link, useNavigate }  from 'react-router-dom';
 import { Nav } from '../index';
 import { Yrgotransred } from '../../assets/Logos/index';
 import { backArrow, nextArrow, locationBlack, clockBlack } from '../../assets/Icons/index';
-import { Progressbar, Red_btn, White_btn } from '../../components';
+import { Progressbar, Red_btn, Spacer_bottom, White_btn } from '../../components';
 import style from './student_finish.module.css';
 
 function Student_finish(){
@@ -46,6 +46,7 @@ function Student_finish(){
 
                 </div>
 
+                <Spacer_bottom />
 
                 <div className={style.footer_buttons}>
                     <Red_btn onClick={handleNextStep} className={style.red}>
@@ -60,6 +61,7 @@ function Student_finish(){
                     </Link>
                 </div>
 
+                <Spacer_bottom />
                 <div className={style.logo_bottom}>
                     <img src={Yrgotransred} alt="yrgo logo red, semi-transparent" />
                 </div>
