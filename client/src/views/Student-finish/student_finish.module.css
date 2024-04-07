@@ -97,7 +97,9 @@
     width: 100%;
     padding: 1rem;
 }
-
+.bot{
+    position: relative;
+}
 .logo_bottom{
     width: 100%;
     display: flex;
