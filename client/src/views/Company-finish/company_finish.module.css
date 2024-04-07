@@ -5,8 +5,7 @@
     align-items: center;
     justify-content: space-between;
     height: 100vh;
-    height: 100dvh;
-    height: 100svh;
+   
     position: relative;
 }
 .header{
