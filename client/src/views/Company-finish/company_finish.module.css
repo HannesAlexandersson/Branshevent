@@ -101,6 +101,6 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    position: absolute;
+   /*  position: absolute; */
     bottom: 0;
 }
