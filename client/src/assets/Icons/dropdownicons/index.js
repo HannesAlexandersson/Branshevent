@@ -6,3 +6,5 @@ export { default as homeBlack } from './homeBlack.svg';
 export { default as accountBlack } from './accountBlack.svg';
 export { default as eventBlack } from './eventBlack.svg';
 export { default as Yrgo } from './Yrgo.svg';
+export { default as heart } from './heart.svg';
+export { default as heartlight } from './heartlight.svg';

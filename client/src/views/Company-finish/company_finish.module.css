@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    height: 100vh;
+   /*  height: 100vh; */
    
     position: relative;
 }
@@ -101,6 +101,6 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
-   /*  position: absolute; */
+    position: absolute;
     bottom: 0;
 }

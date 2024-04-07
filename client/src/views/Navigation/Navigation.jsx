@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
-import { home, event, account, yrgo } from '../../assets/Icons/dropdownicons/index.js';
+import { home, event, account, yrgo, heart, heartlight } from '../../assets/Icons/dropdownicons/index.js';
 import styles from './navigation.module.css';
 import Ylogo from '../../assets/Logos/yrgo-logoRed.svg';
 
@@ -60,6 +60,7 @@ function Navigation(){
             <li><img src={home}/>Home</li>
             <li><img src={event}/>Event info</li>
             <li><img src={yrgo}/>YRGO</li>
+            <li><img src={heart}/>Favourites</li>
             <li><img src={account}/>Account</li>
           </ul>
         </div>

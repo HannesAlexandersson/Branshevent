@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import validator from 'validator';
 import { calendarIcon, add, backArrow, nextArrow, image } from '../../assets/Icons/index.js';
-import { Progressbar, White_btn, Red_btn, Skip_btn, StartDate_picker, EndDate_picker, Onlineprofile, Spacer_bottom  } from '../../components';
+import { Progressbar, White_btn, Red_btn, Skip_btn, StartDate_picker, EndDate_picker, Onlineprofile, Spacer_bottom, Add_image  } from '../../components';
 import { Nav, } from '../index.js';
 import 'react-datepicker/dist/react-datepicker.css'
 import style from './student_secondstage.module.css';
@@ -127,7 +127,10 @@ function Student_second_stage(){
                     <label htmlFor="checkbox" className={style.checkbox_text}>I don&apos;t know when my LIA-period is yet</label>
             
                 </div>
-                <Onlineprofile />
+                <div className={style.profiles_container}>
+                    <Onlineprofile />
+                    <Add_image />
+                </div>
              
                 <div className={style.btn_container}>
                     <div className={style.skip_wrapper}>
@@ -155,10 +158,10 @@ function Student_second_stage(){
                         
                     </div>
 
-                    <Spacer_bottom />
                 </div>
 
 
+                <Spacer_bottom />
             </div>
         </>
     );

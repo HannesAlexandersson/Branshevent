@@ -49,6 +49,7 @@ h2, h3 {
     justify-content: center;   
     gap: .5rem;
     margin-top: 2.5rem;
+    width: 75%;
 }
 .container_last{
     margin-bottom: 5rem;
@@ -94,6 +95,12 @@ h2, h3 {
     padding: 1rem;
     align-items: flex-start;
 }
+.tag_container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
 .tag{
     display: flex;
     padding: 0.5rem ;
@@ -131,4 +138,37 @@ h2, h3 {
     bottom: 4%;
     left: 50%;
     transform: translateX(-50%);
+}
+.image_wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--Grey-20);
+    border-radius: 1.5rem;
+    border: none;
+}
+.user_image{
+    max-width: 100px;
+    max-height: 100px;
+}
+.profile_sack{
+    display: flex;
+    flex-direction: column;
+}
+.profile_sack > p {
+    color: var(--Blue-80);    
+    font-family: var(--default-font);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; 
+    letter-spacing: 0.00938rem;
+    margin: .275rem 0;
+}
+
+.profiles_sack_child > p {
+    color: var( --default-font-clr);    
+    font-family: var(--default-font);
+    margin: .275rem 0;
 }

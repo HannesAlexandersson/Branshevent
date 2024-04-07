@@ -16,3 +16,4 @@ export { default as checkmarg } from './checkmarg.svg';
 export { default as image } from './image.svg';
 export { default as clockBlack } from './clockBlack.svg';
 export { default as locationBlack } from './locationBlack.svg'; 
+export { default as closeBlack } from './closeBlack.svg';

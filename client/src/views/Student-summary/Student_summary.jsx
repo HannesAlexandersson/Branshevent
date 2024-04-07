@@ -5,6 +5,9 @@ import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import { Nav } from '../index.js';
 import style from './student_summary.module.css';
 
+
+
+
 function Student_summary(){
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(6);
@@ -12,23 +15,79 @@ function Student_summary(){
 
     const studentData = [];
 
+    let studentDescription;
+    let studentUsername;
+    let studentOrientation;
+    let studentOnlineProfiles;
+    let studentTags;
+    let studentLocation;
+    let studentPassword;
+    let studentImage;
+    let studentFormData;
+    if( sessionStorage.getItem('studentData') !== null){
+    studentFormData = JSON.parse(sessionStorage.getItem('studentData'));
+    }else {
+        studentFormData = {
+            firstName: 'not set',
+            lastName: 'not set',
+            email: 'not set',
+            phoneNumber: 'not set',
+        }
+    }
+
     let liaStartdate = sessionStorage.getItem("startDate");
     let liaEnddate = sessionStorage.getItem("endDate");    
     const hasDates = liaStartdate && liaEnddate;
 
-    let studentFormData;
-    if( sessionStorage.getItem('studentData') !== null){
-    studentFormData = JSON.parse(sessionStorage.getItem('studentData'));
-    }
-    const studentDescription = sessionStorage.getItem('studentDescription');
-    const studentUsername = sessionStorage.getItem('username');       
    
-   const studentOrientation = sessionStorage.getItem('occupation');
-   const studentOnlineProfiles = JSON.parse(sessionStorage.getItem('onlineProfiles'));
-   const studentTags = JSON.parse(sessionStorage.getItem('selectedTags'));
-   const studentLocation = sessionStorage.getItem('selectedLocation');
-   const studentPassword = sessionStorage.getItem('password');
-
+    if (sessionStorage.getItem('studentDescription') !== null) {
+        studentDescription = sessionStorage.getItem('studentDescription');
+    }else{
+        studentDescription = 'not set';
+    }
+    
+    if (sessionStorage.getItem('username') !== null) {
+        studentUsername = sessionStorage.getItem('username');
+    }else{
+        studentUsername = 'not set';
+    }
+    
+    if (sessionStorage.getItem('occupation') !== null) {
+        studentOrientation = sessionStorage.getItem('occupation');
+    }else {
+        studentOrientation = 'not set';
+    }
+    
+    if (sessionStorage.getItem('onlineProfiles') !== null) {
+        studentOnlineProfiles = JSON.parse(sessionStorage.getItem('onlineProfiles'));
+    }else {
+        studentOnlineProfiles = {profile: 'not set'};
+    }
+    
+    if (sessionStorage.getItem('selectedTags') !== null) {
+        studentTags = JSON.parse(sessionStorage.getItem('selectedTags'));
+    }else {
+        studentTags = {tag: 'not set'};
+    }
+    
+    if (sessionStorage.getItem('selectedLocation') !== null) {
+        studentLocation = sessionStorage.getItem('selectedLocation');
+    }else {
+        studentLocation = 'not set';
+    }
+    
+    if (sessionStorage.getItem('password') !== null) {
+        studentPassword = sessionStorage.getItem('password');
+    }else {
+        studentPassword = 'not set';
+    }
+    
+    if (localStorage.getItem('image') !== null) {
+        studentImage = localStorage.getItem('image');
+    }else {
+        studentImage = 'not set';
+    }
+   
    const handleNextStep = () => {
     const studentData = [
         studentFormData,
@@ -41,6 +100,7 @@ function Student_summary(){
         { studentLocation },
         { username: studentUsername },
         { password: studentPassword },
+        { image: studentImage },
     ];
 
     sessionStorage.setItem('studentData', JSON.stringify(studentData));
@@ -117,15 +177,21 @@ function Student_summary(){
                             <div className={style.comp_name}>
                                 <h2>Online profile</h2>
                                 <div className={style.profile_container}>
-                                {studentOnlineProfiles ? (studentOnlineProfiles.map((profile, index) => (                                    
-                                    <p key={index}>{profile}</p>
-                                    ))
-                                ) : ( <p>Not set</p>  )}
+                                    {studentOnlineProfiles ? (Object.keys(studentOnlineProfiles).map((platform, index) => (
+                                        <div key={index} className={style.profile_sack}>
+                                            <p className={style.profiles_sack_child}>{platform}: {studentOnlineProfiles[platform] !== "" ? <p className={style.profiles_sack_child}>{studentOnlineProfiles[platform]}</p> : "Not provided"}</p>
+                                        </div>
+                                                ))
+                                            ) : (
+                                                <p>Not set</p>
+                                            )}
                                 </div>
                             </div>
                             <div className={style.comp_name}>
                                 <h2>Image attached</h2>
-                                <h3>image link.jpg</h3>
+                                <div className={style.image_wrapper}>
+                                    <img src={studentImage} alt="user uploaded image" className={style.user_image}/>
+                                </div>
                             </div>
                         </div>
                     </div>

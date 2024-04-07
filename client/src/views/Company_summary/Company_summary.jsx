@@ -11,23 +11,70 @@ function Company_summary(){
     const totalSteps = 7;
     const companyData = [];
 
-    const companyUsername = sessionStorage.getItem('username');
-    const companyPassword = sessionStorage.getItem('password');
-    const companyFormData = JSON.parse(sessionStorage.getItem('companyData'));
-    const companyDescription = sessionStorage.getItem('companyDescription');
-    const companyAddress = sessionStorage.getItem('companyAddress');
     let applicationStartdate;
     let applicationEnddate;
     const hasDates = applicationStartdate && applicationEnddate;
-   
-   const compOnlineProfiles = JSON.parse(sessionStorage.getItem('onlineProfiles'));
-   const companyTags = JSON.parse(sessionStorage.getItem('selectedTags'));
-   const companyLocation = sessionStorage.getItem('selectedLocation');
+
+    let  companyUsername, companyPassword, companyFormData, companyDescription, companyAddress, compOnlineProfiles, companyTags, companyLocation, companyImage;
+
+    if (sessionStorage.getItem('username') !== null) {
+        companyUsername = sessionStorage.getItem('username');
+    } else {
+        companyUsername = 'not set';
+    }
+
+    if (sessionStorage.getItem('password') !== null) {
+        companyPassword = sessionStorage.getItem('password');
+    } else {
+        companyPassword = 'not set';
+    }
+
+    if (sessionStorage.getItem('companyData') !== null) {
+        companyFormData = JSON.parse(sessionStorage.getItem('companyData'));
+    } else {
+        companyFormData = { data: 'not set'};
+    }
+
+    if (sessionStorage.getItem('companyDescription') !== null) {
+        companyDescription = sessionStorage.getItem('companyDescription');
+    } else {
+        companyDescription = 'not set';
+    }
+
+    if (sessionStorage.getItem('companyAddress') !== null) {
+        companyAddress = sessionStorage.getItem('companyAddress');
+    } else {
+        companyAddress = 'not set';
+    }
+
+    if (sessionStorage.getItem('onlineProfiles') !== null) {
+        compOnlineProfiles = JSON.parse(sessionStorage.getItem('onlineProfiles'));
+    } else {
+        compOnlineProfiles = {profile: 'not set'};
+    }
+
+    if (sessionStorage.getItem('selectedTags') !== null) {
+        companyTags = JSON.parse(sessionStorage.getItem('selectedTags'));
+    } else {
+        companyTags = {tag: 'not set'};
+    }
+
+    if (sessionStorage.getItem('selectedLocation') !== null) {
+        companyLocation = sessionStorage.getItem('selectedLocation');
+    } else {
+        companyLocation = 'not set';
+    }
+
+    if (localStorage.getItem('image') !== null) {
+        companyImage = localStorage.getItem('image');
+    } else {
+        companyImage = 'not set';
+    }
 
    const handleNextStep = () => {
     const companyData = [
         companyFormData,
-        { onlineProfiles: compOnlineProfiles },
+        compOnlineProfiles,
         { companyDescription },
         { applicationStartdate },
         { applicationEnddate },        
@@ -35,6 +82,7 @@ function Company_summary(){
         { companyLocation },
         { username: companyUsername },
         { password: companyPassword }, 
+        { image: companyImage },
     ];
 
     sessionStorage.setItem('companyData', JSON.stringify(companyData));
@@ -112,16 +160,20 @@ function Company_summary(){
                             <div className={style.comp_name}>
                                 <h2>Online profile</h2>
                                 <div className={style.profile_container}>
-                                {compOnlineProfiles ? (compOnlineProfiles.map((profile, index) => (                                    
-                                    <p key={index}>{profile}</p>
-                                    ))
-                                ) : ( <p>Not set</p>  )}
+                                {compOnlineProfiles ? (Object.keys(compOnlineProfiles).map((platform, index) => (                                    
+                                    <div key={index} className={style.profile_sack}>
+                                        <p className={style.profiles_sack_child}>{platform}: {compOnlineProfiles[platform] !== "" ? <p className={style.profiles_sack_child}>{compOnlineProfiles[platform]}</p> : "Not provided"}</p>
+                                    </div>    
+                                        ))
+                                    ) : ( <p>Not set</p>  )}
                                 </div>
                             </div>
 
                             <div className={style.comp_name}>
                                 <h2>Image attached</h2>
-                                <h3>image link.jpg</h3>
+                                <div className={style.image_wrapper}>
+                                    <img src={companyImage} alt="user uploaded image" className={style.user_image}/>
+                                </div>
                             </div>
                         </div>
                     </div>

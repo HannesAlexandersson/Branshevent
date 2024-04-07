@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { Date_box } from '../index.js';
 import { calendarIcon, user_round, circle_user_round } from '../../assets/Icons/index.js';
-import { homeBlack, eventBlack, accountBlack, Yrgo, } from '../../assets/Icons/dropdownicons/index.js';
+import { homeBlack, eventBlack, accountBlack, Yrgo, heart, heartlight } from '../../assets/Icons/dropdownicons/index.js';
 import styles from './navbar_landing.module.css';
 
 
@@ -52,6 +52,7 @@ function Navbar_landing(){
             <li><img src={homeBlack} />Home</li>
             <li><img src={eventBlack}/>Event info</li>
             <li><img src={Yrgo}/>YRGO</li>
+            <li><img src={heartlight} />Favourites</li>
             <li><img src={accountBlack}/>Account</li>
           </ul>
         </div>

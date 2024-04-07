@@ -6,70 +6,136 @@ import style from './onlineprofile.module.css';
 
 
 function Onlineprofile(){
-    const [onlineProfiles, setOnlineProfiles] = useState([]);
-    const [inputValue, setInputValue] = useState('');
-    const [showInputFields, setShowInputFields] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
+    const [profiles, setProfiles] = useState({
+        CompanyWebsite: '',
+        LinkedIn: '',
+        GitHub: '',
+        Portfolio: '',
+        Behance: ''
+    });
     const [errorMessage, setErrorMessage] = useState('');
 
-    const handleAddOnlineProfile = () => {
-        setShowInputFields(true);
+    const handleAddOnlineProfiles = () => {
+        setShowPopup(true);
     };
 
-    const handleCancelOnlineProfile = () => {
-        setInputValue('');
-        setShowInputFields(false);
+    const handleCancel = () => {
+        setProfiles({
+            CompanyWebsite: '',
+            LinkedIn: '',
+            GitHub: '',
+            Portfolio: '',
+            Behance: ''
+        });
+        setShowPopup(false);
+        setErrorMessage('');
     };
 
-    const handleInputValueChange = (index, value) => {
-        const updatedProfiles = [...onlineProfiles];
-        updatedProfiles[index] = value;
-        setOnlineProfiles(updatedProfiles);
-    };
+    const handleSubmit = () => {
+        const validProfiles = Object.entries(profiles).every(([key, url]) => {
+            // Skip empty fields
+            if (!url.trim()) {
+                return true;
+            }
+            // Validate non-empty URLs
+            return validator.isURL(url.trim());
+        });
 
-    const handleAddProfileField = () => {
-        setOnlineProfiles([...onlineProfiles, inputValue]);
-        setInputValue('');
-    };
+        if (validProfiles) {           
+            console.log('Online profiles:', profiles);
+            const onlineProfiles = {
+                CompanyWebsite: profiles.CompanyWebsite.trim(),
+                LinkedIn: profiles.LinkedIn.trim(),
+                GitHub: profiles.GitHub.trim(),
+                Portfolio: profiles.Portfolio.trim(),
+                Behance: profiles.Behance.trim(),
+                // Add more profile types here if we want more
+            };
+            // save onlineProfiles to sessionStorage
+            sessionStorage.setItem('onlineProfiles', JSON.stringify(onlineProfiles));
 
-    const handleSubmitOnlineProfiles = () => {
-        const isValid = onlineProfiles.every(url => validator.isURL(url.trim()));
-    
-        if (isValid) {
-           // Save the online profiles array to session storage
-            sessionStorage.setItem('onlineProfiles', JSON.stringify(onlineProfiles.map(url => url.trim())));
-            
-            // Reset input fields and hide the popup
-            setOnlineProfiles([]);
-            setShowInputFields(false);
+            // reset the form and hide the popup
+            setProfiles({
+                CompanyWebsite: '',
+                LinkedIn: '',
+                GitHub: '',
+                Portfolio: '',
+                Behance: ''
+            });
+            setShowPopup(false);
             setErrorMessage('');
         } else {
             setErrorMessage('Please enter valid URLs for all profiles.');
-            alert('Please enter valid URLs for all profiles.');
         }
     };
 
-    return(
+    const handleInputChange = (profile, value) => {
+        setProfiles(prevProfiles => ({
+            ...prevProfiles,
+            [profile]: value
+        }));
+    };
+
+    return (
         <>
-            {showInputFields && (
-                <div className={style.wrapper}>
-                    {onlineProfiles.map((profile, index) => (
-                        <div key={index} className={style.item}>
-                            <input
-                                type="text"
-                                value={profile}
-                                onChange={(e) => handleInputValueChange(index, e.target.value)}
-                                className={style.onlineProfile_input}
-                            />
+            <button className={style.add_profiles_btn} onClick={handleAddOnlineProfiles}>
+                <img src={add} alt="Add Icon" />
+                <p>Add Online Profiles</p>
+            </button>
+
+            {showPopup && (
+                <div className={style.popup}>
+                    <div className={style.form}>
+                        <input
+                            type="text"
+                            value={profiles.CompanyWebsite}
+                            onChange={(e) => handleInputChange('CompanyWebsite', e.target.value)}
+                            placeholder="Company website URL"
+                            className={style.input}
+                        />
+                        <input
+                            type="text"
+                            value={profiles.LinkedIn}
+                            onChange={(e) => handleInputChange('LinkedIn', e.target.value)}
+                            placeholder="LinkedIn URL"
+                            className={style.input}
+                        />
+                        <input
+                            type="text"
+                            value={profiles.GitHub}
+                            onChange={(e) => handleInputChange('GitHub', e.target.value)}
+                            placeholder="GitHub URL"
+                            className={style.input}
+                        />
+                        <input
+                            type="text"
+                            value={profiles.Portfolio}
+                            onChange={(e) => handleInputChange('Portfolio', e.target.value)}
+                            placeholder="Portfolio URL"
+                            className={style.input}
+                        />
+                        <input
+                            type="text"
+                            value={profiles.Behance}
+                            onChange={(e) => handleInputChange('Behance', e.target.value)}
+                            placeholder="Behance URL"
+                            className={style.input}
+                        />
+                        {errorMessage && <p className={style.error}>{errorMessage}</p>}
+                        <div className={style.button_wrapper}>
+                            <Red_btn className={style.popup_button} onClick={handleSubmit}>Add</Red_btn>
+                            <White_btn className={style.popup_button} onClick={handleCancel}>Cancel</White_btn>
                         </div>
-                    ))}
-                    <div className={style.btn_wrap}>
-                        <Red_btn className={style.add} onClick={handleAddProfileField}>Add Profile</Red_btn>
-                        <White_btn className={style.add}  onClick={handleSubmitOnlineProfiles}>Submit</White_btn>
-                        <Red_btn className={style.add}  onClick={handleCancelOnlineProfile}>Cancel</Red_btn>
                     </div>
                 </div>
             )}
-            {!showInputFields && (              
+        </>
+    );
+}
+ 
+/**
+ * {!showInputFields && (              
                 <div className={style.online_profile_wrapper}>
                     <White_btn className={style.online_profile_btn} onClick={handleAddOnlineProfile}>
                         <img src={add} alt="Add Icon" />
@@ -82,10 +148,5 @@ function Onlineprofile(){
                     </White_btn>
                 </div>
             )}
-        
-        </>
-    );
-}
- 
-
+ */
 export default Onlineprofile
