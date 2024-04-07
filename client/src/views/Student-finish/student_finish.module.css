@@ -97,11 +97,13 @@
     width: 100%;
     padding: 1rem;
 }
-
+.bot{
+    position: relative;
+}
 .logo_bottom{
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    position: absolute;
+    /* position: absolute; */
     bottom: 0;
 }
