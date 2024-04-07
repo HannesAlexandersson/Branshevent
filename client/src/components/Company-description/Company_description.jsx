@@ -2,7 +2,7 @@ import { useState } from 'react';
 import validator from 'validator'; //for url validation
 /* import sanitizeHtml from 'sanitize-html'; */ //to sanitize the userinputted url
 import { pencil, calendarIcon, add, close } from '../../assets/Icons/index.js';
-import { White_btn, Red_btn, StartDate_picker, EndDate_picker, Onlineprofile, } from '../index.js';
+import { White_btn, Red_btn, StartDate_picker, EndDate_picker, Onlineprofile, Add_image, } from '../index.js';
 import 'react-datepicker/dist/react-datepicker.css'
 import style from './company_description.module.css';
 
@@ -84,8 +84,11 @@ function Company_description({ description, handleDescriptionChange, isDatePendi
                     <label htmlFor="not_looking" className={style.checkbox_text}>we are not looking for interns in the near future</label>
                 </div>
             </div>
-
+        <div className={style.online_wrapper}>
           <Onlineprofile />
+          <Add_image />
+        </div>
+
 
         </>
     );

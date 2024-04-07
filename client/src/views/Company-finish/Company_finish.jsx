@@ -3,7 +3,7 @@ import { Link, useNavigate }  from 'react-router-dom';
 import { Nav } from '../index';
 import { Yrgotransred } from '../../assets/Logos/index';
 import { backArrow, nextArrow, locationBlack, clockBlack } from '../../assets/Icons/index';
-import { Progressbar, Red_btn, Spacer_bottom, White_btn } from '../../components';
+import { Add_to_calendar, Progressbar, Red_btn, Spacer_bottom, White_btn } from '../../components';
 import style from './company_finish.module.css';
 
 function Company_finish(){
@@ -41,9 +41,7 @@ function Company_finish(){
                         <h2 className={style.date}>Wednesday 24 April - 15:00-17:00</h2>
                     </div>
 
-                    <div className={style.add_link}>
-                        <h2 className={style.link}>ADD to calendar</h2>
-                    </div>
+                    <Add_to_calendar />
 
                 </div>
 

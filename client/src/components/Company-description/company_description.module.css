@@ -125,8 +125,13 @@
     text-transform: uppercase;
 }
 
-.online_profile_wrapper{
-
+.online_wrapper{
+    display: flex;
+    flex-direction: row;
+    width: 85%;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
 }
 
 .online_profile_btn{

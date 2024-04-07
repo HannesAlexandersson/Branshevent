@@ -1,29 +1,17 @@
-.online_profile_wrapper{
-    display: flex;
-    flex-direction: row;
-    gap: .5rem;
-    justify-content: space-around;
-}
-
-.online_profile_btn{
-    width: 100%;
+.add_profiles_btn{
+    width: 60%;
     display: flex;
     height: 3rem;
     min-width: 10.0625rem;
     padding: 1rem;
     justify-content: center;
     align-items: center;
-}
-.image_icon{
-    display: flex;
-    width: 30%;
-    align-self: stretch;
-    justify-content: center;
-    align-items: center;
-    min-width: 1rem;
     border-radius: 22.5rem;
+    font-family: var(--default-font);
+    border: 1px solid var(--secondary-BG);
+    background: var(--default-BG);
 }
-.online_profile_btn > p{
+.add_profiles_btn > p{
     color: var(--btn-font-clr);
     text-align: center;    
     font-size: 0.875rem;
@@ -33,6 +21,17 @@
     letter-spacing: 0.07813rem;
     text-transform: uppercase;
     text-decoration: none;
+}
+
+
+.form{
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: .5rem;
+}
+.input{
+
 }
 
 .popup{
@@ -54,8 +53,8 @@
     backdrop-filter: blur(20px); /*blur the background*/
    
 }
-.onlineProfile_input{
-    isplay: flex;
+.input{
+    display: flex;
     width: 19.25rem;
     height: 1rem;
     min-width: 19.25rem;
@@ -67,8 +66,9 @@
     background: var(--Grey-80);
     font-family: var(--default-font);
     color: var(--secondary-font-clr);
+    border: none;
 }
-.onlineProfile_input::placeholder{
+.input::placeholder{
     font-family: var(--default-font);
     overflow: hidden;
     color: var(--Grey-40);
@@ -81,22 +81,14 @@
     line-height: 1.25rem; 
     letter-spacing: 0.03125rem;
 }
-.online_btns_wrapper{
+.button_wrapper{
     display: flex;
     flex-direction: row;
     gap: .285rem;
-}
-.btn_wrap{
-    display: flex;
-    gap: .5rem;
-}
-.add{
-    width: 40%;
-    min-width: 3rem;
-}
-.item{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
 }
+
+.error{
+
+}
+

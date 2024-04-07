@@ -24,3 +24,5 @@ export { default as SendDataToServer } from './Send-to-DB/Send_to_db.jsx';
 export { default as Navbar_landing } from './Navbar-landing/Navbar_landing.jsx';
 export { default as Onlineprofile } from './Onlineprofile/Onlineprofile.jsx';
 export { default as Spacer_bottom } from './Spacer-bottom/Spacer_bottom.jsx';
+export { default as Add_to_calendar } from './Add-to-calendar/Add_to_calendar.jsx';
+export { default as Add_image } from './Add-image/Add_image.jsx';
