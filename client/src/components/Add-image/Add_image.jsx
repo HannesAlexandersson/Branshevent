@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { add, image, closeBlack } from '../../assets/Icons/index.js';
-import { Red_btn, White_btn } from '../index.js';
+import { Red_btn, Spacer_bottom, White_btn } from '../index.js';
 import style from './add_image.module.css';
 
 function getBase64FromImage(imageFile) {
@@ -119,7 +119,12 @@ function Add_image(){
                                 Skip
                             </White_btn>
                         </div>
+
+                        <Spacer_bottom />
                     </div>
+
+                    <Spacer_bottom />
+                    
                 </div>
             )}
         </>
