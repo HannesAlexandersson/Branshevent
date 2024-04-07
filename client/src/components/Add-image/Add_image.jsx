@@ -121,9 +121,7 @@ function Add_image(){
                         </div>
 
                         <Spacer_bottom />
-                    </div>
-
-                    <Spacer_bottom />
+                    </div>                   
                     
                 </div>
             )}
