@@ -98,7 +98,7 @@ router.post('/update', (req, res) => {
   const { company_name, first_name, last_name, phone_number, email, password, description, companyId } = req.body;
   const updateQuery = 'UPDATE Company SET company_name = ?, first_name = ?, last_name = ?, phone_number = ?, email = ?, password = ?, description = ? WHERE id = ?';
 
-  db.run(updateQuery, [, company_name, first_name, last_name, phone_number, email, password, description, companyIdId], function(err) {
+  db.run(updateQuery, [company_name, first_name, last_name, phone_number, email, password, description, companyId], function(err) {
     if(err){
         console.log(err.message);
         return res.status(500).json({ error : 'Internal Server Error' });

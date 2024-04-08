@@ -21,7 +21,7 @@ router.get('/all', (req, res) => {
 
 //get student by ID
 router.get('/:studentId', (req, res) => {
-  const companyId = req.params.studentId;
+  const studentId = req.params.studentId;
   const query = 'SELECT * FROM Student WHERE id = ?';
 
   db.get(query, [studentId], (err, rows) => {
@@ -105,6 +105,23 @@ router.post('/update', (req, res) => {
     }
     console.log('Student updated successfully');
     return res.status(200).send("Update successfull");
+  });
+})
+
+
+//add favorite companies
+router.get('/addToFavorite/:studentId/:companyId', (req, res) => {
+  const studentId = req.params.studentId;
+  const companyId = req.params.companyId;
+
+  const query = 'INSERT INTO Favorite_company VALUES company_id = ?, student_id = ?';
+
+  db.get(query, [studentId, companyId], (err, rows) => {
+    if(err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    return res.status(200).send("Favorite company added successfull");
   });
 })
 
