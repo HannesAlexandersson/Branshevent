@@ -58,12 +58,12 @@ router.post('/login', (req, res) => {
 
 //registration
 router.post('/registration', (req, res) => {
-    const { first_name, last_name, email, password, phone_number, tags } = req.body;
-    const query = 'INSERT INTO Student (first_name, last_name, email, password, phone_number) VALUES (?, ?, ?, ?, ?)'; 
+    const { first_name, last_name, email, password, phone_number, tags, description, work_place } = req.body;
+    const query = 'INSERT INTO Student (first_name, last_name, email, password, phone_number, description, work_place) VALUES (?, ?, ?, ?, ?, ?)'; 
 
     
     //1. create the student
-    db.run(query, [first_name, last_name, email, password, phone_number], function(err) {
+    db.run(query, [first_name, last_name, email, password, phone_number, description, work_place], function(err) {
         if(err){
             console.log(err.message);
             return res.status(500).json({ error : 'Internal Server Error' });
@@ -89,6 +89,9 @@ router.post('/registration', (req, res) => {
         } else {
             return res.status(200).json({ id: studentId });
         }
+
+        
+
     });
 })
 

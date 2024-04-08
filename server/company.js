@@ -58,11 +58,11 @@ router.post('/login', (req, res) => {
 
 //registration
 router.post('/registration', (req, res) => {
-  const { company_name, first_name, last_name, phone_number, email, password } = req.body;
-  const query = 'INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password) VALUES (?, ?, ?, ?)';
+  const { company_name, first_name, last_name, phone_number, email, password, tags, description } = req.body;
+  const query = 'INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password, description) VALUES (?, ?, ?, ?, ?, ?)';
 
   //1. Create a company
-  db.run(query, [company_name, first_name, last_name, phone_number, email, password], function(err) {
+  db.run(query, [company_name, first_name, last_name, phone_number, email, password, description], function(err) {
       if(err){
           console.log(err.message);
           return res.status(500).json({ error : 'Internal Server Error' });
