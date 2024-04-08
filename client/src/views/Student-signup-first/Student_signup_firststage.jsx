@@ -1,6 +1,6 @@
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import { Link, useNavigate, } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Progressbar, Student_form, Gdpr, White_btn, Red_btn, Spacer_bottom,  } from '../../components';
 import { Nav, } from '../index.js';
 import styles from './student_signup.module.css';
@@ -20,6 +20,17 @@ function Student_signup_firststage(){
     const [errors, setErrors] = useState({});
     const [showPopup, setShowPopup] = useState(false);
 
+    useEffect(() => {
+        // Load form data from sessionStorage to be able to 'prefill' the form if user backtracks
+        const storedData = sessionStorage.getItem('userRole') === 'student' ?
+            sessionStorage.getItem('studentData') :
+            sessionStorage.getItem('companyData');
+
+        if (storedData) {
+            setFormData(JSON.parse(storedData));
+        }
+    }, []);
+
     const handleSubmit = (event) => {
         event.preventDefault(); // stop default form submission so we can handle it ourselfs, Here we need to add formhandling, like validation and zanitation of the form data adn then send to db       
 
@@ -29,6 +40,14 @@ function Student_signup_firststage(){
             alert("Please select an occupation before continue!");
             return; 
         }
+
+        if (isChecked) {
+            // Set a session variable to indicate that GDPR is checked
+            sessionStorage.setItem('gdprChecked', true);
+        }else {
+            alert("You must agree to GDPR to register!");
+            return; 
+        } 
 
          // Retrieve sanitized and validated form data
          const { firstName, lastName, email, phoneNumber } = formData;

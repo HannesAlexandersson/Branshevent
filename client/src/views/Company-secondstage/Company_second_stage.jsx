@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, } from 'react-router-dom';
 import { Red_btn, White_btn, Progressbar, Company_description, Skip_btn, Spacer_bottom, } from '../../components/index.js';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
@@ -16,13 +16,57 @@ function Company_second_stage(){
     const [startDate, setStartDate] = useState(null); 
     const [endDate, setEndDate] = useState(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        let storedData = null;
+        // Load form data from sessionStorage to be able to 'prefill' the form if user backtracks
+        if(sessionStorage.getItem('userRole') === 'company'){
+           storedData = {
+            startDate: sessionStorage.getItem('startDate'),
+            endDate: sessionStorage.getItem('endDate'),
+            description: sessionStorage.getItem('companyDescription'),
+            noInterns: sessionStorage.getItem('noInterns'),
+            datePending: sessionStorage.getItem('applicationDatePending'),
+            haveOpenings: sessionStorage.getItem('haveOpenings'),
+            }
+        } 
+
+        if (storedData) {
+            if(storedData.noInterns){
+                setIsNotLookingChecked(storedData.noInterns);
+            }
+            if(storedData.datePending){
+                setIsDatePendingChecked(storedData.datePending);
+            }
+            if(storedData.haveOpenings){
+                setIsContinuousChecked(storedData.haveOpenings);
+            }
+            if(storedData.startDate){
+                setStartDate(storedData.startDate);
+            }
+            if(storedData.endDate){
+                setEndDate(storedData.endDate);
+            }
+            if(storedData.description){
+                setDescription(storedData.description);
+            }
+        }
+    }, []);
+
+    /*---------------------------------------*/
    
     
     const formatDate = (date) => {
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const year = date.getFullYear();
-        return `${month}/${day}/${year}`;
+        if (typeof date === 'object') {
+            // If it's a Date object, format it
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${month}/${day}/${year}`;
+        } else {
+            // If it's already formatted, return it as is
+            return date;
+        }
     };
 
     

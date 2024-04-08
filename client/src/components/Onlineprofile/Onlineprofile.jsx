@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import validator from 'validator'; 
 import { add, image } from '../../assets/Icons/index.js';
 import { Red_btn, White_btn } from '../index.js';
@@ -15,6 +15,20 @@ function Onlineprofile(){
         Behance: ''
     });
     const [errorMessage, setErrorMessage] = useState('');
+
+
+    useEffect(() => {
+        // Load form data from sessionStorage to be able to 'prefill' the form if user backtracks
+        const storedData = sessionStorage.getItem('userRole') === 'student' ?
+            sessionStorage.getItem('onlineProfiles') :
+            sessionStorage.getItem('onlineProfiles');
+
+        if (storedData) {
+            setProfiles(JSON.parse(storedData));
+        }
+    }, []);
+
+
 
     const handleAddOnlineProfiles = () => {
         setShowPopup(true);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, } from 'react-router-dom';
 import { Progressbar,Red_btn, White_btn, Skip_btn, TagsSelector, Spacer_bottom, } from '../../components/index.js';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
@@ -12,6 +12,22 @@ function Student_third_stage(){
     //we keep track of the progrssbar with this hook
     const [currentStep, setCurrentStep] = useState(5);
     const totalSteps = 7;
+
+    useEffect(() => {
+        // Load form data from sessionStorage to be able to 'prefill' the form if user backtracks
+        const storedData = sessionStorage.getItem('userRole') === 'student' ? {
+            tags: sessionStorage.getItem('selectedTags'),
+            location: sessionStorage.getItem('selectedLocation'),           
+        } : null;
+    
+        if (storedData && storedData.tags) {
+            setSelectedTags(JSON.parse(storedData.tags));
+            console.log(storedData.tags);
+        }
+        if (storedData && storedData.location) {           
+            setSelectedLocation(storedData.location);
+        }        
+    }, []);
     
     //handle the selected tags
     const handleSaveSelectedTags = (tagsData) => {
@@ -39,7 +55,8 @@ function Student_third_stage(){
                         who="I" 
                         className={style.tag_selector}
                         onSaveSelectedTags={handleSaveSelectedTags}
-                        selectedTags={selectedTags}
+                        selectedTags={selectedTags.tags}
+                        setSelectedTags={setSelectedTags}
                     />
 
                     <div className={style.location_container}>
