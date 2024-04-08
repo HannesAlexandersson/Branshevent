@@ -59,7 +59,7 @@ router.post('/login', (req, res) => {
 //registration
 router.post('/registration', (req, res) => {
     const { first_name, last_name, email, password, phone_number, tags, description, work_place } = req.body;
-    const query = 'INSERT INTO Student (first_name, last_name, email, password, phone_number, description, work_place) VALUES (?, ?, ?, ?, ?, ?)'; 
+    const query = 'INSERT INTO Student (first_name, last_name, email, password, phone_number, description, work_place) VALUES (?, ?, ?, ?, ?, ?, ?)'; 
 
     
     //1. create the student
@@ -89,10 +89,23 @@ router.post('/registration', (req, res) => {
         } else {
             return res.status(200).json({ id: studentId });
         }
-
-        
-
     });
+  })
+
+
+//update a student
+router.post('/update', (req, res) => {
+  const { first_name, last_name, email, password, phone_number, description, work_place, studentId } = req.body;
+  const updateQuery = 'UPDATE Student SET first_name = ?, last_name = ?, email = ?, password = ?, phone_number = ?, description = ?, work_place = ? WHERE id = ?';
+
+  db.run(updateQuery, [first_name, last_name, email, password, phone_number, description, work_place, studentId], function(err) {
+    if(err){
+        console.log(err.message);
+        return res.status(500).json({ error : 'Internal Server Error' });
+    }
+    console.log('Student updated successfully');
+    return res.status(200).send("Update successfull");
+  });
 })
 
 
