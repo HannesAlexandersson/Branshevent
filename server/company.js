@@ -61,14 +61,33 @@ router.post('/registration', (req, res) => {
   const { company_name, first_name, last_name, phone_number, email, password } = req.body;
   const query = 'INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password) VALUES (?, ?, ?, ?)';
 
-  console.log(password);
+  //1. Create a company
   db.run(query, [company_name, first_name, last_name, phone_number, email, password], function(err) {
       if(err){
           console.log(err.message);
           return res.status(500).json({ error : 'Internal Server Error' });
       }
       console.log('Registration successfull')
-      return res.status(200).json({ id: this.lastID });
+      
+      const companyId = this.lastID;
+
+       //2. get the company_id and add the tags to the db
+       if(tags.length > 0) {
+        const tagString = tags.map(tag_id => `(${tag_id}, ${companyId})`).join(`,`);  // 19 => (19, 2)
+        const tagQuery = `INSERT INTO Company_tags (tag_id, company_id) VALUES ${tagString}`;
+
+        db.run(tagQuery, function(err) {
+            if(err){
+                console.log(err.message);
+                return res.status(500).json({ error : 'Internal Server Error' });
+            }
+            console.log('Tags added successfully');
+        
+            return res.status(200).json({ id: companyId });
+        });
+    } else {
+        return res.status(200).json({ id: companyId });
+    }
   });
 })
 
