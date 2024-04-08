@@ -103,3 +103,12 @@
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 1));
     user-select: none;
 }
+
+@media (min-width: 400px){
+    .tag_selector {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: 65%;
+    }
+}
