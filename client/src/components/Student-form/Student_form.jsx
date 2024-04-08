@@ -66,6 +66,7 @@ function Student_form({ handleSubmit, handleOccupationChange, handleChange, form
                             placeholder="First Name"
                             required
                             className={styles.inputField}
+                            value={formData.firstName}
                             onChange={(e) => handleChange('firstName', sanitizeInput(e.target.value))}
                         />
                         
@@ -78,6 +79,7 @@ function Student_form({ handleSubmit, handleOccupationChange, handleChange, form
                             placeholder="Last Name"
                             required
                             className={styles.inputField}
+                            value={formData.lastName}
                             onChange={(e) => handleChange('lastName', sanitizeInput(e.target.value))}
                         />
                        
@@ -90,6 +92,7 @@ function Student_form({ handleSubmit, handleOccupationChange, handleChange, form
                             placeholder="Email"
                             required
                             className={styles.inputField}
+                            value={formData.email}
                             onChange={(e) => handleChange('email', sanitizeInput(e.target.value))}
                         />
                         
@@ -102,6 +105,7 @@ function Student_form({ handleSubmit, handleOccupationChange, handleChange, form
                             placeholder="Phone Number"
                             required
                             className={styles.inputField}
+                            value={formData.phoneNumber}
                             onChange={(e) => handleChange('phoneNumber', sanitizeInput(e.target.value))}
                         />
                         

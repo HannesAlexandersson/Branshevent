@@ -2,10 +2,12 @@ import React from 'react';
 import Props from 'prop-types';
 import styles from './company_signup_form.module.css';
 
-function Company_signup_form({ handleChange }) {
+function Company_signup_form({ handleChange, formData }) {
     const sanitizeInput = (value) => {       
         return value.trim();
     };
+
+   
    
     return (
         <div className={styles.container}>
@@ -20,6 +22,7 @@ function Company_signup_form({ handleChange }) {
                     placeholder="Company Name" 
                     required 
                     className={styles.inputField} 
+                    value={formData.companyName}
                     onChange={(e) => handleChange('companyName', sanitizeInput(e.target.value))}
                 />
             </div>
@@ -33,6 +36,7 @@ function Company_signup_form({ handleChange }) {
                     minLength="2" 
                     maxLength="50" 
                     className={styles.inputField} 
+                    value={formData.firstName}
                     onChange={(e) => handleChange('firstName', sanitizeInput(e.target.value))}
                 />
             </div>
@@ -46,6 +50,7 @@ function Company_signup_form({ handleChange }) {
                     minLength="2" 
                     maxLength="50" 
                     className={styles.inputField} 
+                    value={formData.lastName}
                     onChange={(e) => handleChange('lastName', sanitizeInput(e.target.value))}
                 />
             </div>
@@ -57,6 +62,7 @@ function Company_signup_form({ handleChange }) {
                     placeholder="Email" 
                     required 
                     className={styles.inputField} 
+                    value={formData.email}
                     onChange={(e) => handleChange('email', sanitizeInput(e.target.value))}
                 />
             </div>
@@ -69,6 +75,7 @@ function Company_signup_form({ handleChange }) {
                     required 
                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
                     className={styles.inputField} 
+                    value={formData.phoneNumber}
                     onChange={(e) => handleChange('phoneNumber', sanitizeInput(e.target.value))}
                 />                
             </div>

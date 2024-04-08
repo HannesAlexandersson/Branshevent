@@ -1,6 +1,3 @@
-import { useState } from 'react';
-import validator from 'validator'; //for url validation
-/* import sanitizeHtml from 'sanitize-html'; */ //to sanitize the userinputted url
 import { pencil, calendarIcon, add, close } from '../../assets/Icons/index.js';
 import { White_btn, Red_btn, StartDate_picker, EndDate_picker, Onlineprofile, Add_image, } from '../index.js';
 import 'react-datepicker/dist/react-datepicker.css'
@@ -8,6 +5,8 @@ import style from './company_description.module.css';
 
 function Company_description({ description, handleDescriptionChange, isDatePendingChecked, isContinuousChecked, isNotLookingChecked, handleDatePendingChange, handleContinuousChange, handleNotLookingChange, startDate, endDate, setStartDate, setEndDate }) {   
     const placeholderText = "A short description about your company";   
+
+   
     
     
     // Function to handle the selected end date
@@ -41,8 +40,15 @@ function Company_description({ description, handleDescriptionChange, isDatePendi
                 <img src={calendarIcon} className={style.date_icon} />
                 <p className='date-text'>Application period:</p>
                 <div className={style.date_return_text_wrapper}>
-                    {startDate && <p className={style.date_return_text}>Start Date: {startDate.toLocaleDateString()}</p>}
-                    {endDate && <p className={style.date_return_text}>End Date: {endDate.toLocaleDateString()}</p>}
+                {startDate && typeof startDate === 'object' ? (
+                        <p className={style.date_return_text}>Start Date: {startDate.toLocaleDateString()}</p>
+                            ) : (
+                        <p className={style.date_return_text}>Start Date: {startDate}</p>
+                            )}                        {endDate && typeof endDate === 'object' ? (
+                        <p className={style.date_return_text}>End Date: {endDate.toLocaleDateString()}</p>
+                            ) : (
+                        <p className={style.date_return_text}>End Date: {endDate}</p>
+                            )}
                 </div>
             </div>
 
@@ -60,6 +66,7 @@ function Company_description({ description, handleDescriptionChange, isDatePendi
                             checked={isDatePendingChecked}
                             onChange={handleDatePendingChange}
                             className={style.checkboxInput}
+                            value={isDatePendingChecked}
                         />
                         <label htmlFor="date_pending" className={style.checkbox_text}>Internship openings, application date pending.</label>
                 </div>
@@ -70,6 +77,7 @@ function Company_description({ description, handleDescriptionChange, isDatePendi
                         checked={isContinuousChecked}
                         onChange={handleContinuousChange}
                         className={style.checkboxInput}
+                        value={isContinuousChecked}
                     />
                     <label htmlFor="continues" className={style.checkbox_text}>Continuous internship openings.</label>
                 </div>
@@ -80,6 +88,7 @@ function Company_description({ description, handleDescriptionChange, isDatePendi
                         checked={isNotLookingChecked}
                         onChange={handleNotLookingChange}
                         className={style.checkboxInput}
+                        value={isNotLookingChecked}
                     />
                     <label htmlFor="not_looking" className={style.checkbox_text}>we are not looking for interns in the near future</label>
                 </div>

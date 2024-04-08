@@ -8,6 +8,8 @@ function TagsSelector(props) {
   const [showGradient, setShowGradient] = useState(true);
   const containerRef = useRef(null);
 
+ 
+
   useEffect(() => {    
     if (tagsData.length > 0) {
       setSelectedCategory(tagsData[0].title);

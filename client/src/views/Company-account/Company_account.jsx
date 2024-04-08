@@ -1,6 +1,6 @@
 import { backArrow, nextArrow, closeRed, checkmarg, gren } from '../../assets/Icons/index.js';
 import { Link, useNavigate, } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Nav, } from '../index.js'
 import { Progressbar, Red_btn, Spacer_bottom, White_btn } from '../../components/index.js';
 import styles from './company_account.module.css';
@@ -16,6 +16,16 @@ function Company_account(){
     const data = JSON.parse(sessionStorage.getItem('companyData'));
     const user = data.email;
     
+    useEffect(() => {
+        // Load form data from sessionStorage to be able to 'prefill' the form if user backtracks
+        const storedData = sessionStorage.getItem('userRole') === 'student' ?
+            sessionStorage.getItem('password') :
+            sessionStorage.getItem('password');
+
+        if (storedData) {
+            setPassword(storedData);
+        }
+    }, []);
 
     const handlePasswordChange = (e) => {
         const newPassword = sanitizeInput(e.target.value);

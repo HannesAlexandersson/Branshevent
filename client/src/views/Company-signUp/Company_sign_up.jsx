@@ -1,6 +1,6 @@
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import { Link, useNavigate, } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Nav from '../../views/Navigation/Navigation.jsx';
 import Progressbar from '../../components/Progress-bar/Progressbar.jsx';
 import Form from '../../components/Company-form/Company_signup_form.jsx';
@@ -22,11 +22,28 @@ function Company_sign_up(){
         email: '',
         phoneNumber: ''
     });
+    
+    
+    useEffect(() => {
+        // Load form data from sessionStorage to be able to 'prefill' the form if user backtracks
+        const storedData = sessionStorage.getItem('userRole') === 'student' ?
+            sessionStorage.getItem('studentData') :
+            sessionStorage.getItem('companyData');
+
+        if (storedData) {
+            setFormData(JSON.parse(storedData));
+        }
+    }, []);
 
     
 
     const handleSubmit = (event) => {
         event.preventDefault(); // stop default form submission so we can handle it ourselfs       
+
+        if (isChecked) {
+            // Set a session variable to indicate that GDPR is checked
+            sessionStorage.setItem('gdprChecked', true);
+        } 
 
         // Retrieve sanitized and validated form data
         const { companyName, firstName, lastName, email, phoneNumber } = formData;
@@ -68,7 +85,8 @@ function Company_sign_up(){
 
                 <Form 
                     id="companySignupForm"                    
-                    handleChange={handleChange}                     
+                    handleChange={handleChange} 
+                    formData={formData}
                     />                
 
                 

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Nav, } from '../index.js';
 import { Progressbar, White_btn, Red_btn, Spacer_bottom } from '../../components';
 import { backArrow, nextArrow, closeRed, checkmarg, gren } from '../../assets/Icons/index.js';
@@ -15,6 +15,17 @@ function Student_account(){
     const user = data.email;
     const navigate = useNavigate();    
     const totalSteps = 7;
+
+    useEffect(() => {
+        // Load form data from sessionStorage to be able to 'prefill' the form if user backtracks
+        const storedData = sessionStorage.getItem('userRole') === 'student' ?
+            sessionStorage.getItem('password') :
+            sessionStorage.getItem('password');
+
+        if (storedData) {
+            setPassword(storedData);
+        }
+    }, []);
 
     const handlePasswordChange = (e) => {
         const newPassword = sanitizeInput(e.target.value);
