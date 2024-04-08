@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, } from 'react-router-dom';
 import { Progressbar,Red_btn, White_btn, Skip_btn, TagsSelector, Spacer_bottom, } from '../../components/index.js';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
@@ -14,6 +14,25 @@ function Company_third() {
     //we keep track of the progrssbar with this hook
     const [currentStep, setCurrentStep] = useState(5);
     const totalSteps = 7;
+
+    useEffect(() => {
+        // Load form data from sessionStorage to be able to 'prefill' the form if user backtracks
+        const storedData = sessionStorage.getItem('userRole') === 'company' ? {
+            tags: sessionStorage.getItem('selectedTags'),
+            location: sessionStorage.getItem('selectedLocation'),
+            address: sessionStorage.getItem('companyAddress'),
+        } : null;
+    
+        if (storedData && storedData.tags) {
+            setSelectedTags(JSON.parse(storedData.tags));
+        }
+        if (storedData && storedData.location) {           
+            setSelectedLocation(storedData.location);
+        }
+        if (storedData && storedData.address) {
+            setCompanyAddress(storedData.address);
+        }
+    }, []);
    
     const handleAddressChange = (newAddress) => {
         setCompanyAddress(newAddress);
@@ -80,7 +99,7 @@ function Company_third() {
                         </div>
                     </div>
 
-                    <Address onAddressChange={handleAddressChange} />
+                    <Address onAddressChange={handleAddressChange} companyAddress={companyAddress} />
 
                     <div className={style.btn_container}>
                         <div className={style.skip_wrapper}>

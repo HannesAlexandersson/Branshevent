@@ -86,3 +86,19 @@
     display: flex;
     gap: .275rem;
 }
+
+@media (min-width: 400px){
+    .location_container {
+       
+        align-items: center;
+        align-self: center;
+      
+        max-width: 50%;
+    }
+    .tag_selector {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 50%;
+    }
+}

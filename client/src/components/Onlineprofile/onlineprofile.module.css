@@ -92,3 +92,20 @@
 
 }
 
+@media (min-width: 400px){
+   
+    .add_profiles_btn{
+        max-width: 23rem;   
+
+    }
+    .image_icon{
+        display: flex;
+    width: 30%;
+    align-self: stretch;
+    justify-content: center;
+    align-items: center;
+    min-width: 1rem;
+    border-radius: 22.5rem;
+    max-width: 10rem;
+    }
+}

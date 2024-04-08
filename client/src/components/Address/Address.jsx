@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import style from './address.module.css';
 
-function Address({ onAddressChange }){
+function Address({ onAddressChange, companyAddress }){
 const [address, setAddress] = useState('');
 
 const handleInput = (event) => {
@@ -27,7 +27,7 @@ const sanitizeInput = (value) => {
                             type="text"
                             onChange={handleInput}
                             placeholder="Street Address, Postalcode/City"// impossible to have newline chars in placeholder text??
-                           
+                           value={companyAddress}
                         />
                     </div>
                 </div>

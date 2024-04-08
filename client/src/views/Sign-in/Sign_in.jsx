@@ -11,6 +11,8 @@ function Sign_in(){
     const [currentStep, setCurrentStep] = useState(1);
     const totalSteps = 7;
 
+  
+
     const handleNextStep = (role) => {
         sessionStorage.setItem('userRole', role);// save the role the user chooses in a sessionvariable 'role'
 

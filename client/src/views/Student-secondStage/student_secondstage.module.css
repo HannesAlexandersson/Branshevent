@@ -226,3 +226,16 @@
     display: flex;
     gap: .275rem;
 }
+
+@media (min-width: 400px){
+    .date_wrapper{
+        display: flex;
+   
+    justify-content: center;
+    margin-left: 0rem;
+    }
+    .add_profiles_btn{
+        max-width: 23rem;   
+
+    }
+}

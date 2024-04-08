@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import validator from 'validator';
 import { calendarIcon, add, backArrow, nextArrow, image } from '../../assets/Icons/index.js';
 import { Progressbar, White_btn, Red_btn, Skip_btn, StartDate_picker, EndDate_picker, Onlineprofile, Spacer_bottom, Add_image  } from '../../components';
@@ -16,14 +16,42 @@ function Student_second_stage(){
     const navigate = useNavigate();
     const totalSteps = 7;
     const placeholderText = "A short description about you";   
+    
 
+    useEffect(() => {
+        let storedData = null;
+        // Load form data from sessionStorage to be able to 'prefill' the form if user backtracks
+        if(sessionStorage.getItem('userRole') === 'student'){
+           storedData = {
+            startDate: sessionStorage.getItem('startDate'),
+            endDate: sessionStorage.getItem('endDate'),
+            description: sessionStorage.getItem('studentDescription'),
+            noDates: sessionStorage.getItem('noDates'),
+            }
+        } 
+
+        if (storedData) {
+            if(storedData.noDates){
+                setIsChecked(storedData.noDates);
+            }
+            if(storedData.startDate){
+                setStartDate(storedData.startDate);
+            }
+            if(storedData.endDate){
+                setEndDate(storedData.endDate);
+            }
+            if(storedData.description){
+                setDescription(storedData.description);
+            }
+        }
+    }, []);
+    
+    //'''''''''''''''''''''
+    
+    
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
-
-    //'''''''''''''''''''''
-
-   
 
     // Function to handle the selected end date
     const handleEndDateSelect = (endDate) => {
@@ -37,10 +65,16 @@ function Student_second_stage(){
 
     //format the date input the format we want
     const formatDate = (date) => {
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const year = date.getFullYear();
-        return `${month}/${day}/${year}`;
+        if (typeof date === 'object') {
+            // If it's a Date object, format it
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${month}/${day}/${year}`;
+        } else {
+            // If it's already formatted, return it as is
+            return date;
+        }
     };
 
     const handleNextStep = () => {
@@ -53,26 +87,25 @@ function Student_second_stage(){
         const sanitizedDescription = description.trim();
         // Save description to session storage
         sessionStorage.setItem('studentDescription', sanitizedDescription);
-        // Save start and end dates to session storage
-        if (startDate && endDate) {
+        // Save start and end dates to session storage // or Save checkbox state to session storage
+        if (isChecked) {
+            sessionStorage.setItem('noDates', 'true');
+        }else if (startDate && endDate) {
             console.log(startDate);
             const formattedStartDate = formatDate(startDate);
             console.log(formattedStartDate);
             const formattedEndDate = formatDate(endDate);
             sessionStorage.setItem('startDate', formattedStartDate); 
             sessionStorage.setItem('endDate', formattedEndDate);
+            sessionStorage.setItem('noDates', false);
         } else {
-            alert('Please select both start and end dates.');//if the user havent entered any dates, prompt the user for both dates
+            alert('Please select both start and end dates OR check the checkbox for no dates.');//if the user havent entered any dates, prompt the user for both dates
             return;
-        }
-
-        // Save checkbox state to session storage
-        if (isChecked) {
-            sessionStorage.setItem('noDates', 'true');
-        }
+        }        
+        
        
        // Only navigate if all validation checks pass
-        if (description.trim() !== '' && startDate && endDate) {
+        if (description.trim() !== '' && startDate && endDate || description.trim() !== '' && isChecked) {
             // add 1 to the progress bar
             if (currentStep < totalSteps) {
                 setCurrentStep(currentStep + 1);
@@ -105,8 +138,15 @@ function Student_second_stage(){
                     <img src={calendarIcon} className={style.date_icon} />
                     <p className='date-text'>Application period:</p>
                     <div className={style.date_return_text_wrapper}>
-                        {startDate && <p className={style.date_return_text}>Start Date: {startDate.toLocaleDateString()}</p>}
-                        {endDate && <p className={style.date_return_text}>End Date: {endDate.toLocaleDateString()}</p>}
+                    {startDate && typeof startDate === 'object' ? (
+                        <p className={style.date_return_text}>Start Date: {startDate.toLocaleDateString()}</p>
+                            ) : (
+                        <p className={style.date_return_text}>Start Date: {startDate}</p>
+                            )}                        {endDate && typeof endDate === 'object' ? (
+                        <p className={style.date_return_text}>End Date: {endDate.toLocaleDateString()}</p>
+                            ) : (
+                        <p className={style.date_return_text}>End Date: {endDate}</p>
+                            )}
                     </div>
                 </div>
 
