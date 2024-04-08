@@ -56,6 +56,8 @@ router.post('/login', (req, res) => {
   });
 })
 
+
+
 //registration
 router.post('/registration', (req, res) => {
   const { company_name, first_name, last_name, phone_number, email, password, tags, description } = req.body;
@@ -115,9 +117,9 @@ router.get('/addToFavorite/:companyId/:studentId', (req, res) => {
   const studentId = req.params.studentId;
   const companyId = req.params.companyId;
 
-  const query = 'INSERT INTO Favorite_student VALUES student_id = ?, company_id = ?';
+  const query = 'INSERT INTO Favorite_student (company_id, student_id) VALUES (?, ?)';
 
-  db.get(query, [studentId, companyId], (err, rows) => {
+  db.get(query, [companyId, studentId], (err, rows) => {
     if(err) {
       console.error(err.message);
       return res.status(500).json({ error: 'Internal Server Error' });
@@ -125,5 +127,41 @@ router.get('/addToFavorite/:companyId/:studentId', (req, res) => {
     return res.status(200).send("Favorite student added successfull");
   });
 })
+
+
+
+//get company by name
+router.get('/getByName/:companyName', (req, res) => {
+  const companyName = req.params.companyName;
+  const query = 'SELECT * FROM Company WHERE company_name = ?';
+
+  db.get(query, [companyName], (err, company) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(company);
+  });
+});
+
+
+//get company by tags
+router.get('/getByTags/:tags', (req, res) => {
+  const tags = req.params.tags.split(',');
+  const query = `
+  SELECT Company_tags.*, Company.company_name
+  FROM Company_tags
+  LEFT JOIN Company ON Company_tags.company_id = Company.id
+  WHERE Company_tags.tag_id IN (?)`;
+  
+  db.get(query, tags, (err, companies) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    console.log(companies);
+    res.json(companies);
+  });
+});
 
 export default router;

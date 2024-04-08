@@ -114,7 +114,7 @@ router.get('/addToFavorite/:studentId/:companyId', (req, res) => {
   const studentId = req.params.studentId;
   const companyId = req.params.companyId;
 
-  const query = 'INSERT INTO Favorite_company VALUES company_id = ?, student_id = ?';
+  const query = 'INSERT INTO Favorite_company (student_id, company_id) VALUES (?, ?)';
 
   db.get(query, [studentId, companyId], (err, rows) => {
     if(err) {
@@ -126,6 +126,13 @@ router.get('/addToFavorite/:studentId/:companyId', (req, res) => {
 })
 
 
+
+//get student
+
+
+//1. by name 
+
+//2. by tag
 
 
 export default router;
