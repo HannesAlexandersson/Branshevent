@@ -91,4 +91,21 @@ router.post('/registration', (req, res) => {
   });
 })
 
+
+
+//update a company
+router.post('/update', (req, res) => {
+  const { company_name, first_name, last_name, phone_number, email, password, description, companyId } = req.body;
+  const updateQuery = 'UPDATE Company SET company_name = ?, first_name = ?, last_name = ?, phone_number = ?, email = ?, password = ?, description = ? WHERE id = ?';
+
+  db.run(updateQuery, [, company_name, first_name, last_name, phone_number, email, password, description, companyIdId], function(err) {
+    if(err){
+        console.log(err.message);
+        return res.status(500).json({ error : 'Internal Server Error' });
+    }
+    console.log('Company updated successfully');
+    return res.status(200).send("Update successfull");
+  });
+})
+
 export default router;
