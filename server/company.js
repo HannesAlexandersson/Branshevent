@@ -108,4 +108,22 @@ router.post('/update', (req, res) => {
   });
 })
 
+
+
+//add favorite student
+router.get('/addToFavorite/:companyId/:studentId', (req, res) => {
+  const studentId = req.params.studentId;
+  const companyId = req.params.companyId;
+
+  const query = 'INSERT INTO Favorite_student VALUES student_id = ?, company_id = ?';
+
+  db.get(query, [studentId, companyId], (err, rows) => {
+    if(err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    return res.status(200).send("Favorite student added successfull");
+  });
+})
+
 export default router;
