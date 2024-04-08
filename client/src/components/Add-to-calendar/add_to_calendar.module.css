@@ -1,0 +1,30 @@
+.add_link{
+    cursor: pointer;
+}
+.link{
+    color: var(--default-font-clr);
+    font-family: var(--default-font);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1rem; /* 114.286% */
+    letter-spacing: 0.07813rem;
+    text-decoration-line: underline;
+    text-transform: uppercase;
+   
+}
+.list{
+    border:none;
+    background-color: var(--default-BG);
+    color: var(--default-font-clr);
+    font-family: var(--default-font);
+
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1rem; /* 114.286% */
+    letter-spacing: 0.07813rem;
+    text-decoration-line: underline;
+    text-transform: uppercase;
+    cursor: pointer;
+}

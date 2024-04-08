@@ -15,8 +15,8 @@ function Draggable(props) {
         const visibleCardHeight = Math.max(0, viewportHeight - cardRect.top); //calculate the diff from the position of the top of the card in relation to the viewport to know huw far we should be able to drag the card       
         const notVisiblePart = totalCardHeight - visibleCardHeight;//get how the height of the not visivle part of the card
         //const finalHeight = visibleCardHeight + (visibleCardHeight / 4); // we need little "extra" space at the bottom, roughly a fourth of the visible card height
-       console.log(`view: ${viewportHeight} visible: ${visibleCardHeight} final: ${notVisiblePart}`)
-        setMaxTop(-notVisiblePart - (visibleCardHeight / 2));  // Calculate the maximum top position based on viewport and element height
+       console.log(`cardpos: ${cardRect.top} view: ${viewportHeight} card: ${totalCardHeight} visible: ${visibleCardHeight} final: ${notVisiblePart}`)
+        setMaxTop(totalCardHeight - visibleCardHeight);  // Calculate the maximum top position based on viewport and element height
       }
     };
     calculateMaxTop();  // initiate the calculateMaxTop function 
@@ -31,7 +31,7 @@ function Draggable(props) {
   
   //The bounds is where we can restrict how far up and down we are able to drag the card, and the axxis restricts wich axis or wich direction we can drag it
   return (
-  <Dragg axis="y" bounds={{ top: maxTop, bottom: 0}}>
+  <Dragg axis="y" bounds={{ top: -maxTop, bottom: 0}}>
     <div ref={draggableRef} className={styles.dragg_card}>
     {props.children}        
     </div>

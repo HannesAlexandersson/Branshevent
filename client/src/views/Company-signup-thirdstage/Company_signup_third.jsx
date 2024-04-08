@@ -1,40 +1,50 @@
 import { useState } from 'react';
 import { Link, useNavigate, } from 'react-router-dom';
-import { Progressbar,Red_btn, White_btn, Skip_btn, TagsSelector, } from '../../components/index.js';
+import { Progressbar,Red_btn, White_btn, Skip_btn, TagsSelector, Spacer_bottom, } from '../../components/index.js';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import Nav from '../Navigation/Navigation';
 import style from './company_signup_third.module.css';
+import Address from '../../components/Address/Address.jsx';
 
-function Company_third(){
+function Company_third() {
+    const [companyAddress, setCompanyAddress] = useState('');
+    const [selectedTags, setSelectedTags] = useState([]);
     // we keep track of the checkboxes with this useState hook
     const [selectedLocation, setSelectedLocation] = useState('');
     //we keep track of the progrssbar with this hook
-    const [currentStep, setCurrentStep] = useState(4);
-    const totalSteps = 4;
-  
-    //progressbar
-    if (currentStep < totalSteps) {//add 1 to the progressbar prop
-        setCurrentStep(currentStep + 1); 
+    const [currentStep, setCurrentStep] = useState(5);
+    const totalSteps = 7;
+   
+    const handleAddressChange = (newAddress) => {
+        setCompanyAddress(newAddress);
     }
+    //handle the selected tags
+    const handleSaveSelectedTags = (tagsData) => {        
+        setSelectedTags(tagsData);
+      };
+    
     //checkboxes
-    const handleCheckboxChange = (event) => {
-        setSelectedLocation(event.target.value);
+    const handleCheckboxChange = (event) => {        
+        setSelectedLocation(event.target.value);        
       };
      
     return(
         <>
-            <Nav />
+            
             <div className={style.main}>
+            <Nav />
 
                 <Progressbar currentStep={currentStep} totalSteps={totalSteps} />    
 
-                <div className={style.content_container}>
-
-
-                    
+                <div className={style.content_container}>                   
 
                     
-                    <TagsSelector who="we" className={style.tag_selector}/>
+                    <TagsSelector 
+                        who="we" 
+                        className={style.tag_selector} 
+                        onSaveSelectedTags={handleSaveSelectedTags}
+                        selectedTags={selectedTags}
+                    />
                       
 
                     <div className={style.location_container}>
@@ -70,10 +80,12 @@ function Company_third(){
                         </div>
                     </div>
 
+                    <Address onAddressChange={handleAddressChange} />
+
                     <div className={style.btn_container}>
-                    <div className={style.skip_wrapper}>
-                        <Skip_btn />
-                    </div>
+                        <div className={style.skip_wrapper}>
+                            <Skip_btn />
+                        </div>
 
                     <div className={style.footer_btn_wrapper}>
                         <Link to="/company-description">
@@ -82,13 +94,30 @@ function Company_third(){
                                     <p>BACK</p>
                                 </White_btn>
                         </Link>
-                        <Link to="#">
-                            <Red_btn>                        
-                                <p>NEXT STEP</p>
-                                <img src={nextArrow} />
-                            </Red_btn>
+                        <Link to="/company-summary">
+                        <Red_btn
+                            onClick={() => {                               
+                                // Save selectedTags to session storage
+                                sessionStorage.setItem('selectedTags', JSON.stringify(selectedTags));
+                                
+                                // Save the selected checkbox value to session storage
+                                sessionStorage.setItem('selectedLocation', selectedLocation);
+
+                                //save address to sessionstorage
+                                sessionStorage.setItem('companyAddress', companyAddress);
+
+                                if (currentStep < totalSteps) {
+                                    setCurrentStep(currentStep + 1);                                     
+                                    }
+                               
+                            }}
+                        >                        
+                            <p>NEXT STEP</p>
+                            <img src={nextArrow} />
+                        </Red_btn>
                         </Link>
                     </div>
+                    <Spacer_bottom />
                 </div>
 
                 </div>

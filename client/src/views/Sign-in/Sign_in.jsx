@@ -4,24 +4,27 @@ import { Link } from 'react-router-dom';
 import Nav from '../Navigation/Navigation.jsx';
 import Progressbar from '../../components/Progress-bar/Progressbar.jsx';
 import styles from './sign_in.module.css';
-
-
+import { Spacer_bottom } from '../../components/index.js';
 
 
 function Sign_in(){
     const [currentStep, setCurrentStep] = useState(1);
-    const totalSteps = 4;
+    const totalSteps = 7;
 
-    const handleNextStep = () => {
+    const handleNextStep = (role) => {
+        sessionStorage.setItem('userRole', role);// save the role the user chooses in a sessionvariable 'role'
+
         if (currentStep < totalSteps) {
+            console.log(`signin expected 1: ${currentStep}`);
             setCurrentStep(currentStep + 1); 
         }
     };
 
     return(
-        <>
-            <Nav/>
+        <>            
             <div className={styles.main}>
+
+            <Nav/>
                 <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
                 <div className={styles.content_wrapper}>
@@ -30,10 +33,12 @@ function Sign_in(){
                         <p>I am a…</p>
                     </div>
                     <div className={styles.content_btn_wrapper}>
-                        <Link onClick={handleNextStep} className={styles.content_btn} to="/student-signup">STUDENT</Link>
-                        <Link onClick={handleNextStep} className={styles.content_btn} to="/company-signup">COMPANY</Link>
+                        <Link onClick={() => handleNextStep('student')} className={styles.content_btn} to="/student-signup">STUDENT</Link>
+                        <Link onClick={() => handleNextStep('company')} className={styles.content_btn} to="/company-signup">COMPANY</Link>
                     </div>
                 </div>
+
+                <Spacer_bottom />
 
                 <div className={styles.footer_btn_wrapper}>
                     <Link to="/">
@@ -43,7 +48,7 @@ function Sign_in(){
                         </button>
                     </Link>
                 </div>
-
+                <Spacer_bottom />
             </div>
         </>
     );

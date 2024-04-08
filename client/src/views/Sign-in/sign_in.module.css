@@ -4,8 +4,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-start;
     gap: 2rem;
+    height: 100vh;
+    height: 100dvh;
+    height: 100svh;
+    
 }
 /* PROGRESSBAR STARTS */
 .progress_bar{

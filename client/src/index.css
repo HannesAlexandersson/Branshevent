@@ -19,6 +19,8 @@
 
   --Blue-40: #CCD1DC;
   --Blue-80: #334875;
+  
+  --Blue-100: #001A52;
 
   --btn-font-clr: #2B2B2B;
   /*Fonts*/
@@ -28,6 +30,7 @@ body{
   margin: 0;
   /* overflow: hidden; */ /**/
   font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
 }
 .default-font{
   font-family: 'Inter', sans-serif;

@@ -8,22 +8,39 @@ import Gdpr from '../../components/GDPR/Gdpr.jsx';
 import styles from './company_sign_up.module.css';
 import Red_btn from '../../components/Red-btn/Red_btn.jsx';
 import White_btn from '../../components/White-btn/White_btn.jsx';
+import { Spacer_bottom } from '../../components/index.js';
 
 function Company_sign_up(){
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
     const [currentStep, setCurrentStep] = useState(2);
-    const totalSteps = 4;
+    const totalSteps = 7;
+    const [formData, setFormData] = useState({
+        companyName: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: ''
+    });
+
     
 
     const handleSubmit = (event) => {
-        event.preventDefault(); // stop default form submission so we can handle it ourselfs, Here we need to add formhandling, like validation and zanitation of the form data adn then send to db       
+        event.preventDefault(); // stop default form submission so we can handle it ourselfs       
 
-        if (currentStep < totalSteps) {//add 1 to the progressbar prop
+        // Retrieve sanitized and validated form data
+        const { companyName, firstName, lastName, email, phoneNumber } = formData;
+
+
+        if (currentStep < totalSteps) {//add 1 to the progressbar prop           
             setCurrentStep(currentStep + 1); 
         }
-        
-        navigate('/company-description');
+       
+           
+        // Save company data to session storage
+        sessionStorage.setItem('companyData', JSON.stringify(formData));
+
+        navigate('/company-account');//route the user to the next step
     };
 
     const handleCheckboxChange = () => {
@@ -33,14 +50,26 @@ function Company_sign_up(){
     const isNextButtonDisabled = !isChecked;
     console.log(isNextButtonDisabled);
     
+    const handleChange = (name, value) => {
+        // Update form data state with sanitized input value
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: value.trim() 
+        }));
+    };
 
     return(
-        <>
-            <Nav />
+        <>            
             <div className={styles.main}>
+
+            <Nav />
+            
             <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
-                <Form id="companySignupForm" handleSubmit={handleSubmit}/>                
+                <Form 
+                    id="companySignupForm"                    
+                    handleChange={handleChange}                     
+                    />                
 
                 
                     <Gdpr
@@ -58,11 +87,10 @@ function Company_sign_up(){
 
                     
                     <Red_btn                                                
-                        onClick={(e) => {
-                            console.log('click');
+                        onClick={(e) => {                            
                             if (!isChecked) {
                                 alert("You must read and agree to the GDPR before continuing."); // if the user havent agreed to gdpr we show an alert
-                            } else {
+                            } else {                                
                                 handleSubmit(e); // else we can go ahead and handle the form submission
                             }
                         }}
@@ -72,6 +100,8 @@ function Company_sign_up(){
                     </Red_btn>
                     
                 </div>
+
+                <Spacer_bottom />
             </div>
         </>
     );

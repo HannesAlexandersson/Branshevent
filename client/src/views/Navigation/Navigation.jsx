@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
-import { home, event, account, yrgo } from '../../assets/Icons/dropdownicons/index.js';
+import { home, event, account, yrgo, heart, heartlight } from '../../assets/Icons/dropdownicons/index.js';
 import styles from './navigation.module.css';
 import Ylogo from '../../assets/Logos/yrgo-logoRed.svg';
 
@@ -24,11 +24,18 @@ function Navigation(){
       '/': 'Home',
       '/sign-in': 'SIGN IN',
       '/company-signup': 'COMPANY SIGN-UP',
+      '/company-account': 'COMPANY SIGN-UP',
       '/company-description': 'COMPANY SIGN-UP',
       '/company-work': 'COMPANY SIGN-UP',
+      '/company-summary': 'COMPANY SUMMARY',
+      '/company-finish': 'COMPANY FINISH',
       '/student-signup': 'STUDENT SIGN-UP',
+      '/student-account': 'STUDENT SIGN-UP',
       '/student-description': 'STUDENT SIGN-UP',
       '/student-work': 'STUDENT SIGN-UP',
+      '/student-summary': 'STUDENT SUMMARY',
+      '/student-finish': 'STUDENT FINISH',
+      '/test-to-DB': 'Test to database',
     }    
 
     useEffect(() => {
@@ -53,6 +60,7 @@ function Navigation(){
             <li><img src={home}/>Home</li>
             <li><img src={event}/>Event info</li>
             <li><img src={yrgo}/>YRGO</li>
+            <li><img src={heart}/>Favourites</li>
             <li><img src={account}/>Account</li>
           </ul>
         </div>
