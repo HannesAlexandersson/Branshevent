@@ -1,8 +1,11 @@
 import express from 'express';
 import sqlite3 from 'sqlite3';
+import jwt from 'jsonwebtoken';
+import SECRET from './secret.js';
 
 const router = express.Router();
 const db = new sqlite3.Database('branchEvent.db');
+
 
 
 //get all students
@@ -20,6 +23,38 @@ router.get('/all', (req, res) => {
 
 
 
+//login
+router.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  const query = 'SELECT * FROM Student WHERE email = ? AND password = ?';
+
+  db.get(query, [email, password], (err, result) => {
+    if(err){
+      console.log(err.message);
+      return res.status(500).json({ error : 'Internal Server Error' });
+    }
+    if(!result) {
+      console.log('Login fail : No student found');
+      return res.status(403).json({ error: 'Email or password incorrect' });
+    } 
+    //creating a token to encrypt data and send back to the client for future authentication
+    const token = jwt.sign({id: result.id, userType: "student", password: result.password}, SECRET, {expiresIn: 864000});
+    return res.status(200).send({ token: token })
+  });
+});
+
+
+//test token route
+router.get('/testToken', (req, res) => {
+  jwt.verify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJzdHVkZW50IiwicGFzc3dvcmQiOiJxd2VydHl1aTEhIiwiaWF0IjoxNzEyNjk5NjM5LCJleHAiOjE3MTM1NjM2Mzl9.Cv8P8Zi6pb97_H2giEIs1Xl8u5QT6d1rPhwWc8gSETw", 
+  SECRET, (err, content) => {
+    console.log(content.userType,'ljhkjh');
+    return res.status(200).send({ content });
+  })
+})
+
+
+
 //get student by ID
 router.get('/:studentId', (req, res) => {
   const studentId = req.params.studentId;
@@ -33,29 +68,6 @@ router.get('/:studentId', (req, res) => {
     res.json(rows);
   });
 });
-
-
-
-//login
-router.post('/login', (req, res) => {
-  const password = req.body.password;
-  const email = req.body.email;
-  const query = 'SELECT * FROM Student WHERE email = ? AND password = ?';
-
-  db.get(query, [email], (err, result) => {
-    if(err){
-      console.log(err.message);
-      return res.status(500).json({ error : 'Internal Server Error' });
-    }
-    if(!result) {
-      console.log('Login fail : No student found');
-      return res.status(403).json({ error: 'Email or password incorrect' });
-    } else {
-      console.log('Successfully logged in')
-      return res.status(200).send(result);
-    }
-  });
-})
 
 
 

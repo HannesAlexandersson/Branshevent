@@ -5,6 +5,7 @@ const router = express.Router();
 const db = new sqlite3.Database('branchEvent.db');
 
 
+
 //get all companies
 router.get('/all', (req, res) => {
     const query = 'SELECT * FROM Company';
