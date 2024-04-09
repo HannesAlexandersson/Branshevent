@@ -1,0 +1,64 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* width: 21.375rem; */
+    gap: 2rem;
+}
+.info_menu_container{
+
+}
+.menu_btns{
+    display: flex;
+    padding: 0.5rem 1rem;
+    align-items: center;   
+    justify-content: center;
+}
+.menu_btns > button{
+    background: none;
+
+    font-family: var(--default-font);
+    color: var(--Blue-40);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; 
+    letter-spacing: 0.00938rem;
+    border: none;
+    position: relative;
+}
+.menu_btns > button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--Blue-40); /* Set the initial color to grey */
+    transition: background-color 0.3s ease; /* Add transition for smooth color change */
+  }
+  
+  .menu_btns > button.selected::after {
+    background-color: red; /* Change to red for the selected category */
+  }
+  .selected{
+    color: var(--default-font-clr)!important; 
+}
+
+
+
+.info_btn{
+
+}
+.profile_preview_btn{
+
+}
+
+
+
+.footer_btns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

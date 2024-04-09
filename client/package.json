@@ -12,6 +12,7 @@
   "dependencies": {
     "add-to-calendar-button-react": "^2.6.10",
     "ics": "^3.7.2",
+    "qrcode": "^1.5.3",
     "react": "^18.2.0",
     "react-datepicker": "^6.6.0",
     "react-dom": "^18.2.0",

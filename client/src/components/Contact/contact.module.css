@@ -1,0 +1,18 @@
+.input{
+    width: 100%;
+
+    color: var(--default-font-clr);
+    /* Body 1 */
+    font-family: var(--default-font);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; /* 150% */
+    letter-spacing: 0.00938rem;
+    background: none;
+    border: none;
+}
+.contact_container{
+    display: flex;
+    flex-direction: column;
+}

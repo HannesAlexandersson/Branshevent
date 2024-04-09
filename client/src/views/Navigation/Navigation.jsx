@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useNavigate, Outlet, Link, } from 'react-router-dom';
 import { home, event, account, yrgo, heart, heartlight } from '../../assets/Icons/dropdownicons/index.js';
 import styles from './navigation.module.css';
 import Ylogo from '../../assets/Logos/yrgo-logoRed.svg';
@@ -35,6 +35,7 @@ function Navigation(){
       '/student-work': 'STUDENT SIGN-UP',
       '/student-summary': 'STUDENT SUMMARY',
       '/student-finish': 'STUDENT FINISH',
+      '/account': 'USER PROFILE',
       '/test-to-DB': 'Test to database',
     }    
 
@@ -57,11 +58,11 @@ function Navigation(){
             {isDropdownOpen && (
         <div className={styles.dropdown_menu}>     
           <ul className={styles.dropDown_list}>
-            <li><img src={home}/>Home</li>
+            <li><Link to="/"><img src={home}/>Home</Link></li>
             <li><img src={event}/>Event info</li>
             <li><img src={yrgo}/>YRGO</li>
             <li><img src={heart}/>Favourites</li>
-            <li><img src={account}/>Account</li>
+            <li><Link to="/account"><img src={account}/>Account</Link></li>
           </ul>
         </div>
       )}

@@ -1,0 +1,5 @@
+.qr_container{
+    display: grid;
+    justify-items: center;
+    align-content: space-evenly;
+}

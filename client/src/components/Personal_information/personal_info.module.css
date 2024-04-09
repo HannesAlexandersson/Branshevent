@@ -1,0 +1,230 @@
+.sub_title{
+    color: var(--btn-font-clr);
+/* Caption */
+font-family: var(--default-font);
+font-size: 0.75rem;
+font-style: normal;
+font-weight: 400;
+line-height: 1rem; /* 133.333% */
+letter-spacing: 0.025rem;
+}
+
+.user_info{
+    display: flex;
+/* width: 21.375rem; */
+/* height: 22.5rem; */
+flex-direction: column;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+gap: .69rem;
+}
+.personal_information_wrapper{
+display: flex;
+flex-direction: column;
+}
+.pers_info_btn_container{
+    display: flex;
+    flex-direction: row;
+    /* gap: 2.5rem; */
+    justify-content: space-between;
+}
+.personal_info_title{
+    color: var(--Blue-100);
+    /* H6 */
+    font-family: var(--default-font);
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; /* 120% */
+    letter-spacing: 0.00938rem;
+}
+.edit_btn{
+    color: var(--secondary-BG);
+    /* Overline */
+    font-family: var(--default-font);
+    font-size: 0.625rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem; /* 160% */
+    letter-spacing: 0.09375rem;
+    text-decoration-line: underline;
+    text-transform: uppercase;
+    background: none;
+    border: none;
+}
+
+.redBox{
+    display: flex;
+   /*  width: 21.375rem; */
+    padding: 2rem 1.5rem;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    border-radius: 1rem;
+    border: 1px solid var(--secondary-BG);
+    background: var(--default-BG);
+    /* Box Shadow Jen */
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.10);
+    margin-bottom: 2rem;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+}
+.label{
+    color: var(--Blue-80);
+/* Button */
+font-family: var(--default-font);
+font-size: 0.875rem;
+font-style: normal;
+font-weight: 400;
+line-height: 1rem; /* 114.286% */
+letter-spacing: 0.07813rem;
+text-transform: uppercase;
+}
+.inputfield{
+    color: var(--default-font-clr);
+/* Body 1 */
+font-family: var(--default-font);
+font-size: 1.125rem;
+font-style: normal;
+font-weight: 400;
+line-height: 1.5rem; /* 133.333% */
+letter-spacing: 0.03125rem;
+background: none;
+border: none;
+}
+
+.change_pass_btn{
+    display: flex;
+    color: var(--primary-accent);
+    font-family: var(--default-font);
+    font-size: 0.625rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem;
+    letter-spacing: 0.09375rem;
+    text-decoration-line: underline;
+    text-transform: uppercase;
+    border: none;
+    background: none;
+    justify-content: flex-start;
+}
+
+
+.img_wrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+.img_display_wrapper{
+    /*CONSTRAIN THE DIMENSION WHEN ENDPOINT IS DONE*/
+}
+.img_btn{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0.5rem;
+    width: 8.0625rem;
+    height: 1rem;
+    /* min-width: 10.0625rem; */
+    padding: 1rem;
+    border-radius: 22.5rem;
+    font-family: var(--default-font);
+    border: 1px solid var(--secondary-BG);
+    background: var(--default-BG);
+    color: var(--btn-font-clr);
+    text-align: center;
+    font-size: 0.675rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: .7rem;
+    letter-spacing: 0.07813rem;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+
+.descr_area{
+    background: none;
+    border: none;
+
+    color: var(--default-font-clr);
+/* Body 1 */
+font-family: var(--default-font);
+font-size: 1.125rem;
+font-style: normal;
+font-weight: 400;
+line-height: 1.5rem; /* 133.333% */
+letter-spacing: 0.03125rem;
+}
+
+
+
+.tags_wrapper{
+
+}
+
+.tags_title{
+    color: var(--Blue-80);
+    /* Button */
+    font-family: var(--default-font);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem; /* 114.286% */
+    letter-spacing: 0.07813rem;
+    text-transform: uppercase;
+}
+.tags_container{
+    display: flex;
+}
+
+
+
+.checkbox_wrapper{
+    display: flex;
+    flex-direction: column;
+}
+.checkbox_loc_title{
+    color: var(--Blue-80);
+    /* Button */
+    font-family: var(--default-font);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem; /* 114.286% */
+    letter-spacing: 0.07813rem;
+    text-transform: uppercase;
+}
+.box_container{
+    display: flex;
+    flex-direction: column;
+}
+.box_row{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: .5rem;
+}
+
+
+
+.fav{
+    color: var(--Blue-80);
+    /* Button */
+    font-family: var(--default-font);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem; /* 114.286% */
+    letter-spacing: 0.07813rem;
+    text-transform: uppercase;
+}
+.favo_container{
+    display: flex;
+}

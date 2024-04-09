@@ -14,3 +14,4 @@ export { default as Company_finish } from './Company-finish/Company_finish.jsx';
 export { default as Student_account } from './Student-account/Student_account.jsx';
 export { default as Student_summary } from './Student-summary/Student_summary.jsx';
 export { default as Student_finish } from './Student-finish/Student_finish.jsx';
+export { default as Account } from './Account/Account.jsx';

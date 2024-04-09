@@ -26,3 +26,8 @@ export { default as Onlineprofile } from './Onlineprofile/Onlineprofile.jsx';
 export { default as Spacer_bottom } from './Spacer-bottom/Spacer_bottom.jsx';
 export { default as Add_to_calendar } from './Add-to-calendar/Add_to_calendar.jsx';
 export { default as Add_image } from './Add-image/Add_image.jsx';
+export { default as Personal_information } from './Personal_information/Personal_information.jsx';
+export { default as Personal_preview } from './Personal_preview/Personal_preview.jsx';
+export { default as About } from './About/About.jsx';
+export { default as Contact } from './Contact/Contact.jsx';
+export { default as QR_Code } from './QRCode/QR_Code.jsx';
