@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useNavigate, Outlet, Link, } from 'react-router-dom';
 import { home, event, account, yrgo, heart, heartlight } from '../../assets/Icons/dropdownicons/index.js';
 import styles from './navigation.module.css';
 import Ylogo from '../../assets/Logos/yrgo-logoRed.svg';
@@ -21,8 +21,10 @@ function Navigation(){
 
     // array of all our route paths converted to page titles
     const titleMap = {
-      '/': 'Home',
+      '/home': 'HOME',
+      '/': 'EVENT',
       '/sign-in': 'SIGN IN',
+      '/favourites': 'FAVOURITES',
       '/company-signup': 'COMPANY SIGN-UP',
       '/company-account': 'COMPANY SIGN-UP',
       '/company-description': 'COMPANY SIGN-UP',
@@ -35,6 +37,7 @@ function Navigation(){
       '/student-work': 'STUDENT SIGN-UP',
       '/student-summary': 'STUDENT SUMMARY',
       '/student-finish': 'STUDENT FINISH',
+      '/account': 'USER PROFILE',
       '/test-to-DB': 'Test to database',
     }    
 
@@ -57,11 +60,11 @@ function Navigation(){
             {isDropdownOpen && (
         <div className={styles.dropdown_menu}>     
           <ul className={styles.dropDown_list}>
-            <li><img src={home}/>Home</li>
-            <li><img src={event}/>Event info</li>
-            <li><img src={yrgo}/>YRGO</li>
-            <li><img src={heart}/>Favourites</li>
-            <li><img src={account}/>Account</li>
+            <li><Link to="/home"><img src={home}/>Home</Link></li>
+            <li><Link to="/"><img src={event}/>Event info</Link></li>
+            <li><a href="https://www.yrgo.se" target="_blank" rel="noopener noreferrer"><img src={yrgo}/>YRGO</a></li>
+            <li><Link to="/favourites"><img src={heart}/>Favourites</Link></li>
+            <li><Link to="/account"><img src={account}/>Account</Link></li>
           </ul>
         </div>
       )}
