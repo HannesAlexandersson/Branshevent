@@ -19,6 +19,7 @@ router.get('/all', (req, res) => {
   });
 
 
+
 //get student by ID
 router.get('/:studentId', (req, res) => {
   const studentId = req.params.studentId;
@@ -32,6 +33,7 @@ router.get('/:studentId', (req, res) => {
     res.json(rows);
   });
 });
+
 
 
 //login
@@ -56,10 +58,13 @@ router.post('/login', (req, res) => {
 })
 
 
+
 //registration
 router.post('/registration', (req, res) => {
     const { first_name, last_name, email, password, phone_number, tags, description, work_place } = req.body;
-    const query = 'INSERT INTO Student (first_name, last_name, email, password, phone_number, description, work_place) VALUES (?, ?, ?, ?, ?, ?, ?)'; 
+    const query = `
+    INSERT INTO Student (first_name, last_name, email, password, phone_number, description, work_place) 
+    VALUES (?, ?, ?, ?, ?, ?, ?)`; 
 
     
     //1. create the student
@@ -93,10 +98,14 @@ router.post('/registration', (req, res) => {
   })
 
 
+
 //update a student
 router.post('/update', (req, res) => {
   const { first_name, last_name, email, password, phone_number, description, work_place, studentId } = req.body;
-  const updateQuery = 'UPDATE Student SET first_name = ?, last_name = ?, email = ?, password = ?, phone_number = ?, description = ?, work_place = ? WHERE id = ?';
+  const updateQuery = `
+  UPDATE Student 
+  SET first_name = ?, last_name = ?, email = ?, password = ?, phone_number = ?, description = ?, work_place = ? 
+  WHERE id = ?`;
 
   db.run(updateQuery, [first_name, last_name, email, password, phone_number, description, work_place, studentId], function(err) {
     if(err){
@@ -107,6 +116,7 @@ router.post('/update', (req, res) => {
     return res.status(200).send("Update successfull");
   });
 })
+
 
 
 //add favorite companies
@@ -140,6 +150,7 @@ router.get('/getByName/:studentName', (req, res) => {
     res.json(student);
   });
 });
+
 
 
 //get student by tags

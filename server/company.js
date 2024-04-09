@@ -19,6 +19,7 @@ router.get('/all', (req, res) => {
   });
 
 
+
 //get company by ID
 router.get('/:companyId', (req, res) => {
   const companyId = req.params.companyId;
@@ -32,6 +33,7 @@ router.get('/:companyId', (req, res) => {
     res.json(rows);
   });
 });
+
 
 
 //login
@@ -61,7 +63,9 @@ router.post('/login', (req, res) => {
 //registration
 router.post('/registration', (req, res) => {
   const { company_name, first_name, last_name, phone_number, email, password, tags, description } = req.body;
-  const query = 'INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password, description) VALUES (?, ?, ?, ?, ?, ?)';
+  const query = `
+  INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password, description) 
+  VALUES (?, ?, ?, ?, ?, ?)`;
 
   //1. Create a company
   db.run(query, [company_name, first_name, last_name, phone_number, email, password, description], function(err) {
@@ -98,7 +102,10 @@ router.post('/registration', (req, res) => {
 //update a company
 router.post('/update', (req, res) => {
   const { company_name, first_name, last_name, phone_number, email, password, description, companyId } = req.body;
-  const updateQuery = 'UPDATE Company SET company_name = ?, first_name = ?, last_name = ?, phone_number = ?, email = ?, password = ?, description = ? WHERE id = ?';
+  const updateQuery = `
+  UPDATE Company 
+  SET company_name = ?, first_name = ?, last_name = ?, phone_number = ?, email = ?, password = ?, description = ? 
+  WHERE id = ?`;
 
   db.run(updateQuery, [company_name, first_name, last_name, phone_number, email, password, description, companyId], function(err) {
     if(err){
@@ -116,7 +123,6 @@ router.post('/update', (req, res) => {
 router.get('/addToFavorite/:companyId/:studentId', (req, res) => {
   const studentId = req.params.studentId;
   const companyId = req.params.companyId;
-
   const query = 'INSERT INTO Favorite_student (company_id, student_id) VALUES (?, ?)';
 
   db.get(query, [companyId, studentId], (err, rows) => {
