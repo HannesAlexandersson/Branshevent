@@ -25,13 +25,13 @@ function Navbar_landing(){
 
     
   const handleHome = () => {
-    navigate('/');
+    navigate('/home');
   }
   const handleAccount = () => {
     navigate('/account');
   }
   const handleEvent = () => {
-    navigate('/event');
+    navigate('/');
   }
   const handleYrgo = () => {
     navigate('https://www.yrgo.se');

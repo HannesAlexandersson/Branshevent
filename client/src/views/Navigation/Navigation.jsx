@@ -21,8 +21,8 @@ function Navigation(){
 
     // array of all our route paths converted to page titles
     const titleMap = {
-      '/': 'HOME',
-      '/event': 'EVENT',
+      '/home': 'HOME',
+      '/': 'EVENT',
       '/sign-in': 'SIGN IN',
       '/favourites': 'FAVOURITES',
       '/company-signup': 'COMPANY SIGN-UP',
@@ -60,8 +60,8 @@ function Navigation(){
             {isDropdownOpen && (
         <div className={styles.dropdown_menu}>     
           <ul className={styles.dropDown_list}>
-            <li><Link to="/"><img src={home}/>Home</Link></li>
-            <li><Link to="/event"><img src={event}/>Event info</Link></li>
+            <li><Link to="/home"><img src={home}/>Home</Link></li>
+            <li><Link to="/"><img src={event}/>Event info</Link></li>
             <li><a href="https://www.yrgo.se" target="_blank" rel="noopener noreferrer"><img src={yrgo}/>YRGO</a></li>
             <li><Link to="/favourites"><img src={heart}/>Favourites</Link></li>
             <li><Link to="/account"><img src={account}/>Account</Link></li>
