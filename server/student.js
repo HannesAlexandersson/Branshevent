@@ -2,6 +2,7 @@ import express from 'express';
 import sqlite3 from 'sqlite3';
 import jwt from 'jsonwebtoken';
 import SECRET from './secret.js';
+import { authMiddleware } from './authMiddleware.js';
 
 const router = express.Router();
 const db = new sqlite3.Database('branchEvent.db');
@@ -38,19 +39,15 @@ router.post('/login', (req, res) => {
       return res.status(403).json({ error: 'Email or password incorrect' });
     } 
     //creating a token to encrypt data and send back to the client for future authentication
-    const token = jwt.sign({id: result.id, userType: "student", password: result.password}, SECRET, {expiresIn: 864000});
+    const token = jwt.sign({id: result.id, userType: "student"}, SECRET, {expiresIn: 864000});
     return res.status(200).send({ token: token })
   });
 });
 
 
 //test token route
-router.get('/testToken', (req, res) => {
-  jwt.verify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJzdHVkZW50IiwicGFzc3dvcmQiOiJxd2VydHl1aTEhIiwiaWF0IjoxNzEyNjk5NjM5LCJleHAiOjE3MTM1NjM2Mzl9.Cv8P8Zi6pb97_H2giEIs1Xl8u5QT6d1rPhwWc8gSETw", 
-  SECRET, (err, content) => {
-    console.log(content.userType,'ljhkjh');
-    return res.status(200).send({ content });
-  })
+router.get('/testToken', authMiddleware, (req, res) => {
+    return res.status(200).send({ userType : req.userType });
 })
 
 
