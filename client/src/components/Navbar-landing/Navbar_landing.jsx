@@ -13,6 +13,8 @@ function Navbar_landing(){
     //dropdown logic:
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);    
 
+    
+
     const toggleDropdown = () => {
       setIsDropdownOpen(!isDropdownOpen);
     };
@@ -22,7 +24,21 @@ function Navbar_landing(){
 
 
     
-  
+  const handleHome = () => {
+    navigate('/');
+  }
+  const handleAccount = () => {
+    navigate('/account');
+  }
+  const handleEvent = () => {
+    navigate('/event');
+  }
+  const handleYrgo = () => {
+    navigate('https://www.yrgo.se');
+  }
+  const handleFavo = () => {
+    navigate('/favourites');
+  }
 
     
 
@@ -49,11 +65,11 @@ function Navbar_landing(){
             {isDropdownOpen && (
         <div className={styles.dropdown_menu}>     
           <ul className={styles.dropDown_list}>
-            <li><img src={homeBlack} />Home</li>
-            <li><img src={eventBlack}/>Event info</li>
-            <li><img src={Yrgo}/>YRGO</li>
-            <li><img src={heartlight} />Favourites</li>
-            <li><img src={accountBlack}/>Account</li>
+            <li onClick={handleHome}><img src={homeBlack} />Home</li>
+            <li onClick={handleEvent}><img src={eventBlack}/>Event info</li>
+            <li onClick={handleYrgo}><img src={Yrgo}/>YRGO</li>
+            <li onClick={handleFavo}><img src={heartlight} />Favourites</li>
+            <li onClick={handleAccount}><img src={accountBlack}/>Account</li>
           </ul>
         </div>
       )}

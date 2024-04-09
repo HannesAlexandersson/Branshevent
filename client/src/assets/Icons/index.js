@@ -17,3 +17,17 @@ export { default as image } from './image.svg';
 export { default as clockBlack } from './clockBlack.svg';
 export { default as locationBlack } from './locationBlack.svg'; 
 export { default as closeBlack } from './closeBlack.svg';
+export { default as eye_off } from './eye-off.svg';
+export { default as pencilRed } from './pencilRed.svg';
+export { default as briefcase } from './briefcase.svg';
+export { default as wrench } from './wrench.svg';
+export { default as laptop } from './laptop.svg';
+export { default as calendarBlue } from './calendarBlue.svg';
+export { default as globe } from './globe.svg';
+export { default as mail } from './mail.svg';
+export { default as phone } from './phone.svg';
+export { default as qr } from './qr.svg';
+export { default as userSml} from './userblackSmall.svg'
+export { default as office } from './office.svg';
+export { default as search } from './search.svg';
+export { default as sliders } from './sliders-horizontal.svg';

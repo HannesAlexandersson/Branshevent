@@ -63,3 +63,16 @@
     line-height: 1.5rem; 
     letter-spacing: 0.03125rem;
 }
+
+a {
+    color: inherit; /* Inherit color from parent */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  a:hover {
+    cursor: pointer;
+  }
+  
+  a:visited {
+    color: inherit; /* Inherit color from parent for visited links */
+  }
