@@ -24,6 +24,7 @@ function Navigation(){
       '/': 'HOME',
       '/event': 'EVENT',
       '/sign-in': 'SIGN IN',
+      '/favourites': 'FAVOURITES',
       '/company-signup': 'COMPANY SIGN-UP',
       '/company-account': 'COMPANY SIGN-UP',
       '/company-description': 'COMPANY SIGN-UP',
@@ -62,7 +63,7 @@ function Navigation(){
             <li><Link to="/"><img src={home}/>Home</Link></li>
             <li><Link to="/event"><img src={event}/>Event info</Link></li>
             <li><a href="https://www.yrgo.se" target="_blank" rel="noopener noreferrer"><img src={yrgo}/>YRGO</a></li>
-            <li><Link to="#"><img src={heart}/>Favourites</Link></li>
+            <li><Link to="/favourites"><img src={heart}/>Favourites</Link></li>
             <li><Link to="/account"><img src={account}/>Account</Link></li>
           </ul>
         </div>

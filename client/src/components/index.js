@@ -31,3 +31,5 @@ export { default as Personal_preview } from './Personal_preview/Personal_preview
 export { default as About } from './About/About.jsx';
 export { default as Contact } from './Contact/Contact.jsx';
 export { default as QR_Code } from './QRCode/QR_Code.jsx';
+export { default as Mini_card } from './Mini-cards/Mini_card.jsx';
+export { default as Card } from './Card/Card.jsx';

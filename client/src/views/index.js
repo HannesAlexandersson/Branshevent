@@ -16,3 +16,4 @@ export { default as Student_summary } from './Student-summary/Student_summary.js
 export { default as Student_finish } from './Student-finish/Student_finish.jsx';
 export { default as Account } from './Account/Account.jsx';
 export { default as Home } from './Home/Home.jsx';
+export { default as Favourites } from './Favourites/Favourites.jsx';

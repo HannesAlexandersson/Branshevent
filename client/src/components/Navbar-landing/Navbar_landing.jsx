@@ -36,6 +36,9 @@ function Navbar_landing(){
   const handleYrgo = () => {
     navigate('https://www.yrgo.se');
   }
+  const handleFavo = () => {
+    navigate('/favourites');
+  }
 
     
 
@@ -65,7 +68,7 @@ function Navbar_landing(){
             <li onClick={handleHome}><img src={homeBlack} />Home</li>
             <li onClick={handleEvent}><img src={eventBlack}/>Event info</li>
             <li onClick={handleYrgo}><img src={Yrgo}/>YRGO</li>
-            <li><img src={heartlight} />Favourites</li>
+            <li onClick={handleFavo}><img src={heartlight} />Favourites</li>
             <li onClick={handleAccount}><img src={accountBlack}/>Account</li>
           </ul>
         </div>
