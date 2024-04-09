@@ -94,4 +94,5 @@ letter-spacing: 0.00938rem;
 .chk_bx_wrap{
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 }

@@ -1,3 +1,65 @@
+.contact_wrapper{
+    display: flex;
+    flex-direction: column;
+}
+.online_container{
+    display: flex;
+    flex-direction: column;
+    gap:1.5rem;
+}
+.onlin_header_wrap{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+.head_txt{
+    color: var(--Blue-80);
+   font-family: var(--default-font);
+    
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; /* 150% */
+    letter-spacing: 0.00938rem;
+}
+
+
+.online_profile_display_wrap{
+display: flex;
+flex-direction: column;
+}
+.box{
+    display: flex;
+flex-direction: column;
+}
+.online_txt_display, .online_txt_value{
+    color: var(--default-font-clr);
+   font-family: var(--default-font);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; /* 150% */
+    letter-spacing: 0.00938rem;
+    margin: .2rem 0 .175rem 0;
+}
+
+.online_txt_value{
+    font-size: 1.125rem;
+
+}
+
+
+.email_wrap{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+
+
+
+
 .input{
     width: 100%;
 

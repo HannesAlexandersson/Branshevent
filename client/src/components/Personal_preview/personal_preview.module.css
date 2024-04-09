@@ -104,8 +104,19 @@
 .role_details{
     display: flex;
     flex-direction: row;
-    gap: .5rem;
+    gap: 2.5rem;
 }
 .user_role{
+
+}
+.details_submenu{
+    width: 100%;
+}
+
+.usher{
+display: flex;
+flex-direction: row;
+}
+.lusher{
 
 }

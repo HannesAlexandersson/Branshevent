@@ -30,6 +30,12 @@ function Navbar_landing(){
   const handleAccount = () => {
     navigate('/account');
   }
+  const handleEvent = () => {
+    navigate('/event');
+  }
+  const handleYrgo = () => {
+    navigate('https://www.yrgo.se');
+  }
 
     
 
@@ -57,8 +63,8 @@ function Navbar_landing(){
         <div className={styles.dropdown_menu}>     
           <ul className={styles.dropDown_list}>
             <li onClick={handleHome}><img src={homeBlack} />Home</li>
-            <li><img src={eventBlack}/>Event info</li>
-            <li><img src={Yrgo}/>YRGO</li>
+            <li onClick={handleEvent}><img src={eventBlack}/>Event info</li>
+            <li onClick={handleYrgo}><img src={Yrgo}/>YRGO</li>
             <li><img src={heartlight} />Favourites</li>
             <li onClick={handleAccount}><img src={accountBlack}/>Account</li>
           </ul>

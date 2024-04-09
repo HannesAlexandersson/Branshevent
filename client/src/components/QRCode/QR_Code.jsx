@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
+import { qr } from '../../assets/Icons/index.js';
 import style from './qr.module.css';
 function QR_Code(){
     const [qrCodeDataURL, setQRCodeDataURL] = useState('');
@@ -35,10 +36,18 @@ function QR_Code(){
     
     return(
         <>
-            <div className={style.qr_container}>
-                {qrCodeDataURL && (
-                    <img src={qrCodeDataURL} alt="QR Code" />
-                )}
+            <div className={style.qr_wrapper}>
+                <div className={style.sub_header}>
+                    <img src={qr} />
+                    <div className={style.sub_txt}>
+                        <p className={style.txt}>Share this profile</p>
+                    </div>
+                </div>
+                <div className={style.qr_container}>
+                    {qrCodeDataURL && (
+                        <img src={qrCodeDataURL} alt="QR Code" />
+                    )}
+                </div>
             </div>
         </>
     );

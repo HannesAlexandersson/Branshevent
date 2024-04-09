@@ -2,6 +2,9 @@ import { pencilRed, eye_off, image } from '../../assets/Icons';
 import style from './personal_info.module.css';
 
 function Personal_information(){
+sessionStorage.setItem('userRole', 'company');
+
+const userRole = sessionStorage.getItem('userRole');
 
     return(
         <>
@@ -17,11 +20,26 @@ function Personal_information(){
 
                             <div className={style.redBox}>
                                 <form className={style.form}>
+
+                                {userRole === 'company' && (
+                                    <div>
+                                        <label className={style.label} htmlFor='companyName'>Company Name</label>
+                                        <input 
+                                            type="text"
+                                            name="companyName"
+                                            className={style.inputfield}
+                                        />
+                                        </div>
+                                         )}
+
+
+
                                     <label className={style.label} htmlFor='proffesion'>PROFFESION</label>
                                     <input 
                                         type="text"
                                         name="proffesion"
                                         className={style.inputfield}
+                                        value="Webdeveloper"
                                     />
 
                                     <label className={style.label} htmlFor='firstname'>FIRSTNAME</label>
@@ -48,6 +66,18 @@ function Personal_information(){
                                         name="phone"
                                         className={style.inputfield}
                                     />
+                   
+                                        {userRole === 'company' && (
+                                        <div>
+                                        <label className={style.label} htmlFor='companyAddress'>Company Address</label>
+                                        <input 
+                                            type="text"
+                                            name="companyAddress"
+                                            className={style.inputfield}
+                                        />
+                                    </div>
+                                     )}
+
                                 </form>
                             </div>
 
@@ -144,16 +174,22 @@ function Personal_information(){
                                 </div>
                             </div>
 
-                            <div className={style.pers_info_btn_container}>
-                                <h2 className={style.personal_info_title}>SEE FAVOURITES</h2>
-                                <button className={style.edit_btn}>EDIT <img src={pencilRed} /></button>
-                            </div>
-                            <div className={style.redBox}>
-                                <p className={style.fav}>FAVOURITES</p>
-                                <div className={style.favo_container}>
-
+                            {userRole === 'student' && (
+                                <div>
+                                    <div className={style.pers_info_btn_container}>
+                                        <h2 className={style.personal_info_title}>SEE FAVOURITES</h2>
+                                        <button className={style.edit_btn}>EDIT <img src={pencilRed} /></button>
+                                    </div>
+                                    <div className={style.redBox}>
+                                        <p className={style.fav}>FAVOURITES</p>
+                                        <div className={style.favo_container}>
+                                            {/* Render favorite items here */}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
+
+
                         </div>
                     </div>
 

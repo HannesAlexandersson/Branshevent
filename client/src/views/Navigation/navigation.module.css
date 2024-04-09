@@ -41,7 +41,7 @@
     padding:1rem;
     width: 15rem;
 }
-.dropDown_list > li{
+.dropDown_list > li a{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -62,3 +62,17 @@
 .nav_logo{
     width: 3rem;
 }
+
+
+a {
+    color: inherit; /* Inherit color from parent */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  a:hover {
+    cursor: pointer;
+  }
+  
+  a:visited {
+    color: inherit; /* Inherit color from parent for visited links */
+  }

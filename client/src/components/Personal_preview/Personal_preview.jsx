@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { About, Contact, QR_Code } from '../index.js';
-import { briefcase, wrench, laptop, calendarBlue, circle_user_round } from '../../assets/Icons';
+import { briefcase, wrench, laptop, calendarBlue, circle_user_round, locationBlack, userSml } from '../../assets/Icons';
 import { account } from '../../assets/Icons/dropdownicons';
 import style from './personal_preview.module.css';
 
@@ -8,6 +8,20 @@ function Personal_preview(){
     const [showAbout, setShowAbout] = useState(true); 
     const [showContact, setShowContact] = useState(false); 
     const [showQRCode, setShowQRCode] = useState(false);
+    const userRole = sessionStorage.getItem('userRole');
+    sessionStorage.setItem('firstname', 'Hannes');
+    sessionStorage.setItem('lastName', 'Hansson');
+    sessionStorage.setItem('compName', 'Gyllene Björnen');
+
+    const firstName = sessionStorage.getItem('firstname');
+    const lastname = sessionStorage.getItem('lastName');
+    const compname = sessionStorage.getItem('compName');
+
+    const me = 'me';
+    const us = 'us';
+    
+
+
     // Function to toggle between displaying the submenus
     const handleButtonClick = (component) => {
         if (component === 'About') {
@@ -36,19 +50,50 @@ function Personal_preview(){
                             {/* img here */}
                         </div>
                     </div>
-
+                   
+                        
                     <div className={style.user_account}>
+
+                    {userRole === 'student' && (
                         <div className={style.user_details}>
                             <img src={circle_user_round} />
-                            <div className={style.user_name_wrapper}>
-                                
-                                <h1 className={style.user_header}>USERNAME HERE</h1>
+                            <div className={style.user_name_wrapper}>                                
+                                <h1 className={style.user_header}>{firstName} {lastname}</h1>
+                            </div>
+                        </div>                        
+                    )}
+                     {userRole === 'company' && (
+                        <div className={style.user_details}>
+                            <img src={briefcase} />
+                            <div className={style.user_name_wrapper}>                                
+                                <h1 className={style.user_header}>{compname}</h1>
                             </div>
                         </div>
-                        <div className={style.role_details}>
-                            <img src={briefcase} />
-                            <p className={style.user_role}>USER ROLE HERE</p>
+                    )}
+
+                    {userRole === 'student' && (
+                        <div>
+                            <div className={style.role_details}>
+                                <img src={briefcase} />
+                                <p className={style.user_role}>USER ROLE HERE</p>
+                            </div>
                         </div>
+                        )}
+                     {userRole === 'company' && (
+                        <div>
+                            <div className={style.role_details}>
+                                <div className={style.usher}>
+                                    <img src={userSml} />
+                                    <p className={style.user_role}>{firstName} {lastname}</p>
+                                </div>
+                                <div className={style.usher}>
+                                    <img src={locationBlack} />
+                                    <p className={style.user_role}>City Name</p>
+                                </div>
+                            </div>
+                        </div>
+                        )}
+
                     </div>
 
                     <div className={style.details_submenu}>
@@ -62,7 +107,7 @@ function Personal_preview(){
                                     setShowQRCode(false);
                                 }}
                             >
-                                About me
+                                {userRole === 'student' ? 'About me' : 'About us'}
                             </button>
 
                             <button
