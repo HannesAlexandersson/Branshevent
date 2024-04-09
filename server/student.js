@@ -138,18 +138,18 @@ router.get('/addToFavorite/:studentId/:companyId', (req, res) => {
 
 
 //get student by name
-router.get('/getByName/:studentName', (req, res) => {
-  const studentName = req.params.studentName;
-  const query = 'SELECT * FROM Student WHERE name = ?';
+// router.get('/getByName/:studentName', (req, res) => {
+//   const studentName = req.params.studentName;
+//   const query = 'SELECT * FROM Student WHERE name = ?';
 
-  db.get(query, [studentName], (err, student) => {
-    if (err) {
-      console.error(err.message);
-      return res.status(500).json({ error: 'Internal Server Error' });
-    }
-    res.json(student);
-  });
-});
+//   db.get(query, [studentName], (err, student) => {
+//     if (err) {
+//       console.error(err.message);
+//       return res.status(500).json({ error: 'Internal Server Error' });
+//     }
+//     res.json(student);
+//   });
+// });
 
 
 
@@ -162,12 +162,29 @@ router.get('/getByTags/:tags', (req, res) => {
   LEFT JOIN Student ON Student_tags.student_id = Student.id
   WHERE Student_tags.tag_id IN (?)`;
   
-  db.get(query, tags, (err, students) => {
+  db.all(query, tags, (err, students) => {
     if (err) {
       console.error(err.message);
       return res.status(500).json({ error: 'Internal Server Error' });
     }
     console.log(students);
+    res.json(students);
+  });
+});
+
+
+
+//search by name
+router.get('/searchByName/:studentName', (req, res) => {
+  const studentName = req.params.studentName;
+  const query = 'SELECT * FROM Student WHERE last_name LIKE ?';
+  const searchName = '%' + studentName + '%';
+
+  db.all(query, [searchName], (err, students) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
     res.json(students);
   });
 });

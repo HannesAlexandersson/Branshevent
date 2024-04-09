@@ -160,7 +160,7 @@ router.get('/getByTags/:tags', (req, res) => {
   LEFT JOIN Company ON Company_tags.company_id = Company.id
   WHERE Company_tags.tag_id IN (?)`;
   
-  db.get(query, tags, (err, companies) => {
+  db.all(query, tags, (err, companies) => {
     if (err) {
       console.error(err.message);
       return res.status(500).json({ error: 'Internal Server Error' });
