@@ -138,18 +138,18 @@ router.get('/addToFavorite/:studentId/:companyId', (req, res) => {
 
 
 //get student by name
-// router.get('/getByName/:studentName', (req, res) => {
-//   const studentName = req.params.studentName;
-//   const query = 'SELECT * FROM Student WHERE name = ?';
+router.get('/getByName/:studentName', (req, res) => {
+  const studentName = req.params.studentName;
+  const query = 'SELECT * FROM Student WHERE name = ?';
 
-//   db.get(query, [studentName], (err, student) => {
-//     if (err) {
-//       console.error(err.message);
-//       return res.status(500).json({ error: 'Internal Server Error' });
-//     }
-//     res.json(student);
-//   });
-// });
+  db.get(query, [studentName], (err, student) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(student);
+  });
+});
 
 
 
@@ -177,7 +177,9 @@ router.get('/getByTags/:tags', (req, res) => {
 //search by name
 router.get('/searchByName/:studentName', (req, res) => {
   const studentName = req.params.studentName;
-  const query = 'SELECT * FROM Student WHERE last_name LIKE ?';
+  const query = `
+  SELECT * FROM Student 
+  WHERE first_name LIKE ? OR last_name LIKE ?`;
   const searchName = '%' + studentName + '%';
 
   db.all(query, [searchName], (err, students) => {

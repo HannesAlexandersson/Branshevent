@@ -136,7 +136,7 @@ router.get('/addToFavorite/:companyId/:studentId', (req, res) => {
 
 
 
-//get company by name
+//get by name
 router.get('/getByName/:companyName', (req, res) => {
   const companyName = req.params.companyName;
   const query = 'SELECT * FROM Company WHERE company_name = ?';
@@ -151,7 +151,8 @@ router.get('/getByName/:companyName', (req, res) => {
 });
 
 
-//get company by tags
+
+//get by tags
 router.get('/getByTags/:tags', (req, res) => {
   const tags = req.params.tags.split(',');
   const query = `
@@ -169,5 +170,26 @@ router.get('/getByTags/:tags', (req, res) => {
     res.json(companies);
   });
 });
+
+
+
+//search by name
+router.get('/searchByName/:companyName', (req, res) => {
+  const companyName = req.params.companyName;
+  const query = `
+  SELECT * FROM Company 
+  WHERE company_name LIKE ?`;
+  const searchName = '%' + companyName + '%';
+
+  db.all(query, [searchName], (err, companies) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(companies);
+  });
+});
+
+
 
 export default router;
