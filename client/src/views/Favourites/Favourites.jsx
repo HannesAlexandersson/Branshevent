@@ -46,6 +46,25 @@ function Favourites(){
                         <img src={search} />
                     </div>
                 </div>
+                
+
+                
+
+               
+
+                <div className={style.attending_comps}>
+
+                <div className={style.search_wrapper_large}>
+                    <div className={style.searchbar}>
+                        <input 
+                        className={style.searchbar_input} 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="Search companies" />
+                        <img src={search} />
+                    </div>
+                </div>
+
 
                 <div className={style.filter_wrapper}>
                     <div className={`${style.filter_btn} ${showFilter ? style.active : ''}`}>
@@ -73,13 +92,107 @@ function Favourites(){
                     </div>
                 </div>
 
-               
 
-                <div className={style.attending_comps}>
                     <p>All Favourites</p>
 
                     <div className={style.mini_cards_containter}>
                         {/* FOREACH COMPANY in DB  ADD A MINI CARD */}
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                    <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                            <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
+                        <Mini_card 
+                        companyName={compName} 
+                        firstName={firstName}
+                        lastName={lastName}
+                        />
+
                         <Mini_card 
                         companyName={compName} 
                         firstName={firstName}

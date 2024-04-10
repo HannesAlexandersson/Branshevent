@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate }  from 'react-router-dom';
 import { Nav } from '../index';
-import { Yrgotransred } from '../../assets/Logos/index';
+import { Yrgotransred, Yrgo } from '../../assets/Logos/index';
 import { backArrow, nextArrow, locationBlack, clockBlack } from '../../assets/Icons/index';
 import { Add_to_calendar, Progressbar, Red_btn, Spacer_bottom, White_btn } from '../../components';
 import style from './student_finish.module.css';
@@ -14,7 +14,7 @@ function Student_finish(){
     const handleNextStep = () => {
 
 
-        navigate('#');
+        navigate('/home');
     }
     return(
         <>            
@@ -48,7 +48,7 @@ function Student_finish(){
 
                 <div className={style.footer_buttons}>
                     <Red_btn onClick={handleNextStep} className={style.red}>
-                        <p>who is coming?</p>
+                        <p>browse companies</p>
                         <img src={nextArrow} />
                     </Red_btn>
                     <Link to="/company-summary" >
@@ -60,11 +60,17 @@ function Student_finish(){
                 </div>
 
                 <Spacer_bottom />
-                <Spacer_bottom>
+                <Spacer_bottom className={style.btm_lgo_spacer}>
                     <div className={style.logo_bottom}>
                         <img src={Yrgotransred} alt="yrgo logo red, semi-transparent" />
                     </div>
                 </Spacer_bottom>
+                
+                <div className={style.big_dev_log}>
+                    <img src={Yrgo} />
+                </div>
+
+                <div className={style.btm_grad}></div>
             </div>
         </>
     );

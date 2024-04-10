@@ -119,12 +119,14 @@ function Student_summary(){
 
                     <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
-                    
+                    <div className={style.review_title}>
+                        <h2>Review and confirm student information</h2>
+                    </div>
+
+                <div className={style.large_device_container}>
 
                     <div className={style.container}>
-                        <div className={style.review_title}>
-                            <h2>Review and confirm student information</h2>
-                        </div>
+                        
 
 
                         <div className={style.red_ball}>
@@ -154,6 +156,10 @@ function Student_summary(){
                             </div>
                             
                         </div>
+                        
+
+
+
                     </div>
 
                     <div className={style.container}>
@@ -221,8 +227,8 @@ function Student_summary(){
                                                         
                         </div>
                     </div>
-
-                    <Spacer_bottom />
+                </div>
+                    <Spacer_bottom className={style.Spacer_bottom} />
 
                 <div className={style.footer_buttons}>
                    <Link to="/student-work">

@@ -5,7 +5,7 @@ import { account } from '../../assets/Icons/dropdownicons';
 import style from './personal_preview.module.css';
 
 function Personal_preview(){
-   
+   sessionStorage.setItem('userRole', 'student');
     const userRole = sessionStorage.getItem('userRole');
     sessionStorage.setItem('firstname', 'Hannes');
     sessionStorage.setItem('lastName', 'Hansson');

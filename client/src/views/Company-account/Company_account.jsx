@@ -90,13 +90,13 @@ function Company_account(){
 
             <Nav />
 
-            <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
+            <Progressbar currentStep={currentStep} totalSteps={totalSteps} />            
+
+            <form className={styles.form}>
 
             <div className={styles.container}>
                 <h2>Create Log In:</h2>
             </div>
-
-            <form className={styles.form}>
                 
                 <div className={styles.form_group}>
                     <label className={styles.label} htmlFor='companyName'>User</label>
