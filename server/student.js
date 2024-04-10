@@ -1,7 +1,7 @@
 import express from 'express';
 import sqlite3 from 'sqlite3';
 import jwt from 'jsonwebtoken';
-import SECRET from './secret.js';
+import SECRET from './config.js';
 import { authMiddleware } from './authMiddleware.js';
 
 const router = express.Router();

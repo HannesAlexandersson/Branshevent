@@ -1,7 +1,7 @@
 import express from 'express';
 import sqlite3 from 'sqlite3';
 import jwt from 'jsonwebtoken';
-import SECRET from './secret.js';
+import SECRET from './config.js';
 import { authMiddleware } from './authMiddleware.js';
 
 const router = express.Router();
@@ -29,6 +29,7 @@ router.post('/login', (req, res) => {
   const { email, password } = req.body;
   const query = 'SELECT * FROM Company WHERE email = ? AND password = ?';
 
+  console.log(email, password);
   db.get(query, [email, password], (err, result) => {
     if(err){
       console.log(err.message);

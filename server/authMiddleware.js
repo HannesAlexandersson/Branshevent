@@ -1,4 +1,4 @@
-import SECRET from './secret.js';
+import SECRET from './config.js';
 import jwt from 'jsonwebtoken';
 
 //this is our authentication middleware that will verify the jwt token for all the endpoints
