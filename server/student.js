@@ -53,7 +53,7 @@ router.get('/testToken', authMiddleware, (req, res) => {
 
 
 //get student by ID
-router.get('/:studentId', (req, res) => {
+router.get('/:studentId', authMiddleware, (req, res) => {
   const studentId = req.params.studentId;
   const query = 'SELECT * FROM Student WHERE id = ?';
 
@@ -109,7 +109,7 @@ router.post('/registration', (req, res) => {
 
 
 //update a student
-router.post('/update', (req, res) => {
+router.post('/update', authMiddleware, (req, res) => {
   const { first_name, last_name, email, password, phone_number, description, work_place, studentId } = req.body;
   const updateQuery = `
   UPDATE Student 
@@ -129,7 +129,7 @@ router.post('/update', (req, res) => {
 
 
 //add favorite companies
-router.get('/addToFavorite/:studentId/:companyId', (req, res) => {
+router.get('/addToFavorite/:studentId/:companyId', authMiddleware, (req, res) => {
   const studentId = req.params.studentId;
   const companyId = req.params.companyId;
 
@@ -147,7 +147,7 @@ router.get('/addToFavorite/:studentId/:companyId', (req, res) => {
 
 
 //get student by name
-router.get('/getByName/:studentName', (req, res) => {
+router.get('/getByName/:studentName', authMiddleware, (req, res) => {
   const studentName = req.params.studentName;
   const query = 'SELECT * FROM Student WHERE name = ?';
 
@@ -163,7 +163,7 @@ router.get('/getByName/:studentName', (req, res) => {
 
 
 //get student by tags
-router.get('/getByTags/:tags', (req, res) => {
+router.get('/getByTags/:tags', authMiddleware, (req, res) => {
   const tags = req.params.tags.split(',');
   const query = `
   SELECT Student_tags.*, Student.name
@@ -184,7 +184,7 @@ router.get('/getByTags/:tags', (req, res) => {
 
 
 //search by name
-router.get('/searchByName/:studentName', (req, res) => {
+router.get('/searchByName/:studentName', authMiddleware, (req, res) => {
   const studentName = req.params.studentName;
   const query = `
   SELECT * FROM Student 

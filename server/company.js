@@ -1,5 +1,8 @@
 import express from 'express';
 import sqlite3 from 'sqlite3';
+import jwt from 'jsonwebtoken';
+import SECRET from './secret.js';
+import { authMiddleware } from './authMiddleware.js';
 
 const router = express.Router();
 const db = new sqlite3.Database('branchEvent.db');
@@ -21,8 +24,36 @@ router.get('/all', (req, res) => {
 
 
 
+//login
+router.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  const query = 'SELECT * FROM Company WHERE email = ? AND password = ?';
+
+  db.get(query, [email, password], (err, result) => {
+    if(err){
+      console.log(err.message);
+      return res.status(500).json({error : 'internal server error'});
+    }
+    if (!result) {
+      console.log('Login fail : No company found');
+      return res.status(403).json({ error: 'Email or password incorrect' });
+    } 
+     //creating a token to encrypt data and send back to the client for future authentication
+    const token = jwt.sign({id: result.id, userType: "company"}, SECRET, {expiresIn: 864000});
+    return res.status(200).send({ token: token })
+  });
+})
+
+
+
+//test token route
+router.get('/testToken', authMiddleware, (req, res) => {
+  return res.status(200).send({ userType : req.userType });
+})
+
+
 //get company by ID
-router.get('/:companyId', (req, res) => {
+router.get('/:companyId', authMiddleware, (req, res) => {
   const companyId = req.params.companyId;
   const query = 'SELECT * FROM Company WHERE id = ?';
 
@@ -34,30 +65,6 @@ router.get('/:companyId', (req, res) => {
     res.json(rows);
   });
 });
-
-
-
-//login
-router.post('/login', (req, res) => {
-  const password = req.body.password;
-  const email = req.body.email;
-  const query = 'SELECT * FROM Company WHERE email = ? AND password = ?';
-
-  console.log(email, req.body);
-  db.get(query, [email], (err, result) => {
-    if(err){
-      console.log(err.message);
-      return res.status(500).json({error : 'internal server error'});
-    }
-    if (!result) {
-      console.log('Login fail : No company found');
-      return res.status(403).json({ error: 'Email or password incorrect' });
-    } else {
-      console.log('Successfully logged in')
-      return res.status(200).send(result);
-    }
-  });
-})
 
 
 
@@ -101,7 +108,7 @@ router.post('/registration', (req, res) => {
 
 
 //update a company
-router.post('/update', (req, res) => {
+router.post('/update', authMiddleware, (req, res) => {
   const { company_name, first_name, last_name, phone_number, email, password, description, companyId } = req.body;
   const updateQuery = `
   UPDATE Company 
@@ -121,7 +128,7 @@ router.post('/update', (req, res) => {
 
 
 //add favorite student
-router.get('/addToFavorite/:companyId/:studentId', (req, res) => {
+router.get('/addToFavorite/:companyId/:studentId', authMiddleware, (req, res) => {
   const studentId = req.params.studentId;
   const companyId = req.params.companyId;
   const query = 'INSERT INTO Favorite_student (company_id, student_id) VALUES (?, ?)';
@@ -138,7 +145,7 @@ router.get('/addToFavorite/:companyId/:studentId', (req, res) => {
 
 
 //get by name
-router.get('/getByName/:companyName', (req, res) => {
+router.get('/getByName/:companyName', authMiddleware, (req, res) => {
   const companyName = req.params.companyName;
   const query = 'SELECT * FROM Company WHERE company_name = ?';
 
@@ -154,7 +161,7 @@ router.get('/getByName/:companyName', (req, res) => {
 
 
 //get by tags
-router.get('/getByTags/:tags', (req, res) => {
+router.get('/getByTags/:tags', authMiddleware, (req, res) => {
   const tags = req.params.tags.split(',');
   const query = `
   SELECT Company_tags.*, Company.company_name
@@ -175,7 +182,7 @@ router.get('/getByTags/:tags', (req, res) => {
 
 
 //search by name
-router.get('/searchByName/:companyName', (req, res) => {
+router.get('/searchByName/:companyName', authMiddleware, (req, res) => {
   const companyName = req.params.companyName;
   const query = `
   SELECT * FROM Company 
