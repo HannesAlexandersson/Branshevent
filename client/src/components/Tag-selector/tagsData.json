@@ -13,10 +13,10 @@
       "Express.js", "Angular", "Vue.js", "Django", "Flask", "Bootstrap", 
       "Sass", "Less", "GraphQL", "RESTful API", "MongoDB", "MySQL", 
       "PostgreSQL", "SQLite", "Redis", "Webpack", "Babel", "Git", "GitHub", 
-      "Bitbucket", "Jira", "Trello", "Slack"]
+      "Bitbucket", "Jira", "Trello", "Slack", "Ruby", "Sanity", "Contentfull"]
     },
     {
-      "title": " Other Preferences ",
+      "title": " Other Preferences  ",
       "tags": ["Github", "Visual Studio Code", "Sublime Text", "Atom", "IntelliJ IDEA", "Eclipse", "NetBeans", "Heroku", "AWS", "Google Cloud Platform", "Microsoft Azure", "Docker", "Kubernetes", "Jenkins", "Travis CI", "CircleCI", "Continuous Integration", "Continuous Deployment"]
     }
   ]

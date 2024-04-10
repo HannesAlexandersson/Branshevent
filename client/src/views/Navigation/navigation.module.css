@@ -14,6 +14,7 @@
 
     width: calc(100dvw - (1.5rem + 1.5rem));/*test debugging*/
    /*  width: calc(100% - (1.5rem * 2)); */
+   
 }
 .hamburger{
     background: var(--Grey-100);
@@ -22,6 +23,7 @@
     font-size: 3rem; 
     width: 3rem;
     padding: 0;
+    cursor: pointer;
 }
 .dropdown_menu {
     position: absolute;
@@ -46,6 +48,7 @@
     flex-direction: row;
     justify-content: flex-start;
     gap: 1rem;
+    cursor: pointer;
 }
 .title_container{
     text-align: center;   
@@ -75,4 +78,15 @@ a {
   
   a:visited {
     color: inherit; /* Inherit color from parent for visited links */
+  }
+
+  @media (min-width: 1024px){
+    .main_nav{
+        width: 100%;
+        width: 100dvw;
+        width: 100svw;
+        height: 4.5rem;
+        box-sizing: border-box;
+        padding: 1.5rem 6.25rem;
+    }
   }

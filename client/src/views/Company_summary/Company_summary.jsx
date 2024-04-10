@@ -102,12 +102,14 @@ function Company_summary(){
 
                     <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
-                    
+                    <div className={style.review_title}>
+                        <h2>Review and confirm company information</h2>
+                    </div>
+
+                <div className={style.page_wrapper}>
 
                     <div className={style.container}>
-                        <div className={style.review_title}>
-                            <h2>Review and confirm company information</h2>
-                        </div>
+                        
 
 
                         <div className={style.red_ball}>
@@ -204,7 +206,7 @@ function Company_summary(){
                             
                         </div>
                     </div>
-
+                </div>
                     <Spacer_bottom />
 
                 <div className={style.footer_buttons}>

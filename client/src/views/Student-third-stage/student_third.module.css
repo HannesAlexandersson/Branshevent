@@ -18,7 +18,7 @@
     flex-direction: column;
     align-items: center;
     gap: .5rem;
-
+    width: 19rem;
 }
 
 
@@ -87,18 +87,8 @@
     gap: .275rem;
 }
 
-@media (min-width: 400px){
-    .location_container {
-       
-        align-items: center;
-        align-self: center;
-      
-        max-width: 50%;
-    }
-    .tag_selector {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        max-width: 50%;
+@media (min-width: 1024px){
+    .content_container{
+        width: 24.375rem;
     }
 }

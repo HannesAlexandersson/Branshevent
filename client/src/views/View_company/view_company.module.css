@@ -1,0 +1,176 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    position: relative;
+}
+.footer_btns{
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-content: center;
+    width: 100%;
+    
+    position: fixed;
+    bottom: 5%;
+    align-items: center;
+    z-index: 99;
+}
+.secondary{
+    display: none;
+}
+@media (min-width: 1024px){
+    .main{
+        display: none;
+    }
+    .secondary{
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+    }
+    .sec_page_container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+       /*  width: 100%; */
+        gap: 0.5rem;
+    }
+    .sec_head_backbtn_container{
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 1rem;
+        align-self: stretch;
+    }
+    .sec_center_container{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+        gap: 1rem;
+    }
+    .sec_left_container{
+       /*  display: flex;
+        flex-direction: column;
+        width: 50%; */
+
+        display: flex;
+        width: 33.125rem;
+        flex-direction: column;
+        align-items: flex-start;
+
+        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.10);
+        border-radius: 0 0 1rem 1rem;
+    }
+    .sec_right_container{
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+    }
+    .sec_img_container{
+        display: flex;
+        padding: 0;        
+        border-radius: 1rem 1rem 0rem 0rem;
+        height: 13.3125rem;
+    }
+    .sec_img_container > img{
+        border-radius: 1rem 1rem 0rem 0rem;
+        /* align-self: stretch; */
+        width: 100%;
+        object-fit: cover;
+    }
+    .sec_name_container{
+        display: flex;
+        flex-direction: row;
+        gap: 1.5rem;
+        align-items: baseline;
+        padding-left: 1rem;
+    }
+    .sec_name_container > h5{
+        color: var(--default-font-clr);
+        /* H5 */
+        font-family:    var(--default-font);
+        font-size: 1.5rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.5rem; /* 100% */
+        letter-spacing: 0.01125rem;
+        margin-bottom: .5rem;
+    }
+    .sec_name_container > img{
+        /* align-self: self-end; */
+    }
+    .sec_name_container > h6{
+        color: var(--default-font-clr);
+      
+        font-family:    var(--default-font);
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5rem; /* 150% */
+        letter-spacing: 0.00938rem;
+        margin-top: .5rem;
+        margin-bottom: .2rem;
+    }
+    .sec_share_prf_wrapper{
+        color: var(--Blue-80);
+        margin-top: 2rem;
+        width: 100%;
+       
+        padding-left: 1rem;
+    }
+    
+   
+
+
+    .sec_padding_container{
+        display: flex;
+        width: 19.25rem;
+        padding: 0 2rem;
+    }
+
+    .menu_btns{
+        display: flex;
+        padding: 0 1rem 0.5rem 0;
+        align-items: center;
+        justify-content: flex-start;
+        
+    }
+    .menu_btns > button{
+        background: none;
+    
+        font-family: var(--default-font);
+        color: var(--Blue-40);
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5rem; 
+        letter-spacing: 0.00938rem;
+        border: none;
+        position: relative;
+        cursor: pointer;
+    }
+    .menu_btns > button::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--Blue-40); /* Set the initial color to grey */
+        transition: background-color 0.3s ease; /* Add transition for smooth color change */
+      }
+      
+      .menu_btns > button.selected::after {
+        background-color: red; /* Change to red for the selected category */
+      }
+      .selected{
+        color: var(--default-font-clr)!important; 
+    }
+}

@@ -23,6 +23,7 @@ function Account(){
     return (
         <div className={style.main}>
             <Nav />
+
             <div className={style.info_menu_container}>
                 <div className={style.menu_btns}>
                     <button
@@ -45,6 +46,13 @@ function Account(){
                         Preview
                     </button>
                 </div>
+
+
+                <div className={style.footer_btns_big_dev}>
+                    <Red_btn>Log Out</Red_btn>
+                </div>
+
+
             </div>
 
            
