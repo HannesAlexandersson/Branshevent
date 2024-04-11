@@ -10,7 +10,8 @@ function Student_finish(){
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(7);
     const totalSteps = 7;
-
+const token = JSON.parse(localStorage.getItem('studentToken'));
+console.log(token);
     const handleNextStep = () => {
 
 
@@ -51,7 +52,7 @@ function Student_finish(){
                         <p>browse companies</p>
                         <img src={nextArrow} />
                     </Red_btn>
-                    <Link to="/company-summary" >
+                    <Link to="/student-summary" >
                         <White_btn className={style.white}>
                             <img src={backArrow} />
                             <p>back to event page</p>

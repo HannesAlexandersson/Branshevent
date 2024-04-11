@@ -19,3 +19,4 @@ export { default as Home } from './Home/Home.jsx';
 export { default as Favourites } from './Favourites/Favourites.jsx';
 export { default as View_company } from './View_company/View_company.jsx';
 export { default as Error_second } from './Error/Error_second.jsx';
+export { default as Log_in } from './Log_in/Log_in.jsx';

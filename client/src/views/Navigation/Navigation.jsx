@@ -41,6 +41,7 @@ function Navigation(){
       '/account': 'USER PROFILE',
       '/test-to-DB': 'Test to database',
       '/error': 'QUIZ ISNT IMPLEMENTED',
+      '/log-in': 'LOG IN',
     }    
 
     useEffect(() => {
