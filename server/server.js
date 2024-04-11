@@ -3,7 +3,7 @@ import companyRoutes from './company.js';
 import studentRoutes from './student.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import PORT from './config.js';
+import { PORT } from './config.js';
 
 const server = express();
 const port = PORT;

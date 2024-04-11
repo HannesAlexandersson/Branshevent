@@ -1,8 +1,10 @@
 import express from 'express';
 import sqlite3 from 'sqlite3';
 import jwt from 'jsonwebtoken';
-import SECRET from './config.js';
+import { SECRET, SALT } from './config.js';
 import { authMiddleware } from './authMiddleware.js';
+import bcrypt from 'bcrypt';
+
 
 const router = express.Router();
 const db = new sqlite3.Database('branchEvent.db');

@@ -1,8 +1,9 @@
 import express from 'express';
 import sqlite3 from 'sqlite3';
 import jwt from 'jsonwebtoken';
-import SECRET from './config.js';
+import { SECRET, SALT } from './config.js';
 import { authMiddleware } from './authMiddleware.js';
+import bcrypt from 'bcrypt';
 
 const router = express.Router();
 const db = new sqlite3.Database('branchEvent.db');
@@ -71,20 +72,29 @@ router.get('/:studentId', authMiddleware, (req, res) => {
 //registration
 router.post('/registration', (req, res) => {
     const { first_name, last_name, email, password, phone_number, tags, description, work_place } = req.body;
+    
+    bcrypt.hash(password, saltRounds, (err, hashed_password) => {
+      if (err) {
+        console.error('Error hashing password', err.message);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+    })
+
     const query = `
     INSERT INTO Student (first_name, last_name, email, password, phone_number, description, work_place) 
     VALUES (?, ?, ?, ?, ?, ?, ?)`; 
 
     
-    //1. create the student
-    db.run(query, [first_name, last_name, email, password, phone_number, description, work_place], function(err) {
+    //1. create the student; enter the hashed password into the db
+    db.run(query, [first_name, last_name, email, hashed_password, phone_number, description, work_place], function(err) {
         if(err){
-            console.log(err.message);
+            console.error('Error inserting student', err.message);
             return res.status(500).json({ error : 'Internal Server Error' });
         }
+        
         console.log('Student created successfully');
-
         const studentId = this.lastID;
+
         
         //2. get the student_id and add the tags to the db
         if(tags.length > 0) {
