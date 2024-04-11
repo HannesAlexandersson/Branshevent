@@ -1,0 +1,128 @@
+.main{
+    background: var(--default-BG);
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 1rem .5rem 0 .5rem; 
+}
+
+.container > h2{
+    color: var(--default-font-clr);
+   
+    font-family: var(--default-font);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; 
+    letter-spacing: 0.00938rem;
+    margin: 0 0 0 1.75rem;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+.form_group{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.password_container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    align-self: stretch;
+}
+.label{
+    margin-left: .75rem;
+
+    color: var(--secondary-accent);
+    
+    font-family: var(--default-font);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem; 
+    letter-spacing: 0.00625rem;
+}
+.inputField_blue{
+    width: 19.25rem;
+    padding: 1rem;
+    border-radius: 22.5rem;
+    border: none;
+    background: var(--secondary-accent);
+    color: var(--secondary-font-clr);
+    max-width: 19.25rem;
+    font-family: var(--default-font);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem; /* 125% */
+    letter-spacing: 0.03125rem;
+}
+.inputField_blue::placeholder {
+    color: var(--secondary-font-clr);
+}
+.inputField{
+    width: 19.25rem;
+    padding: 1rem;
+    border-radius: 22.5rem;
+    border: none;
+    background: var(--Grey-80);
+    color: var(--Grey-20);
+    max-width: 19.25rem;
+    font-family: var(--default-font);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem; /* 125% */
+    letter-spacing: 0.03125rem;
+}
+
+
+.footer_btn_container{
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    left: 0;
+    bottom: 8rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    /* margin-top: 12rem; */
+    gap: .5rem;
+}
+input:focus {
+    outline: none; /*remove the weird orange "border" that appear when typing in the input field*/
+}
+
+.validationIcon{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 75%;
+    color: var(--secondary-BG);
+}
+.red_cross{
+    width: 25%;
+}
+.green_bock{
+    width: 25%;
+}
+.error_cont{
+    width: 70%;
+}

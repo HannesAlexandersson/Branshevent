@@ -1,0 +1,78 @@
+.main_nav{
+    display: flex;    
+    height: calc(4.37rem - (1.5rem + 1.5rem));
+    
+    padding: 1.5rem;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+
+    background: var(--Grey-100);
+    color: var(--secondary-font-clr);
+
+    position: relative;
+
+    width: calc(100dvw - (1.5rem + 1.5rem));/*test debugging*/
+   /*  width: calc(100% - (1.5rem * 2)); */
+}
+.hamburger{
+    background: var(--Grey-100);
+    color: var(--secondary-font-clr);
+    border: none;
+    font-size: 3rem; 
+    width: 3rem;
+    padding: 0;
+}
+.dropdown_menu {
+    position: absolute;
+    top: 99%;
+    left: 0;
+    z-index: 99;
+    background: var(--Grey-100);
+    color: var(--secondary-font-clr);
+    
+  }
+.dropDown_list{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    list-style: none;
+   /*  box-shadow: 0px -14px 54px 0px rgba(0, 0, 0, 0.12);  Its causing a weird effect, gives the margins another darker colour, check with designers if should keep*/
+    padding:1rem;
+    width: 15rem;
+}
+.dropDown_list > li a{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+.title_container{
+    text-align: center;   
+    font-family:var(--default-font);
+}
+.nav_title > p{   
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem; 
+    letter-spacing: 0.07813rem;
+    text-transform: uppercase;
+}
+.nav_logo{
+    width: 3rem;
+}
+
+
+a {
+    color: inherit; /* Inherit color from parent */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  a:hover {
+    cursor: pointer;
+  }
+  
+  a:visited {
+    color: inherit; /* Inherit color from parent for visited links */
+  }

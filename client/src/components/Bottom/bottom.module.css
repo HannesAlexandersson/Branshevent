@@ -1,0 +1,12 @@
+.bottom{
+    
+
+
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.5rem; 
+    letter-spacing: 0.01125rem;
+    font-family: var(--default-font);
+    height: 15rem;
+}

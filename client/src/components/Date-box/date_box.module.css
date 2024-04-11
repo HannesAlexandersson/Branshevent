@@ -1,0 +1,17 @@
+
+.date_box{
+    display: flex;
+    width: 12.5625rem;  
+    width: calc(10.5625rem - (.5rem));  /*Looked way to big in production on vercel original was 12rem*/
+    padding: 0.25rem 0rem;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+
+    color: var(--Blue-100);   
+    border: 1px solid var(--Blue-100);
+    border-radius: 3.5rem;
+
+    gap: .275rem;
+}

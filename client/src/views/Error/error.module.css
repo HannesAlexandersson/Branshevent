@@ -1,0 +1,138 @@
+.error_container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .ladybug{
+    rotate: 90deg;
+    width: 17px;
+  }
+  .roach{
+    width: 10%;
+    rotate: 90deg;
+  }
+  .ladybug_cont {
+   
+    position: absolute;
+    z-index: 99;
+    color: black;
+    top: calc(46% - 20px);
+    left: 0;
+    width: 40px;
+    height: 40px;
+   
+    animation: ladybugWalk 15s linear infinite;
+  }
+  .ladybug_cont1 {
+   
+    position: absolute;
+    z-index: 99;
+    color: black;
+    top: calc(46% - 3px);
+    left: 0;
+    width: 80px;
+    height: 80px;
+   
+    animation: ladybugWalk 5s linear infinite;
+  }
+  .ladybug_cont2 {
+   
+    position: absolute;
+    z-index: 99;
+    color: black;
+    top: 59%;
+    left: 0;
+    width: 40px;
+    height: 40px;
+   
+    animation: ladybugWalk 35s linear infinite;
+  }
+  .ladybug_cont3 {
+   
+    position: absolute;
+    z-index: 99;
+    color: red;
+    top: 16%;
+    left: 0;
+    width: 60px;
+    height:60px;
+   
+    animation: ladybugWalk 25s linear forwards infinite;
+  }
+  .ladybug_cont4 {
+   
+    position: absolute;
+    z-index: 99;
+    color: black;
+    top: 6%;
+    left: 0;
+    width: 15px;
+    height:15px;
+   
+    animation: ladybugWalk 45s linear forwards infinite;
+  }
+  .ladybug_cont5 {
+   
+    position: absolute;
+    z-index: 99;
+    color: black;
+    top: 66%;
+    left: 0;
+    width: 35px;
+    height:35px;
+   
+    animation: ladybugWalk 55s linear forwards infinite;
+  }
+  .ladybug_cont6 {
+   
+    position: absolute;
+    z-index: 99;
+    color: black;
+    top: 80%;
+    left: 0;
+    width: 55px;
+    height:55px;
+   
+    animation: ladybugWalk 65s linear forwards infinite;
+  }
+  .roach_cont{
+    position: absolute;
+    z-index: 99;
+    color: black;
+    top: calc(10%); 
+    left: -10px; 
+    width: 40px;
+    height: 40px;
+     
+    animation: ladybugWalk 5s linear infinite;
+  }
+  .roach_cont1{
+    position: absolute;
+    z-index: 99;
+    color: black;
+    top: calc(30%); 
+    left: -10px; 
+    width: 120px;
+    height: 120px;
+     
+    animation: ladybugWalk 35s linear infinite;
+  }
+  
+  /* @keyframes ladybugWalk {
+    0% {
+      transform: translateX(-5px); 
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  } */
+
+  @keyframes ladybugWalk {
+    0% { left:-8px; } /* Start from the left edge of the screen */
+    100% { left: calc(100% + 5px); } /* Move to the right edge of the screen */
+}
+  

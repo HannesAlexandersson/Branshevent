@@ -1,0 +1,6 @@
+.skip_btn{
+    border: none;
+    background-color: transparent;
+    color: var(--default-font-clr);
+    text-transform: uppercase;
+}

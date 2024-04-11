@@ -1,0 +1,111 @@
+.add_profiles_btn{
+    width: 60%;
+    display: flex;
+    height: 3rem;
+    min-width: 10.0625rem;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 22.5rem;
+    font-family: var(--default-font);
+    border: 1px solid var(--secondary-BG);
+    background: var(--default-BG);
+}
+.add_profiles_btn > p{
+    color: var(--btn-font-clr);
+    text-align: center;    
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem; /* 114.286% */
+    letter-spacing: 0.07813rem;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+
+.form{
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: .5rem;
+}
+.input{
+
+}
+
+.popup{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.4375rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+    /* padding: 1.5rem;    */
+    padding: 20.5rem;/*debugging remove*/
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.8));/*its a filter that makes the blurred background a little darker at the top and lighter at the bottom*/
+    /* background-color: rgba(255, 255, 255, 0.8);  */
+    backdrop-filter: blur(20px); /*blur the background*/
+   
+}
+.input{
+    display: flex;
+    width: 19.25rem;
+    height: 1rem;
+    min-width: 19.25rem;
+    padding: 1rem;
+    align-items: flex-start;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    border-radius: 1.5rem;
+    background: var(--Grey-80);
+    font-family: var(--default-font);
+    color: var(--secondary-font-clr);
+    border: none;
+}
+.input::placeholder{
+    font-family: var(--default-font);
+    overflow: hidden;
+    color: var(--Grey-40);
+    text-overflow: ellipsis;
+    white-space: nowrap;   
+   
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem; 
+    letter-spacing: 0.03125rem;
+}
+.button_wrapper{
+    display: flex;
+    flex-direction: row;
+    gap: .285rem;
+    justify-content: center;
+}
+
+.error{
+
+}
+
+@media (min-width: 400px){
+   
+    .add_profiles_btn{
+        max-width: 23rem;   
+
+    }
+    .image_icon{
+        display: flex;
+    width: 30%;
+    align-self: stretch;
+    justify-content: center;
+    align-items: center;
+    min-width: 1rem;
+    border-radius: 22.5rem;
+    max-width: 10rem;
+    }
+}
