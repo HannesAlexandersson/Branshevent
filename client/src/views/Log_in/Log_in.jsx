@@ -13,7 +13,7 @@ function Log_in(){
         /*
         
         */
-
+        sessionStorage.setItem('loggedIn', true);
         navigate('/home');
     };
 

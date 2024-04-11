@@ -22,11 +22,13 @@ fetch(url, {
             throw new Error('Failed to send data'); 
         }
     })
-    .then(data => {
-       //the server returns a token
-        console.log('Token:', data.token);
-        JSON.parse(localStorage.setItem('token', data.token));
-    })
+    .then(data => {      
+      const userId = data.id; 
+      console.log('User ID:', userId);
+  
+      
+      sessionStorage.setItem('userId', userId);
+  })
     .catch(error => {
         console.error('Error:', error);
     });
