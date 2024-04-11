@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Progressbar, Red_btn, Spacer_bottom, White_btn } from '../../components';
+import { Progressbar, Red_btn, Spacer_bottom, White_btn,SendDataToServer } from '../../components';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
+import tagsArray from '../../tagArray.js';
+
 import { Nav } from '../index.js';
 import style from './company_summary.module.css';
 
@@ -9,13 +11,21 @@ function Company_summary(){
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(6);
     const totalSteps = 7;
-    const companyData = [];
-
+   
     let applicationStartdate;
     let applicationEnddate;
     const hasDates = applicationStartdate && applicationEnddate;
 
-    let  companyUsername, companyPassword, companyFormData, companyDescription, companyAddress, compOnlineProfiles, companyTags, companyLocation, companyImage;
+    let  companyParsed, 
+    companyUsername, 
+    companyPassword, 
+    companyFormData, 
+    companyDescription, 
+    companyAddress, 
+    compOnlineProfiles, 
+    companyTags, 
+    companyLocation, 
+    companyImage;
 
     if (sessionStorage.getItem('username') !== null) {
         companyUsername = sessionStorage.getItem('username');
@@ -55,6 +65,8 @@ function Company_summary(){
 
     if (sessionStorage.getItem('selectedTags') !== null) {
         companyTags = JSON.parse(sessionStorage.getItem('selectedTags'));
+     
+        companyParsed = sessionStorage.getItem('selectedTags');
     } else {
         companyTags = {tag: 'not set'};
     }
@@ -71,21 +83,36 @@ function Company_summary(){
         companyImage = 'not set';
     }
 
-   const handleNextStep = () => {
-    const companyData = [
-        companyFormData,
-        compOnlineProfiles,
-        { companyDescription },
-        { applicationStartdate },
-        { applicationEnddate },        
-        companyTags,
-        { companyLocation },
-        { username: companyUsername },
-        { password: companyPassword }, 
-        { image: companyImage },
-    ];
+    const getSelectedTagIds = () => {
+        // Filter the tagsArray to find tags that match the names in studentTags
+        const selectedTagIds = tagsArray
+            .filter(tag => companyParsed.includes(tag.name))
+            .map(tag => tag.id);
+    
+        return selectedTagIds;
+    };
+  
+    const tagIds = getSelectedTagIds(companyTags);
+    
+    let taagId = tagIds.join(',');
+    const formattedTags = taagId.split(",").map(tag => parseInt(tag.trim()));
+    console.log(formattedTags);
 
-    sessionStorage.setItem('companyData', JSON.stringify(companyData));
+   const handleNextStep = () => {
+    const endpoint = 'api/company/registration';
+    const requestData = {
+        company_name: companyFormData.companyName,
+        first_name: companyFormData.firstName,	
+        last_name: companyFormData.lastName,	
+        password: companyPassword,
+        email: companyFormData.email,
+        phone_number: companyFormData.phoneNumber,	
+        description: companyDescription,	
+        tags: formattedTags	
+    };
+    SendDataToServer(requestData, endpoint)
+
+    
      
     if (currentStep < totalSteps) {
         setCurrentStep(currentStep + 1);

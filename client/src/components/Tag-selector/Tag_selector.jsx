@@ -1,6 +1,10 @@
+
 import { useState, useEffect, useRef, } from 'react';
 import tagsData from './tagsData.json';
+
 import style from './tag_selector.module.css';
+
+
 
 function TagsSelector(props) {
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -15,6 +19,7 @@ function TagsSelector(props) {
       setSelectedCategory(tagsData[0].title);
     }
   }, []);
+  
 
   const handleCategorySelection = (category) => {
     setSelectedCategory(category);

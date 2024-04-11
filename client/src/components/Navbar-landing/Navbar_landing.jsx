@@ -40,7 +40,9 @@ function Navbar_landing(){
   const handleFavo = () => {
     navigate('/favourites');
   }
-
+  const handleUser = () => {
+    navigate('/log-in');
+  }
     
 
     const formatPathname = (pathname) => {
@@ -63,7 +65,7 @@ function Navbar_landing(){
             <div className={styles.logo_txt}><img src={logo_text} alt="yrgo logo text"/></div>
 
 
-            <img src={circle_user_round} alt="user account icon small" className={styles.user_icon}/>
+            <img src={circle_user_round} alt="user account icon small" className={styles.user_icon} onClick={handleUser}/>
             {isDropdownOpen && (
         <div className={styles.dropdown_menu}>     
           <ul className={styles.dropDown_list}>

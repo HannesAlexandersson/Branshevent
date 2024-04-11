@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Company_finish, Landing, Sign_in, Company_sign_up, Company_account, Company_second_stage, Company_signup_third, Company_summary, Student_signup_firststage, Student_second_stage, Student_third_stage, Test, Student_account, Student_summary, Student_finish, Account, Home, Favourites, View_company, Error_second } from './views/index.js';
+import { Company_finish, Landing, Sign_in, Company_sign_up, Company_account, Company_second_stage, Company_signup_third, Company_summary, Student_signup_firststage, Student_second_stage, Student_third_stage, Test, Student_account, Student_summary, Student_finish, Account, Home, Favourites, View_company, Error_second, Log_in } from './views/index.js';
 import Error from './views/Error/Error.jsx';
 import './App.css';
 
@@ -13,6 +13,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/home" element={<Home />} />
+        <Route path="/log-in" element={<Log_in />} />
         <Route path="/" element={<Landing /> } /> 
         <Route path="/sign-in" element={<Sign_in />} />
         <Route path="/favourites" element={<Favourites />} />
