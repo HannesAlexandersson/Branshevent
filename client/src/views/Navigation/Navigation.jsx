@@ -61,16 +61,22 @@ function Navigation(){
             </div>
             <img src={Ylogo} alt="yrgo logo small" className={styles.nav_logo}/>
             {isDropdownOpen && (
-        <div className={styles.dropdown_menu}>     
-          <ul className={styles.dropDown_list}>
-            <li><Link to="/home"><img src={home}/>Home</Link></li>
-            <li><Link to="/"><img src={event}/>Event info</Link></li>
-            <li><a href="https://www.yrgo.se" target="_blank" rel="noopener noreferrer"><img src={yrgo}/>YRGO</a></li>
-            <li><Link to="/favourites"><img src={heart}/>Favourites</Link></li>
-            <li><Link to="/account"><img src={account}/>Account</Link></li>
-          </ul>
-        </div>
-      )}
+              <div className={styles.dropdown_menu}>     
+                <ul className={styles.dropDown_list}>
+                  {sessionStorage.getItem('loggedIn') === 'true' ? (
+                    <>
+                      <li><Link to="/home"><img src={home}/>Home</Link></li>
+                      <li><Link to="/"><img src={event}/>Event info</Link></li>
+                      <li><a href="https://www.yrgo.se" target="_blank" rel="noopener noreferrer"><img src={yrgo}/>YRGO</a></li>
+                      <li><Link to="/favourites"><img src={heart}/>Favourites</Link></li>
+                      <li><Link to="/account"><img src={account}/>Account</Link></li>
+                    </>
+                  ) : (
+                    <li><Link to="/log-in"><img src={account}/>Log in</Link></li>
+                  )}
+                </ul>
+              </div>
+            )}
         </div>
         <Outlet />
     </LocationContext.Provider>

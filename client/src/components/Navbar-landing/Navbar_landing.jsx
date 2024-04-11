@@ -41,6 +41,15 @@ function Navbar_landing(){
     navigate('/favourites');
   }
   const handleUser = () => {
+    if(sessionStorage.getItem('loggedIn') === false){
+      navigate('/log-in');
+    }else if(sessionStorage.getItem('loggedIn') === true){
+      navigate('/account');
+    }else{
+      navigate('/error');
+    }
+  }
+  const handleLogIn = () => {
     navigate('/log-in');
   }
     
@@ -67,16 +76,22 @@ function Navbar_landing(){
 
             <img src={circle_user_round} alt="user account icon small" className={styles.user_icon} onClick={handleUser}/>
             {isDropdownOpen && (
-        <div className={styles.dropdown_menu}>     
-          <ul className={styles.dropDown_list}>
-            <li onClick={handleHome}><img src={homeBlack} />Home</li>
-            <li onClick={handleEvent}><img src={eventBlack}/>Event info</li>
-            <li onClick={handleYrgo}><img src={Yrgo}/>YRGO</li>
-            <li onClick={handleFavo}><img src={heartlight} />Favourites</li>
-            <li onClick={handleAccount}><img src={accountBlack}/>Account</li>
-          </ul>
-        </div>
-      )}
+              <div className={styles.dropdown_menu}>     
+                <ul className={styles.dropDown_list}>
+                  {sessionStorage.getItem('loggedIn') === 'true' ? (
+                    <>
+                      <li onClick={handleHome}><img src={homeBlack} />Home</li>
+                      <li onClick={handleEvent}><img src={eventBlack}/>Event info</li>
+                      <li onClick={handleYrgo}><img src={Yrgo}/>YRGO</li>
+                      <li onClick={handleFavo}><img src={heartlight} />Favourites</li>
+                      <li onClick={handleAccount}><img src={accountBlack}/>Account</li>
+                    </>
+                  ) : (
+                    <li onClick={handleLogIn}><img src={accountBlack} />Log in</li>
+                  )}
+                </ul>
+              </div>
+            )}
         </div>
     </>
     );
