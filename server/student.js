@@ -28,20 +28,37 @@ router.get('/all', (req, res) => {
 //login
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
-  const query = 'SELECT * FROM Student WHERE email = ? AND password = ?';
+  const query = 'SELECT * FROM Student WHERE email = ?';
 
-  db.get(query, [email, password], (err, result) => {
+  db.get(query, [email], (err, result) => {
     if(err){
       console.log(err.message);
       return res.status(500).json({ error : 'Internal Server Error' });
     }
+
     if(!result) {
       console.log('Login fail : No student found');
       return res.status(403).json({ error: 'Email or password incorrect' });
-    } 
-    //creating a token to encrypt data and send back to the client for future authentication
-    const token = jwt.sign({id: result.id, userType: "student"}, SECRET, {expiresIn: 864000});
-    return res.status(200).send({ token: token })
+    }
+
+    bcrypt.compare(password, result.password, (err, result) => {
+      if (err) {
+        console.error('Error comparing passwords:', err);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+    if (result) {
+        //passwords match - user authenticated
+        console.log('Student authenticated successfully');
+        //creating a token to encrypt data and send back to the client for future authentication
+        const token = jwt.sign({id: result.id, userType: "student"}, SECRET, {expiresIn: 864000});
+        return res.status(200).send({ token: token })
+    } else {
+        // Passwords do not match
+        console.log('Incorrect password');
+        return res.status(401).json({ error: 'Incorrect password' });
+    }
+    });
   });
 });
 
@@ -73,12 +90,11 @@ router.get('/:studentId', authMiddleware, (req, res) => {
 router.post('/registration', (req, res) => {
     const { first_name, last_name, email, password, phone_number, tags, description, work_place } = req.body;
     
-    bcrypt.hash(password, saltRounds, (err, hashed_password) => {
+    bcrypt.hash(password, SALT, (err, hashed_password) => {
       if (err) {
         console.error('Error hashing password', err.message);
         return res.status(500).json({ error: 'Internal Server Error' });
       }
-    })
 
     const query = `
     INSERT INTO Student (first_name, last_name, email, password, phone_number, description, work_place) 
@@ -114,8 +130,8 @@ router.post('/registration', (req, res) => {
             return res.status(200).json({ id: studentId });
         }
     });
-  })
-
+  });
+});
 
 
 //update a student
