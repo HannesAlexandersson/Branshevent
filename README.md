@@ -137,7 +137,7 @@ Returns a TOKEN for future authentization
  
 ```javascript
   GET /api/student/searchByName/:studentName'
----
+```
 
 #### Company - Login
 
