@@ -24,6 +24,7 @@ function Company_description({ description, handleDescriptionChange, isDatePendi
     
     return(
         <>
+        <div className={style.page_wrapper}>
             <div className={style.header_wrapper}>
                 <p className={style.header}>This is us:</p>               
                 <textarea 
@@ -97,9 +98,9 @@ function Company_description({ description, handleDescriptionChange, isDatePendi
           <Onlineprofile />
           <Add_image />
         </div>
+    </div>
 
-
-        </>
+    </>
     );
 }
 

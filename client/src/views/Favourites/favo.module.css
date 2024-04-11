@@ -165,3 +165,29 @@
     align-items: center;
     gap: .5rem;
   }
+  .search_wrapper_large{
+    display: none;
+  }
+  @media (min-width: 1024px){
+    .search_wrapper {
+      
+      display: none;
+    }
+    .attending_comps{
+      display: flex;
+      width: 64.5rem;
+      padding: 2.5rem 0rem;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .search_wrapper_large{
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    }
+    .searchbar{
+      width: 100%;
+    }
+    
+  }

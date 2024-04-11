@@ -24,7 +24,7 @@
     font-weight: 400;
     line-height: 1.5rem; 
     letter-spacing: 0.00938rem;
-    margin: 0 0 0 1.75rem;
+    /* margin: 0 0 0 1.75rem; */
 }
 
 .form{
@@ -122,40 +122,6 @@ input:focus {
 .error_cont{
     width: 70%;
 }
-@media (min-width: 400px){
-    .form{
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 75%;
-    }
-    .container{
-        display: flex;
-        flex-direction: column;
-        width: 75%;
-        margin: 1rem .5rem 0 .5rem; 
-    }
-    .inputField_blue {
-        width: 100%;
-      
-        max-width: 100%;
-       
-    }
-    .form_group {
-        width: 100%;
-        align-items: flex-start;
-    }
-    .password_container{
-      
-       width: 100%;
-    }
-    .inputField{
-        width: 100%;
-      
-        max-width: 100%;
-    }
-    .red_cross{
-        width: 25%;
-    max-height: 2.3rem;
-    }
+@media (min-width: 1024px){
+   
 }

@@ -15,6 +15,7 @@
     justify-content: center;
     align-items: center;
     min-width: 1rem;
+    max-width: 6rem;
     border-radius: 22.5rem;
 } 
 
@@ -183,7 +184,5 @@
 }
 @media (min-width: 400px){   
     
-    .image_icon{   
-    max-width: 10rem;
-    }
+    
 }

@@ -26,6 +26,7 @@
     letter-spacing: 0.00938rem;
     border: none;
     position: relative;
+    cursor: pointer;
 }
 .menu_btns > button::after {
     content: '';
@@ -61,4 +62,22 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+}
+.footer_btns_big_dev{
+    display: none;
+}
+@media (min-width: 1220px){
+    .info_menu_container{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 70rem;
+    }
+    .footer_btns_big_dev{
+    display: flex;
+    }
+    .footer_btns{
+        display: none;
+       
+    }
 }

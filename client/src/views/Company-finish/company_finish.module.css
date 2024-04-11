@@ -104,3 +104,46 @@
     position: absolute;
     bottom: 0;
 }
+.btm_grad{
+    display: none;
+}
+.big_dev_log{
+    display: none;
+}
+@media (min-width: 1024px){
+    .container{
+        width: 21.375rem;
+    }
+    .logo_bottom{        
+        display: none;        
+    }
+    .btm_lgo_spacer{
+        display: none;
+    }
+    .btm_grad{
+        display: flex;
+        background: linear-gradient(to top, #f9f8f8, transparent);
+        user-select: none;
+        height: 2.5rem;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+    }
+    .big_dev_log{
+        display: flex;
+        position: absolute;
+        bottom: 0;
+        left: 10%;
+        z-index: 0;
+        justify-content: flex-end;
+    }
+    .big_dev_log > img{
+        width: 100%;
+       /*  scale: 1.2; */
+    }
+
+    .header > h1{       
+        font-size: 2.125rem;       
+        line-height: 2.5rem;        
+    }
+}

@@ -7,3 +7,9 @@
     background: linear-gradient(to top,#F52A3B, transparent);
     user-select: none;
   }
+@media (min-width: 1024px){
+  .gradient{
+    display: none;
+  }
+
+}

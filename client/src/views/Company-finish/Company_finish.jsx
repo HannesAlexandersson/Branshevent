@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate }  from 'react-router-dom';
 import { Nav } from '../index';
-import { Yrgotransred } from '../../assets/Logos/index';
+import { Yrgotransred, Yrgo } from '../../assets/Logos/index';
 import { backArrow, nextArrow, locationBlack, clockBlack } from '../../assets/Icons/index';
 import { Add_to_calendar, Progressbar, Red_btn, Spacer_bottom, White_btn } from '../../components';
 import style from './company_finish.module.css';
@@ -14,7 +14,7 @@ function Company_finish(){
     const handleNextStep = () => {
 
 
-        navigate('#');
+        navigate('/home');
     }
     return(
         <>
@@ -48,10 +48,12 @@ function Company_finish(){
                 <Spacer_bottom />
                 
                 <div className={style.footer_buttons}>
+                    
                     <Red_btn onClick={handleNextStep} className={style.red}>
-                        <p>browse companies</p>
+                        <p>who is coming?</p>
                         <img src={nextArrow} />
                     </Red_btn>
+                    
                     <Link to="/company-summary" >
                         <White_btn className={style.white}>
                             <img src={backArrow} />
@@ -66,6 +68,12 @@ function Company_finish(){
                         <img src={Yrgotransred} alt="yrgo logo red, semi-transparent" />
                     </div>
                 </Spacer_bottom>
+
+                <div className={style.big_dev_log}>
+                    <img src={Yrgo} />
+                </div>
+
+                <div className={style.btm_grad}></div>
             </div>
         </>
     );

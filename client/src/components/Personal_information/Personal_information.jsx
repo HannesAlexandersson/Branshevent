@@ -8,11 +8,13 @@ const userRole = sessionStorage.getItem('userRole');
 
     return(
         <>
+                    <p className={style.sub_title}>Here you can edit your account&apos;s information and profile.</p>
                     
                     <div className={style.user_info}>
-                        <p className={style.sub_title}>Here you can edit your account&apos;s information and profile.</p>
 
                         <div className={style.personal_information_wrapper}>
+<div className={style.name_password_container}>
+    
                             <div className={style.pers_info_btn_container}>
                                 <h2 className={style.personal_info_title}>PERSONAL INFORMATION</h2>
                                 <button className={style.edit_btn}>EDIT <img src={pencilRed} /></button>
@@ -80,8 +82,8 @@ const userRole = sessionStorage.getItem('userRole');
 
                                 </form>
                             </div>
-
-
+    
+   
                             <div className={style.pers_info_btn_container}>
                                 <h2 className={style.personal_info_title}>USERNAME AND PASSWORD</h2>                               
                             </div>
@@ -103,7 +105,8 @@ const userRole = sessionStorage.getItem('userRole');
                                 </form>
 
                             </div>
-
+</div>
+<div className={style.name_password_container}> 
                             <div className={style.pers_info_btn_container}>
                                 <h2 className={style.personal_info_title}>DESCRIPTION</h2>
                                 <button className={style.edit_btn}>EDIT <img src={pencilRed} /></button>
@@ -135,7 +138,8 @@ const userRole = sessionStorage.getItem('userRole');
                                 name="online-profiles"
                                 />
                             </div>
-
+</div>
+<div className={style.name_password_container}>
                             <div className={style.pers_info_btn_container}>
                                 <h2 className={style.personal_info_title}>WORK RELATED</h2>
                                 <button className={style.edit_btn}>EDIT <img src={pencilRed} /></button>
@@ -189,7 +193,7 @@ const userRole = sessionStorage.getItem('userRole');
                                 </div>
                             )}
 
-
+</div>
                         </div>
                     </div>
 

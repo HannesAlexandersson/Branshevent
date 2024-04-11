@@ -24,8 +24,6 @@ router.get('/all', (req, res) => {
     });
   });
 
-
-
 //login
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
@@ -91,7 +89,7 @@ router.post('/registration', (req, res) => {
   const { company_name, first_name, last_name, phone_number, email, password, tags, description } = req.body;
   const query = `
   INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password, description) 
-  VALUES (?, ?, ?, ?, ?, ?)`;
+  VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
   //1. Create a company
   db.run(query, [company_name, first_name, last_name, phone_number, email, password, description], function(err) {

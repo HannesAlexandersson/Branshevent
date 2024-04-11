@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: center;
     gap: 1.875rem;
+    box-sizing: border-box;
 }
 .header{
     color: var(--default-font-clr);
@@ -199,7 +200,7 @@
 }
 
 .profiles_container{
-    width: 100%;
+   
     display: flex;
     flex-direction: row;
     gap: .5rem;
@@ -230,12 +231,11 @@
 @media (min-width: 400px){
     .date_wrapper{
         display: flex;
-   
-    justify-content: center;
-    margin-left: 0rem;
+        justify-content: center;
+        margin-left: 0rem;
+      
+        flex-direction: row;
+        align-items: center;
     }
-    .add_profiles_btn{
-        max-width: 23rem;   
-
-    }
+    
 }
