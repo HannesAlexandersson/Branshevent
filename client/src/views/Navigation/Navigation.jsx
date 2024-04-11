@@ -25,6 +25,7 @@ function Navigation(){
       '/': 'EVENT',
       '/sign-in': 'SIGN IN',
       '/favourites': 'FAVOURITES',
+      '/view-company': 'COMPANY DETAILS',
       '/company-signup': 'COMPANY SIGN-UP',
       '/company-account': 'COMPANY SIGN-UP',
       '/company-description': 'COMPANY SIGN-UP',
@@ -39,6 +40,8 @@ function Navigation(){
       '/student-finish': 'STUDENT FINISH',
       '/account': 'USER PROFILE',
       '/test-to-DB': 'Test to database',
+      '/error': 'QUIZ ISNT IMPLEMENTED',
+      '/log-in': 'LOG IN',
     }    
 
     useEffect(() => {

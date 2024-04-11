@@ -11,6 +11,7 @@
 
     border-radius: 22.5rem;
     font-family: var(--default-font);
+    cursor: pointer;
 }
 
 .next_btn{

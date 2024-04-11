@@ -6,6 +6,10 @@
     align-items: flex-start;
     gap: 0.5rem;
     border-bottom: 2px solid var(--Blue-80);
+
+    height: auto;
+    min-height: 5rem;
+    max-height: 10rem;
 }
 .user_aboutme{
    
@@ -21,6 +25,10 @@
     letter-spacing: 0.00938rem;
     background: none;
     border: none;
+
+    height:8rem;
+    /* overflow-y: hidden;  */
+    /* resize: none; */
 }
 
 

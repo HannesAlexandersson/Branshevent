@@ -1,9 +1,11 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, } from 'react-router-dom';
 import { Progressbar,Red_btn, White_btn, Skip_btn, TagsSelector, Spacer_bottom, } from '../../components/index.js';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import Nav from '../Navigation/Navigation';
 import style from './student_third.module.css';
+import tagArray from '../../tagArray.js';
 
 function Student_third_stage(){
     const [selectedTags, setSelectedTags] = useState([]);
@@ -12,6 +14,8 @@ function Student_third_stage(){
     //we keep track of the progrssbar with this hook
     const [currentStep, setCurrentStep] = useState(5);
     const totalSteps = 7;
+
+    
 
     useEffect(() => {
         // Load form data from sessionStorage to be able to 'prefill' the form if user backtracks
@@ -23,15 +27,19 @@ function Student_third_stage(){
         if (storedData && storedData.tags) {
             setSelectedTags(JSON.parse(storedData.tags));
             console.log(storedData.tags);
+            // Function to compare the selected tags with the tagsArray and return the corresponding IDs
+           
         }
         if (storedData && storedData.location) {           
             setSelectedLocation(storedData.location);
         }        
     }, []);
+
+    
     
     //handle the selected tags
     const handleSaveSelectedTags = (tagsData) => {
-        setSelectedTags(tagsData);
+        setSelectedTags(tagsData.tags);
       };
     
     //checkboxes
@@ -135,3 +143,6 @@ function Student_third_stage(){
 }
 
 export default Student_third_stage
+
+
+

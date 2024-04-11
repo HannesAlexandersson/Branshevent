@@ -5,6 +5,7 @@ import { Progressbar, Student_form, Gdpr, White_btn, Red_btn, Spacer_bottom,  } 
 import { Nav, } from '../index.js';
 import styles from './student_signup.module.css';
 
+
 function Student_signup_firststage(){
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
@@ -55,6 +56,8 @@ function Student_signup_firststage(){
         const isValid = validateForm();
 
         if (isValid) {
+           
+          
 
             if (currentStep < totalSteps) {//add 1 to the progressbar prop
                 setCurrentStep(currentStep + 1); 

@@ -104,11 +104,8 @@
     user-select: none;
 }
 
-@media (min-width: 400px){
-    .tag_selector {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        max-width: 65%;
+@media (min-width: 1024px){
+    .tag_selector{
+        
     }
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { Date_box } from '../index.js';
+import { logo_text } from '../../assets/Logos/index.js';
 import { calendarIcon, user_round, circle_user_round } from '../../assets/Icons/index.js';
 import { homeBlack, eventBlack, accountBlack, Yrgo, heart, heartlight } from '../../assets/Icons/dropdownicons/index.js';
 import styles from './navbar_landing.module.css';
@@ -39,7 +40,9 @@ function Navbar_landing(){
   const handleFavo = () => {
     navigate('/favourites');
   }
-
+  const handleUser = () => {
+    navigate('/log-in');
+  }
     
 
     const formatPathname = (pathname) => {
@@ -59,9 +62,10 @@ function Navbar_landing(){
                     <span>{time}</span>
                 </div>
             </Date_box>
+            <div className={styles.logo_txt}><img src={logo_text} alt="yrgo logo text"/></div>
 
 
-            <img src={circle_user_round} alt="user account icon small" className={styles.user_icon}/>
+            <img src={circle_user_round} alt="user account icon small" className={styles.user_icon} onClick={handleUser}/>
             {isDropdownOpen && (
         <div className={styles.dropdown_menu}>     
           <ul className={styles.dropDown_list}>

@@ -24,7 +24,7 @@
     font-weight: 400;
     line-height: 1.5rem; 
     letter-spacing: 0.00938rem;
-    margin: 0 0 0 1.75rem;
+    /* margin: 0 0 0 1.75rem; */
 }
 
 .form{
@@ -125,4 +125,7 @@ input:focus {
 }
 .error_cont{
     width: 70%;
+}
+@media (min-width: 1024px){
+    
 }

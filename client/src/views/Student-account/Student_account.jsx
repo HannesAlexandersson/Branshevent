@@ -90,23 +90,28 @@ function Student_account(){
 
         <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
-        <div className={styles.container}>
-            <h2>Create Log In:</h2>
-        </div>
+        
 
         <form className={styles.form}>
-            
-            <div className={styles.form_group}>
-                <label className={styles.label} htmlFor='studentName'>User</label>
-                <input 
-                    type="text" 
-                    id="user" 
-                    name="user" 
-                    placeholder={user} 
-                    required 
-                    className={styles.inputField_blue} 
-                    disabled
-                />
+            <div>
+                
+                <div className={styles.container}>
+                    <h2>Create Log In:</h2>
+                </div>
+                
+                <div className={styles.form_group}>
+                    <label className={styles.label} htmlFor='studentName'>User</label>
+                    <input 
+                        type="text" 
+                        id="user" 
+                        name="user" 
+                        placeholder={user} 
+                        required 
+                        className={styles.inputField_blue} 
+                        disabled
+                    />
+                </div>
+
             </div>
 
             <div className={styles.password_container}>

@@ -16,6 +16,7 @@
     border: none;
     font-size: 3rem; 
     width: 3rem;
+    cursor: pointer;
 }
 
 .icon_day{
@@ -30,7 +31,7 @@
     display: flex;
 }
 .user_icon{
-    
+    cursor: pointer;
 }
 .dropdown_menu{
     position: absolute;
@@ -55,6 +56,7 @@
     flex-direction: row;
     justify-content: flex-start;
     gap: 1rem;
+    cursor: pointer;
 
     font-family: var(--default-font);
     font-size: 1.125rem;
@@ -76,3 +78,21 @@ a {
   a:visited {
     color: inherit; /* Inherit color from parent for visited links */
   }
+  .logo_txt{
+    display: none;
+  }
+@media (min-width: 1024px){
+    .main_nav{
+        border-bottom: 1px solid var(--secondary-BG);
+        
+    }
+    .logo_txt{
+        display: flex;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+   /*  .dropdown_menu{
+        height: 100%;
+    } */
+}

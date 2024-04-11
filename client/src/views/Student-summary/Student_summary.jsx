@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Progressbar, Red_btn, Spacer_bottom, White_btn } from '../../components';
+import { Progressbar, Red_btn, Spacer_bottom, White_btn, SendDataToServer } from '../../components';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
+
 import { Nav } from '../index.js';
+
+import tagsArray from '../../tagArray.js';
 import style from './student_summary.module.css';
 
 
@@ -10,16 +13,19 @@ import style from './student_summary.module.css';
 
 function Student_summary(){
     const navigate = useNavigate();
-    const [currentStep, setCurrentStep] = useState(6);
+    const [currentStep, setCurrentStep] = useState(6);   
     const totalSteps = 7;
 
-    const studentData = [];
+    
 
+    const reqData = [];
+    let TOKEN;
     let studentDescription;
     let studentUsername;
     let studentOrientation;
     let studentOnlineProfiles;
     let studentTags;
+    let studentParsed;
     let studentLocation;
     let studentPassword;
     let studentImage;
@@ -66,6 +72,10 @@ function Student_summary(){
     
     if (sessionStorage.getItem('selectedTags') !== null) {
         studentTags = JSON.parse(sessionStorage.getItem('selectedTags'));
+        studentParsed = sessionStorage.getItem('selectedTags');
+       
+       
+        
     }else {
         studentTags = {tag: 'not set'};
     }
@@ -87,27 +97,51 @@ function Student_summary(){
     }else {
         studentImage = 'not set';
     }
+
+    if (sessionStorage.getItem('studentToken') !== null){
+        TOKEN = sessionStorage.getItem('token');
+    }else{
+        console.log('NO TOKEN RECEVIED')
+    }
+    const getSelectedTagIds = () => {
+        // Filter the tagsArray to find tags that match the names in studentTags
+        const selectedTagIds = tagsArray
+            .filter(tag => studentParsed.includes(tag.name))
+            .map(tag => tag.id);
+    
+        return selectedTagIds;
+    };
+  
+    const tagIds = getSelectedTagIds(studentTags);
+    
+    let taagId = tagIds.join(',');
+    const formattedTags = taagId.split(",").map(tag => parseInt(tag.trim()));
+    console.log(formattedTags);
+    
    
    const handleNextStep = () => {
-    const studentData = [
-        studentFormData,
-        { orientation: studentOrientation },
-        { onlineProfiles: studentOnlineProfiles },
-        { studentDescription },
-        { liaStartdate },
-        { liaEnddate },        
-        studentTags,
-        { studentLocation },
-        { username: studentUsername },
-        { password: studentPassword },
-        { image: studentImage },
-    ];
+    const endpoint = 'api/student/registration';
+    
+    
+    const requestData = {
+        first_name: studentFormData.firstName,
+        last_name: studentFormData.lastName,
+        email: studentFormData.email,
+        password: studentPassword,
+        phone_number: studentFormData.phoneNumber,
+        description: studentDescription,
+        work_place: studentLocation,
+        tags: formattedTags
+    };
+    SendDataToServer(requestData, endpoint);
+   
 
-    sessionStorage.setItem('studentData', JSON.stringify(studentData));
+    
      
     if (currentStep < totalSteps) {
         setCurrentStep(currentStep + 1);
-    }
+    }   
+
     navigate('/student-finish');
    } 
   
@@ -119,12 +153,14 @@ function Student_summary(){
 
                     <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
-                    
+                    <div className={style.review_title}>
+                        <h2>Review and confirm student information</h2>
+                    </div>
+
+                <div className={style.large_device_container}>
 
                     <div className={style.container}>
-                        <div className={style.review_title}>
-                            <h2>Review and confirm student information</h2>
-                        </div>
+                        
 
 
                         <div className={style.red_ball}>
@@ -154,6 +190,10 @@ function Student_summary(){
                             </div>
                             
                         </div>
+                        
+
+
+
                     </div>
 
                     <div className={style.container}>
@@ -205,8 +245,8 @@ function Student_summary(){
                             <div className={style.comp_name}>
                                 <h2>How do I want to work?</h2>
                                 <div className={style.tag_container}>
-                                    {studentTags.tags ? (
-                                        studentTags.tags.map((tag, index) => (
+                                    {studentTags ? (
+                                        studentTags.map((tag, index) => (
                                         <p key={index} className={style.tag}>{tag}</p>
                                         ))
                                     ) : (
@@ -221,8 +261,8 @@ function Student_summary(){
                                                         
                         </div>
                     </div>
-
-                    <Spacer_bottom />
+                </div>
+                    <Spacer_bottom className={style.Spacer_bottom} />
 
                 <div className={style.footer_buttons}>
                    <Link to="/student-work">

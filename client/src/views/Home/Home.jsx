@@ -3,21 +3,21 @@ import { Nav } from '../index.js';
 import { briefcase, locationBlack, search, sliders, userSml } from '../../assets/Icons/index.js';
 import style from './home.module.css';
 import { heartlight } from '../../assets/Icons/dropdownicons/index.js';
-import { Mini_card, Spacer_bottom } from '../../components/index.js';
+import { Mini_card, Quiz_wrapper, Spacer_bottom } from '../../components/index.js';
 
 function Home(){
     const [showFilter, setShowFilter] = useState(false);
     const [animationReverted, setAnimationReverted] = useState(false);
 
     /*Dummy data */
-    sessionStorage.setItem('userRole', 'company');
+    sessionStorage.setItem('userRole', 'student');
     sessionStorage.setItem('companyName', ' Big company');
    
     sessionStorage.setItem('firstname', 'Hannes');
     sessionStorage.setItem('lastName', 'Hansson');
     
 
-    const userRole = 'company';
+    const userRole = sessionStorage.getItem('userRole');
     const compName = sessionStorage.getItem('companyName');
     const firstName = sessionStorage.getItem('firstname');
     const lastName = sessionStorage.getItem('lastName');
@@ -35,7 +35,7 @@ const handleAnimationEnd = () => {
         <>
             <div className={style.main}>
                 <Nav />
-
+<div className={style.page_wrapper}>
                 <div className={style.search_wrapper}>
                     <div className={style.searchbar}>
                         <input 
@@ -75,20 +75,20 @@ const handleAnimationEnd = () => {
 
                 <Spacer_bottom />
 
-                <div className={style.quiz_wrapper}>
-                    <button className={style.quizbtn}>
-                        <p className={style.quiz_head}>What company suits you the best?</p>
-                        <p className={style.quiz_sub}>Increase your chances of connecting by taking this quiz</p>
-                    </button>
-                </div>
+                {userRole === 'student' && (
+                    <Quiz_wrapper />
+                )}               
+                
 
-                {/*SLIDER GOES HERE */}
                 <div className={style.new_companies_slider}>
 
                     <div className={style.new_companies_slide_card}>
                         <div className={style.new_cmp_head}>
                             <p>New companies</p>
                         </div>
+        <div className={style.slide_container}>
+                {/*SLIDER GOES HERE */}
+                
                         <div className={style.redBox}>
                             <div className={style.img_wrapper}>
                                 <div className={style.img_display_area}>
@@ -97,7 +97,7 @@ const handleAnimationEnd = () => {
                                     </div>
                                 </div>
                             </div>
-
+        
                             <div className={style.name_box}>
                                 <img src={briefcase} />
                                 <p>{compName}</p>
@@ -113,10 +113,12 @@ const handleAnimationEnd = () => {
                                 </div>
                             </div>
                         </div>
+                {/*END SLIDER */}
+                
+        </div>
                     </div>
 
                 </div>
-                {/*END SLIDER */}
 
                 <div className={style.attending_comps}>
                     <p>All companies attending</p>
@@ -149,6 +151,7 @@ const handleAnimationEnd = () => {
                     </div>
                 </div>
             </div>
+        </div>
         </>
     );
 }

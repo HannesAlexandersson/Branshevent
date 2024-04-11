@@ -32,6 +32,7 @@ h2, h3 {
 }
 .review_title{
     display: flex;
+    margin-top: 2.5rem;
 }
 .review_title > h2{
     color: var( --default-font-clr);    
@@ -171,4 +172,40 @@ h2, h3 {
     color: var( --default-font-clr);    
     font-family: var(--default-font);
     margin: .275rem 0;
+}
+.large_device_container{
+    padding: 0 1.5rem;
+}
+@media (min-width: 620px){
+    .descr_box{
+        min-width:initial ;
+        width: 21.375rem;
+    }
+}
+@media (min-width: 1024px){
+    .large_device_container{
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        align-content: center;
+        justify-content: center;
+        gap: 2rem;        
+    }
+    .descr_box{
+        min-width:initial ;
+        width: 21.375rem;
+    }
+
+    .footer_buttons{
+        display: flex;
+        flex-direction: row;
+        gap: .5rem;
+        justify-content: center;      
+       
+        left: 50%;
+        transform: translateX(-50%);
+        align-items: center;
+        bottom: 4.5rem;
+    }
+    
 }
