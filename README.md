@@ -56,7 +56,9 @@ Example request:
 
 #### Student - Login
 
+```javascript
   POST /api/student/login
+```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
@@ -67,7 +69,9 @@ Returns a TOKEN for future authentization
 
 #### Student - Register
 
+```javascript
   POST /api/student/registration
+```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
@@ -84,11 +88,15 @@ Returns a TOKEN for future authentization
 
 #### Student - Get all student
 
+```javascript
   GET /api/student/all
+```
 
 #### Student - Update
  
+```javascript
   POST /api/student/update
+```
 
 | Parameter | Type     | 
 | :-------- | :------- | 
@@ -103,29 +111,39 @@ Returns a TOKEN for future authentization
 
 #### Student - Get by ID
  
+```javascript
   GET /api/student/:studentId
+```
 
 #### Student - Add favorite companies
  
+```javascript
   GET /api/student/addToFavorite/:studentId/:companyId'
+```
 
 #### Student - Get by name
  
+```javascript
   GET /api/student/getByName/:studentName'
+```
 
 #### Student - Get by tag
  
+```javascript
   GET /api/student/getByTags/:tags'
+```
 
 #### Student - Search by name
  
+```javascript
   GET /api/student/searchByName/:studentName'
-
 ---
 
 #### Company - Login
 
+```javascript
   POST /api/company/login
+```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
@@ -136,7 +154,9 @@ Returns a TOKEN for future authentization
 
 #### Company - Register
 
+```javascript
   POST /api/company/registration
+```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
@@ -153,11 +173,15 @@ Returns a TOKEN for future authentization
 
 #### Company - Get all companies
 
+```javascript
   GET /api/company/all
+```
 
 #### Company - Update
  
+```javascript
   POST /api/company/update
+```
 
 | Parameter | Type     | 
 | :-------- | :------- | 
@@ -171,20 +195,30 @@ Returns a TOKEN for future authentization
 
 #### Company - Get by ID
  
+```javascript
   GET /api/company/:companyId
+```
 
 #### Company - Add favorite student
  
+```javascript
   GET /api/company/addToFavorite/:companyId/:studentId'
+```
 
 #### Company - Get by name
  
+```javascript
   GET /api/company/getByName/:companyName'
+```
 
 #### Company - Get by tag
  
+```javascript
   GET /api/company/getByTags/:tags'
+```
 
 #### Company - Search by name
  
+```javascript
   GET /api/company/searchByName/:companyName'
+```
