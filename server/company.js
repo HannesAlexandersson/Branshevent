@@ -115,10 +115,12 @@ router.post('/registration', (req, res) => {
             }
             console.log('Tags added successfully');
         
-            return res.status(200).json({ id: companyId });
+            const token = jwt.sign({id: result.id, userType: "company"}, SECRET, {expiresIn: 864000});
+            return res.status(200).send({ token: token })
         });
     } else {
-        return res.status(200).json({ id: companyId });
+      const token = jwt.sign({id: result.id, userType: "company"}, SECRET, {expiresIn: 864000});
+      return res.status(200).send({ token: token })
     }
   });
 })

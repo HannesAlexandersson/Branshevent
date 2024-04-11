@@ -64,7 +64,7 @@ Returns a TOKEN for future authentization
 
 #### Student - Register
 
-  POST /api/student/register
+  POST /api/student/registration
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
@@ -133,7 +133,7 @@ Returns a TOKEN for future authentization
 
 #### Company - Register
 
-  POST /api/company/register
+  POST /api/company/registration
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |

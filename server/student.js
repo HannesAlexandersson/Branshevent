@@ -63,6 +63,7 @@ router.post('/login', (req, res) => {
 });
 
 
+
 //test token route
 router.get('/testToken', authMiddleware, (req, res) => {
     return res.status(200).send({ userType : req.userType });
@@ -123,11 +124,14 @@ router.post('/registration', (req, res) => {
                     return res.status(500).json({ error : 'Internal Server Error' });
                 }
                 console.log('Tags added successfully');
-            
-                return res.status(200).json({ id: studentId });
+    
+                const token = jwt.sign({id: result.id, userType: "student"}, SECRET, {expiresIn: 864000});
+                return res.status(200).send({ token: token })
             });
         } else {
-            return res.status(200).json({ id: studentId });
+          const token = jwt.sign({id: result.id, userType: "student"}, SECRET, {expiresIn: 864000});
+          return res.status(200).send({ token: token })
+
         }
     });
   });
