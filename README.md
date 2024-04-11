@@ -34,12 +34,15 @@ In order to get this token, first perform a successful login request towards /ap
 
 Place this token in you localstorage or similar and add it to the header of all subsequent request using this pattern:
 
+```javascript
 header: {'Content-Type': 'application/json', authorization: 'bearer '+TOKEN }
+```
 
 Where TOKEN is the jwt token recieved from the login request.
 
 Example request:
 
+```javascript
  fetch('/api/student/getById/2',{
     method: 'GET', 
     headers: {
@@ -47,6 +50,7 @@ Example request:
         'Authorization': 'Bearer ' + token
     },
 })
+```
 
 ## API Reference
 
