@@ -94,6 +94,7 @@
     text-transform: uppercase;
 
     text-decoration: none;
+    cursor: pointer;
 }
 /* MAIN CONTENT ENDS */
 .formfield{
@@ -138,4 +139,7 @@
     display: flex;
     flex-direction: row;
     gap: 1rem;
+}
+.radiobtn{
+    cursor: pointer;
 }

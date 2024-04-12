@@ -48,7 +48,7 @@ function Log_in(){
             }
         })
         .catch(error => {
-            // If the request fails, check the error status
+            // If the request fails, set the error status, wich will be renderd to the user
             if (error.response && (error.response.status === 401 || error.response.status === 403)) {                
                 console.error('Invalid credentials');                
                 setErrors('Incorrect username or password');
@@ -58,13 +58,14 @@ function Log_in(){
             }
         });
     }
+    
     const signInCompany = () => {
         const endpoint = '/api/company/login';
         get_user_data(endpoint, email, password)
         .then(data => {          
             sessionStorage.setItem('loggedIn', 'true');
             console.log('Successfully logged in');
-
+            //when a succesulfull log in happens, we set the loggedin to true to navigate to next page
             if(sessionStorage.getItem('loggedIn') === 'true'){
                 navigate('/home');
             }
@@ -81,7 +82,7 @@ function Log_in(){
         });
     }       
     
-
+    //if user press sign up we take them to the registration form
     const handleSignUp = () => {
         navigate('/sign-in');
     };
@@ -108,6 +109,7 @@ function Log_in(){
                                 value="company"
                                 checked={userType === 'company'}
                                 onChange={handleUserTypeChange}
+                                className={style.radiobtn}
                             />
                             <label className={style.label} htmlFor="company">Company</label>
                         </div>
@@ -119,6 +121,7 @@ function Log_in(){
                                 value="student"
                                 checked={userType === 'student'}
                                 onChange={handleUserTypeChange}
+                                className={style.radiobtn}
                             />
                             <label className={style.label} htmlFor="student">Student</label>
                         </div>
