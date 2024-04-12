@@ -23,7 +23,7 @@ function Log_in(){
 
     const handleSignIn = () => {
         //compare input to users in db, if user inputs correct data, log them in. 
-        const endpoint = 'api/student/login';
+        const endpoint = 'api/user/login';
         
         get_user_data(endpoint, email, password)
         .then(data => {          

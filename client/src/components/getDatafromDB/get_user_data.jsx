@@ -23,8 +23,11 @@ function get_user_data(endpoint, email, password) {
     })
     .then(data => {      
         console.log('Token:', data.token);
-        localStorage.setItem('token', data.token); //store the JWT token               
+        localStorage.setItem('token', data.token); // Store the JWT token
+        sessionStorage.setItem('userData', JSON.stringify(data)); // Store user data in sessionStorage
+        sessionStorage.setItem('userType', data.userType); // Store user type in sessionStorage
         console.log('Successfully retrieved user data');
+        return data; // Return the user data for further processing if needed
     })
     .catch(error => {
         console.error('Error:', error);

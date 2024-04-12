@@ -41,12 +41,12 @@ function Navbar_landing(){
     navigate('/favourites');
   }
   const handleUser = () => {
-    if(sessionStorage.getItem('loggedIn') === false){
+    if(sessionStorage.getItem('loggedIn') === false){ // if user isnt logged in
       navigate('/log-in');
-    }else if(sessionStorage.getItem('loggedIn') === true){
+    }else if(sessionStorage.getItem('loggedIn') === true){ // if user is logged in
       navigate('/account');
     }else{
-      navigate('/error');
+      navigate('/log-in'); // if the sessionvariable isnt set
     }
   }
   const handleLogIn = () => {

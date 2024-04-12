@@ -89,12 +89,19 @@ router.get('/:companyId', authMiddleware, (req, res) => {
 //registration
 router.post('/registration', (req, res) => {
   const { company_name, first_name, last_name, phone_number, email, password, tags, description } = req.body;
+
+  bcrypt.hash(password, SALT, (err, hashed_password) => {
+    if (err) {
+      console.error('Error hashing password', err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
   const query = `
   INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password, description) 
-  VALUES (?, ?, ?, ?, ?, ?)`;
+  VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
   //1. Create a company
-  db.run(query, [company_name, first_name, last_name, phone_number, email, password, description], function(err) {
+  db.run(query, [company_name, first_name, last_name, phone_number, email, hashed_password, description], function(err) {
       if(err){
           console.log(err.message);
           return res.status(500).json({ error : 'Internal Server Error' });
@@ -121,6 +128,7 @@ router.post('/registration', (req, res) => {
         return res.status(200).json({ id: companyId });
     }
   });
+});
 })
 
 

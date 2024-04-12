@@ -1,12 +1,17 @@
 import express from 'express';
 import companyRoutes from './company.js';
 import studentRoutes from './student.js';
+import userRoutes from './user.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { PORT } from './config.js';
 
+
+
 const server = express();
 const port = PORT;
+
+
 
 //cross origin resource sharing settings to make the API work
 const corsOptions = {
@@ -23,6 +28,9 @@ server.use(bodyParser.json())
 
 server.use('/api/company/', companyRoutes);
 server.use('/api/student/', studentRoutes);
+server.use('/api/user/', userRoutes);
+
+
 
 server.listen(port, () => {
     console.log(`Server is running on ${port}`);
