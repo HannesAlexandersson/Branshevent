@@ -134,3 +134,8 @@
     align-items: center;
     color: var(--primary-accent);
 }
+.radio{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
