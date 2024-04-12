@@ -12,7 +12,8 @@
   
   .searchbar {
     display: flex;
-    width: 21.375rem;
+   /*  width: 21.375rem; */
+   width: 100%;
     padding: 0.5rem 1rem;
     flex-direction: row;
     align-items: flex-start;

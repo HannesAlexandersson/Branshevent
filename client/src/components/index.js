@@ -35,3 +35,4 @@ export { default as Mini_card } from './Mini-cards/Mini_card.jsx';
 export { default as Card } from './Card/Card.jsx';
 export { default as Quiz_wrapper } from './Quiz_wrapper/Quiz_wrapper.jsx';
 export { default as Simple_slider } from './Slider/Slider.jsx';
+export { default as get_user_data } from './getDatafromDB/get_user_data.jsx';

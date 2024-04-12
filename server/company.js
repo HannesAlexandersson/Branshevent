@@ -29,7 +29,7 @@ router.get('/all', (req, res) => {
 //login
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
-  const query = 'SELECT * FROM Company WHERE email = ? AND password = ?';
+  const query = 'SELECT * FROM Company WHERE email = ?';
 
   console.log(email, password);
   db.get(query, [email, password], (err, result) => {
@@ -40,10 +40,25 @@ router.post('/login', (req, res) => {
     if (!result) {
       console.log('Login fail : No company found');
       return res.status(403).json({ error: 'Email or password incorrect' });
-    } 
-     //creating a token to encrypt data and send back to the client for future authentication
-    const token = jwt.sign({id: result.id, userType: "company"}, SECRET, {expiresIn: 864000});
-    return res.status(200).send({ token: token })
+    }
+    
+    bcrypt.compare(password, result.password, (err, result) => {
+      if (err) {
+        console.error('Error comparing passwords:', err);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+    if (result) {
+      //passwords match - user authenticated
+        console.log('Company authenticated successfully');
+      //creating a token to encrypt data and send back to the client for future authentication
+      const token = jwt.sign({id: result.id, userType: "company"}, SECRET, {expiresIn: 864000});
+      return res.status(200).send({ token: token })
+    } else {
+      console.log('Incorrect password');
+      return res.status(401).json({ error: 'Incorrect password' });
+    }
+    });
   });
 })
 
@@ -74,12 +89,19 @@ router.get('/:companyId', authMiddleware, (req, res) => {
 //registration
 router.post('/registration', (req, res) => {
   const { company_name, first_name, last_name, phone_number, email, password, tags, description } = req.body;
+
+  bcrypt.hash(password, SALT, (err, hashed_password) => {
+    if (err) {
+      console.error('Error hashing password', err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
   const query = `
   INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password, description) 
   VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
   //1. Create a company
-  db.run(query, [company_name, first_name, last_name, phone_number, email, password, description], function(err) {
+  db.run(query, [company_name, first_name, last_name, phone_number, email, hashed_password, description], function(err) {
       if(err){
           console.log(err.message);
           return res.status(500).json({ error : 'Internal Server Error' });
@@ -106,6 +128,7 @@ router.post('/registration', (req, res) => {
         return res.status(200).json({ id: companyId });
     }
   });
+});
 })
 
 

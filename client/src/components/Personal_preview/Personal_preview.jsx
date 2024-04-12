@@ -5,11 +5,8 @@ import { account } from '../../assets/Icons/dropdownicons';
 import style from './personal_preview.module.css';
 
 function Personal_preview(){
-   sessionStorage.setItem('userRole', 'student');
-    const userRole = sessionStorage.getItem('userRole');
-    sessionStorage.setItem('firstname', 'Hannes');
-    sessionStorage.setItem('lastName', 'Hansson');
-    sessionStorage.setItem('compName', 'Gyllene Björnen');
+   
+    const userRole = sessionStorage.getItem('userRole');  
 
     const firstName = sessionStorage.getItem('firstname');
     const lastname = sessionStorage.getItem('lastName');
