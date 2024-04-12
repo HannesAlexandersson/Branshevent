@@ -78,4 +78,29 @@ router.post('/login', (req, res) => {
     });
 });
 
+
+router.get('/company/:companyId/tags', (req, res) => {
+    const companyId = req.params.companyId;
+  
+    // SQLite query to retrieve tag IDs associated with the given company ID
+    const query = `
+      SELECT tag_id 
+      FROM Company_tags 
+      WHERE company_id = ?;
+    `;
+  
+    db.all(query, [companyId], (err, rows) => {
+      if (err) {
+        console.error('Error retrieving tags:', err);
+        res.status(500).json({ error: 'Internal server error' });
+      } else {
+        // Extract tag IDs from the query result
+        const tagIds = rows.map(row => row.tag_id);
+        res.json(tagIds);
+      }
+    });
+  });
+
+
+
   export default router;

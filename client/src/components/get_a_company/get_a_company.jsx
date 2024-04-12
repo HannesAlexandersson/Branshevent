@@ -1,9 +1,9 @@
 
 
-
-function get_company_all( token ) {
-    const url = 'http://localhost:3000/api/company/all';
-    
+function get_a_company(token, id){
+    const companyId = id;
+    const baseUrl = 'http://localhost:3000/api/company/:';
+    const url = baseUrl + companyId;
 
     return fetch(url, { 
         method: 'GET',
@@ -25,6 +25,8 @@ function get_company_all( token ) {
         console.error('Error:', error);
         throw error; // Rethrow the error to be caught in the calling function
     });
+
+    
 }
 
-export default get_company_all;
+export default get_a_company

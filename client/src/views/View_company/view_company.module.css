@@ -83,7 +83,7 @@
         border-radius: 1rem 1rem 0rem 0rem;
         /* align-self: stretch; */
         width: 100%;
-        object-fit: cover;
+        object-fit: contain;
     }
     .sec_name_container{
         display: flex;

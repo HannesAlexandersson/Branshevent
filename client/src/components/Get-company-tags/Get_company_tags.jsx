@@ -1,15 +1,17 @@
 
 
 
-function get_company_all( token ) {
-    const url = 'http://localhost:3000/api/company/all';
-    
-
+function get_company_tags( id, token){
+    const companyId = id;
+    const baseUrl = 'http://localhost:3000/api/company/company/';
+    const end = '/tags';
+    const url = baseUrl + companyId + end;
+   
     return fetch(url, { 
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json', 
-            'Authorization': 'Bearer ' + token, 
+            'Content-Type': 'application/json',     
+            'Authorization': 'Bearer ' + token
         },       
     })
     .then(response => {
@@ -25,6 +27,7 @@ function get_company_all( token ) {
         console.error('Error:', error);
         throw error; // Rethrow the error to be caught in the calling function
     });
-}
 
-export default get_company_all;
+    
+}
+export default get_company_tags
