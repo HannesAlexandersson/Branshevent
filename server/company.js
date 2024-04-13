@@ -227,7 +227,7 @@ router.get('/searchByName/:companyName', authMiddleware, (req, res) => {
   });
 });
 
-router.get('/company/:companyId/tags', (req, res) => {
+router.get('/:companyId/tags', (req, res) => {
   const companyId = req.params.companyId;
 
   // query to retrieve tag IDs associated with the given company ID to render the tags

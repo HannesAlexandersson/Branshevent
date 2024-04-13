@@ -24,6 +24,7 @@ function Contact({ userData }){
 
 
     let userRole;
+    // if the userData contains a property that name is company name then the user is a company else a stuedtn
     if ('company_name' in userData) {
         userRole = 'company';
         company = userData;
@@ -45,8 +46,8 @@ function Contact({ userData }){
             }
         }, [company]);
     }
-    console.log(`contact compid ${company.id}`)
-   
+    
+   //set the vars
     if (companyContact) {
         companywebsite = companyContact.company_website || 'not set';
         companyPhone = companyContact.phone_number || 'not set';

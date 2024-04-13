@@ -76,7 +76,7 @@ function About( { userData } ){
     }
 
 
-    console.log(`about compid ${company.id}`)
+    /* console.log(`about studid ${student.id}`) */
     
     // we need to manually set the id to a var
     /* const companyId = compObj.id; */
