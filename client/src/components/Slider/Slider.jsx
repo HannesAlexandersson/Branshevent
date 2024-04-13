@@ -13,18 +13,18 @@ import style from './slider.module.css';
 
   function SimpleSlider({ companies }) {
     const navigate = useNavigate();
+
+    //set random avatars to the companies if they doesnt have an uploaded image
     let image;
-    const company_avatars = Object.values(avatarsc);
-    
-        const randomIndex = Math.floor(Math.random() * company_avatars.length);
-        
-        image = company_avatars[randomIndex];
+    const company_avatars = Object.values(avatarsc);    
+    const randomIndex = Math.floor(Math.random() * company_avatars.length);    
+    image = company_avatars[randomIndex];
        
 
 
-        const handleViewCompany = (companyId) => {
-          navigate('/view-company', { state: { companyId, companies } });
-        };
+    const handleViewCompany = (companyId) => {
+      navigate('/view-company', { state: { companyId, companies } });
+    };
    
     return (
       
