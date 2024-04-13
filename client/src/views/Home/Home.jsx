@@ -59,7 +59,7 @@ const handleAnimationEnd = () => {
                         className={style.searchbar_input} 
                         type="text" 
                         id="search-input" 
-                        placeholder="Search companies" />
+                        placeholder={`Search ${(sessionStorage.getItem('userRole') == 'student' ? 'Companies' : 'Students')}`} />
                         <img src={search} />
                     </div>
                 </div>
