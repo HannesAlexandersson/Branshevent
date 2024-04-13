@@ -8,17 +8,14 @@ import styles from './landing.module.css';
 
 function Landing_page(){
   const location = useLocation();  
-  
-  sessionStorage.clear();//clear session
+  if(!sessionStorage.getItem('loggedIn') || sessionStorage.getItem('loggedIn') !== 'true'){
+    sessionStorage.clear();//clear session
+  }
   useEffect(() => {
     // We only want to have overflow hidden on the landing page so:
     const isLandingPage = location.pathname === '/'; // check to see if we are on the landing page or not
-    // Apply the class if we are on the landing page, and remove it when we are not.  
-   /*  if (isLandingPage) {
-      document.body.classList.add('overflow-hidden');
-    } else {
-      document.body.classList.remove('overflow-hidden');
-    } */
+     
+   
     // default is to remove the overflow hidden property
     return () => {
       document.body.classList.remove('overflow-hidden');
@@ -64,11 +61,13 @@ function Landing_page(){
                   </h1>
                   <p>Perfect place for you to find the perfect intern or internship within Web development or Digital Design!</p>
                 
+                  {sessionStorage.getItem('loggedIn') !== 'true' && (
                 <div className={styles.join_event_btn_wrapper}>
                   <Link to="/sign-in">
                     <button className={styles.join_the_event} onClick={handleJoinEvent}>JOIN THE EVENT</button>
                   </Link>
                 </div>
+                )}
                 
                 </Main_header>
 
@@ -173,10 +172,12 @@ function Landing_page(){
         </Draggable> 
           
       </div>
-
-      <div className={styles.join}>
-        <Join_btn onClick={handleJoinEvent}>Join the Event</Join_btn>
-      </div>
+      {sessionStorage.getItem('loggedIn') !== 'true' && (
+        <div className={styles.join}>
+          <Join_btn onClick={handleJoinEvent}>Join the Event</Join_btn>
+        </div>
+      )}
+      
       <Gradient/>
       
     </>

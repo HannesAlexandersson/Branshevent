@@ -12,11 +12,19 @@ function View_company(){
     const [showContact, setShowContact] = useState(false); 
     const [img, setImg] = useState(null);
   
-    const locations = useLocation();
-    const { companyId, companies } = locations.state;
+    /* const locations = useLocation();
+    const { companyId, companies } = locations.state; */
+    const { state } = useLocation();
+    const { companyId, companies } = state;
+    console.log(` company id from view: ${companyId}`);
+   
 
+    //get the correct company from companies using the company id
     const company = companies.find(company => company.id === companyId);
-    
+    //then set a var to company becouse the about page requires it in the form of userData
+    const userData = company;
+    /* const parsedCompany = JSON.parse(company); */
+    console.log(` companys from view: ${company.id}`);
     //if the user havent uploaded a image we use a default random avatar, but we dont want the avatar to re render. so 
     // we put it in a hook and with an empty dependencie array it only renders once, thus setting the img var only once
     useEffect(() => {
@@ -35,12 +43,9 @@ function View_company(){
     const lastName = company.last_name; 
     const phone = company.phone_number;
     const email = company.email;
-    const description = company.description;
-    const location = company.location;
-    const startDate =  company.app_start; 
-    const endDate = company.app_end; 
-    const userData = sessionStorage.getItem('userData');
-    const userRole = userData.userType;
+    
+    
+    const userRole = sessionStorage.getItem('userType');
 
 
 
@@ -68,7 +73,7 @@ function View_company(){
             <div className={style.main}>
                 <Nav />
 
-                <Card company={company} firstName={firstName} lastname={lastName} email={email} phone={phone} img={img} />
+                <Card company={company} img={img} />
 
                 <div className={style.footer_btns}>
                     <Link to="/home">
@@ -144,8 +149,8 @@ function View_company(){
                                 
                                 </div>
                                     
-                                    {showAbout && <About company={company}/>}           
-                                    {showContact && <Contact company={company}/>}
+                                    {showAbout && <About userData={userData}/>}           
+                                    {showContact && <Contact userData={userData}/>}
                                     
                                 </div>
 

@@ -1,16 +1,13 @@
-
-
-function get_student_tags( id, token){
+function get_a_student(token, id){
     const companyId = id;
     const baseUrl = 'http://localhost:3000/api/student/';
-    const end = '/tags';
-    const url = baseUrl + companyId + end;
-   
+    const url = baseUrl + companyId;
+
     return fetch(url, { 
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',     
-            'Authorization': 'Bearer ' + token
+            'Content-Type': 'application/json', 
+            'Authorization': 'Bearer ' + token, 
         },       
     })
     .then(response => {
@@ -29,4 +26,5 @@ function get_student_tags( id, token){
 
     
 }
-export default get_student_tags
+
+export default get_a_student

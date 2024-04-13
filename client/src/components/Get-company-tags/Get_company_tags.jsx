@@ -3,7 +3,7 @@
 
 function get_company_tags( id, token){
     const companyId = id;
-    const baseUrl = 'http://localhost:3000/api/company/company/';
+    const baseUrl = 'http://localhost:3000/api/company/';
     const end = '/tags';
     const url = baseUrl + companyId + end;
    

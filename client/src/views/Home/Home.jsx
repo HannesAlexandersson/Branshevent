@@ -13,11 +13,8 @@ function Home(){
     const [companies, setCompanies] = useState([]);
 
     const userRole = sessionStorage.getItem('userType');
-    const userData = JSON.parse(sessionStorage.getItem('userData'));
     
-    const compName = userData.company_name;
-    const firstName = userData.first_name;
-    const lastName = userData.last_name;
+   
 
     useEffect(() => {
         const fetchData = async () => {

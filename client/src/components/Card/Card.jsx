@@ -27,7 +27,7 @@ function Card({userRole, student, company, img, }){
             setShowQRCode(true);
         }
     };
-    
+   
     let userData;
     if (student) {
         userData = student;

@@ -40,7 +40,7 @@ router.post('/login', (req, res) => {
       console.log('Login fail : No student found');
       return res.status(403).json({ error: 'Email or password incorrect' });
     }
-    
+
     if (result) {
     bcrypt.compare(password, result.password, (bcryptErr, bcryptResult) => {
       if (bcryptErr) {
@@ -260,6 +260,30 @@ router.get('/searchByName/:studentName', authMiddleware, (req, res) => {
       return res.status(500).json({ error: 'Internal Server Error' });
     }
     res.json(students);
+  });
+});
+
+
+router.get('/:studentId/tags', (req, res) => {
+  const studentId = req.params.studentId;
+
+  // query to retrieve tag IDs associated with the given company ID to render the tags
+  const query = `
+    SELECT tag_id 
+    FROM Student_tags 
+    WHERE student_id = ?;
+  `;
+
+  db.all(query, [studentId], (err, rows) => {
+    if (err) {
+      console.error('Error retrieving tags:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      // extract tag IDs from the query result
+      const tagIds = rows.map(row => row.tag_id);
+      res.json(tagIds);
+      console.log('tags succesfully sent to client');
+    }
   });
 });
 
