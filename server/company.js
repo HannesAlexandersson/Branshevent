@@ -73,7 +73,7 @@ router.post('/login', (req, res) => {
 // })
 
 
-//get company by ID
+//get by ID
 router.get('/:companyId', authMiddleware, (req, res) => {
   const companyId = req.params.companyId;
   const query = 'SELECT * FROM Company WHERE id = ?';
@@ -125,7 +125,7 @@ router.post('/registration', (req, res) => {
             }
             console.log('Tags added successfully');
         
-            const token = jwt.sign({id: studentId, userType: "company"}, SECRET, {expiresIn: 864000});
+            const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
             return res.status(200).send({ token: token })
         });
     } else {
@@ -140,17 +140,34 @@ router.post('/registration', (req, res) => {
 
 //update a company
 router.post('/update', authMiddleware, (req, res) => {
-  const { company_name, first_name, last_name, phone_number, email, password, description, open_for_lia, app_start, app_end, work_place, address, company_websites, companyId } = req.body;
+  const { 
+    company_name, 
+    first_name, 
+    last_name, 
+    phone_number, 
+    email, 
+    password, 
+    description, 
+    open_for_lia, 
+    app_start, 
+    app_end, 
+    work_place, 
+    address, 
+    company_website, 
+    linkedin } = req.body;
+
   const updateQuery = `
   UPDATE Company 
-  SET company_name = ?, first_name = ?, last_name = ?, phone_number = ?, email = ?, password = ?, description = ?, open_for_lia = ?, app_start = ?, app_end = ?, work_place = ?, address = ?, company_websites = ?, linkedin  = ? 
+  SET company_name = ?, first_name = ?, last_name = ?, phone_number = ?, email = ?, password = ?, description = ?, open_for_lia = ?, app_start = ?, app_end = ?, work_place = ?, address = ?, company_website = ?, linkedin  = ? 
   WHERE id = ?`;
 
-  db.run(updateQuery, [company_name, first_name, last_name, phone_number, email, password, description, open_for_lia, app_start, app_end, work_place, address, company_websites, companyId], function(err) {
+  db.run(updateQuery, [company_name, first_name, last_name, phone_number, email, password, description, open_for_lia, app_start, app_end, work_place, address, company_website, linkedin, req.id], function(err) {
     if(err){
         console.log(err.message);
         return res.status(500).json({ error : 'Internal Server Error' });
     }
+
+    console.log(req.id) ; 
     console.log('Company updated successfully');
     return res.status(200).send("Update successfull");
   });
