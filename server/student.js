@@ -232,8 +232,8 @@ router.get('/searchByName/:studentName', authMiddleware, (req, res) => {
 });
 
 
-router.get('/student/:companyId/tags', (req, res) => {
-  const companyId = req.params.companyId;
+router.get('/:studentId/tags', (req, res) => {
+  const studentId = req.params.studentId;
 
   // query to retrieve tag IDs associated with the given company ID to render the tags
   const query = `
@@ -242,7 +242,7 @@ router.get('/student/:companyId/tags', (req, res) => {
     WHERE student_id = ?;
   `;
 
-  db.all(query, [companyId], (err, rows) => {
+  db.all(query, [studentId], (err, rows) => {
     if (err) {
       console.error('Error retrieving tags:', err);
       res.status(500).json({ error: 'Internal server error' });

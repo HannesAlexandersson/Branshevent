@@ -16,9 +16,7 @@ function Update_company(updatedData, endpoint, token) {
         if (!response.ok) {
             throw new Error('Failed to update company data');
         }
-        console.log(response);
-        sessionStorage.setItem('userData', response);
-        console.log('data updated');
+        console.log('Student data updated successfully');       
     })
     .catch(error => {
         console.error('Error updating company data:', error);

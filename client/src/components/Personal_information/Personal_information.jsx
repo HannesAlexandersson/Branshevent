@@ -7,6 +7,7 @@ import Tags_name_from_server from '../TagsFromServer/Tags_name_from_server';
 import tagsArray from '../../tagArray';
 import Update_company from '../Update/Update_company.jsx';
 import Update_student from '../Update/Update_student.jsx';
+import get_a_company from '../get_a_company/get_a_company.jsx';
 
 function Personal_information({ userData }){
     const [userDataObj, setUserDataObj] = useState({});
@@ -58,15 +59,17 @@ function Personal_information({ userData }){
         console.error('Unknown user role:', userRole);
     }
 
-    // After sending the data to the server, you can switch back to view mode
+    // switch back to view mode
     setEditMode((prevEditMode) => ({
         ...prevEditMode,
         [section]: false,
     }));
+
+    sessionStorage.setItem('userData', JSON.stringify(userDataObj));
 };
 
     const updateCompanyData = (section) => {
-        // Implement logic to send updated company data to the server
+        // logic to send updated company data to the server
         console.log('Updating company data...');
         const endpoint = 'api/company/update';
         const token = localStorage.getItem('token');
@@ -78,14 +81,17 @@ function Personal_information({ userData }){
             email: userDataObj.email,
             password: userDataObj.password,
             description: userDataObj.description,
-            companyId: userDataObj.id // Assuming companyId is the same as id
+            companyId: userDataObj.id 
         }; 
-        // Example: Call an update function passing token, new data, and id
+        
+        //call the db to update the data
         Update_company( updatedData, endpoint, token);
+        
+        
     };
 
     const updateStudentData = (section) => {
-        // Implement logic to send updated student data to the server
+        //logic to send updated student data to the server
         console.log('Updating student data...');
         const endpoint = 'api/student/update'
         const token = localStorage.getItem('token');
@@ -103,8 +109,10 @@ function Personal_information({ userData }){
             work_place: userDataObj.work_place,
             studentId: userDataObj.id
         };
-        // Example: Call an update function passing token, new data, and id
+        sessionStorage.setItem('userData', updatedData);
+        
         Update_student(updatedData, endpoint, token);
+        
     };
 
     // get the id from the user, and the token
@@ -202,6 +210,17 @@ function Personal_information({ userData }){
                                 {userRole === 'student' && ( 
                                     <div>
                                     <label className={style.label} htmlFor='proffesion'>PROFFESION</label>
+                                    {editMode.personalInformation ? (
+                                    <input 
+                                        type="text"
+                                        name="proffesion"
+                                        className={style.inputfield}
+                                        value={userDataObj.occupation}
+                                        onChange={(e) => setUserDataObj({ ...userDataObj, occupation: e.target.value })}
+                                    />
+                                    
+                                ) : (                                   
+                                    
                                     <input 
                                         type="text"
                                         name="proffesion"
@@ -209,33 +228,77 @@ function Personal_information({ userData }){
                                         value={userDataObj.occupation}
                                         disabled
                                     />
-                                    </div>
                                 )}
+                                </div>
+                                )}
+
                                     <label className={style.label} htmlFor='firstname'>FIRSTNAME</label>
+                                    {editMode.personalInformation ? (
                                     <input 
                                         type="text"
                                         name="firstname"
                                         className={style.inputfield}
-                                        disabled
+                                        onChange={(e) => setUserDataObj({ ...userDataObj, first_name: e.target.value })}
                                         value={userDataObj.first_name}
                                     />
+                                    ) : ( 
+                                        <input 
+                                            type="text"
+                                            name="firstname"
+                                            className={style.inputfield}
+                                            disabled
+                                            value={userDataObj.first_name}
+                                        />
+                                    )}
+
                                     <label className={style.label} htmlFor='lastname'>LASTNAME</label>
+                                    {editMode.personalInformation ? (
                                     <input 
+                                        type="text"
+                                        name="lastname"
+                                        className={style.inputfield}
+                                        onChange={(e) => setUserDataObj({ ...userDataObj, last_name: e.target.value })}
+                                        value={userDataObj.last_name}
+                                    />
+                                    ) : ( 
+                                        <input 
                                         type="text"
                                         name="lastname"
                                         className={style.inputfield}
                                         disabled
                                         value={userDataObj.last_name}
                                     />
+                                    )}
+
                                     <label className={style.label} htmlFor='email'>EMAIL</label>
+                                    {editMode.personalInformation ? (
                                     <input 
+                                        type="text"
+                                        name="email"
+                                        className={style.inputfield}
+                                        onChange={(e) => setUserDataObj({ ...userDataObj, email: e.target.value })}
+                                        value={userDataObj.email}
+                                    />
+                                    ) : ( 
+                                        <input 
                                         type="text"
                                         name="email"
                                         className={style.inputfield}
                                         disabled
                                         value={userDataObj.email}
                                     />
+                                    )}
+
                                     <label className={style.label} htmlFor='phone'>PHONENUMBER</label>
+                                    {editMode.personalInformation ? (
+                                    <input 
+                                        type="text"
+                                        name="phone"
+                                        className={style.inputfield}
+                                        onChange={(e) => setUserDataObj({ ...userDataObj, phone_number: e.target.value })}
+                                        value={userDataObj.phone_number}
+                                    />
+                                ) : ( 
                                     <input 
                                         type="text"
                                         name="phone"
@@ -243,17 +306,28 @@ function Personal_information({ userData }){
                                         disabled
                                         value={userDataObj.phone_number}
                                     />
-                   
+                                )}
+
                                         {userRole === 'company' && (
                                         <div>
                                         <label className={style.label} htmlFor='companyAddress'>Company Address</label>
+                                        {editMode.personalInformation ? (
                                         <input 
                                             type="text"
                                             name="companyAddress"
                                             className={style.inputfield}
-                                            disabled
+                                            onChange={(e) => setUserDataObj({ ...userDataObj, address: e.target.value })}
                                             value={userDataObj.address}
                                         />
+                                    ) : ( 
+                                        <input 
+                                        type="text"
+                                        name="companyAddress"
+                                        className={style.inputfield}
+                                        disabled
+                                        value={userDataObj.address}
+                                    />
+                                    )}
                                     </div>
                                      )}
 
@@ -306,29 +380,67 @@ function Personal_information({ userData }){
                                 </div>
 
                                 <label className={style.label} htmlFor='description' >DESCRIPTION</label>
+                                {editMode.description ? (
                                 <textarea 
+                                    className={style.descr_area} 
+                                    name="description"
+                                    onChange={(e) => setUserDataObj({ ...userDataObj, description: e.target.value })}
+                                    value={userDataObj.description}
+                                />
+                                ):(
+                                    <textarea 
                                     className={style.descr_area} 
                                     name="description"
                                     disabled
                                     value={userDataObj.description}
                                 />
-
+                                )}
                                 <label className={style.label} htmlFor='application-periodStart'>APPLICATION PERIOD</label>
+                                {editMode.description ? (
                                 <input 
                                 className={style.inputfield}
                                 type="text"
                                 name="application-periodStart"
-                                disabled
+                                onChange={(e) => setUserDataObj({ ...userDataObj, app_start: e.target.value })}
                                 value={userDataObj.app_start}
                                 />
+                                ):(
+                                    <input 
+                                    className={style.inputfield}
+                                    type="text"
+                                    name="application-periodStart"
+                                    disabled
+                                    value={userDataObj.app_start}
+                                    />
+                                )}
+                                 {editMode.description ? (
                                   <input 
                                 className={style.inputfield}
                                 type="text"
                                 name="application-periodEnd"
-                                disabled
+                                onChange={(e) => setUserDataObj({ ...userDataObj, app_end: e.target.value })}
                                 value={userDataObj.app_end}
                                 />
+                                 ):(
+                                    <input 
+                                    className={style.inputfield}
+                                    type="text"
+                                    name="application-periodEnd"
+                                    disabled
+                                    value={userDataObj.app_end}
+                                    />
+                                 )}
                                 <label className={style.label} htmlFor='online-profiles'>ONLINE PROFILE</label>
+                                {editMode.onlineProfiles ? (
+                                <input 
+                                className={style.inputfield}
+                                type="text"
+                                name="online-profiles"
+                                onChange={(e) => setUserDataObj({ ...userDataObj, linkedin: e.target.value })}
+                                value={userDataObj.linkedin
+                                }
+                                />
+                            ):(
                                 <input 
                                 className={style.inputfield}
                                 type="text"
@@ -337,24 +449,50 @@ function Personal_information({ userData }){
                                 value={userDataObj.linkedin
                                 }
                                 />
+                            )}
+
                                 {userRole === 'student' ? (
-                                    <input 
-                                    className={style.inputfield}
-                                    type="text"
-                                    name="online-profiles"
-                                    disabled
-                                    value={userDataObj.github
-                                    }
-                                    />
-                                ): (
-                                    <input 
-                                    className={style.inputfield}
-                                    type="text"
-                                    name="online-profiles"
-                                    disabled
-                                    value={userDataObj.company_website
-                                    }
-                                    />
+                                    <div>
+                                        <label className={style.label} htmlFor='online-profiles'>Github</label>
+                                        {editMode.onlineProfiles ? (
+                                            <input 
+                                                className={style.inputfield}
+                                                type="text"
+                                                name="online-profiles"
+                                                value={userDataObj.github}
+                                                onChange={(e) => setUserDataObj({ ...userDataObj, github: e.target.value })}
+                                            />
+                                        ) : (
+                                            <input 
+                                                className={style.inputfield}
+                                                type="text"
+                                                name="online-profiles"
+                                                disabled
+                                                value={userDataObj.github}
+                                            />
+                                        )}
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <label className={style.label} htmlFor='online-profiles'>Company Website</label>
+                                        {editMode.onlineProfiles ? (
+                                            <input 
+                                                className={style.inputfield}
+                                                type="text"
+                                                name="online-profiles"
+                                                value={userDataObj.company_website}
+                                                onChange={(e) => setUserDataObj({ ...userDataObj, company_website: e.target.value })}
+                                            />
+                                        ) : (
+                                            <input 
+                                                className={style.inputfield}
+                                                type="text"
+                                                name="online-profiles"
+                                                disabled
+                                                value={userDataObj.company_website}
+                                            />
+                                        )}
+                                    </div>
                                 )}
                                
                             </div>

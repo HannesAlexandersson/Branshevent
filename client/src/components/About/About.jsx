@@ -135,7 +135,7 @@ function About( { userData } ){
                                 disabled
                                 name="location"
                             />
-                            {userRole === 'company' ? (companyAbout.location ? location : 'not set') : (studentAbout.location ? studentAbout.location : 'not set')}
+                            {userRole === 'company' ? (companyAbout.work_place ? companyAbout.work_place : 'not set') : (studentAbout.work_place ? studentAbout.work_place : 'not set')}
                         </label>
                         </div>
                     </div>
