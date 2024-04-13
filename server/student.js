@@ -63,10 +63,10 @@ router.post('/login', (req, res) => {
 });
 
 
-//test token route
-router.get('/testToken', authMiddleware, (req, res) => {
-    return res.status(200).send({ userType : req.userType });
-})
+// //test token route
+// router.get('/testToken', authMiddleware, (req, res) => {
+//     return res.status(200).send({ userType : req.userType });
+// })
 
 
 
