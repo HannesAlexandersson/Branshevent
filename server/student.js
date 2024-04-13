@@ -40,25 +40,27 @@ router.post('/login', (req, res) => {
       console.log('Login fail : No student found');
       return res.status(403).json({ error: 'Email or password incorrect' });
     }
-
-    bcrypt.compare(password, result.password, (err, result) => {
-      if (err) {
-        console.error('Error comparing passwords:', err);
+    
+    if (result) {
+    bcrypt.compare(password, result.password, (bcryptErr, bcryptResult) => {
+      if (bcryptErr) {
+        console.error('Error comparing passwords:', bcryptErr);
         return res.status(500).json({ error: 'Internal Server Error' });
       }
 
-    if (result) {
+    if (bcryptResult) {
         //passwords match - user authenticated
         console.log('Student authenticated successfully');
         //creating a token to encrypt data and send back to the client for future authentication
         const token = jwt.sign({id: result.id, userType: "student"}, SECRET, {expiresIn: 864000});
-        return res.status(200).send({ token: token })
+        return res.status(200).send({ token: token, userData: result })
     } else {
         // Passwords do not match
         console.log('Incorrect password');
         return res.status(401).json({ error: 'Incorrect password' });
     }
     });
+  }
   });
 });
 

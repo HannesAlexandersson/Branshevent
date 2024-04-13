@@ -29,8 +29,8 @@ router.post('/login', (req, res) => {
   const { email, password } = req.body;
   const query = 'SELECT * FROM Company WHERE email = ?';
 
-  console.log(email, password);
-  db.get(query, [email, password], (err, result) => {
+  
+  db.get(query, [email], (err, result) => {
     if(err){
       console.log(err.message);
       return res.status(500).json({error : 'internal server error'});
@@ -39,24 +39,27 @@ router.post('/login', (req, res) => {
       console.log('Login fail : No company found');
       return res.status(403).json({ error: 'Email or password incorrect' });
     }
-    
-    bcrypt.compare(password, result.password, (err, result) => {
-      if (err) {
-        console.error('Error comparing passwords:', err);
+
+    if (result) {
+    bcrypt.compare(password, result.password, (bcryptErr, bcryptResult) => { //you where using result here, that reset result to the result of the encryption witch was true or false only
+      if (bcryptErr) {
+        console.error('Error comparing passwords:', bcryptErr);
         return res.status(500).json({ error: 'Internal Server Error' });
       }
 
-    if (result) {
+    if (bcryptResult) {
+      console.log('User ID:', result.id);
       //passwords match - user authenticated
         console.log('Company authenticated successfully');
       //creating a token to encrypt data and send back to the client for future authentication
       const token = jwt.sign({id: result.id, userType: "company"}, SECRET, {expiresIn: 864000});
-      return res.status(200).send({ token: token })
+      return res.status(200).send({ token, userData: result })
     } else {
       console.log('Incorrect password');
       return res.status(401).json({ error: 'Incorrect password' });
     }
     });
+  }
   });
 })
 

@@ -1,4 +1,4 @@
-
+import { jwtDecode } from "jwt-decode";
 
 function get_user_data(endpoint, email, password) {
     const baseUrl = 'http://localhost:3000/';
@@ -24,9 +24,13 @@ function get_user_data(endpoint, email, password) {
     .then(data => {      
         console.log('Token:', data.token);
         localStorage.setItem('token', data.token); // Store the JWT token
-        sessionStorage.setItem('userData', JSON.stringify(data)); // Store user data in sessionStorage
-        sessionStorage.setItem('userType', data.userType); // Store user type in sessionStorage
+        sessionStorage.setItem('userData', JSON.stringify(data.userData)); // Store user data in sessionStorage        
         console.log('Successfully retrieved user data');
+        const token = localStorage.getItem('token');
+        const decoded = jwtDecode(token);
+        sessionStorage.setItem('userType', decoded.userType);
+        sessionStorage.setItem('id', decoded.id);
+        console.log(decoded);
         return data; // Return the user data for further processing if needed
     })
     .catch(error => {

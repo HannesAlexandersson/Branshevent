@@ -1,15 +1,16 @@
 
 
-function get_a_company(token, id){
+function get_company_tags( id, token){
     const companyId = id;
-    const baseUrl = 'http://localhost:3000/api/company/';
-    const url = baseUrl + companyId;
-
+    const baseUrl = 'http://localhost:3000/api/student/student/';
+    const end = '/tags';
+    const url = baseUrl + companyId + end;
+   
     return fetch(url, { 
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json', 
-            'Authorization': 'Bearer ' + token, 
+            'Content-Type': 'application/json',     
+            'Authorization': 'Bearer ' + token
         },       
     })
     .then(response => {
@@ -28,5 +29,4 @@ function get_a_company(token, id){
 
     
 }
-
-export default get_a_company
+export default get_company_tags

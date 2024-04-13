@@ -4,12 +4,12 @@ import { briefcase, circle_user_round, locationBlack, userSml } from '../../asse
 import { account } from '../../assets/Icons/dropdownicons';
 import style from './card.module.css';
 
-function Card({ userRole, firstName, lastname, compname, company, occupation, img, phone, email, lastName  }){
+function Card({userRole, student, company, img, }){
     const [showAbout, setShowAbout] = useState(true); 
     const [showContact, setShowContact] = useState(false); 
     const [showQRCode, setShowQRCode] = useState(false);
     
-   
+   //userRole, firstName, lastname, compname, company, occupation, img, phone, email, lastName 
      // Function to toggle between displaying the submenus
      const handleButtonClick = (component) => {
         if (component === 'About') {
@@ -28,13 +28,12 @@ function Card({ userRole, firstName, lastname, compname, company, occupation, im
         }
     };
     
-    
-    
-
-    if (occupation) {
-        occupation = student.occupation || 'not set';       
+    let userData;
+    if (student) {
+        userData = student;
+    }else if(company){
+        userData = company;
     }
-    
     
 
     return(
@@ -53,7 +52,7 @@ function Card({ userRole, firstName, lastname, compname, company, occupation, im
                         <div className={style.user_details}>
                             <img src={circle_user_round} />
                             <div className={style.user_name_wrapper}>                                
-                                <h1 className={style.user_header}>{firstName} {lastname}</h1>
+                                <h1 className={style.user_header}>{userData.firstName} {userData.lastname}</h1>
                             </div>
                         </div>                        
                     )}
@@ -61,7 +60,7 @@ function Card({ userRole, firstName, lastname, compname, company, occupation, im
                         <div className={style.user_details}>
                             <img src={briefcase} />
                             <div className={style.user_name_wrapper}>                                
-                                <h1 className={style.user_header}>{compname}</h1>
+                                <h1 className={style.user_header}>{userData.company_name}</h1>
                             </div>
                         </div>
                     )}
@@ -70,7 +69,7 @@ function Card({ userRole, firstName, lastname, compname, company, occupation, im
                         <div>
                             <div className={style.role_details}>
                                 <img src={briefcase} />
-                                <p className={style.user_role}>{occupation}</p>
+                                <p className={style.user_role}>{userData.occupation}</p>
                             </div>
                         </div>
                         )}
@@ -79,7 +78,7 @@ function Card({ userRole, firstName, lastname, compname, company, occupation, im
                             <div className={style.role_details}>
                                 <div className={style.usher}>
                                     <img src={userSml} />
-                                    <p className={style.user_role}>{firstName} {lastname}</p>
+                                    <p className={style.user_role}>{userData.first_name} {userData.last_name}</p>
                                 </div>
                                 <div className={style.usher}>
                                     <img src={locationBlack} />
@@ -128,9 +127,9 @@ function Card({ userRole, firstName, lastname, compname, company, occupation, im
                             </button>
                         </div>
                             
-                            {showAbout && <About company={company}/>}           
-                            {showContact && <Contact company={company} />}
-                            {showQRCode && <QR_Code  firstName={firstName} lastName={lastName} phone={phone} email={email}/>}
+                            {showAbout && <About userData={userData}/>}           
+                            {showContact && <Contact userData={userData} />}
+                            {showQRCode && <QR_Code  firstName={userData.first_name} lastName={userData.last_name} phone={userData.phone_number} email={userData.email}/>}
                     </div>
 
                 </div>
