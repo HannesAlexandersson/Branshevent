@@ -110,8 +110,9 @@ function Company_summary(){
         description: companyDescription,	
         tags: formattedTags	
     };
-    SendDataToServer(requestData, endpoint)
 
+    SendDataToServer(requestData, endpoint)
+    
     
      
     if (currentStep < totalSteps) {

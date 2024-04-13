@@ -31,7 +31,7 @@ function Personal_information({ userData }){
     };
     // get the id from the user, and the token
     const id = userDataObj.id;
-    console.log(id);
+    
     const token = localStorage.getItem('token');
     useEffect(() => {
         const fetchTags = async (id, token, userRole) => {
@@ -188,8 +188,7 @@ function Personal_information({ userData }){
                                     <input 
                                         className={style.inputfield}
                                         type="password"
-                                        disabled
-                                        hidden
+                                        disabled                                        
                                         value={userDataObj.password}
                                     />
                                     <button className={style.change_pass_btn}>CHANGE PASSWORD</button>
@@ -292,30 +291,140 @@ function Personal_information({ userData }){
                                 </div>
 
                                 <div className={style.checkbox_wrapper}>
-                                    <p className={style.checkbox_loc_title}>HOW DO I WORK</p>
-                                    <div className={style.box_container}>
+
+                                    {userRole === 'student' ? (
+                                    <div>
+                                        <p className={style.checkbox_loc_title}>HOW DO I WORK</p>
+                                        <div className={style.box_container}>
                                         <div className={style.box_row}>
-                                        <label htmlFor='office'>IN OFFICE</label>
-                                        <input 
-                                            type="checkbox"
-                                            name="office"
-                                            />
+                                            {userDataObj.location === 'office' ? (
+                                                <div>                                                
+                                                <input 
+                                                    type="checkbox"
+                                                    name="office"
+                                                    checked
+                                                    />
+                                                    <label htmlFor='office'>IN OFFICE</label>
+                                                </div>
+                                            ) : (
+                                                <div>                                               
+                                                <input 
+                                                    type="checkbox"
+                                                    name="office"
+                                                    />
+                                                     <label htmlFor='office'>IN OFFICE</label>
+                                                </div>
+                                            )}
                                             </div>
                                             <div className={style.box_row}>
-                                            <label htmlFor='remote'>REMOTElY</label>
-                                        <input 
-                                            type="checkbox"
-                                            name="remote"
-                                            />
+                                            {userDataObj.location === 'office' ? (
+                                                <div>
+                                              
+                                            <input 
+                                                type="checkbox"
+                                                name="remote"
+                                                checked
+                                                />
+                                                  <label htmlFor='remote'>REMOTELY</label>
+                                                </div>
+                                            ) : (<div>                                               
+                                            <input 
+                                                type="checkbox"
+                                                name="remote"                                                
+                                                />
+                                                 <label htmlFor='remote'>REMOTELY</label>
+                                                </div>)}
                                             </div>
                                               <div className={style.box_row}>
-                                            <label htmlFor='both'>BOTH</label>
-                                        <input 
-                                            type="checkbox"
-                                            name="both"
-                                            />
+                                                {userDataObj.location === 'office' ? (
+                                                    <div>                                                        
+                                                    <input 
+                                                        type="checkbox"
+                                                        name="both"
+                                                        checked
+                                                        />
+                                                        <label htmlFor='both'>BOTH</label>
+                                                    </div>
+                                                ) : (
+                                                    <div>
+                                                        
+                                                    <input 
+                                                        type="checkbox"
+                                                        name="both"
+                                                        />
+                                                        <label htmlFor='both'>BOTH</label>
+                                                    </div>
+                                                )}
                                             </div>
+                                        </div>
                                     </div>
+                                    ) : (
+                                    <div>
+                                        <p className={style.checkbox_loc_title}>HOW DO WE WORK</p>
+                                        <div className={style.box_container}>
+                                        <div className={style.box_row}>
+                                            {userDataObj.work_place === 'office' ? (
+                                                <div>                                                
+                                                <input 
+                                                    type="checkbox"
+                                                    name="office"
+                                                    checked
+                                                    />
+                                                    <label htmlFor='office'>IN OFFICE</label>
+                                                </div>
+                                            ) : (
+                                                <div>                                               
+                                                <input 
+                                                    type="checkbox"
+                                                    name="office"
+                                                    />
+                                                     <label htmlFor='office'>IN OFFICE</label>
+                                                </div>
+                                            )}
+                                            </div>
+                                            <div className={style.box_row}>
+                                            {userDataObj.work_place === 'office' ? (
+                                                <div>
+                                              
+                                            <input 
+                                                type="checkbox"
+                                                name="remote"
+                                                checked
+                                                />
+                                                  <label htmlFor='remote'>REMOTELY</label>
+                                                </div>
+                                            ) : (<div>                                               
+                                            <input 
+                                                type="checkbox"
+                                                name="remote"                                                
+                                                />
+                                                 <label htmlFor='remote'>REMOTELY</label>
+                                                </div>)}
+                                            </div>
+                                              <div className={style.box_row}>
+                                                {userDataObj.work_place === 'office' ? (
+                                                    <div>                                                        
+                                                    <input 
+                                                        type="checkbox"
+                                                        name="both"
+                                                        checked
+                                                        />
+                                                        <label htmlFor='both'>BOTH</label>
+                                                    </div>
+                                                ) : (
+                                                    <div>
+                                                        
+                                                    <input 
+                                                        type="checkbox"
+                                                        name="both"
+                                                        />
+                                                        <label htmlFor='both'>BOTH</label>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    )}
                                 </div>
                             </div>
 

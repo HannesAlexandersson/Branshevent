@@ -7,14 +7,22 @@ import style from './personal_preview.module.css';
 
 function Personal_preview({ userData }){
    
-    const userRole = sessionStorage.getItem('userType'); 
+
+    let userDataObj = JSON.parse(userData);
+    let userRole;
+    if ('company_name' in userDataObj) {
+        userRole = 'company';
+    }else{
+        userRole = 'student';
+    } 
     let company;
     let student;
     if(userRole === 'company'){
-        company = userData;
+        company = userDataObj;
     }else if(userRole === 'student'){
-        student = userData;
+        student = userDataObj;
     }
+    /* console.log(userDataObj); */
      
     return(
         <>

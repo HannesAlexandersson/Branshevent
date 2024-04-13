@@ -5,31 +5,82 @@ import style from './about.module.css';
 import { Tags_name_from_server } from '../../components/index.js';
 import get_company_tags from '../../components/Get-company-tags/Get_company_tags.jsx';
 import tagsArray from '../../tagArray';
+import get_student_tags from '../get-student-tags/get_student_tags.jsx';
 
-function About( { company,  userRole } ){
+function About( { userData } ){
     const [companyAbout, setCompanyAbout] = useState(null);
+    const [studentAbout, setStudentAbout] = useState(null);
     const [ tags, setTags ] = useState([]);
 
     //get the JTW token for server calls
     const token = localStorage.getItem('token');
-    //useEffect hook to set the company data from the provided prop 
-    useEffect(() => {
-        if (company) {
-            setCompanyAbout(company);
-        }
-    }, [company]);
+    //initialize empty vars
+    let company;
+    let student;
+    /* const userDataObj = JSON.parse(userData); */
+    let userRole;
+    if ('company_name' in userData) {
+        userRole = 'company';
+        company = userData;
 
+        //useEffect hook to set the company data from the provided prop 
+        useEffect(() => {
+            if (company) {
+                setCompanyAbout(company);
+            }
+        }, [company]);
+
+        //and use another hook to get the selected tags from the db and set the response to the tags state
+        useEffect(() => {
+            if (company.id) { 
+                get_company_tags(company.id, token)
+                    .then(data => setTags(data))
+                    .catch(error => console.error('Error fetching company tags:', error));
+            }
+        }, [company.id]);
+
+
+         //if there is any error we present a loading decoy instead of a crash
+        if (!companyAbout) {
+            return <div>Loading...</div>;
+        }
+    
+        
+
+    }else{
+        userRole = 'student';
+        student = userData;
+
+         //useEffect hook to set the student data from the provided prop 
+         useEffect(() => {
+            if (student) {
+                setStudentAbout(student);
+            }
+        }, [student]);
+
+        //and use another hook to get the selected tags from the db and set the response to the tags state
+        useEffect(() => {
+            if (student.id) { 
+                get_student_tags(student.id, token)
+                    .then(data => setTags(data))
+                    .catch(error => console.error('Error fetching company tags:', error));
+            }
+        }, [student.id]);
+
+         //if there is any error we present a loading decoy instead of a crash
+        if (!studentAbout) {
+            return <div>Loading...</div>;
+        }
+    
+        
+    }
+
+
+    console.log(`about compid ${company.id}`)
+    
     // we need to manually set the id to a var
-    const companyId = company.id;
-    //and use another hook to get the selected hooks from the db and set the response to the tags state
-    useEffect(() => {
-        if (companyId) { 
-            get_company_tags(companyId, token)
-                .then(data => setTags(data))
-                .catch(error => console.error('Error fetching company tags:', error));
-        }
-    }, [companyId]);
-
+    /* const companyId = compObj.id; */
+   
     //a reverse function to compare the tags id from the db to the tagsArray to get the names of the selected tags
     const getSelectedTagNames = (tagIds) => {
         // we need to filter the tagsArray to find tags that match the IDs in tagIds
@@ -44,13 +95,7 @@ function About( { company,  userRole } ){
     const tagIdsFromServer = tags; 
     const selectedTagNames = getSelectedTagNames(tagIdsFromServer);
     
-    //if there is any error we present a loading decoy instead of a crash
-    if (!companyAbout) {
-        return <div>Loading...</div>;
-    }
-    
-    //set all the vars
-    const { company_name: companyName, first_name: firstName, last_name: lastName, description, location, app_start: startDate, app_end: endDate } = companyAbout;
+   
     
     
 
@@ -60,7 +105,7 @@ function About( { company,  userRole } ){
                 <textarea 
                 className={style.user_aboutme}
                 type="text"
-                value={description}
+                value={userRole === 'company' ? companyAbout.description : studentAbout.description}
                 />                    
                 
             </div>
@@ -90,7 +135,7 @@ function About( { company,  userRole } ){
                                 disabled
                                 name="location"
                             />
-                            {location ? location : 'not set'}
+                            {userRole === 'company' ? (companyAbout.location ? location : 'not set') : (studentAbout.location ? studentAbout.location : 'not set')}
                         </label>
                         </div>
                     </div>
@@ -101,9 +146,27 @@ function About( { company,  userRole } ){
                             <p className={style.loc_txt}>Application period</p>
                         </div>
                         <div className={style.app_period_display_container}>
-                            {startDate&&endDate ? (<p className={style.dates}><span>Startdate:{startDate} </span><span>Enddate: {endDate}</span></p>)
-                            :
-                            (<p className={style.online_txt_value}>not set</p>)}
+                           
+                                {userRole === 'company' ? (
+                                    companyAbout.app_start && companyAbout.app_end ? (
+                                        <p className={style.dates}>
+                                            <span>Startdate: {companyAbout.app_start}</span>
+                                            <span>Enddate: {companyAbout.app_end}</span>
+                                        </p>
+                                    ) : (
+                                        <p className={style.online_txt_value}>not set</p>
+                                    )
+                                ) : (
+                                    studentAbout.app_start && studentAbout.app_end ? (
+                                        <p className={style.dates}>
+                                            <span>Startdate: {studentAbout.app_start}</span>
+                                            <span>Enddate: {studentAbout.app_end}</span>
+                                        </p>
+                                    ) : (
+                                        <p className={style.online_txt_value}>not set</p>
+                                    )
+                                )}
+
                         </div>
                     </div>
 
