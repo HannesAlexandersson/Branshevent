@@ -41,24 +41,26 @@ router.post('/login', (req, res) => {
       return res.status(403).json({ error: 'Email or password incorrect' });
     }
 
-    bcrypt.compare(password, result.password, (err, result) => {
-      if (err) {
-        console.error('Error comparing passwords:', err);
+    if (result) {
+    bcrypt.compare(password, result.password, (bcryptErr, bcryptResult) => {
+      if (bcryptErr) {
+        console.error('Error comparing passwords:', bcryptErr);
         return res.status(500).json({ error: 'Internal Server Error' });
       }
 
-    if (result) {
+    if (bcryptResult) {
         //passwords match - user authenticated
         console.log('Student authenticated successfully');
         //creating a token to encrypt data and send back to the client for future authentication
         const token = jwt.sign({id: result.id, userType: "student"}, SECRET, {expiresIn: 864000});
-        return res.status(200).send({ token: token })
+        return res.status(200).send({ token: token, userData: result })
     } else {
         // Passwords do not match
         console.log('Incorrect password');
         return res.status(401).json({ error: 'Incorrect password' });
     }
     });
+  }
   });
 });
 
@@ -226,6 +228,30 @@ router.get('/searchByName/:studentName', authMiddleware, (req, res) => {
       return res.status(500).json({ error: 'Internal Server Error' });
     }
     res.json(students);
+  });
+});
+
+
+router.get('/student/:companyId/tags', (req, res) => {
+  const companyId = req.params.companyId;
+
+  // query to retrieve tag IDs associated with the given company ID to render the tags
+  const query = `
+    SELECT tag_id 
+    FROM Student_tags 
+    WHERE student_id = ?;
+  `;
+
+  db.all(query, [companyId], (err, rows) => {
+    if (err) {
+      console.error('Error retrieving tags:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      // extract tag IDs from the query result
+      const tagIds = rows.map(row => row.tag_id);
+      res.json(tagIds);
+      console.log('tags succesfully sent to client');
+    }
   });
 });
 

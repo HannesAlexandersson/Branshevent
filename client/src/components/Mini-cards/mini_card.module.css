@@ -12,7 +12,7 @@
 }
 .mini_card_img_wrapper{
     flex: 1;
-    overflow: hidden;
+   
     position: relative;
 
     border-radius: 1rem 1rem 0rem 0rem;
@@ -60,17 +60,18 @@
     gap: .5rem;
     width: 100%;
     justify-content: flex-start;
-    align-items: center;
+    align-items: baseline;
 }
 .mini_card_sub_title > p{
     color: var(--default-font-clr);
-    /* Caption */
     font-family: var(--default-font);
     font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 1rem; /* 133.333% */
+    line-height: 1rem;
     letter-spacing: 0.025rem;
+    margin: 0;
+    margin-bottom: 1rem;
 }
 .mini_subText{
     display: flex;

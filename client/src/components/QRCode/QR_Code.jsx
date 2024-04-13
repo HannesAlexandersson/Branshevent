@@ -2,16 +2,16 @@ import { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
 import { qr } from '../../assets/Icons/index.js';
 import style from './qr.module.css';
-function QR_Code(){
+function QR_Code({ firstName, lastName, email, phone }){
     const [qrCodeDataURL, setQRCodeDataURL] = useState('');
 
     useEffect(() => {
+        const fullname = firstName + ' ' + lastName; 
         // replace it with actual data our DB when endpoints are done
         const contact = {
-            name: 'John Doe',
-            email: 'johndoe@example.com',
-            phone: '+1234567890',
-            address: '123 Main St, Anytown, USA'
+            name: fullname,
+            email: email,
+            phone: phone,            
         };
 
         // format users details into vcard format
@@ -19,8 +19,7 @@ function QR_Code(){
             VERSION:3.0
             FN:${contact.name}
             EMAIL:${contact.email}
-            TEL:${contact.phone}
-            ADR:${contact.address}
+            TEL:${contact.phone}           
             END:VCARD`;
 
         // create the qr

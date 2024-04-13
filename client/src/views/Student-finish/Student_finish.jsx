@@ -13,6 +13,7 @@ function Student_finish(){
 const token = JSON.parse(localStorage.getItem('studentToken'));
 console.log(token);
     const handleNextStep = () => {
+        
 
 
         navigate('/home');
@@ -52,7 +53,7 @@ console.log(token);
                         <p>browse companies</p>
                         <img src={nextArrow} />
                     </Red_btn>
-                    <Link to="/student-summary" >
+                    <Link to="/" >
                         <White_btn className={style.white}>
                             <img src={backArrow} />
                             <p>back to event page</p>

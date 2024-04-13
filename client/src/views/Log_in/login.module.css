@@ -94,6 +94,7 @@
     text-transform: uppercase;
 
     text-decoration: none;
+    cursor: pointer;
 }
 /* MAIN CONTENT ENDS */
 .formfield{
@@ -117,7 +118,7 @@
     border-radius: 22.5rem;
     border: none;
     background: lightgrey;
-    padding: .275rem;
+    padding: .5rem;
    
 }
 .inputbox{
@@ -126,4 +127,19 @@
     justify-content: center;
     align-items: flex-start;
     gap: .5rem;
+}
+.error{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-accent);
+}
+.radio{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+.radiobtn{
+    cursor: pointer;
 }

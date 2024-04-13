@@ -1,0 +1,11 @@
+export { default as avatar1 } from './avatar-default-symbolic-svgrepo-com.svg';
+export { default as avatar2 } from './avatar-portrait-svgrepo-com.svg';
+export { default as avatar3 } from './avatar-svgrepo-com (1).svg';
+export { default as avatar4 } from './avatar-svgrepo-com (2).svg';
+export { default as avatar5 } from './avatar-svgrepo-com (3).svg';
+export { default as avatar6 } from './avatar-svgrepo-com (4).svg';
+export { default as avatar7 } from './avatar-svgrepo-com (5).svg';
+export { default as avatar8 } from './avatar-svgrepo-com (6).svg';
+export { default as avatar9 } from './avatar-svgrepo-com (7).svg';
+export { default as avatar10 } from './avatar-svgrepo-com (8).svg';
+export { default as avatar11 } from './avatar-svgrepo-com.svg';

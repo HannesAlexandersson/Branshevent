@@ -1,22 +1,22 @@
 
 import { locationBlack, userSml } from '../../assets/Icons';
 import { heart, heartlight } from '../../assets/Icons/dropdownicons';
+import * as avatarsc from '../../assets/company_default_avatars/index';
 import style from './mini_card.module.css';
 
-function Mini_card(){
-    sessionStorage.setItem('userRole', 'company');
-    sessionStorage.setItem('companyName', ' Big company');
+function Mini_card({ companyName, firstName, lastName, location, avatar }){
    
-    sessionStorage.setItem('firstname', 'Hannes');
-    sessionStorage.setItem('lastName', 'Hansson');
+    const compName = companyName;
+    let image;
+    const company_avatars = Object.values(avatarsc);
+    if (avatar === null) {
+        const randomIndex = Math.floor(Math.random() * company_avatars.length);
+        
+        image = company_avatars[randomIndex];
+    }else{
+        image = avatar;
+    }   
     
-
-    const userRole = 'company';
-    const compName = sessionStorage.getItem('companyName');
-    const firstName = sessionStorage.getItem('firstname');
-    const lastName = sessionStorage.getItem('lastName');
-   
-    const testImg = localStorage.getItem('image');
     return(
             <>
                 <div className={style.mini_card_wrapper}>
@@ -24,7 +24,7 @@ function Mini_card(){
                         <div className={style.img_heart_wrap}>
                             <img src={heartlight} className={style.heart} />
                         </div>
-                        <img className={style.img} src={testImg} />
+                        <img className={style.img} src={image} />
                     </div>
                     <div className={style.mini_card_text}>
                         <div className={style.mini_card_title}>
@@ -37,7 +37,7 @@ function Mini_card(){
                             </div>
                             <div className={style.mini_card_sub_title}>
                                 <img src={locationBlack} />
-                                <p>Company City</p>
+                                <p>Gothenburg</p>
                             </div>
                         </div>
                     </div>

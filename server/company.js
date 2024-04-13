@@ -29,8 +29,8 @@ router.post('/login', (req, res) => {
   const { email, password } = req.body;
   const query = 'SELECT * FROM Company WHERE email = ?';
 
-  console.log(email, password);
-  db.get(query, [email, password], (err, result) => {
+  
+  db.get(query, [email], (err, result) => {
     if(err){
       console.log(err.message);
       return res.status(500).json({error : 'internal server error'});
@@ -39,24 +39,27 @@ router.post('/login', (req, res) => {
       console.log('Login fail : No company found');
       return res.status(403).json({ error: 'Email or password incorrect' });
     }
-    
-    bcrypt.compare(password, result.password, (err, result) => {
-      if (err) {
-        console.error('Error comparing passwords:', err);
+
+    if (result) {
+    bcrypt.compare(password, result.password, (bcryptErr, bcryptResult) => { //you where using result here, that reset result to the result of the encryption witch was true or false only
+      if (bcryptErr) {
+        console.error('Error comparing passwords:', bcryptErr);
         return res.status(500).json({ error: 'Internal Server Error' });
       }
 
-    if (result) {
+    if (bcryptResult) {
+      console.log('User ID:', result.id);
       //passwords match - user authenticated
         console.log('Company authenticated successfully');
       //creating a token to encrypt data and send back to the client for future authentication
       const token = jwt.sign({id: result.id, userType: "company"}, SECRET, {expiresIn: 864000});
-      return res.status(200).send({ token: token })
+      return res.status(200).send({ token, userData: result })
     } else {
       console.log('Incorrect password');
       return res.status(401).json({ error: 'Incorrect password' });
     }
     });
+  }
   });
 })
 
@@ -87,12 +90,19 @@ router.get('/:companyId', authMiddleware, (req, res) => {
 //registration
 router.post('/registration', (req, res) => {
   const { company_name, first_name, last_name, phone_number, email, password, tags, description } = req.body;
+
+  bcrypt.hash(password, SALT, (err, hashed_password) => {
+    if (err) {
+      console.error('Error hashing password', err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
   const query = `
   INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password, description) 
   VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
   //1. Create a company
-  db.run(query, [company_name, first_name, last_name, phone_number, email, password, description], function(err) {
+  db.run(query, [company_name, first_name, last_name, phone_number, email, hashed_password, description], function(err) {
       if(err){
           console.log(err.message);
           return res.status(500).json({ error : 'Internal Server Error' });
@@ -121,6 +131,7 @@ router.post('/registration', (req, res) => {
       return res.status(200).send({ token: token })
     }
   });
+});
 })
 
 
@@ -216,6 +227,28 @@ router.get('/searchByName/:companyName', authMiddleware, (req, res) => {
   });
 });
 
+router.get('/company/:companyId/tags', (req, res) => {
+  const companyId = req.params.companyId;
+
+  // query to retrieve tag IDs associated with the given company ID to render the tags
+  const query = `
+    SELECT tag_id 
+    FROM Company_tags 
+    WHERE company_id = ?;
+  `;
+
+  db.all(query, [companyId], (err, rows) => {
+    if (err) {
+      console.error('Error retrieving tags:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      // extract tag IDs from the query result
+      const tagIds = rows.map(row => row.tag_id);
+      res.json(tagIds);
+      console.log('tags succesfully sent to client');
+    }
+  });
+});
 
 
 export default router;

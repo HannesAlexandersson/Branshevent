@@ -1,27 +1,41 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Nav } from '../index.js';
+import get_company_all from "../../components/getcompanyAll/get_company_all.jsx";
 import { briefcase, locationBlack, search, sliders, userSml } from '../../assets/Icons/index.js';
 import style from './home.module.css';
 import { heartlight } from '../../assets/Icons/dropdownicons/index.js';
-import { Mini_card, Quiz_wrapper, Spacer_bottom } from '../../components/index.js';
+import { Mini_card, Quiz_wrapper, Spacer_bottom, Simple_slider } from '../../components/index.js';
+import Render_mini from '../../components/Render_mini/Render_mini.jsx';
 
 function Home(){
     const [showFilter, setShowFilter] = useState(false);
     const [animationReverted, setAnimationReverted] = useState(false);
+    const [companies, setCompanies] = useState([]);
 
-    /*Dummy data */
-    sessionStorage.setItem('userRole', 'student');
-    sessionStorage.setItem('companyName', ' Big company');
-   
-    sessionStorage.setItem('firstname', 'Hannes');
-    sessionStorage.setItem('lastName', 'Hansson');
+    const userRole = sessionStorage.getItem('userType');
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    
+    const compName = userData.company_name;
+    const firstName = userData.first_name;
+    const lastName = userData.last_name;
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+            const token = localStorage.getItem("token");
+            const companyData = await get_company_all(token);
+            setCompanies(companyData);
+            } catch (error) {
+            console.error("Error fetching company data:", error);
+            }
+        };
+    
+        fetchData();
+        }, []);
     
 
-    const userRole = sessionStorage.getItem('userRole');
-    const compName = sessionStorage.getItem('companyName');
-    const firstName = sessionStorage.getItem('firstname');
-    const lastName = sessionStorage.getItem('lastName');
-/*Dummy data */
+    
+    
 
 const handleFilter = () => {
     setShowFilter(!showFilter);
@@ -31,6 +45,12 @@ const handleFilter = () => {
 const handleAnimationEnd = () => {
     setAnimationReverted(true); // Set animation reverted state after animation ends
 }
+
+
+
+
+
+
     return(
         <>
             <div className={style.main}>
@@ -86,36 +106,12 @@ const handleAnimationEnd = () => {
                         <div className={style.new_cmp_head}>
                             <p>New companies</p>
                         </div>
-        <div className={style.slide_container}>
-                {/*SLIDER GOES HERE */}
-                
-                        <div className={style.redBox}>
-                            <div className={style.img_wrapper}>
-                                <div className={style.img_display_area}>
-                                    <div className={style.icon_container}>
-                                        <img src={heartlight} />
-                                    </div>
-                                </div>
-                            </div>
-        
-                            <div className={style.name_box}>
-                                <img src={briefcase} />
-                                <p>{compName}</p>
-                            </div>
-                            <div className={style.name_box}>
-                                <div className={style.name_loc_wrapper}>
-                                    <img src={userSml} />
-                                    <p>{firstName} {lastName}</p>
-                                </div>
-                                <div className={style.name_loc_wrapper}>                                
-                                    <img src={locationBlack} />
-                                    <p>Company City</p>
-                                </div>
-                            </div>
+                        <div className={style.slide_container}>
+                            <Simple_slider 
+                                companies={companies}
+                            />                                    
+                                
                         </div>
-                {/*END SLIDER */}
-                
-        </div>
                     </div>
 
                 </div>
@@ -124,30 +120,7 @@ const handleAnimationEnd = () => {
                     <p>All companies attending</p>
 
                     <div className={style.mini_cards_containter}>
-                        {/* FOREACH COMPANY in DB  ADD A MINI CARD */}
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
+                        <Render_mini companies={companies} />
                     </div>
                 </div>
             </div>
