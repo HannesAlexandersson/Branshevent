@@ -141,13 +141,13 @@ router.post('/registration', (req, res) => {
 
 //update a student
 router.post('/update', authMiddleware, (req, res) => {
-  const { first_name, last_name, email, password, phone_number, description, github, portfolio, linkedin, behance, work_place, studentId } = req.body;
+  const { first_name, last_name, email, password, phone_number, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends, studentId } = req.body;
   const updateQuery = `
   UPDATE Student 
-  SET first_name = ?, last_name = ?, email = ?, password = ?, phone_number = ?, description = ?, github = ?, portfolio = ?, linkedin = ?, behance = ?,work_place = ? 
+  SET first_name = ?, last_name = ?, email = ?, password = ?, phone_number = ?, description = ?, github = ?, portfolio = ?, linkedin = ?, behance = ?, work_place = ?, app_starts = ?, app_ends = ? 
   WHERE id = ?`;
 
-  db.run(updateQuery, [first_name, last_name, email, password, phone_number, description, github, portfolio, linkedin, behance, work_place, studentId], function(err) {
+  db.run(updateQuery, [first_name, last_name, email, password, phone_number, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends, studentId], function(err) {
     if(err){
         console.log(err.message);
         return res.status(500).json({ error : 'Internal Server Error' });
