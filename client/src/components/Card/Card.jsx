@@ -4,11 +4,12 @@ import { briefcase, circle_user_round, locationBlack, userSml } from '../../asse
 import { account } from '../../assets/Icons/dropdownicons';
 import style from './card.module.css';
 
-function Card({ userRole, firstName, lastname, compname}){
+function Card({ userRole, firstName, lastname, compname, company, occupation, img, phone, email, lastName  }){
     const [showAbout, setShowAbout] = useState(true); 
     const [showContact, setShowContact] = useState(false); 
     const [showQRCode, setShowQRCode] = useState(false);
-
+    
+   
      // Function to toggle between displaying the submenus
      const handleButtonClick = (component) => {
         if (component === 'About') {
@@ -26,14 +27,22 @@ function Card({ userRole, firstName, lastname, compname}){
             setShowQRCode(true);
         }
     };
+    
+    
+    
 
+    if (occupation) {
+        occupation = student.occupation || 'not set';       
+    }
+    
+    
 
     return(
         <>
             <div className={style.redBox}>
                     <div className={style.img_container}>
                         <div className={style.img_display_area}>
-                            {/* img here */}
+                            <img src={img} />
                         </div>
                     </div>
                    
@@ -61,7 +70,7 @@ function Card({ userRole, firstName, lastname, compname}){
                         <div>
                             <div className={style.role_details}>
                                 <img src={briefcase} />
-                                <p className={style.user_role}>USER ROLE HERE</p>
+                                <p className={style.user_role}>{occupation}</p>
                             </div>
                         </div>
                         )}
@@ -74,7 +83,7 @@ function Card({ userRole, firstName, lastname, compname}){
                                 </div>
                                 <div className={style.usher}>
                                     <img src={locationBlack} />
-                                    <p className={style.user_role}>City Name</p>
+                                    <p className={style.user_role}>Gothenburg</p>
                                 </div>
                             </div>
                         </div>
@@ -119,9 +128,9 @@ function Card({ userRole, firstName, lastname, compname}){
                             </button>
                         </div>
                             
-                            {showAbout && <About />}           
-                            {showContact && <Contact />}
-                            {showQRCode && <QR_Code />}
+                            {showAbout && <About company={company}/>}           
+                            {showContact && <Contact company={company} />}
+                            {showQRCode && <QR_Code  firstName={firstName} lastName={lastName} phone={phone} email={email}/>}
                     </div>
 
                 </div>

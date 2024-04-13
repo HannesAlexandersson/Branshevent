@@ -1,8 +1,23 @@
-import { pencilRed, eye_off, image } from '../../assets/Icons';
+import { useState } from 'react';
+import { pencilRed, image, save } from '../../assets/Icons';
 import style from './personal_info.module.css';
 
 function Personal_information(){
-sessionStorage.setItem('userRole', 'company');
+    const [editMode, setEditMode] = useState({
+        personalInformation: false,       
+        description: false,
+        workrelated: false,
+    });
+
+    const handleEditToggle = (section) => {
+        setEditMode((prevEditMode) => ({
+            ...prevEditMode,
+            [section]: !prevEditMode[section],
+        }));
+    };
+    const endpoint = 'getByName/';
+
+
 
 const userRole = sessionStorage.getItem('userRole');
 
@@ -16,8 +31,15 @@ const userRole = sessionStorage.getItem('userRole');
 <div className={style.name_password_container}>
     
                             <div className={style.pers_info_btn_container}>
-                                <h2 className={style.personal_info_title}>PERSONAL INFORMATION</h2>
-                                <button className={style.edit_btn}>EDIT <img src={pencilRed} /></button>
+                                <h2 className={style.personal_info_title}>PERSONAL INFORMATION</h2>                               
+                                <button className={style.edit_btn} onClick={() => handleEditToggle('personalInformation')}>
+                                    {editMode.personalInformation ? <img src={save} /> : (
+                                        <>
+                                            EDIT
+                                            <img src={pencilRed} />
+                                        </>
+                                    )}
+                                </button>
                             </div>
 
                             <div className={style.redBox}>
@@ -30,6 +52,7 @@ const userRole = sessionStorage.getItem('userRole');
                                             type="text"
                                             name="companyName"
                                             className={style.inputfield}
+                                            disabled
                                         />
                                         </div>
                                          )}
@@ -42,6 +65,7 @@ const userRole = sessionStorage.getItem('userRole');
                                         name="proffesion"
                                         className={style.inputfield}
                                         value="Webdeveloper"
+                                        disabled
                                     />
 
                                     <label className={style.label} htmlFor='firstname'>FIRSTNAME</label>
@@ -49,24 +73,28 @@ const userRole = sessionStorage.getItem('userRole');
                                         type="text"
                                         name="firstname"
                                         className={style.inputfield}
+                                        disabled
                                     />
                                     <label className={style.label} htmlFor='lastname'>LASTNAME</label>
                                     <input 
                                         type="text"
                                         name="lastname"
                                         className={style.inputfield}
+                                        disabled
                                     />
                                     <label className={style.label} htmlFor='email'>EMAIL</label>
                                     <input 
                                         type="text"
                                         name="email"
                                         className={style.inputfield}
+                                        disabled
                                     />
                                     <label className={style.label} htmlFor='phone'>PHONENUMBER</label>
                                     <input 
                                         type="text"
                                         name="phone"
                                         className={style.inputfield}
+                                        disabled
                                     />
                    
                                         {userRole === 'company' && (
@@ -76,6 +104,7 @@ const userRole = sessionStorage.getItem('userRole');
                                             type="text"
                                             name="companyAddress"
                                             className={style.inputfield}
+                                            disabled
                                         />
                                     </div>
                                      )}
@@ -85,8 +114,8 @@ const userRole = sessionStorage.getItem('userRole');
     
    
                             <div className={style.pers_info_btn_container}>
-                                <h2 className={style.personal_info_title}>USERNAME AND PASSWORD</h2>                               
-                            </div>
+                                <h2 className={style.personal_info_title}>USERNAME AND PASSWORD</h2>  
+                            </div>  
                             <div className={style.redBox}>
                                 <form  className={style.form}>
                                     <label className={style.label} htmlFor='username'>USERNAME</label>
@@ -99,7 +128,7 @@ const userRole = sessionStorage.getItem('userRole');
                                     <input 
                                         className={style.inputfield}
                                         type="password"
-                                        
+                                        disabled
                                     />
                                     <button className={style.change_pass_btn}>CHANGE PASSWORD</button>
                                 </form>
@@ -109,7 +138,14 @@ const userRole = sessionStorage.getItem('userRole');
 <div className={style.name_password_container}> 
                             <div className={style.pers_info_btn_container}>
                                 <h2 className={style.personal_info_title}>DESCRIPTION</h2>
-                                <button className={style.edit_btn}>EDIT <img src={pencilRed} /></button>
+                                <button className={style.edit_btn} onClick={() => handleEditToggle('description')}>
+                                    {editMode.descriptionn ? <img src={save} /> : (
+                                        <>
+                                            EDIT
+                                            <img src={pencilRed} />
+                                        </>
+                                    )}
+                                </button>
                             </div>
                             <div className={style.redBox}>
                                 <div className={style.img_wrapper}>
@@ -123,6 +159,7 @@ const userRole = sessionStorage.getItem('userRole');
                                 <textarea 
                                     className={style.descr_area} 
                                     name="description"
+                                    disabled
                                 />
 
                                 <label className={style.label} htmlFor='application-period'>APPLICATION PERIOD</label>
@@ -130,19 +167,28 @@ const userRole = sessionStorage.getItem('userRole');
                                 className={style.inputfield}
                                 type="text"
                                 name="application-period"
+                                disabled
                                 />
                                 <label className={style.label} htmlFor='online-profiles'>ONLINE PROFILE</label>
                                 <input 
                                 className={style.inputfield}
                                 type="text"
                                 name="online-profiles"
+                                disabled
                                 />
                             </div>
 </div>
 <div className={style.name_password_container}>
                             <div className={style.pers_info_btn_container}>
                                 <h2 className={style.personal_info_title}>WORK RELATED</h2>
-                                <button className={style.edit_btn}>EDIT <img src={pencilRed} /></button>
+                                <button className={style.edit_btn} onClick={() => handleEditToggle('workrelated')}>
+                                    {editMode.workrelated ? <img src={save} /> : (
+                                        <>
+                                            EDIT
+                                            <img src={pencilRed} />
+                                        </>
+                                    )}
+                                </button>
                             </div>
                             <div className={style.redBox}>
                                 <div className={style.tags_wrapper}>
@@ -182,7 +228,7 @@ const userRole = sessionStorage.getItem('userRole');
                                 <div>
                                     <div className={style.pers_info_btn_container}>
                                         <h2 className={style.personal_info_title}>SEE FAVOURITES</h2>
-                                        <button className={style.edit_btn}>EDIT <img src={pencilRed} /></button>
+                                       {/*  <button className={style.edit_btn}>EDIT <img src={pencilRed} /></button> */}
                                     </div>
                                     <div className={style.redBox}>
                                         <p className={style.fav}>FAVOURITES</p>

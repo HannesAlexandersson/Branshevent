@@ -22,10 +22,13 @@ fetch(url, {
             throw new Error('Failed to send data'); 
         }
     })
-    .then(data => {
-       //the server returns a token
+    .then(data => {       
         console.log('Token:', data.token);
-        JSON.parse(localStorage.setItem('token', data.token));
+        JSON.parse(localStorage.setItem('token', data.token));//store the JTW token
+        const userId = data.id; //extract the user id from the respone
+        console.log('User ID:', userId);      
+        sessionStorage.setItem('userId', userId); //store the user id
+        sessionStorage.setItem('loggedIn', 'true');//set logged in to true
     })
     .catch(error => {
         console.error('Error:', error);

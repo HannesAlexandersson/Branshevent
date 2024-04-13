@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import {  useNavigate } from 'react-router-dom';
 import { Nav } from '../index';
 import { Personal_information, Personal_preview, Red_btn, Spacer_bottom } from '../../components';
 
@@ -8,7 +9,7 @@ import style from './account.module.css';
 function Account(){
     const [showPersonalInfo, setShowPersonalInfo] = useState(true); // set to true to mount the state fromt he start
     const [showProfilePreview, setShowProfilePreview] = useState(false); // set to default false to hide the preview until iser clicks the btn
-
+    const navigate = useNavigate();
     // Function to toggle between displaying personal information and profile preview
     const handleButtonClick = (component) => {
         if (component === 'personalInfo') {
@@ -19,7 +20,19 @@ function Account(){
             setShowPersonalInfo(false);
             setShowProfilePreview(true);
         }
+
+        
     };
+
+    const handleLogOut = () => {
+        // Clear localStorage
+        localStorage.clear();
+
+        // Clear sessionStorage
+        sessionStorage.clear();
+            
+        navigate('/log-in');
+    }
     return (
         <div className={style.main}>
             <Nav />
@@ -49,7 +62,7 @@ function Account(){
 
 
                 <div className={style.footer_btns_big_dev}>
-                    <Red_btn>Log Out</Red_btn>
+                    <Red_btn onClick={handleLogOut}>Log Out</Red_btn>
                 </div>
 
 
@@ -63,7 +76,7 @@ function Account(){
 
             <Spacer_bottom />
             <div className={style.footer_btns}>
-                <Red_btn>Log Out</Red_btn>
+                <Red_btn onClick={handleLogOut}>Log Out</Red_btn>
             </div>
             <Spacer_bottom />
         </div>
