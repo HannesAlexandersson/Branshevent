@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Nav } from '../index.js';
-import { Mini_card, Spacer_bottom } from '../../components/index.js';
+import { Mini_card, Spacer_bottom,  } from '../../components/index.js';
+import Render_mini from '../../components/Render_mini/Render_mini.jsx';
 import { briefcase, locationBlack, search, sliders, userSml } from '../../assets/Icons/index.js';
+import get_company_all from '../../components/getcompanyAll/get_company_all.jsx';
 import style from './favo.module.css';
 
 function Favourites(){
+    const [companies, setCompanies] = useState([]);
     const [showFilter, setShowFilter] = useState(false);
     const [animationReverted, setAnimationReverted] = useState(false);
 
@@ -17,19 +20,26 @@ function Favourites(){
         setAnimationReverted(true); // Set animation reverted state after animation ends
     }
 
-     /*Dummy data */
-     sessionStorage.setItem('userRole', 'company');
-     sessionStorage.setItem('companyName', ' Big company');
     
-     sessionStorage.setItem('firstname', 'Hannes');
-     sessionStorage.setItem('lastName', 'Hansson');
+    //get all companies the user have liked, for now render all companies in db
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+            const token = localStorage.getItem("token");
+            const companyData = await get_company_all(token);
+            setCompanies(companyData);
+            } catch (error) {
+            console.error("Error fetching company data:", error);
+            }
+        };
+    
+        fetchData();
+        }, []);
+    
      
  
-     const userRole = 'company';
-     const compName = sessionStorage.getItem('companyName');
-     const firstName = sessionStorage.getItem('firstname');
-     const lastName = sessionStorage.getItem('lastName');
- /*Dummy data */
+     
+ 
  
     return(
         <>
@@ -96,126 +106,10 @@ function Favourites(){
                     <p>All Favourites</p>
 
                     <div className={style.mini_cards_containter}>
-                        {/* FOREACH COMPANY in DB  ADD A MINI CARD */}
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                    <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                            <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
-
-                        <Mini_card 
-                        companyName={compName} 
-                        firstName={firstName}
-                        lastName={lastName}
-                        />
+                        {/* FOREACH COMPANY in DB-favo table  ADD A MINI CARD */}
+                        <div className={style.mini_cards_containter}>
+                            <Render_mini companies={companies} />
+                        </div>
                     </div>
                 </div>
 
