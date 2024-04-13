@@ -24,6 +24,8 @@ router.get('/all', (req, res) => {
     });
   });
 
+
+
 //login
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
@@ -65,13 +67,13 @@ router.post('/login', (req, res) => {
 
 
 
-//test token route
-router.get('/testToken', authMiddleware, (req, res) => {
-  return res.status(200).send({ userType : req.userType });
-})
+// //test token route
+// router.get('/testToken', authMiddleware, (req, res) => {
+//   return res.status(200).send({ userType : req.userType });
+// })
 
 
-//get company by ID
+//get by ID
 router.get('/:companyId', authMiddleware, (req, res) => {
   const companyId = req.params.companyId;
   const query = 'SELECT * FROM Company WHERE id = ?';
@@ -89,7 +91,7 @@ router.get('/:companyId', authMiddleware, (req, res) => {
 
 //registration
 router.post('/registration', (req, res) => {
-  const { company_name, first_name, last_name, phone_number, email, password, tags, description } = req.body;
+  const { company_name, first_name, last_name, phone_number, email, password, tags, open_for_lia, app_start, app_end, work_place, address, description, company_website, linkedin, gdpr } = req.body;
 
   bcrypt.hash(password, SALT, (err, hashed_password) => {
     if (err) {
@@ -98,11 +100,11 @@ router.post('/registration', (req, res) => {
     }
 
   const query = `
-  INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password, description) 
-  VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password, description, open_for_lia, app_start, app_end, work_place, address, company_website, linkedin, gdpr) 
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   //1. Create a company
-  db.run(query, [company_name, first_name, last_name, phone_number, email, hashed_password, description], function(err) {
+  db.run(query, [company_name, first_name, last_name, phone_number, email, hashed_password, description, open_for_lia, app_start, app_end, work_place, address, company_website, linkedin, gdpr], function(err) {
       if(err){
           console.log(err.message);
           return res.status(500).json({ error : 'Internal Server Error' });
@@ -123,11 +125,11 @@ router.post('/registration', (req, res) => {
             }
             console.log('Tags added successfully');
         
-            const token = jwt.sign({id: studentId, userType: "company"}, SECRET, {expiresIn: 864000});
+            const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
             return res.status(200).send({ token: token })
         });
     } else {
-      const token = jwt.sign({id: studentId, userType: "company"}, SECRET, {expiresIn: 864000});
+      const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
       return res.status(200).send({ token: token })
     }
   });
@@ -138,17 +140,34 @@ router.post('/registration', (req, res) => {
 
 //update a company
 router.post('/update', authMiddleware, (req, res) => {
-  const { company_name, first_name, last_name, phone_number, email, password, description, companyId } = req.body;
+  const { 
+    company_name, 
+    first_name, 
+    last_name, 
+    phone_number, 
+    email, 
+    password, 
+    description, 
+    open_for_lia, 
+    app_start, 
+    app_end, 
+    work_place, 
+    address, 
+    company_website, 
+    linkedin } = req.body;
+
   const updateQuery = `
   UPDATE Company 
-  SET company_name = ?, first_name = ?, last_name = ?, phone_number = ?, email = ?, password = ?, description = ? 
+  SET company_name = ?, first_name = ?, last_name = ?, phone_number = ?, email = ?, password = ?, description = ?, open_for_lia = ?, app_start = ?, app_end = ?, work_place = ?, address = ?, company_website = ?, linkedin  = ? 
   WHERE id = ?`;
 
-  db.run(updateQuery, [company_name, first_name, last_name, phone_number, email, password, description, companyId], function(err) {
+  db.run(updateQuery, [company_name, first_name, last_name, phone_number, email, password, description, open_for_lia, app_start, app_end, work_place, address, company_website, linkedin, req.id], function(err) {
     if(err){
         console.log(err.message);
         return res.status(500).json({ error : 'Internal Server Error' });
     }
+
+    console.log(req.id) ; 
     console.log('Company updated successfully');
     return res.status(200).send("Update successfull");
   });
@@ -227,27 +246,29 @@ router.get('/searchByName/:companyName', authMiddleware, (req, res) => {
   });
 });
 
-router.get('/company/:companyId/tags', (req, res) => {
+
+
+
+//get tags by id
+router.get('/:companyId/tags', (req, res) => {
   const companyId = req.params.companyId;
+const query = `
+  SELECT tag_id 
+  FROM Company_tags 
+  WHERE company_id = ?;
+`;
 
-  // query to retrieve tag IDs associated with the given company ID to render the tags
-  const query = `
-    SELECT tag_id 
-    FROM Company_tags 
-    WHERE company_id = ?;
-  `;
-
-  db.all(query, [companyId], (err, rows) => {
-    if (err) {
-      console.error('Error retrieving tags:', err);
-      res.status(500).json({ error: 'Internal server error' });
-    } else {
-      // extract tag IDs from the query result
-      const tagIds = rows.map(row => row.tag_id);
-      res.json(tagIds);
-      console.log('tags succesfully sent to client');
-    }
-  });
+db.all(query, [companyId], (err, rows) => {
+  if (err) {
+    console.error('Error retrieving tags:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  } else {
+    // extract tag IDs from the query result
+    const tagIds = rows.map(row => row.tag_id);
+    res.json(tagIds);
+    console.log('tags succesfully sent to client');
+  }
+});
 });
 
 
