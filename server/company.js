@@ -246,27 +246,29 @@ router.get('/searchByName/:companyName', authMiddleware, (req, res) => {
   });
 });
 
-router.get('/company/:companyId/tags', (req, res) => {
+
+
+
+//get tags by id
+router.get('/:companyId/tags', (req, res) => {
   const companyId = req.params.companyId;
+const query = `
+  SELECT tag_id 
+  FROM Company_tags 
+  WHERE company_id = ?;
+`;
 
-  // query to retrieve tag IDs associated with the given company ID to render the tags
-  const query = `
-    SELECT tag_id 
-    FROM Company_tags 
-    WHERE company_id = ?;
-  `;
-
-  db.all(query, [companyId], (err, rows) => {
-    if (err) {
-      console.error('Error retrieving tags:', err);
-      res.status(500).json({ error: 'Internal server error' });
-    } else {
-      // extract tag IDs from the query result
-      const tagIds = rows.map(row => row.tag_id);
-      res.json(tagIds);
-      console.log('tags succesfully sent to client');
-    }
-  });
+db.all(query, [companyId], (err, rows) => {
+  if (err) {
+    console.error('Error retrieving tags:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  } else {
+    // extract tag IDs from the query result
+    const tagIds = rows.map(row => row.tag_id);
+    res.json(tagIds);
+    console.log('tags succesfully sent to client');
+  }
+});
 });
 
 
