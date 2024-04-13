@@ -90,7 +90,7 @@ router.get('/:studentId', authMiddleware, (req, res) => {
 
 //registration
 router.post('/registration', (req, res) => {
-    const { first_name, last_name, email, password, phone_number, gdpr, tags, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends } = req.body;
+    const { first_name, last_name, email, password, phone_number, gdpr, tags, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends, occupation } = req.body;
     
     bcrypt.hash(password, SALT, (err, hashed_password) => {
       if (err) {
@@ -99,12 +99,12 @@ router.post('/registration', (req, res) => {
       }
 
     const query = `
-    INSERT INTO Student (first_name, last_name, email, password, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`; 
+    INSERT INTO Student (first_name, last_name, email, password, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends, occupation) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`; 
 
     
     //1. create the student; enter the hashed password into the db
-    db.run(query, [first_name, last_name, email, hashed_password, phone_number, description, github, portfolio, linkedin, behance, work_place, app_starts], app_ends, function(err) {
+    db.run(query, [first_name, last_name, email, hashed_password, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends, occupation], function(err) {
         if(err){
             console.error('Error inserting student', err.message);
             return res.status(500).json({ error : 'Internal Server Error' });

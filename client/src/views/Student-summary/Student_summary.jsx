@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Progressbar, Red_btn, Spacer_bottom, White_btn, SendDataToServer } from '../../components';
+import { Progressbar, Red_btn, Spacer_bottom, White_btn, SendDataToServer, Onlineprofile } from '../../components';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 
 import { Nav } from '../index.js';
@@ -20,7 +20,7 @@ function Student_summary(){
 
     const reqData = [];
     let TOKEN;
-    let studentDescription;
+    let studentDescription = '';
     let studentUsername;
     let studentOrientation;
     let studentOnlineProfiles;
@@ -30,6 +30,14 @@ function Student_summary(){
     let studentPassword;
     let studentImage;
     let studentFormData;
+    let studentGdpr;
+    let studentStartDate;
+    let studentEndDate;
+    let studentGithub;
+    let studentLinkedIn;
+    let studentBehance;
+    let studentOccupation;
+
     if( sessionStorage.getItem('studentData') !== null){
     studentFormData = JSON.parse(sessionStorage.getItem('studentData'));
     }else {
@@ -42,8 +50,18 @@ function Student_summary(){
     }
 
     let liaStartdate = sessionStorage.getItem("startDate");
+    studentStartDate = new Date(liaStartdate);
     let liaEnddate = sessionStorage.getItem("endDate");    
+    studentEndDate = new Date(liaEnddate);
     const hasDates = liaStartdate && liaEnddate;
+
+   
+
+    if (sessionStorage.getItem('occupation') !== null) {
+        studentOccupation = sessionStorage.getItem('studentDescription');
+    }else{
+        studentDescription = 'not set';
+    }
 
    
     if (sessionStorage.getItem('studentDescription') !== null) {
@@ -72,9 +90,7 @@ function Student_summary(){
     
     if (sessionStorage.getItem('selectedTags') !== null) {
         studentTags = JSON.parse(sessionStorage.getItem('selectedTags'));
-        studentParsed = sessionStorage.getItem('selectedTags');
-       
-       
+        studentParsed = sessionStorage.getItem('selectedTags');     
         
     }else {
         studentTags = {tag: 'not set'};
@@ -103,6 +119,13 @@ function Student_summary(){
     }else{
         console.log('NO TOKEN RECEVIED')
     }
+
+    if (sessionStorage.getItem('gdprChecked') !== null){
+        studentGdpr = true;
+    }else{
+        console.log('NOT set ')
+    }
+
     const getSelectedTagIds = () => {
         // Filter the tagsArray to find tags that match the names in studentTags
         const selectedTagIds = tagsArray
@@ -129,12 +152,23 @@ function Student_summary(){
         email: studentFormData.email,
         password: studentPassword,
         phone_number: studentFormData.phoneNumber,
+        gdpr: studentGdpr,
         description: studentDescription,
+        github: studentOnlineProfiles.Github,
+        portfolio: studentOnlineProfiles.Portfolio,
+        linkedin: studentOnlineProfiles.Linkedin,
+        behance: studentOnlineProfiles.Behance,        
         work_place: studentLocation,
-        tags: formattedTags
+        app_starts: studentStartDate,
+        app_ends: studentEndDate,
+        tags: formattedTags,
+        occupation: studentOrientation,
     };
+//    const {  work_place, app_starts, app_ends, occupation } = req.body;
+
     SendDataToServer(requestData, endpoint);
    
+
 
     
      

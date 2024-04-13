@@ -96,13 +96,13 @@ function Company_second_stage(){
 
         // Save checkbox state to session storage
         if (isNotLookingChecked) {
-            sessionStorage.setItem('noInterns', 'true');
+            sessionStorage.setItem('open_for_lia', 'noInterns');
         }
         if(isDatePendingChecked){
-            sessionStorage.setItem('applicationDatePending', 'true');
+            sessionStorage.setItem('open_for_lia','applicationDatePending');
         }
         if(isContinuousChecked){
-            sessionStorage.setItem('haveOpenings', 'true')
+            sessionStorage.setItem('open_for_lia','haveOpenings')
         }
        
        // Only navigate if all validation checks pass
