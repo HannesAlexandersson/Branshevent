@@ -91,7 +91,23 @@ router.get('/:companyId', authMiddleware, (req, res) => {
 
 //registration
 router.post('/registration', (req, res) => {
-  const { company_name, first_name, last_name, phone_number, email, password, tags, open_for_lia, app_start, app_end, work_place, address, description, company_website, linkedin, gdpr } = req.body;
+  const { 
+    company_name, 
+    first_name, 
+    last_name, 
+    phone_number, 
+    email, 
+    password, 
+    tags, 
+    open_for_lia, 
+    app_start, 
+    app_end, 
+    work_place, 
+    address, 
+    description, 
+    company_website, 
+    linkedin, 
+    gdpr } = req.body;
 
   bcrypt.hash(password, SALT, (err, hashed_password) => {
     if (err) {
@@ -167,7 +183,6 @@ router.post('/update', authMiddleware, (req, res) => {
         return res.status(500).json({ error : 'Internal Server Error' });
     }
 
-    console.log(req.id) ; 
     console.log('Company updated successfully');
     return res.status(200).send("Update successfull");
   });
