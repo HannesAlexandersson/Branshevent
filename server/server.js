@@ -1,6 +1,7 @@
 import express from 'express';
 import companyRoutes from './company.js';
 import studentRoutes from './student.js';
+import tagRoutes from './tags.js';
 import userRoutes from './user.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -29,6 +30,7 @@ server.use(bodyParser.json())
 server.use('/api/company/', companyRoutes);
 server.use('/api/student/', studentRoutes);
 server.use('/api/user/', userRoutes);
+server.use('/api/tags', tagRoutes);
 
 
 

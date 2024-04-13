@@ -6,56 +6,93 @@ import style from './home.module.css';
 import { heartlight } from '../../assets/Icons/dropdownicons/index.js';
 import { Mini_card, Quiz_wrapper, Spacer_bottom, Simple_slider } from '../../components/index.js';
 import Render_mini from '../../components/Render_mini/Render_mini.jsx';
+import { getAllUsedTags } from '../../apiFunctions/tags.jsx';
+import Multiselect from 'multiselect-react-dropdown';
+import { searchCompaniesByName, searchCompaniesByNameAndTags, searchCompaniesByTags } from '../../apiFunctions/company.jsx';
 
 function Home(){
     const [showFilter, setShowFilter] = useState(false);
     const [animationReverted, setAnimationReverted] = useState(false);
     const [companies, setCompanies] = useState([]);
+    const [tags, setTags] = useState([]);
+    const [selectedTags, setSelectedTags] = useState('');
+    const [searchString, setSearchString] = useState('');
 
     const userRole = sessionStorage.getItem('userType');
+    const token = localStorage.getItem('token');
     
-   
-
+    // get inital companies/student
     useEffect(() => {
         const fetchData = async () => {
             try {
-            const token = localStorage.getItem("token");
-            const companyData = await get_company_all(token);
-            setCompanies(companyData);
+                const token = localStorage.getItem('token');
+                const companyData = await get_company_all(token);
+                setCompanies(companyData);
             } catch (error) {
-            console.error("Error fetching company data:", error);
+                console.error("Error fetching company data:", error);
+            }
+        };
+        fetchData();
+    }, []);
+    
+    // get all tags
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const tagsData = await getAllUsedTags();
+                setTags(tagsData);
+            } catch (error) {
+                console.error("Error fetching company data:", error);
             }
         };
     
         fetchData();
-        }, []);
+    }, []);
     
-
+    // do search
+    useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    let companyData;
+                    if(!searchString.length && !selectedTags || !selectedTags.length) {
+                        const token = localStorage.getItem('token');
+                        companyData = await get_company_all(token);
+                    }
+                    else if (searchString.length && selectedTags && selectedTags.length){
+                        companyData = await searchCompaniesByNameAndTags(searchString, selectedTags);
+                    } else if (!selectedTags || !selectedTags.length && searchString) {
+                        companyData = await searchCompaniesByName(searchString);
+                    } else if (!searchString && selectedTags && selectedTags.length) {
+                        companyData = await searchCompaniesByTags(selectedTags);
+                    }
+                    setCompanies(companyData);
+                } catch (error) {
+                    console.error("Error fetching company data:", error);
+                }
+            };
+            fetchData();
+    }, [userRole, selectedTags.length, searchString]);
     
-    
+    const handleFilter = () => {
+        setShowFilter(!showFilter);
+        setAnimationReverted(false); // Reset animation reverted state
+    }
 
-const handleFilter = () => {
-    setShowFilter(!showFilter);
-    setAnimationReverted(false); // Reset animation reverted state
-}
-
-const handleAnimationEnd = () => {
-    setAnimationReverted(true); // Set animation reverted state after animation ends
-}
-
-
-
-
+    const handleAnimationEnd = () => {
+        setAnimationReverted(true); // Set animation reverted state after animation ends
+    }
 
 
     return(
         <>
             <div className={style.main}>
                 <Nav />
-<div className={style.page_wrapper}>
+            <div className={style.page_wrapper}>
                 <div className={style.search_wrapper}>
                     <div className={style.searchbar}>
                         <input 
+                        onChange={(event) => setSearchString(event.target.value)}
+
                         className={style.searchbar_input} 
                         type="text" 
                         id="search-input" 
@@ -74,13 +111,13 @@ const handleAnimationEnd = () => {
                         </div>
                         {showFilter && (
                         <div className={style.dropdowns_wrapper}>
-                            {/* Dropdown for tags */}
-                            <select className={style.dropdown}>
-                            <option value="" disabled selected hidden>Tags</option>
-                            </select>
+                            { tags &&
+                                <Multiselect options={tags} displayValue='name' groupBy='category_name' 
+                                    onSelect={(selectedList) => {setSelectedTags(selectedList.map(tag => tag.id))}} onRemove={(selectedList) => setSelectedTags(selectedList.map(tag => tag.id))} />
+                            }
                             {/* Dropdown for workplace */}
-                            <select className={style.dropdown}>
-                                <option value="" disabled selected hidden>Workplace</option>
+                            <select className={style.dropdown} defaultValue={""}>
+                                <option value="" disabled hidden>Workplace</option>
                                 <option value="office">Office</option>
                                 <option value="remote">Remote</option>
                                 <option value="both">Both</option>
