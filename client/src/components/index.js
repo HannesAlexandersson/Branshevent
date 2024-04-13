@@ -37,3 +37,4 @@ export { default as Quiz_wrapper } from './Quiz_wrapper/Quiz_wrapper.jsx';
 export { default as Simple_slider } from './Slider/Slider.jsx';
 export { default as get_user_data } from './getDatafromDB/get_user_data.jsx';
 export { default as Tags_name_from_server } from './TagsFromServer/Tags_name_from_server.jsx';
+export { default as get_a_company } from './get_a_company/get_a_company.jsx';

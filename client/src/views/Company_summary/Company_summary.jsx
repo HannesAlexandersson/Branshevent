@@ -117,6 +117,7 @@ function Company_summary(){
     if (currentStep < totalSteps) {
         setCurrentStep(currentStep + 1);
     }
+    sessionStorage.setItem('loggedin', true);
     navigate('/company-finish');
    } 
   

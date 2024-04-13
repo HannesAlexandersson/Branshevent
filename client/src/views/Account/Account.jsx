@@ -10,6 +10,30 @@ function Account(){
     const [showPersonalInfo, setShowPersonalInfo] = useState(true); // set to true to mount the state fromt he start
     const [showProfilePreview, setShowProfilePreview] = useState(false); // set to default false to hide the preview until iser clicks the btn
     const navigate = useNavigate();
+
+    const userRole = sessionStorage.getItem('userType'); 
+    let userData = []; 
+    let company= [];
+    let student= [];
+    let id;
+    let token;
+    if(userRole === 'company'){
+         id = sessionStorage.getItem('id');
+         token = localStorage.getItem('token');
+        //get_a_company(id, token);
+         userData = sessionStorage.getItem('userData');
+        
+    }else if(userRole === 'student'){
+         id = sessionStorage.getItem('id');
+         token = localStorage.getItem('token');
+         userData = sessionStorage.getItem('userData');
+         
+    }
+
+
+
+
+
     // Function to toggle between displaying personal information and profile preview
     const handleButtonClick = (component) => {
         if (component === 'personalInfo') {
@@ -69,10 +93,10 @@ function Account(){
             </div>
 
            
-            {showPersonalInfo && <Personal_information />}
+            {showPersonalInfo && <Personal_information userData={userData}/>}           
+            {showProfilePreview && <Personal_preview userData={userData}/>}
 
-           
-            {showProfilePreview && <Personal_preview />}
+            
 
             <Spacer_bottom />
             <div className={style.footer_btns}>

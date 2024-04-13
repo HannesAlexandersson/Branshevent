@@ -142,6 +142,7 @@ function Student_summary(){
         setCurrentStep(currentStep + 1);
     }   
 
+    sessionStorage.setItem('loggedin', true);
     navigate('/student-finish');
    } 
   

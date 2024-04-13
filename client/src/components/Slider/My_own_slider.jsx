@@ -19,8 +19,8 @@ function MyOwnSlider({ companies, children }) {
     <div className={style.slider_container_child}>
       {children[currentIndex]}
       <div className={style.prev_nxt_cont}>
-        <button className={style.nxt_prev} onClick={goToPrevSlide}>-</button>
-        <button className={style.nxt_prev} onClick={goToNextSlide}>+</button>
+        <button className={style.nxt_prev} onClick={goToPrevSlide}>&lt;-</button>
+        <button className={style.nxt_prev} onClick={goToNextSlide}>-&gt;</button>
       </div>
     </div>
   );

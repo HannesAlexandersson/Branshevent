@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {  get_user_data } from '../../components/index';
 import { Nav } from '../index';
-
 import style from './login.module.css';
 
 
@@ -12,7 +11,7 @@ function Log_in(){
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState('');
     const [userType, setUserType] = useState('');
-    
+    sessionStorage.clear;
 
     const handleUsernameChange = (event) => {
         setEmail(event.target.value);
@@ -37,7 +36,7 @@ function Log_in(){
     }
 
     const signInStudent = () => {
-        const endpoint = '/api/student/login';
+        const endpoint = 'api/student/login';
         get_user_data(endpoint, email, password)
         .then(data => {          
             sessionStorage.setItem('loggedIn', 'true');
@@ -60,7 +59,7 @@ function Log_in(){
     }
     
     const signInCompany = () => {
-        const endpoint = '/api/company/login';
+        const endpoint = 'api/company/login';
         get_user_data(endpoint, email, password)
         .then(data => {          
             sessionStorage.setItem('loggedIn', 'true');
@@ -80,8 +79,9 @@ function Log_in(){
                 console.error('Error:', error);
             }
         });
-    }       
-    
+              
+} 
+
     //if user press sign up we take them to the registration form
     const handleSignUp = () => {
         navigate('/sign-in');
