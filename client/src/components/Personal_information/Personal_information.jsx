@@ -4,13 +4,24 @@ import get_company_tags from '../Get-company-tags/Get_company_tags.jsx';
 import get_student_tags from '../get-student-tags/get_student_tags.jsx';
 import style from './personal_info.module.css';
 import Tags_name_from_server from '../TagsFromServer/Tags_name_from_server';
+import tagsArray from '../../tagArray';
 
 function Personal_information({ userData }){
+    const [tags, setTags] = useState([]);
     const [editMode, setEditMode] = useState({
         personalInformation: false,       
         description: false,
         workrelated: false,
     });
+
+    const userDataObj = JSON.parse(userData);
+    let userRole;
+    if ('company_name' in userDataObj) {
+        userRole = 'company';
+    }else{
+        userRole = 'student';
+    }
+    
 
     const handleEditToggle = (section) => {
         setEditMode((prevEditMode) => ({
@@ -18,27 +29,33 @@ function Personal_information({ userData }){
             [section]: !prevEditMode[section],
         }));
     };
-    
-    const id = userData.id;
+    // get the id from the user, and the token
+    const id = userDataObj.id;
+    console.log(id);
     const token = localStorage.getItem('token');
-    if(userRole === 'company'){
-        useEffect(() => {
-            if (id) { 
-                get_company_tags(id, token)
-                    .then(data => setTags(data))
-                    .catch(error => console.error('Error fetching company tags:', error));
+    useEffect(() => {
+        const fetchTags = async (id, token, userRole) => {
+            try {
+                let tagsData; // Conditionally use a fetch call depending on the user role
+                if (userRole === 'company') {
+                    tagsData = await get_company_tags(id, token);
+                } else if (userRole === 'student') {
+                    tagsData = await get_student_tags(id, token);
+                }
+                if (Array.isArray(tagsData)) {
+                    setTags(tagsData); // Only set tags if tagsData is an array
+                } else {
+                    console.error('Invalid tags data:', tagsData);
+                }
+            } catch (error) {
+                console.error('Error fetching tags:', error);
             }
-        }, [id]);
-    }else if(userRole === 'student'){
-        useEffect(() => {
-            if (id) { 
-                get_student_tags(id, token)
-                    .then(data => setTags(data))
-                    .catch(error => console.error('Error fetching company tags:', error));
-            }
-        }, [id]);
-    }
-
+        };
+    
+        if (id && token) {
+            fetchTags(id, token, userRole);
+        }
+    }, [id, token, userRole]);
     //a reverse function to compare the tags id from the db to the tagsArray to get the names of the selected tags
     const getSelectedTagNames = (tagIds) => {
         // we need to filter the tagsArray to find tags that match the IDs in tagIds
@@ -53,7 +70,7 @@ function Personal_information({ userData }){
     const tagIdsFromServer = tags; 
     const selectedTagNames = getSelectedTagNames(tagIdsFromServer);
 
-const userRole = sessionStorage.getItem('userType');
+
 
     return(
         <>
@@ -87,7 +104,7 @@ const userRole = sessionStorage.getItem('userType');
                                             name="companyName"
                                             className={style.inputfield}
                                             disabled
-                                            value={userData.company_name}
+                                            value={userDataObj.company_name}
                                         />
                                         </div>
                                          )}
@@ -100,7 +117,7 @@ const userRole = sessionStorage.getItem('userType');
                                         type="text"
                                         name="proffesion"
                                         className={style.inputfield}
-                                        value={userData.occupation}
+                                        value={userDataObj.occupation}
                                         disabled
                                     />
                                     </div>
@@ -111,7 +128,7 @@ const userRole = sessionStorage.getItem('userType');
                                         name="firstname"
                                         className={style.inputfield}
                                         disabled
-                                        value={userData.first_name}
+                                        value={userDataObj.first_name}
                                     />
                                     <label className={style.label} htmlFor='lastname'>LASTNAME</label>
                                     <input 
@@ -119,7 +136,7 @@ const userRole = sessionStorage.getItem('userType');
                                         name="lastname"
                                         className={style.inputfield}
                                         disabled
-                                        value={userData.last_name}
+                                        value={userDataObj.last_name}
                                     />
                                     <label className={style.label} htmlFor='email'>EMAIL</label>
                                     <input 
@@ -127,7 +144,7 @@ const userRole = sessionStorage.getItem('userType');
                                         name="email"
                                         className={style.inputfield}
                                         disabled
-                                        value={userData.email}
+                                        value={userDataObj.email}
                                     />
                                     <label className={style.label} htmlFor='phone'>PHONENUMBER</label>
                                     <input 
@@ -135,7 +152,7 @@ const userRole = sessionStorage.getItem('userType');
                                         name="phone"
                                         className={style.inputfield}
                                         disabled
-                                        value={userData.phone_number}
+                                        value={userDataObj.phone_number}
                                     />
                    
                                         {userRole === 'company' && (
@@ -146,7 +163,7 @@ const userRole = sessionStorage.getItem('userType');
                                             name="companyAddress"
                                             className={style.inputfield}
                                             disabled
-                                            value={userData.address}
+                                            value={userDataObj.address}
                                         />
                                     </div>
                                      )}
@@ -165,7 +182,7 @@ const userRole = sessionStorage.getItem('userType');
                                         className={style.inputfield}
                                         type="email"
                                         disabled
-                                        value={userData.email}
+                                        value={userDataObj.email}
                                     />
                                     <label className={style.label} htmlFor='password'>PASSWORD</label>
                                     <input 
@@ -173,7 +190,7 @@ const userRole = sessionStorage.getItem('userType');
                                         type="password"
                                         disabled
                                         hidden
-                                        value={userData.password}
+                                        value={userDataObj.password}
                                     />
                                     <button className={style.change_pass_btn}>CHANGE PASSWORD</button>
                                 </form>
@@ -205,7 +222,7 @@ const userRole = sessionStorage.getItem('userType');
                                     className={style.descr_area} 
                                     name="description"
                                     disabled
-                                    value={userData.description}
+                                    value={userDataObj.description}
                                 />
 
                                 <label className={style.label} htmlFor='application-periodStart'>APPLICATION PERIOD</label>
@@ -214,14 +231,14 @@ const userRole = sessionStorage.getItem('userType');
                                 type="text"
                                 name="application-periodStart"
                                 disabled
-                                value={userData.app_start}
+                                value={userDataObj.app_start}
                                 />
                                   <input 
                                 className={style.inputfield}
                                 type="text"
                                 name="application-periodEnd"
                                 disabled
-                                value={userData.app_end}
+                                value={userDataObj.app_end}
                                 />
                                 <label className={style.label} htmlFor='online-profiles'>ONLINE PROFILE</label>
                                 <input 
@@ -229,7 +246,7 @@ const userRole = sessionStorage.getItem('userType');
                                 type="text"
                                 name="online-profiles"
                                 disabled
-                                value={userData.linkedin
+                                value={userDataObj.linkedin
                                 }
                                 />
                                 {userRole === 'student' ? (
@@ -238,7 +255,7 @@ const userRole = sessionStorage.getItem('userType');
                                     type="text"
                                     name="online-profiles"
                                     disabled
-                                    value={userData.github
+                                    value={userDataObj.github
                                     }
                                     />
                                 ): (
@@ -247,7 +264,7 @@ const userRole = sessionStorage.getItem('userType');
                                     type="text"
                                     name="online-profiles"
                                     disabled
-                                    value={userData.company_website
+                                    value={userDataObj.company_website
                                     }
                                     />
                                 )}
@@ -269,11 +286,9 @@ const userRole = sessionStorage.getItem('userType');
                             <div className={style.redBox}>
                                 <div className={style.tags_wrapper}>
                                     <p className={style.tags_title}>PROGRAM USED</p>
-                                    <div className={style.tags_container}>
-                                        <Tags_name_from_server >
-                                        {/*tags here*/}
-                                        </Tags_name_from_server>
-                                    </div>
+                                    
+                                        <Tags_name_from_server selectedTagNames={selectedTagNames} />                                       
+                                    
                                 </div>
 
                                 <div className={style.checkbox_wrapper}>
