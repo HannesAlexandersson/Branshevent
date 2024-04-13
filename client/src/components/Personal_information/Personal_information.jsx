@@ -5,8 +5,11 @@ import get_student_tags from '../get-student-tags/get_student_tags.jsx';
 import style from './personal_info.module.css';
 import Tags_name_from_server from '../TagsFromServer/Tags_name_from_server';
 import tagsArray from '../../tagArray';
+import Update_company from '../Update/Update_company.jsx';
+import Update_student from '../Update/Update_student.jsx';
 
 function Personal_information({ userData }){
+    const [userDataObj, setUserDataObj] = useState({});
     const [tags, setTags] = useState([]);
     const [editMode, setEditMode] = useState({
         personalInformation: false,       
@@ -14,21 +17,96 @@ function Personal_information({ userData }){
         workrelated: false,
     });
 
-    const userDataObj = JSON.parse(userData);
+    //set the initial userDataObj to the userData props parsed
+    useEffect(() => {
+        if (userData) {
+            setUserDataObj(JSON.parse(userData));
+        }
+    }, [userData]);
+
+    /*  userDataObj = JSON.parse(userData); */
     let userRole;
     if ('company_name' in userDataObj) {
         userRole = 'company';
     }else{
         userRole = 'student';
-    }
-    
+    }  
 
     const handleEditToggle = (section) => {
-        setEditMode((prevEditMode) => ({
-            ...prevEditMode,
-            [section]: !prevEditMode[section],
-        }));
+        if (!editMode[section]) {
+            // If not in edit mode, switch to edit mode
+            setEditMode((prevEditMode) => ({
+                ...prevEditMode,
+                [section]: true,
+            }));
+        } else {
+            // If in edit mode, save the changes
+
+            saveChangesToDatabase(section);
+        }
     };
+    const saveChangesToDatabase = (section) => {
+    console.log('Saving changes to database...');
+    console.log('Updated data:', userDataObj);
+
+    // Update the database based on the user's role
+    if (userRole === 'company') {
+        updateCompanyData(section);
+    } else if (userRole === 'student') {
+        updateStudentData(section);
+    } else {
+        console.error('Unknown user role:', userRole);
+    }
+
+    // After sending the data to the server, you can switch back to view mode
+    setEditMode((prevEditMode) => ({
+        ...prevEditMode,
+        [section]: false,
+    }));
+};
+
+    const updateCompanyData = (section) => {
+        // Implement logic to send updated company data to the server
+        console.log('Updating company data...');
+        const endpoint = 'api/company/update';
+        const token = localStorage.getItem('token');
+        const updatedData = {
+            company_name: userDataObj.company_name,
+            first_name: userDataObj.first_name,
+            last_name: userDataObj.last_name,
+            phone_number: userDataObj.phone_number,
+            email: userDataObj.email,
+            password: userDataObj.password,
+            description: userDataObj.description,
+            companyId: userDataObj.id // Assuming companyId is the same as id
+        }; 
+        // Example: Call an update function passing token, new data, and id
+        Update_company( updatedData, endpoint, token);
+    };
+
+    const updateStudentData = (section) => {
+        // Implement logic to send updated student data to the server
+        console.log('Updating student data...');
+        const endpoint = 'api/student/update'
+        const token = localStorage.getItem('token');
+        const updatedData = {
+            first_name: userDataObj.first_name,
+            last_name: userDataObj.last_name,
+            email: userDataObj.email,
+            password: userDataObj.password,
+            phone_number: userDataObj.phone_number,
+            description: userDataObj.description,
+            github: userDataObj.github,
+            portfolio: userDataObj.portfolio,
+            linkedin: userDataObj.linkedin,
+            behance: userDataObj.behance,
+            work_place: userDataObj.work_place,
+            studentId: userDataObj.id
+        };
+        // Example: Call an update function passing token, new data, and id
+        Update_student(updatedData, endpoint, token);
+    };
+
     // get the id from the user, and the token
     const id = userDataObj.id;
     
@@ -99,6 +177,15 @@ function Personal_information({ userData }){
                                 {userRole === 'company' && (
                                     <div>
                                         <label className={style.label} htmlFor='companyName'>Company Name</label>
+                                        {editMode.personalInformation ? (
+                                        <input 
+                                        type="text"
+                                        name="companyName"
+                                        className={style.inputfield}
+                                        value={userDataObj.company_name}
+                                        onChange={(e) => setUserDataObj({ ...userDataObj, company_name: e.target.value })}
+                                    />
+                                    ) : (
                                         <input 
                                             type="text"
                                             name="companyName"
@@ -106,8 +193,10 @@ function Personal_information({ userData }){
                                             disabled
                                             value={userDataObj.company_name}
                                         />
-                                        </div>
-                                         )}
+                                    )}
+                                        
+                                </div>
+                                )}
 
 
                                 {userRole === 'student' && ( 
