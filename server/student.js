@@ -88,7 +88,7 @@ router.get('/:studentId', authMiddleware, (req, res) => {
 
 //registration
 router.post('/registration', (req, res) => {
-    const { first_name, last_name, email, password, phone_number, tags, description, work_place } = req.body;
+    const { first_name, last_name, email, password, phone_number, gdpr, tags, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends } = req.body;
     
     bcrypt.hash(password, SALT, (err, hashed_password) => {
       if (err) {
@@ -97,12 +97,12 @@ router.post('/registration', (req, res) => {
       }
 
     const query = `
-    INSERT INTO Student (first_name, last_name, email, password, phone_number, description, work_place) 
-    VALUES (?, ?, ?, ?, ?, ?, ?)`; 
+    INSERT INTO Student (first_name, last_name, email, password, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`; 
 
     
     //1. create the student; enter the hashed password into the db
-    db.run(query, [first_name, last_name, email, hashed_password, phone_number, description, work_place], function(err) {
+    db.run(query, [first_name, last_name, email, hashed_password, phone_number, description, github, portfolio, linkedin, behance, work_place, app_starts], app_ends, function(err) {
         if(err){
             console.error('Error inserting student', err.message);
             return res.status(500).json({ error : 'Internal Server Error' });
@@ -123,11 +123,14 @@ router.post('/registration', (req, res) => {
                     return res.status(500).json({ error : 'Internal Server Error' });
                 }
                 console.log('Tags added successfully');
-            
-                return res.status(200).json({ id: studentId });
+    
+                const token = jwt.sign({id: studentId, userType: "student"}, SECRET, {expiresIn: 864000});
+                return res.status(200).send({ token: token })
             });
         } else {
-            return res.status(200).json({ id: studentId });
+          const token = jwt.sign({id: studentId, userType: "student"}, SECRET, {expiresIn: 864000});
+          return res.status(200).send({ token: token })
+
         }
     });
   });
@@ -136,13 +139,13 @@ router.post('/registration', (req, res) => {
 
 //update a student
 router.post('/update', authMiddleware, (req, res) => {
-  const { first_name, last_name, email, password, phone_number, description, work_place, studentId } = req.body;
+  const { first_name, last_name, email, password, phone_number, description, github, portfolio, linkedin, behance, work_place, studentId } = req.body;
   const updateQuery = `
   UPDATE Student 
-  SET first_name = ?, last_name = ?, email = ?, password = ?, phone_number = ?, description = ?, work_place = ? 
+  SET first_name = ?, last_name = ?, email = ?, password = ?, phone_number = ?, description = ?, github = ?, portfolio = ?, linkedin = ?, behance = ?,work_place = ? 
   WHERE id = ?`;
 
-  db.run(updateQuery, [first_name, last_name, email, password, phone_number, description, work_place, studentId], function(err) {
+  db.run(updateQuery, [first_name, last_name, email, password, phone_number, description, github, portfolio, linkedin, behance, work_place, studentId], function(err) {
     if(err){
         console.log(err.message);
         return res.status(500).json({ error : 'Internal Server Error' });
