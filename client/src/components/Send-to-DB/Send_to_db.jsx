@@ -24,7 +24,7 @@ fetch(url, {
     })
     .then(data => {       
         console.log('Token:', data.token);
-        JSON.parse(localStorage.setItem('token', data.token));//store the JTW token
+        localStorage.setItem('token', data.token);//store the JTW token
         const userId = data.id; //extract the user id from the respone
         console.log('User ID:', userId);      
         sessionStorage.setItem('userId', userId); //store the user id

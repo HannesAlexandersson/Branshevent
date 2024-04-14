@@ -105,8 +105,8 @@ router.post('/registration', (req, res) => {
       occupation,
       behance, 
       work_place, 
-      app_starts, 
-      app_ends } = req.body;
+      app_start, 
+      app_end } = req.body;
     
     bcrypt.hash(password, SALT, (err, hashed_password) => {
       if (err) {
@@ -116,12 +116,12 @@ router.post('/registration', (req, res) => {
       console.log(work_place);
  
     const query = `
-    INSERT INTO Student (first_name, last_name, email, password, occupation, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends) 
+    INSERT INTO Student (first_name, last_name, email, password, occupation, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_start, app_end) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`; 
 
     
     //1. create the student
-    db.run(query, [first_name, last_name, email, hashed_password, occupation, phone_number, gdpr,description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends], function(err) {
+    db.run(query, [first_name, last_name, email, hashed_password, occupation, phone_number, gdpr,description, github, portfolio, linkedin, behance, work_place, app_start, app_end], function(err) {
       console.log(work_place);
         if(err){
             console.error('Error inserting student', err.message);
@@ -172,15 +172,15 @@ router.post('/update', authMiddleware, (req, res) => {
     occupation,
     behance, 
     work_place, 
-    app_starts, 
-    app_ends } = req.body;
+    app_start, 
+    app_end } = req.body;
 
   const updateQuery = `
   UPDATE Student 
-  SET first_name = ?, last_name = ?, email = ?, password = ?, phone_number = ?, description = ?, github = ?, portfolio = ?, linkedin = ?, occupation = ?, behance = ?, work_place = ?, app_starts = ?, app_ends = ? 
+  SET first_name = ?, last_name = ?, email = ?, password = ?, phone_number = ?, description = ?, github = ?, portfolio = ?, linkedin = ?, occupation = ?, behance = ?, work_place = ?, app_start = ?, app_end = ? 
   WHERE id = ?`;
 
-  db.run(updateQuery, [first_name, last_name, email, password, phone_number, description, github, portfolio, linkedin, occupation, behance, work_place, app_starts, app_ends, req.id], function(err) {
+  db.run(updateQuery, [first_name, last_name, email, password, phone_number, description, github, portfolio, linkedin, occupation, behance, work_place, app_start, app_end, req.id], function(err) {
     if(err){
       console.log(req.id);
         console.log(err.message);
@@ -286,6 +286,68 @@ router.get('/:studentId/tags', (req, res) => {
     }
   });
 });
+
+
+//search by tag & id
+router.post('/searchByNameAndTags', authMiddleware, (req, res) => {
+
+  const tags = req.body.tags;
+  const studentName = req.body.searchString;
+  const query = `
+  SELECT Student.*, Student_tags.tag_id
+  FROM Student
+  JOIN Student_tags ON Student.id = Student_tags.student_id
+  WHERE Student_tags.tag_id IN (${tags})
+  AND Student.last_name LIKE (?)
+  GROUP BY Student.id`;
+  const searchName = '%' + studentName + '%';
+
+  db.all(query, [searchName], (err, students) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(students);
+  });
+});
+
+
+
+//Search route
+router.post('/search', (req, res) => {
+
+  const searchString = req.body.searchString;
+  const workPlace = req.body.workPlace;
+  const tags = req.body.tags;
+
+  let query = 'SELECT Student.* FROM Student, Student_tags';
+  let joinWord = 'WHERE';
+
+  if (searchString) {
+    query = query + ` ${joinWord} (first_name LIKE '%${searchString}%' OR last_name LIKE '%${searchString}%') `;
+    joinWord = 'AND';
+  }
+
+  if (workPlace) {
+    query = query + ` ${joinWord} work_place IN ('${workPlace.join("', '")}')`;
+    joinWord = 'AND';
+  }
+
+  if (tags) {
+    query = query + ` ${joinWord} Student_tags.tag_id IN (${tags}) AND Student.id = Student_tags.student_id`;
+  }
+
+  query = query + ' GROUP BY Student.id';
+
+
+  db.all(query, (err, students) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(students);
+  })
+})
 
 
 export default router;
