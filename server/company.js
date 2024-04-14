@@ -91,7 +91,23 @@ router.get('/:companyId', authMiddleware, (req, res) => {
 
 //registration
 router.post('/registration', (req, res) => {
-  const { company_name, first_name, last_name, phone_number, email, password, tags, open_for_lia, app_start, app_end, work_place, address, description, company_website, linkedin, gdpr } = req.body;
+  const { 
+    company_name, 
+    first_name, 
+    last_name, 
+    phone_number, 
+    email, 
+    password, 
+    tags, 
+    open_for_lia, 
+    app_start, 
+    app_end, 
+    work_place, 
+    address, 
+    description, 
+    company_website, 
+    linkedin, 
+    gdpr } = req.body;
 
   bcrypt.hash(password, SALT, (err, hashed_password) => {
     if (err) {
@@ -167,7 +183,6 @@ router.post('/update', authMiddleware, (req, res) => {
         return res.status(500).json({ error : 'Internal Server Error' });
     }
 
-    console.log(req.id) ; 
     console.log('Company updated successfully');
     return res.status(200).send("Update successfull");
   });
@@ -246,6 +261,49 @@ router.get('/searchByName/:companyName', authMiddleware, (req, res) => {
   });
 });
 
+
+//search by tag & id
+router.post('/searchByNameAndTags', authMiddleware, (req, res) => {
+
+  const tags = req.body.tags;
+  const companyName = req.body.searchString;
+  const query = `
+  SELECT Company.*, Company_tags.tag_id
+  FROM Company
+  JOIN Company_tags ON Company.id = Company_tags.company_id
+  WHERE Company_tags.tag_id IN (${tags})
+  AND Company.company_name LIKE (?)
+  GROUP BY Company.id`;
+  const searchName = '%' + companyName + '%';
+
+  db.all(query, [searchName], (err, companies) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(companies);
+  });
+});
+
+//search by tag & id
+router.post('/searchByTags', authMiddleware, (req, res) => {
+
+  const tags = req.body.tags;
+  const companyName = req.body.searchString;
+  const query = `
+  SELECT Company.*, Company_tags.*
+  FROM Company
+  JOIN Company_tags ON Company.id = Company_tags.company_id
+  WHERE Company_tags.tag_id IN (${tags})`;
+
+  db.all(query, [], (err, companies) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(companies);
+  });
+});
 
 
 

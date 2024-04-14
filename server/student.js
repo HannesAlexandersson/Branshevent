@@ -90,21 +90,39 @@ router.get('/:studentId', authMiddleware, (req, res) => {
 
 //registration
 router.post('/registration', (req, res) => {
-    const { first_name, last_name, email, password, phone_number, gdpr, tags, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends, occupation } = req.body;
+    const { 
+      first_name, 
+      last_name, 
+      email, 
+      password, 
+      phone_number, 
+      gdpr, 
+      tags, 
+      description, 
+      github, 
+      portfolio, 
+      linkedin, 
+      occupation,
+      behance, 
+      work_place, 
+      app_starts, 
+      app_ends } = req.body;
     
     bcrypt.hash(password, SALT, (err, hashed_password) => {
       if (err) {
         console.error('Error hashing password', err.message);
         return res.status(500).json({ error: 'Internal Server Error' });
       }
-
+      console.log(work_place);
+ 
     const query = `
-    INSERT INTO Student (first_name, last_name, email, password, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends, occupation) 
+    INSERT INTO Student (first_name, last_name, email, password, occupation, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`; 
 
     
-    //1. create the student; enter the hashed password into the db
-    db.run(query, [first_name, last_name, email, hashed_password, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends, occupation], function(err) {
+    //1. create the student
+    db.run(query, [first_name, last_name, email, hashed_password, occupation, phone_number, gdpr,description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends], function(err) {
+      console.log(work_place);
         if(err){
             console.error('Error inserting student', err.message);
             return res.status(500).json({ error : 'Internal Server Error' });
@@ -141,14 +159,30 @@ router.post('/registration', (req, res) => {
 
 //update a student
 router.post('/update', authMiddleware, (req, res) => {
-  const { first_name, last_name, email, password, phone_number, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends, studentId } = req.body;
+  const { 
+    first_name, 
+    last_name, 
+    email, 
+    password, 
+    phone_number, 
+    description, 
+    github, 
+    portfolio, 
+    linkedin, 
+    occupation,
+    behance, 
+    work_place, 
+    app_starts, 
+    app_ends } = req.body;
+
   const updateQuery = `
   UPDATE Student 
-  SET first_name = ?, last_name = ?, email = ?, password = ?, phone_number = ?, description = ?, github = ?, portfolio = ?, linkedin = ?, behance = ?, work_place = ?, app_starts = ?, app_ends = ? 
+  SET first_name = ?, last_name = ?, email = ?, password = ?, phone_number = ?, description = ?, github = ?, portfolio = ?, linkedin = ?, occupation = ?, behance = ?, work_place = ?, app_starts = ?, app_ends = ? 
   WHERE id = ?`;
 
-  db.run(updateQuery, [first_name, last_name, email, password, phone_number, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends, studentId], function(err) {
+  db.run(updateQuery, [first_name, last_name, email, password, phone_number, description, github, portfolio, linkedin, occupation, behance, work_place, app_starts, app_ends, req.id], function(err) {
     if(err){
+      console.log(req.id);
         console.log(err.message);
         return res.status(500).json({ error : 'Internal Server Error' });
     }
@@ -163,7 +197,6 @@ router.post('/update', authMiddleware, (req, res) => {
 router.get('/addToFavorite/:studentId/:companyId', authMiddleware, (req, res) => {
   const studentId = req.params.studentId;
   const companyId = req.params.companyId;
-
   const query = 'INSERT INTO Favorite_company (student_id, company_id) VALUES (?, ?)';
 
   db.get(query, [studentId, companyId], (err, rows) => {
@@ -180,7 +213,7 @@ router.get('/addToFavorite/:studentId/:companyId', authMiddleware, (req, res) =>
 //get student by name
 router.get('/getByName/:studentName', authMiddleware, (req, res) => {
   const studentName = req.params.studentName;
-  const query = 'SELECT * FROM Student WHERE name = ?';
+  const query = 'SELECT * FROM Student WHERE last_name = ?';
 
   db.get(query, [studentName], (err, student) => {
     if (err) {
@@ -197,7 +230,7 @@ router.get('/getByName/:studentName', authMiddleware, (req, res) => {
 router.get('/getByTags/:tags', authMiddleware, (req, res) => {
   const tags = req.params.tags.split(',');
   const query = `
-  SELECT Student_tags.*, Student.name
+  SELECT Student_tags.*, Student.last_name
   FROM Student_tags
   LEFT JOIN Student ON Student_tags.student_id = Student.id
   WHERE Student_tags.tag_id IN (?)`;
@@ -211,7 +244,6 @@ router.get('/getByTags/:tags', authMiddleware, (req, res) => {
     res.json(students);
   });
 });
-
 
 
 //search by name
