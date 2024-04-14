@@ -25,7 +25,7 @@ function Contact({ userData }){
 
     let userRole;
     // if the userData contains a property that name is company name then the user is a company else a stuedtn
-    if ('company_name' in userData) {
+    if (userData && userData.company_name !== undefined) {
         userRole = 'company';
         company = userData;
 
@@ -41,10 +41,10 @@ function Contact({ userData }){
 
          //useEffect hook to set the company data from the provided prop 
          useEffect(() => {
-            if (company) {
+            if (student) {
                 setStudentContact(student);
             }
-        }, [company]);
+        }, [student]);
     }
     
    //set the vars

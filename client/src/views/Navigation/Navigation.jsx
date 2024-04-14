@@ -63,7 +63,7 @@ function Navigation(){
             {isDropdownOpen && (
               <div className={styles.dropdown_menu}>     
                 <ul className={styles.dropDown_list}>
-                  {sessionStorage.getItem('loggedIn') === 'true' ? (
+                  {sessionStorage.getItem('loggedIn') === 'true' || sessionStorage.getItem('loggedin') === 'true' ? (
                     <>
                       <li><Link to="/home"><img src={home}/>Home</Link></li>
                       <li><Link to="/"><img src={event}/>Event info</Link></li>

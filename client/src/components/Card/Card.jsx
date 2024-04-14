@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { About, Contact, QR_Code } from '../index.js';
 import { briefcase, circle_user_round, locationBlack, userSml } from '../../assets/Icons';
+
 import { account } from '../../assets/Icons/dropdownicons';
 import style from './card.module.css';
 
 function Card({userRole, student, company, img, }){
+    
     const [showAbout, setShowAbout] = useState(true); 
     const [showContact, setShowContact] = useState(false); 
     const [showQRCode, setShowQRCode] = useState(false);
@@ -28,12 +30,19 @@ function Card({userRole, student, company, img, }){
         }
     };
    
+
+    
+
+
     let userData;
     if (student) {
         userData = student;
+
+      
     }else if(company){
         userData = company;
     }
+    /* console.log(userData); */
     
 
     return(
