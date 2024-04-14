@@ -20,12 +20,21 @@ function Company_summary(){
     companyUsername, 
     companyPassword, 
     companyFormData, 
-    companyDescription, 
     companyAddress, 
     compOnlineProfiles, 
     companyTags, 
+    companyStartDate,
+    companyEndDate,
     companyLocation, 
-    companyImage;
+    compAddress,
+    companyDescription,
+    compWebsite,
+    compLinkedin,   
+    companyLIA,  
+    compGdpr,
+    companyImage,
+    storedDate,
+    storedEnd;
 
     if (sessionStorage.getItem('username') !== null) {
         companyUsername = sessionStorage.getItem('username');
@@ -52,11 +61,11 @@ function Company_summary(){
     }
 
     if (sessionStorage.getItem('companyAddress') !== null) {
-        companyAddress = sessionStorage.getItem('companyAddress');
+        compAddress = sessionStorage.getItem('companyAddress');
     } else {
-        companyAddress = 'not set';
+        compAddress = 'not set';
     }
-
+//we need to extract the weburls
     if (sessionStorage.getItem('onlineProfiles') !== null) {
         compOnlineProfiles = JSON.parse(sessionStorage.getItem('onlineProfiles'));
     } else {
@@ -76,11 +85,44 @@ function Company_summary(){
     } else {
         companyLocation = 'not set';
     }
+    if (sessionStorage.getItem('open_for_lia') !== null) {
+        companyLIA = sessionStorage.getItem('open_for_lia');
+    } else {
+        companyLIA = 'not set';
+    }
+    if (sessionStorage.getItem('companyAddress') !== null) {
+        companyAddress = sessionStorage.getItem('companyAddress');
+    } else {
+        companyAddress = 'not set';
+    }
+
+    if (sessionStorage.getItem('gdprChecked') !== null) {
+       if(sessionStorage.getItem('gdprChecked') === true)
+       compGdpr = true;
+    } else {
+        compGdpr = 'not set';
+    }
 
     if (localStorage.getItem('image') !== null) {
         companyImage = localStorage.getItem('image');
     } else {
         companyImage = 'not set';
+    }
+
+    if (sessionStorage.getItem('startDate') !== null) {
+       
+        storedDate = sessionStorage.getItem('startDate');
+        companyStartDate = new Date(storedDate);
+         
+    } else {
+        companyStartDate = 'not set';
+    }
+
+    if (sessionStorage.getItem('endDate') !== null) {
+        storedEnd = sessionStorage.getItem('endDate');
+        companyEndDate = new Date(storedEnd);
+    } else {
+        companyEndDate = 'not set';
     }
 
     const getSelectedTagIds = () => {
@@ -104,13 +146,20 @@ function Company_summary(){
         company_name: companyFormData.companyName,
         first_name: companyFormData.firstName,	
         last_name: companyFormData.lastName,	
-        password: companyPassword,
-        email: companyFormData.email,
         phone_number: companyFormData.phoneNumber,	
+        email: companyFormData.email,
+        password: companyPassword,
+        tags: formattedTags,	
+        open_for_lia: companyLIA,
+        app_start: companyStartDate,
+        app_end: companyEndDate,
+        work_place: companyLocation,
+        address: companyAddress,
         description: companyDescription,	
-        tags: formattedTags	
+        company_website: compOnlineProfiles.CompanyWebsite,
+        linkedin: compOnlineProfiles.LinkedIn,
+        gdpr: compGdpr,
     };
-
     SendDataToServer(requestData, endpoint)
     
     

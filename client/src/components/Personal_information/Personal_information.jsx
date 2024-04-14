@@ -17,19 +17,29 @@ function Personal_information({ userData }){
         description: false,
         workrelated: false,
     });
-
+    
     //set the initial userDataObj to the userData props parsed
+    
     useEffect(() => {
         if (userData) {
-            setUserDataObj(JSON.parse(userData));
-        }
+           
+            const parsedData = JSON.parse(userData);
+            setUserDataObj(parsedData);
+           
+            }
+   
+       
     }, [userData]);
+    
 
-    /*  userDataObj = JSON.parse(userData); */
+
+    
+
+   
     let userRole;
-    if ('company_name' in userDataObj) {
+    if (userDataObj && userDataObj.company_name !== undefined) {
         userRole = 'company';
-    }else{
+    }else{        
         userRole = 'student';
     }  
 
@@ -396,7 +406,9 @@ function Personal_information({ userData }){
                                 />
                                 )}
                                 <label className={style.label} htmlFor='application-periodStart'>APPLICATION PERIOD</label>
+                               
                                 {editMode.description ? (
+                                    
                                 <input 
                                 className={style.inputfield}
                                 type="text"
@@ -527,6 +539,7 @@ function Personal_information({ userData }){
                                             {userDataObj.location === 'office' ? (
                                                 <div>                                                
                                                 <input 
+                                                    disabled
                                                     type="checkbox"
                                                     name="office"
                                                     checked
@@ -536,6 +549,7 @@ function Personal_information({ userData }){
                                             ) : (
                                                 <div>                                               
                                                 <input 
+                                                    disabled
                                                     type="checkbox"
                                                     name="office"
                                                     />
@@ -544,10 +558,11 @@ function Personal_information({ userData }){
                                             )}
                                             </div>
                                             <div className={style.box_row}>
-                                            {userDataObj.location === 'office' ? (
+                                            {userDataObj.location === 'remote' ? (
                                                 <div>
                                               
                                             <input 
+                                                disabled
                                                 type="checkbox"
                                                 name="remote"
                                                 checked
@@ -556,6 +571,7 @@ function Personal_information({ userData }){
                                                 </div>
                                             ) : (<div>                                               
                                             <input 
+                                                disabled
                                                 type="checkbox"
                                                 name="remote"                                                
                                                 />
@@ -563,9 +579,10 @@ function Personal_information({ userData }){
                                                 </div>)}
                                             </div>
                                               <div className={style.box_row}>
-                                                {userDataObj.location === 'office' ? (
+                                                {userDataObj.location === 'both' ? (
                                                     <div>                                                        
                                                     <input 
+                                                        disabled
                                                         type="checkbox"
                                                         name="both"
                                                         checked
@@ -576,6 +593,7 @@ function Personal_information({ userData }){
                                                     <div>
                                                         
                                                     <input 
+                                                        disabled
                                                         type="checkbox"
                                                         name="both"
                                                         />
@@ -593,6 +611,7 @@ function Personal_information({ userData }){
                                             {userDataObj.work_place === 'office' ? (
                                                 <div>                                                
                                                 <input 
+                                                  disabled
                                                     type="checkbox"
                                                     name="office"
                                                     checked
@@ -602,6 +621,7 @@ function Personal_information({ userData }){
                                             ) : (
                                                 <div>                                               
                                                 <input 
+                                                  disabled
                                                     type="checkbox"
                                                     name="office"
                                                     />
@@ -610,10 +630,11 @@ function Personal_information({ userData }){
                                             )}
                                             </div>
                                             <div className={style.box_row}>
-                                            {userDataObj.work_place === 'office' ? (
+                                            {userDataObj.work_place === 'remote' ? (
                                                 <div>
                                               
                                             <input 
+                                              disabled
                                                 type="checkbox"
                                                 name="remote"
                                                 checked
@@ -622,6 +643,7 @@ function Personal_information({ userData }){
                                                 </div>
                                             ) : (<div>                                               
                                             <input 
+                                              disabled
                                                 type="checkbox"
                                                 name="remote"                                                
                                                 />
@@ -629,9 +651,10 @@ function Personal_information({ userData }){
                                                 </div>)}
                                             </div>
                                               <div className={style.box_row}>
-                                                {userDataObj.work_place === 'office' ? (
+                                                {userDataObj.work_place === 'both' ? (
                                                     <div>                                                        
                                                     <input 
+                                                      disabled
                                                         type="checkbox"
                                                         name="both"
                                                         checked
@@ -642,6 +665,7 @@ function Personal_information({ userData }){
                                                     <div>
                                                         
                                                     <input 
+                                                      disabled
                                                         type="checkbox"
                                                         name="both"
                                                         />

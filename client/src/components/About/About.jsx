@@ -8,18 +8,26 @@ import tagsArray from '../../tagArray';
 import get_student_tags from '../get-student-tags/get_student_tags.jsx';
 
 function About( { userData } ){
+    /* const [userDataObj, setUserDataObj] = useState({}); */
     const [companyAbout, setCompanyAbout] = useState(null);
     const [studentAbout, setStudentAbout] = useState(null);
     const [ tags, setTags ] = useState([]);
+
+   
+             
+           
+    
 
     //get the JTW token for server calls
     const token = localStorage.getItem('token');
     //initialize empty vars
     let company;
     let student;
-    /* const userDataObj = JSON.parse(userData); */
+    let startDate;
+    let endDate;
+   
     let userRole;
-    if ('company_name' in userData) {
+    if (userData && userData.company_name !== undefined) {
         userRole = 'company';
         company = userData;
 
@@ -37,7 +45,7 @@ function About( { userData } ){
                     .then(data => setTags(data))
                     .catch(error => console.error('Error fetching company tags:', error));
             }
-        }, [company.id]);
+        }, [company.id, token]);
 
 
          //if there is any error we present a loading decoy instead of a crash
@@ -45,6 +53,8 @@ function About( { userData } ){
             return <div>Loading...</div>;
         }
     
+        startDate = new Date(companyAbout.app_start);
+        endDate = new Date(companyAbout.app_end);
         
 
     }else{
@@ -55,6 +65,7 @@ function About( { userData } ){
          useEffect(() => {
             if (student) {
                 setStudentAbout(student);
+               
             }
         }, [student]);
 
@@ -65,22 +76,20 @@ function About( { userData } ){
                     .then(data => setTags(data))
                     .catch(error => console.error('Error fetching company tags:', error));
             }
-        }, [student.id]);
+        }, [student.id, token]);
 
          //if there is any error we present a loading decoy instead of a crash
         if (!studentAbout) {
             return <div>Loading...</div>;
         }
-    
+       
+        startDate = new Date(studentAbout.app_starts);
+        
+        endDate = new Date(studentAbout.app_ends);
         
     }
 
-
-    /* console.log(`about studid ${student.id}`) */
     
-    // we need to manually set the id to a var
-    /* const companyId = compObj.id; */
-   
     //a reverse function to compare the tags id from the db to the tagsArray to get the names of the selected tags
     const getSelectedTagNames = (tagIds) => {
         // we need to filter the tagsArray to find tags that match the IDs in tagIds
@@ -95,8 +104,23 @@ function About( { userData } ){
     const tagIdsFromServer = tags; 
     const selectedTagNames = getSelectedTagNames(tagIdsFromServer);
     
-   
+   /*  let formattedStartDate;
+    let formattedEndDate; */
+   /*  if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {       
+        formattedStartDate = startDate.toISOString().split('T')[0]; 
+        formattedEndDate = endDate.toISOString().split('T')[0];        
+       console.log(formattedStartDate, 'hej');
+    } else {
+        console.error("Invalid date format");
+    } */
+
     
+// format the date strings to correct format before render
+    const formattedStartDate = startDate.toISOString().split('T')[0]; 
+    const formattedEndDate = endDate.toISOString().split('T')[0];
+    
+    const app_start = formattedStartDate;
+    const app_end = formattedEndDate;
     
 
     return(
@@ -149,19 +173,27 @@ function About( { userData } ){
                            
                                 {userRole === 'company' ? (
                                     companyAbout.app_start && companyAbout.app_end ? (
+                                        <div className={style.dattes}>
                                         <p className={style.dates}>
-                                            <span>Startdate: {companyAbout.app_start}</span>
-                                            <span>Enddate: {companyAbout.app_end}</span>
+                                            <span>Startdate: {app_start}</span>
+                                            </p>
+                                            <p className={style.dates}>
+                                            <span>Enddate: {app_end}</span>
                                         </p>
+                                        </div>
                                     ) : (
                                         <p className={style.online_txt_value}>not set</p>
                                     )
                                 ) : (
-                                    studentAbout.app_start && studentAbout.app_end ? (
+                                    studentAbout.app_starts && studentAbout.app_ends ? (
+                                        <div className={style.dattes}>
                                         <p className={style.dates}>
-                                            <span>Startdate: {studentAbout.app_start}</span>
-                                            <span>Enddate: {studentAbout.app_end}</span>
+                                            <span>Startdate: {app_start}</span>
                                         </p>
+                                        <p className={style.dates}>
+                                            <span>Enddate: {app_end}</span>
+                                        </p>
+                                        </div>
                                     ) : (
                                         <p className={style.online_txt_value}>not set</p>
                                     )

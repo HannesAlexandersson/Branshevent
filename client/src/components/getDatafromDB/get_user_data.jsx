@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 
-function get_user_data(endpoint, email, password) {
+function get_user_data(endpoint, email, password, token) {
     const baseUrl = 'http://localhost:3000/';
     const endpointUrl = endpoint;
     const url = baseUrl + endpointUrl;
@@ -8,7 +8,8 @@ function get_user_data(endpoint, email, password) {
     return fetch(url, { 
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',            
+            'Content-Type': 'application/json',     
+            'Authorization': 'Bearer ' + token,        
         },
         body: JSON.stringify({ email, password }),
     })
