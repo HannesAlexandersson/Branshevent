@@ -313,7 +313,7 @@ router.post('/searchByNameAndTags', authMiddleware, (req, res) => {
 
 
 
-//Search route
+//Search students
 router.post('/search', (req, res) => {
 
   const searchString = req.body.searchString;

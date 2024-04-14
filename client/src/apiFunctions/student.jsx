@@ -72,7 +72,6 @@ export async function searchStudentByTags(tags) {
 
 export async function getAllStudents(token) {
 
-
     return fetch(apiUrl + 'student/all/', { 
         method: 'GET',
         headers: {
@@ -95,9 +94,9 @@ export async function getAllStudents(token) {
     });
 }
   
+
 export async function searchStudents(searchString, tags, workPlace){
 
-    console.log(searchString, tags, workPlace);
     return fetch(apiUrl + 'student/search/', { 
         method: 'POST',
         headers: {
@@ -109,6 +108,31 @@ export async function searchStudents(searchString, tags, workPlace){
             tags: (tags.length) ? tags : null,
             workPlace: (workPlace.length) ? workPlace : null
         })       
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Data received successfully');            
+            return response.json(); 
+        } else {
+            console.error('Failed to fetch data');
+            throw new Error('Failed to fetch data'); 
+        }
+    })    
+    .catch(error => {
+        console.error('Error:', error);
+        throw error; // Rethrow the error to be caught in the calling function
+    });
+}
+
+
+export async function addFavoriteCompanies(){
+
+    return fetch(apiUrl + 'student/addFacoriteCompanies/', { 
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json', 
+            'Authorization': 'Bearer ' + token, 
+        },       
     })
     .then(response => {
         if (response.ok) {

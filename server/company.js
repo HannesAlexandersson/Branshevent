@@ -310,24 +310,62 @@ router.post('/searchByTags', authMiddleware, (req, res) => {
 //get tags by id
 router.get('/:companyId/tags', (req, res) => {
   const companyId = req.params.companyId;
-const query = `
-  SELECT tag_id 
-  FROM Company_tags 
-  WHERE company_id = ?;
-`;
+  const query = `
+    SELECT tag_id 
+    FROM Company_tags 
+    WHERE company_id = ?;
+  `;
 
-db.all(query, [companyId], (err, rows) => {
-  if (err) {
-    console.error('Error retrieving tags:', err);
-    res.status(500).json({ error: 'Internal server error' });
-  } else {
-    // extract tag IDs from the query result
-    const tagIds = rows.map(row => row.tag_id);
-    res.json(tagIds);
-    console.log('tags succesfully sent to client');
+  db.all(query, [companyId], (err, rows) => {
+    if (err) {
+      console.error('Error retrieving tags:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      // extract tag IDs from the query result
+      const tagIds = rows.map(row => row.tag_id);
+      res.json(tagIds);
+      console.log('tags succesfully sent to client');
+    }
+  });
+});
+
+
+
+//Search 
+router.post('/search', (req, res) => {
+
+  const searchString = req.body.searchString;
+  const workPlace = req.body.workPlace;
+  const tags = req.body.tags;
+
+  let query = 'SELECT Company.* FROM Company, Company_tags';
+  let joinWord = 'WHERE';
+
+  if (searchString) {
+    query = query + ` ${joinWord} company_name LIKE '%${searchString}%' `;
+    joinWord = 'AND';
   }
-});
-});
+
+  if (workPlace) {
+    query = query + ` ${joinWord} work_place IN ('${workPlace.join("', '")}')`;
+    joinWord = 'AND';
+  }
+
+  if (tags) {
+    query = query + ` ${joinWord} Company_tags.tag_id IN (${tags}) AND Company.id = Company_tags.company_id`;
+  }
+
+  query = query + ' GROUP BY Company.id';
+
+
+  db.all(query, (err, companies) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(companies);
+  })
+})
 
 
 export default router;

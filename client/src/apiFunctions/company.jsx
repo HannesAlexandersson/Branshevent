@@ -71,3 +71,33 @@ export async function searchCompaniesByTags(tags) {
         throw error;
     })
 };
+
+
+export async function searchCompanies(searchString, tags, workPlace){
+
+    return fetch(apiUrl + 'company/search/', { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', 
+            'Authorization': 'Bearer ' + token, 
+        },
+        body: JSON.stringify({
+            searchString: searchString,
+            tags: (tags.length) ? tags : null,
+            workPlace: (workPlace.length) ? workPlace : null
+        })       
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Data received successfully');            
+            return response.json(); 
+        } else {
+            console.error('Failed to fetch data');
+            throw new Error('Failed to fetch data'); 
+        }
+    })    
+    .catch(error => {
+        console.error('Error:', error);
+        throw error; // Rethrow the error to be caught in the calling function
+    });
+}

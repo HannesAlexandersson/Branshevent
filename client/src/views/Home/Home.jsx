@@ -8,7 +8,7 @@ import { Mini_card, Quiz_wrapper, Spacer_bottom, Simple_slider } from '../../com
 import Render_mini from '../../components/Render_mini/Render_mini.jsx';
 import { getAllUsedTags } from '../../apiFunctions/tags.jsx';
 import Multiselect from 'multiselect-react-dropdown';
-import { searchCompaniesByName, searchCompaniesByNameAndTags, searchCompaniesByTags } from '../../apiFunctions/company.jsx';
+import { searchCompanies } from '../../apiFunctions/company.jsx';
 import { searchStudents } from '../../apiFunctions/student.jsx';
 
 function Home(){
@@ -55,29 +55,18 @@ function Home(){
     useEffect(() => {
         let fetchData;
         const userRole = sessionStorage.getItem("userRole");
-        console.log(userRole, "palsdaölsdk");
 
         if(userRole == "student") {
             fetchData = async () => {
                 try {
-                    let companyData;
-                    if(!searchString.length && (!selectedTags || !selectedTags.length)) {
-                        const token = localStorage.getItem('token');
-                        companyData = await get_company_all(token);
-                    }
-                    else if (searchString.length && selectedTags && selectedTags.length){
-                        companyData = await searchCompaniesByNameAndTags(searchString, selectedTags);
-                    } else if (!selectedTags || !selectedTags.length && searchString) {
-                        companyData = await searchCompaniesByName(searchString);
-                    } else if (!searchString && selectedTags && selectedTags.length) {
-                        companyData = await searchCompaniesByTags(selectedTags);
-                    }
+                    const companyData = await searchCompanies(searchString, selectedTags, selectedWorkplace)
                     setSearchResult(companyData);
                 } catch (error) {
                     console.error("Error fetching company data:", error);
                 }
             };
             fetchData();
+            
         } else if (userRole == "company") {
             fetchData = async () => {
                 try {
