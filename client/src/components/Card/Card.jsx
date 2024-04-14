@@ -11,7 +11,7 @@ function Card({userRole, student, company, img, }){
     const [showContact, setShowContact] = useState(false); 
     const [showQRCode, setShowQRCode] = useState(false);
     
-   //userRole, firstName, lastname, compname, company, occupation, img, phone, email, lastName 
+   
      // Function to toggle between displaying the submenus
      const handleButtonClick = (component) => {
         if (component === 'About') {
@@ -33,6 +33,10 @@ function Card({userRole, student, company, img, }){
 
     
 
+/* we get userData as props from either company view or the accountpage, so it can either be 
+ a student that want to view a company, or a student that want to watch their own details, 
+ or a company watching their own details or another company etc etc, so we need to know who is
+ watching what */
 
     let userData;
     if (student) {
@@ -42,7 +46,7 @@ function Card({userRole, student, company, img, }){
     }else if(company){
         userData = company;
     }
-    /* console.log(userData); */
+    
     
 
     return(
@@ -57,7 +61,7 @@ function Card({userRole, student, company, img, }){
                         
                     <div className={style.user_account}>
 
-                    {userRole === 'student' && (
+                    {student && (
                         <div className={style.user_details}>
                             <img src={circle_user_round} />
                             <div className={style.user_name_wrapper}>                                
@@ -65,7 +69,8 @@ function Card({userRole, student, company, img, }){
                             </div>
                         </div>                        
                     )}
-                     {userRole === 'company' && (
+
+                     {userData.company_name && (
                         <div className={style.user_details}>
                             <img src={briefcase} />
                             <div className={style.user_name_wrapper}>                                
@@ -74,7 +79,7 @@ function Card({userRole, student, company, img, }){
                         </div>
                     )}
 
-                    {userRole === 'student' && (
+                    {!company && userRole === 'student' (
                         <div>
                             <div className={style.role_details}>
                                 <img src={briefcase} />
@@ -82,7 +87,8 @@ function Card({userRole, student, company, img, }){
                             </div>
                         </div>
                         )}
-                     {userRole === 'company' && (
+
+                     {company && (
                         <div>
                             <div className={style.role_details}>
                                 <div className={style.usher}>
@@ -110,7 +116,7 @@ function Card({userRole, student, company, img, }){
                                     setShowQRCode(false);
                                 }}
                             >
-                                {userRole === 'student' ? 'About me' : 'About us'}
+                                {student ? 'About me' : 'About us'}
                             </button>
 
                             <button

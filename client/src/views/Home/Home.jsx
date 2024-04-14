@@ -6,9 +6,8 @@ import style from './home.module.css';
 import { heartlight } from '../../assets/Icons/dropdownicons/index.js';
 import { Mini_card, Quiz_wrapper, Spacer_bottom, Simple_slider } from '../../components/index.js';
 import Render_mini from '../../components/Render_mini/Render_mini.jsx';
-import { getAllUsedTags } from '../../apiFunctions/tags.jsx';
 import Multiselect from 'multiselect-react-dropdown';
-import { searchCompaniesByName, searchCompaniesByNameAndTags, searchCompaniesByTags } from '../../apiFunctions/company.jsx';
+//import { getAllUsedTags, searchCompaniesByName, searchCompaniesByNameAndTags, searchCompaniesByTags } from '../../apiFunctions/company.jsx';
 
 function Home(){
     const [showFilter, setShowFilter] = useState(false);

@@ -105,8 +105,8 @@ router.post('/registration', (req, res) => {
       occupation,
       behance, 
       work_place, 
-      app_starts, 
-      app_ends } = req.body;
+      app_start, 
+      app_end } = req.body;
     
     bcrypt.hash(password, SALT, (err, hashed_password) => {
       if (err) {
@@ -116,12 +116,12 @@ router.post('/registration', (req, res) => {
       console.log(work_place);
  
     const query = `
-    INSERT INTO Student (first_name, last_name, email, password, occupation, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends) 
+    INSERT INTO Student (first_name, last_name, email, password, occupation, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_start, app_end) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`; 
 
     
     //1. create the student
-    db.run(query, [first_name, last_name, email, hashed_password, occupation, phone_number, gdpr,description, github, portfolio, linkedin, behance, work_place, app_starts, app_ends], function(err) {
+    db.run(query, [first_name, last_name, email, hashed_password, occupation, phone_number, gdpr,description, github, portfolio, linkedin, behance, work_place, app_start, app_end], function(err) {
       console.log(work_place);
         if(err){
             console.error('Error inserting student', err.message);
