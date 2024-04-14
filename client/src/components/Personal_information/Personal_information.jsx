@@ -408,7 +408,7 @@ function Personal_information({ userData }){
                                 <label className={style.label} htmlFor='application-periodStart'>APPLICATION PERIOD</label>
                                
                                 {editMode.description ? (
-                                    {/*FIX STUDENT APP STATS */}
+                                    
                                 <input 
                                 className={style.inputfield}
                                 type="text"
