@@ -104,20 +104,20 @@ function About( { userData } ){
     const tagIdsFromServer = tags; 
     const selectedTagNames = getSelectedTagNames(tagIdsFromServer);
     
-    let formattedStartDate;
-    let formattedEndDate;
-    if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {       
+   /*  let formattedStartDate;
+    let formattedEndDate; */
+   /*  if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {       
         formattedStartDate = startDate.toISOString().split('T')[0]; 
         formattedEndDate = endDate.toISOString().split('T')[0];        
        console.log(formattedStartDate, 'hej');
     } else {
         console.error("Invalid date format");
-    }
+    } */
 
     
 // format the date strings to correct format before render
-    /* const formattedStartDate = startDate.toISOString().split('T')[0]; 
-    const formattedEndDate = endDate.toISOString().split('T')[0]; */
+    const formattedStartDate = startDate.toISOString().split('T')[0]; 
+    const formattedEndDate = endDate.toISOString().split('T')[0];
     
     const app_start = formattedStartDate;
     const app_end = formattedEndDate;
