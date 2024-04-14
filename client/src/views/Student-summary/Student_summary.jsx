@@ -141,7 +141,7 @@ function Student_summary(){
     const formattedTags = taagId.split(",").map(tag => parseInt(tag.trim()));
     console.log(formattedTags);
     
-   
+   console.log(studentOnlineProfiles.GitHub);
    const handleNextStep = () => {
     const endpoint = 'api/student/registration';
     
@@ -154,9 +154,9 @@ function Student_summary(){
         phone_number: studentFormData.phoneNumber,
         gdpr: studentGdpr,
         description: studentDescription,
-        github: studentOnlineProfiles.Github,
+        github: studentOnlineProfiles.GitHub,
         portfolio: studentOnlineProfiles.Portfolio,
-        linkedin: studentOnlineProfiles.Linkedin,
+        linkedin: studentOnlineProfiles.LinkedIn,
         behance: studentOnlineProfiles.Behance,        
         work_place: studentLocation,
         app_start: studentStartDate,

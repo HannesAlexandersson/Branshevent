@@ -9,7 +9,7 @@ import Update_company from '../Update/Update_company.jsx';
 import Update_student from '../Update/Update_student.jsx';
 import get_a_company from '../get_a_company/get_a_company.jsx';
 
-function Personal_information({ userData }){
+function Personal_information({ userData }){    
     const [userDataObj, setUserDataObj] = useState({});
     const [tags, setTags] = useState([]);
     const [editMode, setEditMode] = useState({
@@ -165,7 +165,26 @@ function Personal_information({ userData }){
     
     const tagIdsFromServer = tags; 
     const selectedTagNames = getSelectedTagNames(tagIdsFromServer);
+    let unformatedDateStart = new Date();
+    let unformatedDateEnd = new Date();
+    let formattedStartDate;
+    let formattedEndDate;
+    
+    if(userDataObj){
+        if(userDataObj.app_start & userDataObj.app_end !== null){
+            unformatedDateStart = userDataObj.app_start;
+            unformatedDateEnd = userDataObj.app_end;
+        }
+    }
+    
+    if(unformatedDateEnd !== null){
+        formattedStartDate = unformatedDateStart.toISOString().split('T')[0]; 
+        formattedEndDate = unformatedDateEnd.toISOString().split('T')[0];
+    }
 
+    const app_start = formattedStartDate;
+    const app_end = formattedEndDate;
+console.log(`app start ${userDataObj.app_start} app end ${userDataObj.app_end}`);
 
 
     return(
@@ -414,7 +433,7 @@ function Personal_information({ userData }){
                                 type="text"
                                 name="application-periodStart"
                                 onChange={(e) => setUserDataObj({ ...userDataObj, app_start: e.target.value })}
-                                value={userDataObj.app_start}
+                                value={app_start}
                                 />
                                 ):(
                                     <input 
@@ -422,7 +441,7 @@ function Personal_information({ userData }){
                                     type="text"
                                     name="application-periodStart"
                                     disabled
-                                    value={userDataObj.app_start}
+                                    value={app_start}
                                     />
                                 )}
                                  {editMode.description ? (
@@ -431,7 +450,7 @@ function Personal_information({ userData }){
                                 type="text"
                                 name="application-periodEnd"
                                 onChange={(e) => setUserDataObj({ ...userDataObj, app_end: e.target.value })}
-                                value={userDataObj.app_end}
+                                value={app_end}
                                 />
                                  ):(
                                     <input 
@@ -439,7 +458,7 @@ function Personal_information({ userData }){
                                     type="text"
                                     name="application-periodEnd"
                                     disabled
-                                    value={userDataObj.app_end}
+                                    value={app_end}
                                     />
                                  )}
                                 <label className={style.label} htmlFor='online-profiles'>ONLINE PROFILE</label>
