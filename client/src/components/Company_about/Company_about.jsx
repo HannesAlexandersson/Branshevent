@@ -1,36 +1,47 @@
 import { useState, useEffect } from 'react';
 import props from 'prop-types';
 import { briefcase, wrench, laptop, calendarBlue } from '../../assets/Icons';
-import style from './about.module.css';
+import style from './company_about.module.css';
 import { Tags_name_from_server } from '../../components/index.js';
 import get_company_tags from '../../components/Get-company-tags/Get_company_tags.jsx';
 import tagsArray from '../../tagArray';
 
-function Preview( { company,  userRole } ){
-    const [companyAbout, setCompanyAbout] = useState(null);
+function Company_about( { userData } ){  
+    const [companyAbout, setCompanyAbout] = useState({});    
     const [ tags, setTags ] = useState([]);
 
+
     //get the JTW token for server calls
-    const token = localStorage.getItem('token');
-    //useEffect hook to set the company data from the provided prop 
+    const token = localStorage.getItem('token');    
+    
     useEffect(() => {
-        if (company) {
-            setCompanyAbout(company);
+        if (userData) {
+            setCompanyAbout(userData);
+           
         }
-    }, [company]);
-
-    // we need to manually set the id to a var
-    const companyId = company.id;
-    //and use another hook to get the selected hooks from the db and set the response to the tags state
-    useEffect(() => {
-        if (companyId) { 
-            get_company_tags(companyId, token)
-                .then(data => setTags(data))
-                .catch(error => console.error('Error fetching company tags:', error));
+    }, [userData]);
+    
+    if (companyAbout && companyAbout.id) {
+       
+        //hinder rerender of entire page due to the state resetting by only run the fetch call if tags is not set already
+        if(tags === null){
+        get_company_tags(companyAbout.id, token)
+            .then(data => setTags(data))
+            .catch(error => console.error('Error fetching company tags:', error));
         }
-    }, [companyId]);
+    }
+      
 
+        //if there is any error we present a loading decoy instead of a crash
+    if (!companyAbout) {
+        return <div>Loading...</div>;
+    }
+
+   
+   
+    
     //a reverse function to compare the tags id from the db to the tagsArray to get the names of the selected tags
+    
     const getSelectedTagNames = (tagIds) => {
         // we need to filter the tagsArray to find tags that match the IDs in tagIds
         const selectedTagNames = tagsArray
@@ -44,15 +55,34 @@ function Preview( { company,  userRole } ){
     const tagIdsFromServer = tags; 
     const selectedTagNames = getSelectedTagNames(tagIdsFromServer);
     
-    //if there is any error we present a loading decoy instead of a crash
-    if (!companyAbout) {
-        return <div>Loading...</div>;
+  /*---------- */
+    let formattedStartDate;
+    let formattedEndDate;
+    let app_start;
+    let app_end;
+  if(companyAbout.app_start && companyAbout.app_end){
+    //initialize date variables
+    let unformatedDateStart = new Date();
+    let unformatedDateEnd = new Date();
+  
+    //if the userdata have date set format the dates
+    if (companyAbout && companyAbout.app_start && companyAbout.app_end) {
+        unformatedDateStart = new Date(companyAbout.app_start);
+        unformatedDateEnd = new Date(companyAbout.app_end);
     }
+    //formate the user dates to our desired display format(ie we take away the time and only display date)
+    formattedStartDate = unformatedDateStart.toISOString().split('T')[0]; 
+    formattedEndDate = unformatedDateEnd.toISOString().split('T')[0];
+    //set the display variables to the formatted dates
+    app_start = formattedStartDate;
+    app_end = formattedEndDate;
+    /**........... */
+}else{
+    app_start = 'not set';
+    app_end = 'not set';
+}
     
-    //set all the vars
-    const { company_name: companyName, first_name: firstName, last_name: lastName, description, location, app_start: startDate, app_end: endDate } = companyAbout;
-    
-    
+
 
     return(
         <>
@@ -60,7 +90,7 @@ function Preview( { company,  userRole } ){
                 <textarea 
                 className={style.user_aboutme}
                 type="text"
-                value={description}
+                value={companyAbout.description}
                 />                    
                 
             </div>
@@ -90,7 +120,7 @@ function Preview( { company,  userRole } ){
                                 disabled
                                 name="location"
                             />
-                            {location ? location : 'not set'}
+                            {companyAbout.work_place ? companyAbout.work_place : 'not set' }
                         </label>
                         </div>
                     </div>
@@ -101,9 +131,19 @@ function Preview( { company,  userRole } ){
                             <p className={style.loc_txt}>Application period</p>
                         </div>
                         <div className={style.app_period_display_container}>
-                            {startDate&&endDate ? (<p className={style.dates}><span>Startdate:{startDate} </span><span>Enddate: {endDate}</span></p>)
-                            :
-                            (<p className={style.online_txt_value}>not set</p>)}
+                           
+                               
+                                    {app_start && app_end ? (
+                                        <div className={style.dattes}>
+                                        <p className={style.dates}>
+                                            <span>Startdate: {app_start}</span>
+                                            </p>
+                                            <p className={style.dates}>
+                                            <span>Enddate: {app_end}</span>
+                                        </p>
+                                        </div>
+                                    ) : ( <p className={style.online_txt_value}>not set</p>  )}
+                       
                         </div>
                     </div>
 
@@ -112,4 +152,4 @@ function Preview( { company,  userRole } ){
     );
 }
 
-export default Preview
+export default Company_about

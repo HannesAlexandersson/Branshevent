@@ -21,7 +21,14 @@
 .secondary{
     display: none;
 }
+.big_screen{
+    display: none;
+}
 @media (min-width: 1024px){
+    .big_screen{
+        display: flex;
+        flex-direction: column;
+    }
     .main{
         display: none;
     }

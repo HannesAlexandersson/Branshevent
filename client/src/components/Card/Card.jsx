@@ -79,7 +79,7 @@ function Card({userRole, student, company, img, }){
                         </div>
                     )}
 
-                    {!company && userRole === 'student' (
+                    {student && (
                         <div>
                             <div className={style.role_details}>
                                 <img src={briefcase} />
@@ -116,7 +116,7 @@ function Card({userRole, student, company, img, }){
                                     setShowQRCode(false);
                                 }}
                             >
-                                {student ? 'About me' : 'About us'}
+                                {student ? 'About me' : student === false ? 'About us' : null}
                             </button>
 
                             <button

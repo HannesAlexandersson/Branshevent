@@ -59,7 +59,7 @@ function Home(){
                     }
                     else if (searchString.length && selectedTags && selectedTags.length){
                         companyData = await searchCompaniesByNameAndTags(searchString, selectedTags);
-                    } else if (!selectedTags || !selectedTags.length && searchString) {
+                    } else if (!selectedTags || !selectedTags.length && searchString) {
                         companyData = await searchCompaniesByName(searchString);
                     } else if (!searchString && selectedTags && selectedTags.length) {
                         companyData = await searchCompaniesByTags(selectedTags);

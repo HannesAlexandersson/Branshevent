@@ -7,7 +7,7 @@ import Tags_name_from_server from '../TagsFromServer/Tags_name_from_server';
 import tagsArray from '../../tagArray';
 import Update_company from '../Update/Update_company.jsx';
 import Update_student from '../Update/Update_student.jsx';
-import get_a_company from '../get_a_company/get_a_company.jsx';
+
 
 function Personal_information({ userData }){    
     const [userDataObj, setUserDataObj] = useState({});
@@ -165,26 +165,23 @@ function Personal_information({ userData }){
     
     const tagIdsFromServer = tags; 
     const selectedTagNames = getSelectedTagNames(tagIdsFromServer);
+    //initialize date variables
     let unformatedDateStart = new Date();
     let unformatedDateEnd = new Date();
     let formattedStartDate;
     let formattedEndDate;
-    
-    if(userDataObj){
-        if(userDataObj.app_start & userDataObj.app_end !== null){
-            unformatedDateStart = userDataObj.app_start;
-            unformatedDateEnd = userDataObj.app_end;
-        }
+    //if the userdata have date set format the dates
+    if (userDataObj && userDataObj.app_start && userDataObj.app_end) {
+        unformatedDateStart = new Date(userDataObj.app_start);
+        unformatedDateEnd = new Date(userDataObj.app_end);
     }
-    
-    if(unformatedDateEnd !== null){
-        formattedStartDate = unformatedDateStart.toISOString().split('T')[0]; 
-        formattedEndDate = unformatedDateEnd.toISOString().split('T')[0];
-    }
-
+    //formate the user dates to our desired display format(ie we take away the time and only display date)
+    formattedStartDate = unformatedDateStart.toISOString().split('T')[0]; 
+    formattedEndDate = unformatedDateEnd.toISOString().split('T')[0];
+    //set the display variables to the formatted dates
     const app_start = formattedStartDate;
     const app_end = formattedEndDate;
-console.log(`app start ${userDataObj.app_start} app end ${userDataObj.app_end}`);
+
 
 
     return(

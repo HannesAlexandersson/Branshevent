@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { Nav } from '../index.js';
-import { Card, QR_Code, White_btn, About, Contact } from '../../components/index.js';
+import { Company_card, QR_Code, White_btn, Company_about, Company_contact } from '../../components/index.js';
 import * as avatarsc from '../../assets/company_default_avatars/index';
 import style from './view_company.module.css';
 import { backArrow, briefcase, circle_user_round, } from '../../assets/Icons';
 import { account, accountBlack } from '../../assets/Icons/dropdownicons/index.js';
 
 function View_company(){
-    const [showAbout, setShowAbout] = useState(true); 
-    const [showContact, setShowContact] = useState(false); 
+    const [showCompanyAbout, setShowCompanyAbout] = useState(true); 
+    const [showCompanyContact, setShowCompanyContact] = useState(false); 
     const [img, setImg] = useState(null);
   
    //we provide the viewpage with the company id from home page and the list of all companies.
@@ -31,7 +31,7 @@ function View_company(){
         const randomIndex = Math.floor(Math.random() * company_avatars.length);
         const randomAvatar = company_avatars[randomIndex];
 
-        
+        console.log('useffect avatar viewcomp');
         setImg(randomAvatar);
     }, []); 
 
@@ -52,12 +52,12 @@ function View_company(){
      const handleButtonClick = (component) => {
         if (component === 'About') {
             
-            setShowAbout(true);
-            setShowContact(false)
+            setShowCompanyAbout(true);
+            setShowCompanyContact(false)
           
         } else if (component === 'Contact') {
-            setShowAbout(false);
-            setShowContact(true)
+            setShowCompanyAbout(false);
+            setShowCompanyContact(true)
            
         }
     };
@@ -71,7 +71,7 @@ function View_company(){
             <div className={style.main}>
                 <Nav />
 
-                <Card company={company} img={img} />
+                <Company_card userData={userData} img={img} />
 
                 <div className={style.footer_btns}>
                     <Link to="/home">
@@ -125,20 +125,20 @@ function View_company(){
 
                                 <div className={style.menu_btns}>
                                     <button
-                                        className={`${style.info_btn} ${showAbout ? style.selected : ''}`}
+                                        className={`${style.info_btn} ${showCompanyAbout ? style.selected : ''}`}
                                         onClick={() => {
-                                            setShowAbout(true);
-                                            setShowContact(false);                                       
+                                            setShowCompanyAbout(true);
+                                            setShowCompanyContact(false);                                       
                                         }}
                                     >
                                         {userRole === 'student' ? 'About me' : 'About us'}
                                     </button>
 
                                     <button
-                                        className={`${style.profile_preview_btn} ${showContact ? style.selected : ''}`}
+                                        className={`${style.profile_preview_btn} ${showCompanyContact ? style.selected : ''}`}
                                         onClick={() => {
-                                            setShowAbout(false);
-                                            setShowContact(true);                                        
+                                            setShowCompanyAbout(false);
+                                            setShowCompanyContact(true);                                        
                                         }}
                                     >
                                         Contact
@@ -146,10 +146,10 @@ function View_company(){
 
                                 
                                 </div>
-                                    
-                                    {showAbout && <About userData={userData}/>}           
-                                    {showContact && <Contact userData={userData}/>}
-                                    
+                                    <div className={style.big_screen}>
+                                        {showCompanyAbout && <Company_about userData={userData}/>}           
+                                        {showCompanyContact && <Company_contact userData={userData}/>}
+                                    </div>
                                 </div>
 
                             </div>

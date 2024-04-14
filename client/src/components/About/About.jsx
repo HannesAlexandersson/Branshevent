@@ -13,13 +13,10 @@ function About( { userData } ){
     const [studentAbout, setStudentAbout] = useState(null);
     const [ tags, setTags ] = useState([]);
 
-   
-             
-           
-    
 
     //get the JTW token for server calls
     const token = localStorage.getItem('token');
+    
     //initialize empty vars
     let company;
     let student;
@@ -31,22 +28,15 @@ function About( { userData } ){
         userRole = 'company';
         company = userData;
 
-        //useEffect hook to set the company data from the provided prop 
-        useEffect(() => {
-            if (company) {
-                setCompanyAbout(company);
-            }
-        }, [company]);
+        setCompanyAbout(company);    
 
-        //and use another hook to get the selected tags from the db and set the response to the tags state
-        useEffect(() => {
-            if (company.id) { 
-                get_company_tags(company.id, token)
-                    .then(data => setTags(data))
-                    .catch(error => console.error('Error fetching company tags:', error));
-            }
-        }, [company.id, token]);
-
+        
+        if (company.id) { 
+            get_company_tags(company.id, token)
+                .then(data => setTags(data))
+                .catch(error => console.error('Error fetching company tags:', error));
+        }
+      
 
          //if there is any error we present a loading decoy instead of a crash
         if (!companyAbout) {
@@ -60,23 +50,14 @@ function About( { userData } ){
     }else{
         userRole = 'student';
         student = userData;
-
-         //useEffect hook to set the student data from the provided prop 
-         useEffect(() => {
-            if (student) {
-                setStudentAbout(student);
-               
-            }
-        }, [student]);
-
-        //and use another hook to get the selected tags from the db and set the response to the tags state
-        useEffect(() => {
-            if (student.id) { 
-                get_student_tags(student.id, token)
-                    .then(data => setTags(data))
-                    .catch(error => console.error('Error fetching company tags:', error));
-            }
-        }, [student.id, token]);
+        setStudentAbout(student);  
+        
+        if (student.id) { 
+            get_student_tags(student.id, token)
+                .then(data => setTags(data))
+                .catch(error => console.error('Error fetching company tags:', error));
+        }
+    
 
          //if there is any error we present a loading decoy instead of a crash
         if (!studentAbout) {
@@ -104,15 +85,7 @@ function About( { userData } ){
     const tagIdsFromServer = tags; 
     const selectedTagNames = getSelectedTagNames(tagIdsFromServer);
     
-   /*  let formattedStartDate;
-    let formattedEndDate; */
-   /*  if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {       
-        formattedStartDate = startDate.toISOString().split('T')[0]; 
-        formattedEndDate = endDate.toISOString().split('T')[0];        
-       console.log(formattedStartDate, 'hej');
-    } else {
-        console.error("Invalid date format");
-    } */
+  
 
     
 // format the date strings to correct format before render

@@ -10,11 +10,9 @@ function Personal_preview({ userData }){
     const [preView, setPreView] = useState({});
 
 
-    function getRandomAvatar() {
-        const randomIndex = Math.floor(Math.random() * avatars.length);
-        return avatars[randomIndex];
-      }
+    
 
+      //set the state of this pages state of the userdata to the userdata prop
     useEffect(() => {
         if (userData) {
             const parsedData = JSON.parse(userData);
@@ -36,18 +34,17 @@ function Personal_preview({ userData }){
     }else if(userRole === 'student'){
         student = preView;
 
-        useEffect(() => {
-            // Get the random avatar image
-            const student_avatars = Object.values(avatars);
-            const randomIndex = Math.floor(Math.random() * student_avatars.length);
-            const randomAvatar = student_avatars[randomIndex];
-    
-            // Set image state
-            setImg(randomAvatar);
-        }, []); 
-    
+        
+        // select a avatar at random from all the student avatars
+        const student_avatars = Object.values(avatars);
+        const randomIndex = Math.floor(Math.random() * student_avatars.length);
+        const randomAvatar = student_avatars[randomIndex];
+
+        // Set image state with that random selected avatar
+        setImg(randomAvatar);
+       
     }
-   /*  console.log(student); */
+   
      
     return(
         <>
