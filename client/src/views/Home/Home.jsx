@@ -9,14 +9,16 @@ import Render_mini from '../../components/Render_mini/Render_mini.jsx';
 import { getAllUsedTags } from '../../apiFunctions/tags.jsx';
 import Multiselect from 'multiselect-react-dropdown';
 import { searchCompaniesByName, searchCompaniesByNameAndTags, searchCompaniesByTags } from '../../apiFunctions/company.jsx';
+import { searchStudents } from '../../apiFunctions/student.jsx';
 
 function Home(){
     const [showFilter, setShowFilter] = useState(false);
     const [animationReverted, setAnimationReverted] = useState(false);
-    const [companies, setCompanies] = useState([]);
+    const [searchResult, setSearchResult] = useState([]);
     const [tags, setTags] = useState([]);
     const [selectedTags, setSelectedTags] = useState('');
     const [searchString, setSearchString] = useState('');
+    const [selectedWorkplace, setSelectedWorkplace] = useState('');
 
     const userRole = sessionStorage.getItem('userType');
     const token = localStorage.getItem('token');
@@ -27,7 +29,7 @@ function Home(){
             try {
                 const token = localStorage.getItem('token');
                 const companyData = await get_company_all(token);
-                setCompanies(companyData);
+                setSearchResult(companyData);
             } catch (error) {
                 console.error("Error fetching company data:", error);
             }
@@ -51,10 +53,15 @@ function Home(){
     
     // do search
     useEffect(() => {
-            const fetchData = async () => {
+        let fetchData;
+        const userRole = sessionStorage.getItem("userRole");
+        console.log(userRole, "palsdaölsdk");
+
+        if(userRole == "student") {
+            fetchData = async () => {
                 try {
                     let companyData;
-                    if(!searchString.length && !selectedTags || !selectedTags.length) {
+                    if(!searchString.length && (!selectedTags || !selectedTags.length)) {
                         const token = localStorage.getItem('token');
                         companyData = await get_company_all(token);
                     }
@@ -65,13 +72,25 @@ function Home(){
                     } else if (!searchString && selectedTags && selectedTags.length) {
                         companyData = await searchCompaniesByTags(selectedTags);
                     }
-                    setCompanies(companyData);
+                    setSearchResult(companyData);
                 } catch (error) {
                     console.error("Error fetching company data:", error);
                 }
             };
             fetchData();
-    }, [userRole, selectedTags.length, searchString]);
+        } else if (userRole == "company") {
+            fetchData = async () => {
+                try {
+                    const studentData = await searchStudents(searchString, selectedTags, selectedWorkplace)
+                    setSearchResult(studentData);
+                } catch (error) {
+                    console.error("Error fetching company data:", error);
+                }
+            };
+            fetchData();
+        }
+
+    }, [userRole, selectedTags.length, searchString, selectedWorkplace]);
     
     const handleFilter = () => {
         setShowFilter(!showFilter);
@@ -111,17 +130,25 @@ function Home(){
                         </div>
                         {showFilter && (
                         <div className={style.dropdowns_wrapper}>
-                            { tags &&
-                                <Multiselect options={tags} displayValue='name' groupBy='category_name' 
+                            { 
+                            tags && <Multiselect options={tags} displayValue='name' groupBy='category_name' placeholder='Tags'
                                     onSelect={(selectedList) => {setSelectedTags(selectedList.map(tag => tag.id))}} onRemove={(selectedList) => setSelectedTags(selectedList.map(tag => tag.id))} />
                             }
-                            {/* Dropdown for workplace */}
+                            <Multiselect options={[
+                                {'name':'Office', 'value': 'office'},
+                                {'name':'Remote', 'value': 'remote'},
+                                {'name':'Both', 'value': 'both'},
+                            ]} displayValue='name' placeholder='Preferred workplace'
+                                    onSelect={(selectedWorkplace) => setSelectedWorkplace(selectedWorkplace.map(workPlace => workPlace.value))} 
+                                    onRemove={(selectedWorkplace) => setSelectedWorkplace(selectedWorkplace.map(workPlace => workPlace.value))} />
+                            {/* Dropdown for workplace 
                             <select className={style.dropdown} defaultValue={""}>
                                 <option value="" disabled hidden>Workplace</option>
                                 <option value="office">Office</option>
                                 <option value="remote">Remote</option>
                                 <option value="both">Both</option>
                             </select>
+                            */}
                         </div>
                         )}
                     </div>
@@ -141,10 +168,7 @@ function Home(){
                             <p>New companies</p>
                         </div>
                         <div className={style.slide_container}>
-                            <Simple_slider 
-                                companies={companies}
-                            />                                    
-                                
+                            { searchResult && searchResult.length && <Simple_slider companies={searchResult} />}         
                         </div>
                     </div>
 
@@ -154,7 +178,7 @@ function Home(){
                     <p>All companies attending</p>
 
                     <div className={style.mini_cards_containter}>
-                        <Render_mini companies={companies} />
+                        { searchResult && searchResult.length && <Render_mini companies={searchResult} /> }
                     </div>
                 </div>
             </div>
