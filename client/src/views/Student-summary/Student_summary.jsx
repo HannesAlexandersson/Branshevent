@@ -159,8 +159,8 @@ function Student_summary(){
         linkedin: studentOnlineProfiles.Linkedin,
         behance: studentOnlineProfiles.Behance,        
         work_place: studentLocation,
-        app_starts: studentStartDate,
-        app_ends: studentEndDate,
+        app_start: studentStartDate,
+        app_end: studentEndDate,
         tags: formattedTags,
         occupation: studentOrientation,
     };
