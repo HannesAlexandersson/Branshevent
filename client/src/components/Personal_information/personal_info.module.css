@@ -244,6 +244,15 @@ letter-spacing: 0.03125rem;
         flex-wrap: wrap;
         padding: 0 0 .3rem 1.5rem;
     }
+    .checkis[type="checkbox"]:disabled{
+       /*  opacity: .5; */
+    }
+    .checkis[type="checkbox"]:checked{
+        color: deepskyblue;
+    }
     
-    
+    input[type="checkbox"]:checked:disabled {
+        /* Add your styles for checked and disabled checkboxes here */
+        color: blue; /* Example: change color to blue */
+      }
 }

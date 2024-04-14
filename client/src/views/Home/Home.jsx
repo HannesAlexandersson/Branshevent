@@ -6,7 +6,6 @@ import style from './home.module.css';
 import { heartlight } from '../../assets/Icons/dropdownicons/index.js';
 import { Mini_card, Quiz_wrapper, Spacer_bottom, Simple_slider } from '../../components/index.js';
 import Render_mini from '../../components/Render_mini/Render_mini.jsx';
-import { getAllUsedTags } from '../../apiFunctions/tags.jsx';
 import Multiselect from 'multiselect-react-dropdown';
 import { searchCompaniesByName, searchCompaniesByNameAndTags, searchCompaniesByTags } from '../../apiFunctions/company.jsx';
 import { searchStudents } from '../../apiFunctions/student.jsx';
@@ -20,8 +19,11 @@ function Home(){
     const [searchString, setSearchString] = useState('');
     const [selectedWorkplace, setSelectedWorkplace] = useState('');
 
-    const userRole = sessionStorage.getItem('userType');
     const token = localStorage.getItem('token');
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    console.log(decodedToken.userType);
+    const userRole = decodedToken.userType;
+
     
     // get inital companies/student
     useEffect(() => {
@@ -67,7 +69,7 @@ function Home(){
                     }
                     else if (searchString.length && selectedTags && selectedTags.length){
                         companyData = await searchCompaniesByNameAndTags(searchString, selectedTags);
-                    } else if (!selectedTags || !selectedTags.length && searchString) {
+                    } else if (!selectedTags || !selectedTags.length && searchString) {
                         companyData = await searchCompaniesByName(searchString);
                     } else if (!searchString && selectedTags && selectedTags.length) {
                         companyData = await searchCompaniesByTags(selectedTags);

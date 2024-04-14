@@ -4,57 +4,103 @@ import * as avatars from '../../assets/student_default_avatars/index.js';
 import { briefcase, wrench, laptop, calendarBlue, circle_user_round, locationBlack, userSml } from '../../assets/Icons';
 import { account } from '../../assets/Icons/dropdownicons';
 import style from './personal_preview.module.css';
-
-function Personal_preview({ userData }){
+import get_a_student from '../get_a_company/get_a_student.jsx';
+/* useEffect(() => {
+        if (userData) {
+           
+            const parsedData = JSON.parse(userData);
+            setUserDataObj(parsedData);
+            console.log(parsedData, 'inside hook preview');
+            }
+          
+    }, [userData]); */
+function Personal_preview( {userData} ){
     const [img , setImg ] = useState(null);
-    const [preView, setPreView] = useState({});
-
-
-    function getRandomAvatar() {
-        const randomIndex = Math.floor(Math.random() * avatars.length);
-        return avatars[randomIndex];
-      }
+    const [company, setCompany] = useState({});
+    const [student, setStudent] = useState({});
+    const [userDataObj, setUserDataObj] = useState({});    
+    
+    const token = localStorage.getItem('token');           
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    
+    const id = decodedToken.id;
+    const userType = decodedToken.userType;
+    
+    let userRole; 
+  
+    
+    //set the userole
+    if(decodedToken.userType === 'student'){
+        userRole = 'student';
+    }else if(decodedToken.userType === 'company' ){
+        userRole = 'company';
+    }
 
     useEffect(() => {
-        if (userData) {
-            const parsedData = JSON.parse(userData);
+        console.log('hej');
+        if (decodedToken.userType === 'student') {
+            get_a_student(token, id)
+                .then((rows) => {
+                    setUserDataObj(rows);
+                   /*  console.log(rows.app_start, 'inside get a student PREVIEW'); */
+                })
+                .catch((error) => {
+                    console.error('Error fetching student data:', error);
+                });
+            }else if(decodedToken.userType === 'company'){
+                get_a_company(token, id)
+                .then((rows) => {
+                    setUserDataObj(rows);
+                    /* console.log(JSON.stringify(rows), 'inside get a company PREVIEW'); */
+                })
+                .catch((error) => {
+                    console.error('Error fetching company data:', error);
+                });
+            }else{
+                console.log('error fetching userdata');
+            }
+        }, []);
+    
           
-            setPreView(parsedData);
+   
+    let randomAvatar;
+    
+    useEffect(() => {
+        if(userDataObj){
+            if (userType === 'company'){               
+                setCompany(userDataObj);
+               
+            }else if(userType === 'student'){               
+                setStudent(userDataObj);
+                
+            } 
         }
+    }, [userDataObj, userType]);
     
-    }, [userData]);
-    let userRole;
-    if (preView && preView.company_name !== undefined){
-        userRole = 'company';
-    }else{
-        userRole = 'student';
-    } 
-    let company;
-    let student;
-    if(userRole === 'company'){
-        company = preView;
-    }else if(userRole === 'student'){
-        student = preView;
+        
+    // select a avatar at random from all the student avatars
+    const student_avatars = Object.values(avatars);
+    const randomIndex = Math.floor(Math.random() * student_avatars.length);
+    randomAvatar = student_avatars[randomIndex];
+        
 
-        useEffect(() => {
-            // Get the random avatar image
-            const student_avatars = Object.values(avatars);
-            const randomIndex = Math.floor(Math.random() * student_avatars.length);
-            const randomAvatar = student_avatars[randomIndex];
+    useEffect(() => {
+        if(randomAvatar){
+        // Set image state with that random selected avatar
+        setImg(randomAvatar);
+        
+        }
+
+    }, [randomAvatar]);
+
+
     
-            // Set image state
-            setImg(randomAvatar);
-        }, []); 
-    
-    }
-   /*  console.log(student); */
-     
     return(
         <>
             <div className={style.user_preview}>
                 <p className={style.sub_header}>Here you can see what your account looks like to others.</p>
 
-                { /*{...(userRole === 'student' ? { student }  : { company })}  */}
+                
                 <Card 
                    {...(userRole === 'student' ? { student, img: img } : { company })}
                 />
