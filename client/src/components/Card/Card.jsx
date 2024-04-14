@@ -27,13 +27,15 @@ function Card({userRole, student, company, img, }){
             setShowQRCode(true);
         }
     };
-   
+   /* console.log(student); */
     let userData;
     if (student) {
         userData = student;
+        
     }else if(company){
         userData = company;
     }
+    /* console.log(userData); */
     
 
     return(

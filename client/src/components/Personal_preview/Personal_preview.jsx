@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { About, Contact, QR_Code, Card, get_a_company } from '../index.js';
 
 import { briefcase, wrench, laptop, calendarBlue, circle_user_round, locationBlack, userSml } from '../../assets/Icons';
@@ -6,11 +6,18 @@ import { account } from '../../assets/Icons/dropdownicons';
 import style from './personal_preview.module.css';
 
 function Personal_preview({ userData }){
-   
+    const [preView, setPreView] = useState({});
 
-    let userDataObj = JSON.parse(userData);
+    useEffect(() => {
+        if (userData) {
+            const parsedData = JSON.parse(userData);
+          
+            setPreView(parsedData);
+        }
+    
+    }, [userData]);
     let userRole;
-    if ('company_name' in userDataObj) {
+    if (preView && preView.company_name !== undefined){
         userRole = 'company';
     }else{
         userRole = 'student';
@@ -18,11 +25,11 @@ function Personal_preview({ userData }){
     let company;
     let student;
     if(userRole === 'company'){
-        company = userDataObj;
+        company = preView;
     }else if(userRole === 'student'){
-        student = userDataObj;
+        student = preView;
     }
-    /* console.log(userDataObj); */
+   /*  console.log(student); */
      
     return(
         <>

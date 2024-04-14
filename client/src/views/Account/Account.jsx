@@ -1,38 +1,54 @@
 import { useState } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import { Nav } from '../index';
-import { Personal_information, Personal_preview, Red_btn, Spacer_bottom } from '../../components';
+import { Personal_information, Personal_preview, Red_btn, Spacer_bottom, get_a_company, get_user_data } from '../../components';
 
 import style from './account.module.css';
+import get_a_student from '../../components/get_a_company/get_a_student';
 
 //need an endpoint to server to fetch user data here
 function Account(){
     const [showPersonalInfo, setShowPersonalInfo] = useState(true); // set to true to mount the state fromt he start
     const [showProfilePreview, setShowProfilePreview] = useState(false); // set to default false to hide the preview until iser clicks the btn
+    const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
 
-    const userRole = sessionStorage.getItem('userType'); 
-    let userData = []; 
-    let company= [];
-    let student= [];
+   
+    
+  
+     // first we need to find out what userrole is here
+    const token = localStorage.getItem('token');
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    
+    let userRole; 
     let id;
-    let token;
-    if(userRole === 'company'){
-         id = sessionStorage.getItem('id');
-         token = localStorage.getItem('token');
-        //get_a_company(id, token);
-         userData = sessionStorage.getItem('userData');
-        
-    }else if(userRole === 'student'){
-         id = sessionStorage.getItem('id');
-         token = localStorage.getItem('token');
-         userData = sessionStorage.getItem('userData');
-         
+    //set the userole
+    if(decodedToken.userType === 'student'){
+        userRole = 'student';
+    }else if(decodedToken.userType === 'company' ){
+        userRole = 'company';
     }
+    //get the userdata and set the userData state to the fetched data
+    if(userRole === 'student'){
+        id = decodedToken.id;
 
+        get_a_student(token, id)
+        .then((userData) => {
+           
+            setUserData(JSON.stringify(userData));
+           
+          })
+    }else if(userRole === 'company'){
+        id = decodedToken.id;
 
+        get_a_company(token, id)
+        .then((userData) => {
 
-
+            setUserData(JSON.stringify(userData));
+            
+        })
+    }
+   
 
     // Function to toggle between displaying personal information and profile preview
     const handleButtonClick = (component) => {
@@ -49,10 +65,10 @@ function Account(){
     };
 
     const handleLogOut = () => {
-        // Clear localStorage
+        // Clear localStorage when user loggs out
         localStorage.clear();
 
-        // Clear sessionStorage
+        // Clear sessionStorage hen user loggs out
         sessionStorage.clear();
             
         navigate('/log-in');
