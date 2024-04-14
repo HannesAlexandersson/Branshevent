@@ -5,8 +5,14 @@ function Contact({ userData }){
     const [companyContact, setCompanyContact] = useState(null);
     const [studentContact, setStudentContact] = useState(null);
 
-    //get the JTW token for server calls
-    const token = localStorage.getItem('token');
+   
+    
+    const token = localStorage.getItem('token');    
+    const parts = token.split('.');    
+    const payload = JSON.parse(atob(parts[1]));   
+    const id = payload.id;
+    const userType = payload.userType;
+    
     let company;
     let companywebsite = 'not set';
     let companyPhone = 'not set';

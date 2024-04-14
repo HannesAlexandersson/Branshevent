@@ -10,8 +10,9 @@ function Student_finish(){
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(7);
     const totalSteps = 7;
-const token = JSON.parse(localStorage.getItem('studentToken'));
-console.log(token);
+    const token = localStorage.getItem('token');
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+console.log(decodedToken.userType);
     const handleNextStep = () => {
         
 

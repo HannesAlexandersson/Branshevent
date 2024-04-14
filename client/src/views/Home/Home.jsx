@@ -17,8 +17,11 @@ function Home(){
     const [selectedTags, setSelectedTags] = useState('');
     const [searchString, setSearchString] = useState('');
 
-    const userRole = sessionStorage.getItem('userType');
     const token = localStorage.getItem('token');
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    console.log(decodedToken.userType);
+    const userRole = decodedToken.userType;
+
     
     // get inital companies/student
     useEffect(() => {
