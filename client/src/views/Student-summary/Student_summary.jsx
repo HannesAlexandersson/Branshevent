@@ -141,8 +141,25 @@ function Student_summary(){
     const formattedTags = taagId.split(",").map(tag => parseInt(tag.trim()));
     console.log(formattedTags);
     
-   console.log(studentOnlineProfiles.GitHub);
+   
+
+
    const handleNextStep = () => {
+
+    const imageData = studentImage;
+
+    let binaryData;
+    //decode the user provided image, if there is a error set the var to a emoty string. 
+    try {
+        const base64Parts = imageData.split(",");
+        binaryData = atob(base64Parts[1]);        
+    } catch (error) {
+        binaryData = '';
+        console.error('Error decoding base64 string:', error);
+    }
+
+
+
     const endpoint = 'api/student/registration';
     
     
@@ -163,6 +180,7 @@ function Student_summary(){
         app_end: studentEndDate,
         tags: formattedTags,
         occupation: studentOrientation,
+        avatar: binaryData
     };
 //    const {  work_place, app_starts, app_ends, occupation } = req.body;
 
