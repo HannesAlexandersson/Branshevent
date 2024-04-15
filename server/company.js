@@ -43,19 +43,18 @@ router.post('/login', (req, res) => {
     }
 
     if (result) {
-    bcrypt.compare(password, result.password, (bcryptErr, bcryptResult) => { //you where using result here, that reset result to the result of the encryption witch was true or false only
+      console.log(password, result.password);
+      bcrypt.compare(password, result.password, (bcryptErr, bcryptResult) => { //you where using result here, that reset result to the result of the encryption witch was true or false only
       if (bcryptErr) {
         console.error('Error comparing passwords:', bcryptErr);
         return res.status(500).json({ error: 'Internal Server Error' });
       }
 
     if (bcryptResult) {
-      console.log('User ID:', result.id);
-      //passwords match - user authenticated
-        console.log('Company authenticated successfully');
+      result.password = null;
       //creating a token to encrypt data and send back to the client for future authentication
       const token = jwt.sign({id: result.id, userType: "company"}, SECRET, {expiresIn: 864000});
-      return res.status(200).send({ token, userData: result })
+      return res.status(200).send({ token: token, userData: result, userType: 'company' })
     } else {
       console.log('Incorrect password');
       return res.status(401).json({ error: 'Incorrect password' });
@@ -126,11 +125,11 @@ router.post('/registration', (req, res) => {
             console.log('Tags added successfully');
         
             const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
-            return res.status(200).send({ token: token })
+            return res.status(200).send({ token: token, userType: 'company' });
         });
     } else {
       const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
-      return res.status(200).send({ token: token })
+      return res.status(200).send({ token: token, userType: 'company'})
     }
   });
 });
@@ -172,7 +171,7 @@ router.post('/update', authMiddleware, (req, res) => {
   });
 })
 
-router.get('/getFavorites', (req, res) => {
+router.get('/getFavorites', authMiddleware, (req, res) => {
   const query = 'SELECT * FROM Favorite_student WHERE company_id = ?';
 
   db.all(query, [req.id], (err, rows) => {

@@ -7,14 +7,14 @@ export const authMiddleware = (req, res, next) => {
 
     if (authHeader) {
         const token = authHeader.split(' ')[1];
-
         jwt.verify(token, SECRET, (err, result) => {
             if (err) {
                 return res.sendStatus(403);
             }
+
+            console.log(result);
             req.id = result.id;
             req.userType = result.userType;
-    
             next();
         });
     } else {

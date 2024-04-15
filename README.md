@@ -86,7 +86,7 @@ Returns a TOKEN for future authentization
 
 Returns a TOKEN for future authentization
 
-#### Student - Get all student
+#### Student - Get all students
 
 ```javascript
   GET /api/student/all
@@ -115,29 +115,63 @@ Returns a TOKEN for future authentization
   GET /api/student/:studentId
 ```
 
-#### Student - Add favorite companies
+#### Student - Get favorite companies
  
 ```javascript
-  GET /api/student/addToFavorite/:studentId/:companyId'
+  GET /api/student/getFavorites
+```
+
+#### Student - Add favorite company
+ 
+```javascript
+  POST /api/student/addToFavorite
+```
+
+#### Student - Remove favorite company
+ 
+```javascript
+  POST /api/student/removeFromFavorite
 ```
 
 #### Student - Get by name
  
 ```javascript
-  GET /api/student/getByName/:studentName'
+  GET /api/student/getByName/:studentName
 ```
 
-#### Student - Get by tag
+#### Student - Get by tags
  
 ```javascript
-  GET /api/student/getByTags/:tags'
+  GET /api/student/getByTags/:tags
 ```
 
 #### Student - Search by name
  
 ```javascript
-  GET /api/student/searchByName/:studentName'
+  GET /api/student/searchByName/:studentName
 ```
+
+#### Student - Get student's tags
+ 
+```javascript
+  GET /api/student/:studentId/tags
+```
+
+#### Student - Search by tag and ID
+ 
+```javascript
+  POST /api/student/searchByNameAndTags
+```
+
+#### Student - Search students
+ 
+```javascript
+  POST /api/student/search
+```
+
+
+---
+
 
 #### Company - Login
 
@@ -151,6 +185,7 @@ Returns a TOKEN for future authentization
 | password | string | *Required*. The companys's password |
 
 Returns a TOKEN for future authentization
+
 
 #### Company - Register
 
@@ -202,23 +237,52 @@ Returns a TOKEN for future authentization
 #### Company - Add favorite student
  
 ```javascript
-  GET /api/company/addToFavorite/:companyId/:studentId'
+  POST /api/company/addToFavorite
+```
+
+#### Company - Remove favorite student
+ 
+```javascript
+  POST /api/company/removeFromFavorite
 ```
 
 #### Company - Get by name
  
 ```javascript
-  GET /api/company/getByName/:companyName'
+  GET /api/company/getByName/:companyName
 ```
 
-#### Company - Get by tag
+#### Company - Get by tags
  
 ```javascript
-  GET /api/company/getByTags/:tags'
+  GET /api/company/getByTags/:tags
 ```
 
 #### Company - Search by name
  
 ```javascript
-  GET /api/company/searchByName/:companyName'
+  GET /api/company/searchByName/:companyName
+```
+
+#### Company - Search by name and tags
+ 
+```javascript
+  POST /api/company/searchByNameAndTags
+```
+
+#### Company - Search by tag and ID
+ 
+```javascript
+  POST /api/company/searchByTags
+```
+
+#### Company - Get tags by ID
+ 
+```javascript
+  GET /api/company/:companyId/tags
+```
+#### Company - Search companies
+ 
+```javascript
+  POST /api/company/search
 ```

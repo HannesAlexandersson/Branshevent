@@ -1,8 +1,8 @@
 import apiUrl from "./config";
-const token = localStorage.getItem("token");
 
 
 export async function searchCompaniesByNameAndTags(searchString, tags) {
+    const token = localStorage.getItem("token");
     
     return fetch(apiUrl + 'company/searchByNameAndTags', {
         method: 'POST',
@@ -28,6 +28,7 @@ export async function searchCompaniesByNameAndTags(searchString, tags) {
 };
 
 export async function searchCompaniesByName(searchString) {
+    const token = localStorage.getItem("token");
     
     return fetch(apiUrl + 'company/searchByName/'+searchString, {
         method: 'GET',
@@ -49,6 +50,7 @@ export async function searchCompaniesByName(searchString) {
 };
 
 export async function searchCompaniesByTags(tags) {
+    const token = localStorage.getItem("token");
     
     return fetch(apiUrl + 'company/searchByTags/', {
         method: 'POST',
@@ -74,6 +76,7 @@ export async function searchCompaniesByTags(tags) {
 
 
 export async function searchCompanies(searchString, tags, workPlace){
+    const token = localStorage.getItem("token");
 
     return fetch(apiUrl + 'company/search/', { 
         method: 'POST',

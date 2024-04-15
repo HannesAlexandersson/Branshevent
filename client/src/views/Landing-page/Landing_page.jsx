@@ -59,7 +59,7 @@ function Landing_page(){
                     <span style={{ fontWeight: 'bold' }}>WELCOME TO </span>
                     <span style={{ fontWeight: 'normal' }}>INDUSTRY MEETUP</span>
                   </h1>
-                  <p>Perfect place for you to find the perfect intern or internship within Web development or Digital Design!</p>
+                  <p>Perfect place for you to find the perfect intern or internship within Web Development or Digital Design!</p>
                 
                   {sessionStorage.getItem('loggedIn') !== 'true' && (
                 <div className={styles.join_event_btn_wrapper}>
@@ -91,7 +91,7 @@ function Landing_page(){
                   </div>
                   <div className={styles.locTime_box}>
                     <img src={clock} />
-                    <p>Wednesday April Kl 15:00-17:00</p>
+                    <p>Wednesday April 24th, 15:00-17:00</p>
                   </div>
                 </div>
 
@@ -104,14 +104,14 @@ function Landing_page(){
                     <p>
                       Welcome to Yrgo&apos;s mingle-event to find future coworkers or interns during the LIA-period. 
                       You will be able to meet Web-developers and Digital Designers from Yrgo who want to show you what 
-                      they have worked with during the year, and we hope you find a match.
+                      they have worked with during the year. We hope you find a suitable match.
                     </p>
                   </div>
                 
                 </div>
 
                 <div className={styles.top_sidebar}>
-                  <h5>The Web-developers and Digital Designers welcome you!</h5>
+                  <h5>The Web Developers and Digital Designers welcome you!</h5>
                 </div>
 
 
