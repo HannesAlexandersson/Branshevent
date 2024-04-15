@@ -3,13 +3,16 @@ import { Nav } from '../index.js';
 import get_company_all from "../../components/getcompanyAll/get_company_all.jsx";
 import { briefcase, locationBlack, search, sliders, userSml } from '../../assets/Icons/index.js';
 import style from './home.module.css';
-import { heartlight } from '../../assets/Icons/dropdownicons/index.js';
 import { Mini_card, Quiz_wrapper, Spacer_bottom, Simple_slider } from '../../components/index.js';
 import Render_mini from '../../components/Render_mini/Render_mini.jsx';
 import { getAllUsedTags } from '../../apiFunctions/tags.jsx';
 import Multiselect from 'multiselect-react-dropdown';
 import { searchCompanies } from '../../apiFunctions/company.jsx';
 import { searchStudents } from '../../apiFunctions/student.jsx';
+import { getFavorites, toggleFavorite } from '../../apiFunctions/favorites.jsx';
+
+
+
 
 function Home(){
     const [showFilter, setShowFilter] = useState(false);
@@ -19,10 +22,24 @@ function Home(){
     const [selectedTags, setSelectedTags] = useState('');
     const [searchString, setSearchString] = useState('');
     const [selectedWorkplace, setSelectedWorkplace] = useState('');
+    const [favorites, setFavorites] = useState([]);
+    const [shouldGetFavorites, setShouldGetFavorites] = useState(true);
 
     const userRole = sessionStorage.getItem('userType');
     const token = localStorage.getItem('token');
     
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const favoriteData = await getFavorites();
+                setFavorites(favoriteData);
+            } catch (error) {
+                console.error("Error fetching favorite data:", error);
+            }
+        };
+        fetchData();
+    }, [shouldGetFavorites]);
+
     // get inital companies/student
     useEffect(() => {
         const fetchData = async () => {
@@ -90,6 +107,11 @@ function Home(){
         setAnimationReverted(true); // Set animation reverted state after animation ends
     }
 
+    async function handleToggleFavorites(favoriteId, isFavorite) {
+        await toggleFavorite(favoriteId, isFavorite);
+        setShouldGetFavorites(!shouldGetFavorites);
+    }
+
 
     return(
         <>
@@ -100,7 +122,6 @@ function Home(){
                     <div className={style.searchbar}>
                         <input 
                         onChange={(event) => setSearchString(event.target.value)}
-
                         className={style.searchbar_input} 
                         type="text" 
                         id="search-input" 
@@ -130,14 +151,6 @@ function Home(){
                             ]} displayValue='name' placeholder='Preferred workplace'
                                     onSelect={(selectedWorkplace) => setSelectedWorkplace(selectedWorkplace.map(workPlace => workPlace.value))} 
                                     onRemove={(selectedWorkplace) => setSelectedWorkplace(selectedWorkplace.map(workPlace => workPlace.value))} />
-                            {/* Dropdown for workplace 
-                            <select className={style.dropdown} defaultValue={""}>
-                                <option value="" disabled hidden>Workplace</option>
-                                <option value="office">Office</option>
-                                <option value="remote">Remote</option>
-                                <option value="both">Both</option>
-                            </select>
-                            */}
                         </div>
                         )}
                     </div>
@@ -149,7 +162,6 @@ function Home(){
                     <Quiz_wrapper />
                 )}               
                 
-
                 <div className={style.new_companies_slider}>
 
                     <div className={style.new_companies_slide_card}>
@@ -157,7 +169,7 @@ function Home(){
                             <p>New companies</p>
                         </div>
                         <div className={style.slide_container}>
-                            { searchResult && searchResult.length && <Simple_slider companies={searchResult} />}         
+                            <Simple_slider companies={searchResult} />       
                         </div>
                     </div>
 
@@ -167,7 +179,7 @@ function Home(){
                     <p>All companies attending</p>
 
                     <div className={style.mini_cards_containter}>
-                        { searchResult && searchResult.length && <Render_mini companies={searchResult} /> }
+                        <Render_mini companies={searchResult} onHeartClick={handleToggleFavorites} favorites={favorites}/>
                     </div>
                 </div>
             </div>

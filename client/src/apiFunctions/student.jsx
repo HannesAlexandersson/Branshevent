@@ -125,18 +125,44 @@ export async function searchStudents(searchString, tags, workPlace){
 }
 
 
-export async function addFavoriteCompanies(){
+export async function addFavoriteCompany(companyId){
 
-    return fetch(apiUrl + 'student/addFacoriteCompanies/', { 
-        method: 'GET',
+    return fetch(apiUrl + 'student/addToFavorite', { 
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json', 
             'Authorization': 'Bearer ' + token, 
-        },       
+        },     
+        body: JSON.stringify({ companyId: companyId })   
     })
     .then(response => {
         if (response.ok) {
             console.log('Data received successfully');            
+            return response.json(); 
+        } else {
+            console.error('Failed to fetch data');
+            throw new Error('Failed to fetch data'); 
+        }
+    })    
+    .catch(error => {
+        console.error('Error:', error);
+        throw error; // Rethrow the error to be caught in the calling function
+    });
+}
+
+export async function removeFavoriteCompany(companyId){
+
+    return fetch(apiUrl + 'student/removeFromFavorite', { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', 
+            'Authorization': 'Bearer ' + token, 
+        },   
+        body: JSON.stringify({ companyId })    
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Data removed successfully');            
             return response.json(); 
         } else {
             console.error('Failed to fetch data');

@@ -73,22 +73,6 @@ router.post('/login', (req, res) => {
 // })
 
 
-//get by ID
-router.get('/:companyId', authMiddleware, (req, res) => {
-  const companyId = req.params.companyId;
-  const query = 'SELECT * FROM Company WHERE id = ?';
-
-  db.get(query, [companyId], (err, rows) => {
-    if (err) {
-      console.error(err.message);
-      return res.status(500).json({ error: 'Internal Server Error' });
-    }
-    res.json(rows);
-  });
-});
-
-
-
 //registration
 router.post('/registration', (req, res) => {
   const { 
@@ -188,22 +172,48 @@ router.post('/update', authMiddleware, (req, res) => {
   });
 })
 
+router.get('/getFavorites', (req, res) => {
+  const query = 'SELECT * FROM Favorite_student WHERE company_id = ?';
 
+  db.all(query, [req.id], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(rows);
+  });
+});
 
 //add favorite student
-router.get('/addToFavorite/:companyId/:studentId', authMiddleware, (req, res) => {
-  const studentId = req.params.studentId;
-  const companyId = req.params.companyId;
-  const query = 'INSERT INTO Favorite_student (company_id, student_id) VALUES (?, ?)';
+router.post('/addToFavorite', authMiddleware, (req, res) => {
+  const student_id = req.body.favoriteId;
+  const query = 'INSERT INTO Favorite_student (student_id, company_id) VALUES (?, ?)';
 
-  db.get(query, [companyId, studentId], (err, rows) => {
+  db.get(query, [student_id, req.id], (err, rows) => {
     if(err) {
       console.error(err.message);
       return res.status(500).json({ error: 'Internal Server Error' });
     }
-    return res.status(200).send("Favorite student added successfull");
+    return res.status(200).send("Favorite company added successfull");
   });
 })
+
+
+//remove favorite student
+router.post('/removeFromFavorite', authMiddleware, (req, res) => {
+  
+  const student_id = req.body.favoriteId;
+  const query = 'DELETE FROM Favorite_student WHERE student_id = ? AND company_id = ?';
+
+  db.get(query, [student_id, req.id], (err, rows) => {
+    if(err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    return res.status(200).send("Favorite company removed successfull");
+  });
+})
+
 
 
 
@@ -329,9 +339,22 @@ router.get('/:companyId/tags', (req, res) => {
   });
 });
 
+//get by ID
+router.get('/:companyId', authMiddleware, (req, res) => {
+  const companyId = req.params.companyId;
+  const query = 'SELECT * FROM Company WHERE id = ?';
+
+  db.get(query, [companyId], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(rows);
+  });
+});
 
 
-//Search 
+//Search companies
 router.post('/search', (req, res) => {
 
   const searchString = req.body.searchString;

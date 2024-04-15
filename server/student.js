@@ -72,20 +72,6 @@ router.post('/login', (req, res) => {
 
 
 
-//get student by ID
-router.get('/:studentId', authMiddleware, (req, res) => {
-  const studentId = req.params.studentId;
-  const query = 'SELECT * FROM Student WHERE id = ?';
-
-  db.get(query, [studentId], (err, rows) => {
-    if(err) {
-      console.error(err.message);
-      return res.status(500).json({ error: 'Internal Server Error' });
-    }
-    res.json(rows);
-  });
-});
-
 
 
 //registration
@@ -192,14 +178,25 @@ router.post('/update', authMiddleware, (req, res) => {
 })
 
 
+router.get('/getFavorites', authMiddleware, (req, res) => {
+  const query = 'SELECT * FROM Favorite_company WHERE student_id = ?';
 
-//add favorite companies
-router.get('/addToFavorite/:studentId/:companyId', authMiddleware, (req, res) => {
-  const studentId = req.params.studentId;
-  const companyId = req.params.companyId;
+  db.all(query, [req.id], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(rows);
+  });
+});
+
+//add favorite company
+router.post('/addToFavorite', authMiddleware, (req, res) => {
+  //const studentId = req.params.studentId;
+  const companyId = req.body.favoriteId;
   const query = 'INSERT INTO Favorite_company (student_id, company_id) VALUES (?, ?)';
 
-  db.get(query, [studentId, companyId], (err, rows) => {
+  db.get(query, [req.id, companyId], (err, rows) => {
     if(err) {
       console.error(err.message);
       return res.status(500).json({ error: 'Internal Server Error' });
@@ -208,6 +205,21 @@ router.get('/addToFavorite/:studentId/:companyId', authMiddleware, (req, res) =>
   });
 })
 
+
+//remove favorite company
+router.post('/removeFromFavorite', authMiddleware, (req, res) => {
+  
+  const companyId = req.body.favoriteId;
+  const query = 'DELETE FROM Favorite_company WHERE student_id = ? AND company_id = ?';
+
+  db.get(query, [req.id, companyId], (err, rows) => {
+    if(err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    return res.status(200).send("Favorite company removed successfull");
+  });
+})
 
 
 //get student by name
@@ -348,6 +360,21 @@ router.post('/search', (req, res) => {
     res.json(students);
   })
 })
+
+
+//get student by ID
+router.get('/:studentId', authMiddleware, (req, res) => {
+  const studentId = req.params.studentId;
+  const query = 'SELECT * FROM Student WHERE id = ?';
+
+  db.get(query, [studentId], (err, rows) => {
+    if(err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(rows);
+  });
+});
 
 
 export default router;

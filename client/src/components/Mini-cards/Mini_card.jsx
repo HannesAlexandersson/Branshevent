@@ -1,10 +1,11 @@
 
-import { locationBlack, userSml } from '../../assets/Icons';
+import { locationBlack, userSml, heartRed } from '../../assets/Icons';
 import { heart, heartlight } from '../../assets/Icons/dropdownicons';
 import * as avatarsc from '../../assets/company_default_avatars/index';
 import style from './mini_card.module.css';
+import { addFavoriteCompany, removeFavoriteCompany } from '../../apiFunctions/student.jsx';
 
-function Mini_card({ companyName, firstName, lastName, location, avatar, onClick }){
+function Mini_card({ companyName, firstName, lastName, location, avatar, onHeartClick, favorite}){
    
     const compName = companyName;
     let image;
@@ -19,10 +20,10 @@ function Mini_card({ companyName, firstName, lastName, location, avatar, onClick
     
     return(
             <>
-                <div className={style.mini_card_wrapper} onClick={onClick}>
+                <div className={style.mini_card_wrapper} >
                     <div className={style.mini_card_img_wrapper}>
                         <div className={style.img_heart_wrap}>
-                            <img src={heartlight} className={style.heart} />
+                            <img src={ favorite && heartRed || heartlight } className={style.heart} onClick={onHeartClick}/>
                         </div>
                         <img className={style.img} src={image} />
                     </div>
