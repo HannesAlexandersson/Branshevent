@@ -178,6 +178,7 @@ router.post('/update', authMiddleware, (req, res) => {
 })
 
 
+//get favorites
 router.get('/getFavorites', authMiddleware, (req, res) => {
   const query = 'SELECT * FROM Favorite_company WHERE student_id = ?';
 
@@ -277,6 +278,7 @@ router.get('/searchByName/:studentName', authMiddleware, (req, res) => {
 });
 
 
+//get student's tags
 router.get('/:studentId/tags', (req, res) => {
   const studentId = req.params.studentId;
 
