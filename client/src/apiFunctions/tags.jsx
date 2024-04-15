@@ -1,8 +1,8 @@
 import apiUrl from "./config";
-const token = localStorage.getItem("token");
 
 
 export async function getAllTags() {
+    const token = localStorage.getItem("token");
 
     return fetch(apiUrl + 'tags/all', {
         method: 'GET',
@@ -24,6 +24,7 @@ export async function getAllTags() {
 };
 
 export async function getAllUsedTags() {
+    const token = localStorage.getItem("token");
 
     return fetch(apiUrl + 'tags/getUsedTags', {
         method: 'GET',

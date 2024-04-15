@@ -1,9 +1,7 @@
 import apiUrl from "./config";
-import { removeFavoriteCompany } from "./student";
-const userType = localStorage.getItem("userType");
-
 
 export async function getFavorites() {
+    const userType = localStorage.getItem("userType");
     const token = localStorage.getItem("token");
     const endpointUrl = (userType === "student") ? 'student/getFavorites' : 'company/getFavorites';
     return fetch(apiUrl + endpointUrl, { 
@@ -28,6 +26,7 @@ export async function getFavorites() {
 }
 
 export async function toggleFavorite(favoriteId, isFavorite) {
+    const userType = localStorage.getItem("userType");
     const token = localStorage.getItem("token");
     // Construct the endpoint depending on what type of user we are, and if we want to add or remove the favorite
     let endpointUrl;

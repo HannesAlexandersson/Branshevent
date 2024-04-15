@@ -7,7 +7,7 @@ import { Nav } from '../index.js';
 
 import tagsArray from '../../tagArray.js';
 import style from './student_summary.module.css';
-import { registerStudent } from '../../apiFunctions/student';
+import { register } from '../../apiFunctions/user';
 
 
 
@@ -167,11 +167,7 @@ function Student_summary(){
     };
 //    const {  work_place, app_starts, app_ends, occupation } = req.body;
 
-    registerStudent(requestData);
-   
-
-
-    
+    register(requestData, 'student');
      
     if (currentStep < totalSteps) {
         setCurrentStep(currentStep + 1);

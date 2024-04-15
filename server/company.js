@@ -43,16 +43,15 @@ router.post('/login', (req, res) => {
     }
 
     if (result) {
-    bcrypt.compare(password, result.password, (bcryptErr, bcryptResult) => { //you where using result here, that reset result to the result of the encryption witch was true or false only
+      console.log(password, result.password);
+      bcrypt.compare(password, result.password, (bcryptErr, bcryptResult) => { //you where using result here, that reset result to the result of the encryption witch was true or false only
       if (bcryptErr) {
         console.error('Error comparing passwords:', bcryptErr);
         return res.status(500).json({ error: 'Internal Server Error' });
       }
 
     if (bcryptResult) {
-      console.log('User ID:', result.id);
-      //passwords match - user authenticated
-        console.log('Company authenticated successfully');
+      result.password = null;
       //creating a token to encrypt data and send back to the client for future authentication
       const token = jwt.sign({id: result.id, userType: "company"}, SECRET, {expiresIn: 864000});
       return res.status(200).send({ token: token, userData: result, userType: 'company' })

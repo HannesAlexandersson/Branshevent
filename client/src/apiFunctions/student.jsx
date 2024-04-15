@@ -1,8 +1,7 @@
 import apiUrl from "./config";
-const token = localStorage.getItem("token");
-
 
 export async function searchStudentByNameAndTags(searchString, tags) {
+    const token = localStorage.getItem("token");
     
     return fetch(apiUrl + 'student/searchByNameAndTags', {
         method: 'POST',
@@ -28,6 +27,7 @@ export async function searchStudentByNameAndTags(searchString, tags) {
 };
 
 export async function searchStudentByName(searchString) {
+    const token = localStorage.getItem("token");
     
     return fetch(apiUrl + 'student/searchByName/' + searchString, {
         method: 'GET',
@@ -49,6 +49,7 @@ export async function searchStudentByName(searchString) {
 };
 
 export async function searchStudentByTags(tags) {
+    const token = localStorage.getItem("token");
     
     return fetch(apiUrl + 'student/getByTags/' + tags, {
         method: 'GET',
@@ -70,7 +71,8 @@ export async function searchStudentByTags(tags) {
 };
 
 
-export async function getAllStudents(token) {
+export async function getAllStudents() {
+    const token = localStorage.getItem("token");
 
     return fetch(apiUrl + 'student/all/', { 
         method: 'GET',
@@ -96,6 +98,7 @@ export async function getAllStudents(token) {
   
 
 export async function searchStudents(searchString, tags, workPlace){
+    const token = localStorage.getItem("token");
 
     return fetch(apiUrl + 'student/search/', { 
         method: 'POST',
@@ -126,6 +129,7 @@ export async function searchStudents(searchString, tags, workPlace){
 
 
 export async function addFavoriteCompany(companyId){
+    const token = localStorage.getItem("token");
 
     return fetch(apiUrl + 'student/addToFavorite', { 
         method: 'POST',
@@ -151,6 +155,7 @@ export async function addFavoriteCompany(companyId){
 }
 
 export async function removeFavoriteCompany(companyId){
+    const token = localStorage.getItem("token");
 
     return fetch(apiUrl + 'student/removeFromFavorite', { 
         method: 'POST',
@@ -174,31 +179,3 @@ export async function removeFavoriteCompany(companyId){
         throw error; // Rethrow the error to be caught in the calling function
     });
 }
-
-export async function registerStudent(userData) {
-   
-    fetch(apiUrl + 'student/registration', { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userData),
-        })
-        .then(response => {
-            if (response.ok) {           
-                return response.json(); 
-            } else {
-                throw new Error('Failed to send data'); 
-            }
-        })
-        .then(data => {       
-            localStorage.setItem('token', data.token);//store the JTW token
-            localStorage.setItem('userType', data.userType);     
-            sessionStorage.setItem('userId', userId); //store the user id
-            sessionStorage.setItem('loggedIn', 'true');//set logged in to true
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-    

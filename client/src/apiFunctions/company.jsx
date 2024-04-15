@@ -1,8 +1,8 @@
 import apiUrl from "./config";
-const token = localStorage.getItem("token");
 
 
 export async function searchCompaniesByNameAndTags(searchString, tags) {
+    const token = localStorage.getItem("token");
     
     return fetch(apiUrl + 'company/searchByNameAndTags', {
         method: 'POST',
@@ -28,6 +28,7 @@ export async function searchCompaniesByNameAndTags(searchString, tags) {
 };
 
 export async function searchCompaniesByName(searchString) {
+    const token = localStorage.getItem("token");
     
     return fetch(apiUrl + 'company/searchByName/'+searchString, {
         method: 'GET',
@@ -49,6 +50,7 @@ export async function searchCompaniesByName(searchString) {
 };
 
 export async function searchCompaniesByTags(tags) {
+    const token = localStorage.getItem("token");
     
     return fetch(apiUrl + 'company/searchByTags/', {
         method: 'POST',
@@ -74,6 +76,7 @@ export async function searchCompaniesByTags(tags) {
 
 
 export async function searchCompanies(searchString, tags, workPlace){
+    const token = localStorage.getItem("token");
 
     return fetch(apiUrl + 'company/search/', { 
         method: 'POST',
@@ -101,32 +104,3 @@ export async function searchCompanies(searchString, tags, workPlace){
         throw error; // Rethrow the error to be caught in the calling function
     });
 }
-
-
-export async function registerCompany(userData) {
-   
-    fetch(apiUrl + 'company/registration', { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userData),
-        })
-        .then(response => {
-            if (response.ok) {           
-                return response.json(); 
-            } else {
-                throw new Error('Failed to send data'); 
-            }
-        })
-        .then(data => {       
-            localStorage.setItem('token', data.token);//store the JTW token
-            localStorage.setItem('userType', data.userType);     
-            sessionStorage.setItem('userId', userId); //store the user id
-            sessionStorage.setItem('loggedIn', 'true');//set logged in to true
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-    

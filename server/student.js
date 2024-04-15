@@ -49,9 +49,7 @@ router.post('/login', (req, res) => {
       }
 
     if (bcryptResult) {
-        //passwords match - user authenticated
-        console.log('Student authenticated successfully');
-        //creating a token to encrypt data and send back to the client for future authentication
+        result.password = null;
         const token = jwt.sign({id: result.id, userType: "student"}, SECRET, {expiresIn: 864000});
         return res.status(200).send({ token: token, userData: result, userType: 'student' })
     } else {
