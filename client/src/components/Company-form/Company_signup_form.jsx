@@ -1,8 +1,9 @@
 import React from 'react';
 import Props from 'prop-types';
+import { close } from '../../assets/Icons/index.js';
 import styles from './company_signup_form.module.css';
 
-function Company_signup_form({ handleChange, formData }) {
+function Company_signup_form({ handleSubmit, handleChange, formData, errors, validateForm, showPopup, onClose }) {
     const sanitizeInput = (value) => {       
         return value.trim();
     };
@@ -12,7 +13,15 @@ function Company_signup_form({ handleChange, formData }) {
     return (
         <div className={styles.container}>
             <h2>Contact Person</h2>
-            <form className={styles.form}>
+            <form 
+                className={styles.form}
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    if (validateForm()) {
+                        handleSubmit(e);
+                    }
+                }}
+            >
                 
             <div className={styles.form_group}>
                 <input 
@@ -79,6 +88,23 @@ function Company_signup_form({ handleChange, formData }) {
                     onChange={(e) => handleChange('phoneNumber', sanitizeInput(e.target.value))}
                 />                
             </div>
+
+            {showPopup && (
+                        <div className={styles.errorPopup}>
+                            <div className={styles.btn_close_wrapper}>
+                                <button className={styles.closeButton} onClick={onClose}>
+                                    <img src={close} />
+                                </button>
+                            </div>
+                            <div className={styles.error_txt_wrapper}>
+                                {Object.values(errors).map((error, index) => (
+                                    <span key={index} className={styles.error}>
+                                        {error}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 
             </form>
         </div>

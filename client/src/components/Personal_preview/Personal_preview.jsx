@@ -5,15 +5,7 @@ import { briefcase, wrench, laptop, calendarBlue, circle_user_round, locationBla
 import { account } from '../../assets/Icons/dropdownicons';
 import style from './personal_preview.module.css';
 import get_a_student from '../get_a_company/get_a_student.jsx';
-/* useEffect(() => {
-        if (userData) {
-           
-            const parsedData = JSON.parse(userData);
-            setUserDataObj(parsedData);
-            console.log(parsedData, 'inside hook preview');
-            }
-          
-    }, [userData]); */
+
 function Personal_preview( {userData} ){
     const [img , setImg ] = useState(null);
     const [company, setCompany] = useState({});

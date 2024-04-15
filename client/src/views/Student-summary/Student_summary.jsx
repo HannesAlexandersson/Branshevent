@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Progressbar, Red_btn, Spacer_bottom, White_btn, SendDataToServer, Onlineprofile } from '../../components';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
-
+import * as avatars from '../../assets/student_default_avatars/index.js';
 import { Nav } from '../index.js';
 
 import tagsArray from '../../tagArray.js';
@@ -15,7 +15,7 @@ function Student_summary(){
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(6);   
     const totalSteps = 7;
-
+    const [img , setImg ] = useState(null);
     
 
     const reqData = [];
@@ -179,7 +179,29 @@ function Student_summary(){
     sessionStorage.setItem('loggedin', true);
     navigate('/student-finish');
    } 
-  
+   let randomAvatar;
+   useEffect(() => { 
+    if(studentImage === null){
+        const student_avatars = Object.values(avatars);
+        const randomIndex = Math.floor(Math.random() * student_avatars.length);        
+        randomAvatar = student_avatars[randomIndex];
+
+        setImg(randomAvatar);
+    }else{
+        setImg(studentImage);
+    }
+}, [studentImage]);
+
+  /*  useEffect(() => {
+       if(randomAvatar){
+       
+       setImg(randomAvatar);
+       
+       }
+
+   }, [randomAvatar]); */
+
+
     return(
         <>
             <div className={style.main}>
@@ -265,7 +287,11 @@ function Student_summary(){
                             <div className={style.comp_name}>
                                 <h2>Image attached</h2>
                                 <div className={style.image_wrapper}>
-                                    <img src={studentImage} alt="user uploaded image" className={style.user_image}/>
+                                    {studentImage === null ? ( 
+                                        <img src={studentImage} alt="user uploaded image" className={style.user_image}/>
+                                    ): (
+                                        <img src={img} alt="default student avatar" className={style.user_image}/>
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { Nav } from '../index.js';
-import { Company_card, QR_Code, White_btn, Company_about, Company_contact } from '../../components/index.js';
+import { Company_card, QR_Code, White_btn, Company_about, Company_contact, Spacer_bottom } from '../../components/index.js';
 import * as avatarsc from '../../assets/company_default_avatars/index';
 import style from './view_company.module.css';
 import { backArrow, briefcase, circle_user_round, } from '../../assets/Icons';
@@ -155,8 +155,9 @@ function View_company(){
                             </div>
                         </div>
 
+                        
                     </div>
-                    
+                    <Spacer_bottom />
                 </div>
 
             </div>

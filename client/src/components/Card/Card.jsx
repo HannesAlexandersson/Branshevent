@@ -114,7 +114,7 @@ function Card({userRole, student, company, img, }){
                                     setShowQRCode(false);
                                 }}
                             >
-                                {student ? 'About me' : student === false ? 'About us' : null}
+                                {student ? 'About me' : 'About us'}
                             </button>
 
                             <button
