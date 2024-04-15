@@ -22,7 +22,7 @@ function Account(){
     
     let userRole; 
     let id = decodedToken.id;
-    /* console.log(decodedToken.id); */
+    
     //set the userole
     if(decodedToken.userType === 'student'){
         userRole = 'student';
@@ -54,41 +54,7 @@ function Account(){
         }, []);
 
     
-    //get the userdata and set the userData state to the fetched data
-   /*  if(userRole === 'student'){
-        id = decodedToken.id;
-
-        get_a_student(token, id)
-        .then((userData) => {
-           
-            setUserData(userData);
-         
-          }) */
- /*    }else if(userRole === 'company'){
-        id = decodedToken.id;
-
-        get_a_company(token, id)
-        .then((userData) => {
-
-            setUserData(userData);
-            
-        })
-    } */
    
-
-    // Function to toggle between displaying personal information and profile preview
-    /* const handleButtonClick = (component) => {
-        if (component === 'personalInfo') {
-            
-            setShowPersonalInfo(true);
-            setShowProfilePreview(false);
-        } else if (component === 'profilePreview') {
-            setShowPersonalInfo(false);
-            setShowProfilePreview(true);
-        }
-
-        
-    }; */
 
     const handleLogOut = () => {
         // Clear localStorage when user loggs out
@@ -99,7 +65,7 @@ function Account(){
             
         navigate('/log-in');
     }
-   /* console.log(userData, 'account userdata'); */
+   
     return (
     
         <div className={style.main}>

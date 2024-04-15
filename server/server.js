@@ -3,6 +3,7 @@ import companyRoutes from './company.js';
 import studentRoutes from './student.js';
 import tagRoutes from './tags.js';
 import userRoutes from './user.js';
+import avatarRoutes from './avatar.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { PORT } from './config.js';
@@ -35,6 +36,7 @@ server.use('/api/company/', companyRoutes);
 server.use('/api/student/', studentRoutes);
 server.use('/api/user/', userRoutes);
 server.use('/api/tags', tagRoutes);
+server.use('/api/avatars/', avatarRoutes);
 
 
 

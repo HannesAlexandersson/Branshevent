@@ -385,4 +385,45 @@ db.all(query, [companyId], (err, rows) => {
 });
 
 
+//get student avatar
+router.get('/companyAvatars', (req, res) => {
+  //client provide the id of comp wich avatar we want to fetch
+  const { companyId } = req.params;
+  //query to find the com first, and their avatar id.
+  const query = `SELECT avatar_id FROM Company WHERE id = ?`;
+
+  db.get(query, [companyId], (err, row) => {
+    if (err) {
+      console.error('Error querying database:', err);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+    if (!row) {
+      return res.status(404).json({ error: 'company not found' });
+    }
+    //we have the avatar id
+    const { avatar_id } = row;
+    //we query the avatar table
+    const avatarQuery = `SELECT filename FROM Company_avatar WHERE id = ?`;
+
+    db.get(avatarQuery, [avatar_id], (avatarErr, avatarRow) => {
+      if (avatarErr) {
+        console.error('Error querying database:', avatarErr);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+      if (!avatarRow) {
+        return res.status(404).json({ error: 'Avatar not found' });
+      }
+      //the name is the same as the filename in the avatarfolder
+      const { filename } = avatarRow;
+      const imagePath = path.join(companyAvatarFolderPath, filename);
+
+      //send the image file to the client
+      res.sendFile(imagePath);
+    });
+  });
+});
+
+
 export default router;
