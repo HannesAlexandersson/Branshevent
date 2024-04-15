@@ -139,18 +139,8 @@ function Student_second_stage(){
                     <div className={style.date_return_text_wrapper}>
                         <img src={calendarIcon} className={style.date_icon} />
                         <p className='date-text'>Application period:</p>
-                    </div>
-                  {/*   {startDate && typeof startDate === 'object' ? (
-                        <p className={style.date_return_text}>Start Date: {startDate.toLocaleDateString()}</p>
-                            ) : (
-                        <p className={style.date_return_text}>Start Date: {startDate}</p>
-                            )}                        {endDate && typeof endDate === 'object' ? (
-                        <p className={style.date_return_text}>End Date: {endDate.toLocaleDateString()}</p>
-                            ) : (
-                        <p className={style.date_return_text}>End Date: {endDate}</p>
-                            )} */}
-                    
-                
+                    </div>              
+                  
 
                     <div className={style.date_btn_wrapper}>
                         <div className={style.student_date_btn}>
@@ -160,10 +150,7 @@ function Student_second_stage(){
                         <span className={style.tooltip}>Student dates are fixed to current dates</span>                        
                     </div>
                 </div>
-               {/*  <div className={style.date_btn_wrapper}>
-                    <StartDate_picker onSelectStartDate={handleStartDateSelect}>START DATE</StartDate_picker>
-                    <EndDate_picker onSelectEndDate={handleEndDateSelect}>END DATE</EndDate_picker>
-                </div> */}
+             
 
                 <div className={style.checkboxWrapper}>
 
