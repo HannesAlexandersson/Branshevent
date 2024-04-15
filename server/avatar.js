@@ -93,8 +93,8 @@ router.get('/companyAvatars/:companyId', (req, res) => {
         }
         //the name is the same as the filename in the avatarfolder
         const avatarName = avatarRow.name.toString();        
-        const { filename } = avatarName;
-        const companyimagePath = path.join(companyAvatarFolderPath, filename);
+        /* const { filename } = avatarName; */
+        const companyimagePath = path.join(companyAvatarFolderPath, avatarName);
   
         //send the image file to the client
         res.sendFile(companyimagePath);
@@ -103,4 +103,57 @@ router.get('/companyAvatars/:companyId', (req, res) => {
     });
   });
 
+
+  //get avatar by id from avatar tabel
+  router.get('/cavatars/:avatar_id', (req, res) => {
+    const { avatar_id } = req.params;
+    //we query the avatar table
+    const avatarQuery = `SELECT name FROM Company_avatar WHERE id = ?`;
+
+    db.get(avatarQuery, [avatar_id], (avatarErr, avatarRow) => {
+      if (avatarErr) {
+        console.error('Error querying database:', avatarErr);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+      if (!avatarRow) {
+        return res.status(404).json({ error: 'Avatar not found' });
+      }
+      //the name is the same as the filename in the avatarfolder
+      const avatarName = avatarRow.name.toString();        
+      /* const { filename } = avatarName; */
+      const companyimagePath = path.join(companyAvatarFolderPath, avatarName);
+
+      //send the image file to the client
+      res.sendFile(companyimagePath);
+      console.log('avatar sent to client')
+    })
+});
+//get students avatar from avatarid
+router.get('/savatars/:avatar_id', (req, res) => {
+    const { avatar_id } = req.params;
+    //we query the avatar table
+    const avatarQuery = `SELECT name FROM Student_avatar WHERE id = ?`;
+
+    db.get(avatarQuery, [avatar_id], (avatarErr, avatarRow) => {
+      if (avatarErr) {
+        console.error('Error querying database:', avatarErr);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+      if (!avatarRow) {
+        return res.status(404).json({ error: 'Avatar not found' });
+      }
+      //the name is the same as the filename in the avatarfolder
+      const avatarName = avatarRow.name.toString();        
+     
+      const companyimagePath = path.join(studentAvatarFolderPath, avatarName);
+
+      //send the image file to the client
+      res.sendFile(companyimagePath);
+      console.log('avatar sent to client')
+    })
+});
+  
+  
   export default router;

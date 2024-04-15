@@ -13,6 +13,7 @@ function Personal_preview( {userData} ){
     const [student, setStudent] = useState({});
     const [userDataObj, setUserDataObj] = useState({});  
     const [avatarDataObj, setAvatarDataObj] = useState(null);  
+    const [avatarLoaded, setAvatarLoaded] = useState(false);
     
     const token = localStorage.getItem('token');           
     const decodedToken = JSON.parse(atob(token.split('.')[1]));
@@ -21,7 +22,8 @@ function Personal_preview( {userData} ){
     const userType = decodedToken.userType;
     
     let userRole; 
-  
+   let randomAvatar;
+    
     
     //set the userole
     if(decodedToken.userType === 'student'){
@@ -35,13 +37,12 @@ function Personal_preview( {userData} ){
         if (decodedToken.userType === 'student') {
           Promise.all([
             get_a_student(token, id),
-            Get_avatars(id, token, 'studentAvatars/'),
-           
+            Get_avatars(id, token, 'studentAvatars/'),           
           ])
           .then(([userData, avatarData]) => {
             setUserDataObj(userData);
             setAvatarDataObj(avatarData);
-            console.log( 'avatar??');
+            setAvatarLoaded(true);
           })
           .catch((error) => {
             console.error('Error fetching student data:', error);
@@ -53,8 +54,8 @@ function Personal_preview( {userData} ){
           ])
           .then(([userData, avatarData]) => {
             setUserDataObj(userData);
-            setAvatarDataObj(avatarData);
-            console.log( 'avatar??');
+            setAvatarDataObj(avatarData);     
+            setAvatarLoaded(true);       
           })
           .catch((error) => {
             console.error('Error fetching company data:', error);
@@ -65,34 +66,9 @@ function Personal_preview( {userData} ){
       }, []);
 
 
-   /*  THIS IS WORKIN SAVE IF NEW DONT WORK
-     useEffect(() => {
-        console.log('hej');
-        if (decodedToken.userType === 'student') {
-            get_a_student(token, id)
-                .then((rows) => {
-                    setUserDataObj(rows);                                      
-                })
-                .catch((error) => {
-                    console.error('Error fetching student data:', error);
-                });
-            }else if(decodedToken.userType === 'company'){
-                get_a_company(token, id)
-                .then((rows) => {
-                    setUserDataObj(rows);                    
-                })
-                .catch((error) => {
-                    console.error('Error fetching company data:', error);
-                });
-            }else{
-                console.log('error fetching userdata');
-            }
-        }, []); */
-    
           
    
-    let randomAvatar;
-    
+   
     useEffect(() => {
         if(userDataObj){
             if (userType === 'company'){               
@@ -105,38 +81,44 @@ function Personal_preview( {userData} ){
         }
     }, [userDataObj, userType]);
     
-       //if there is no user image we supply the user with a default avatar
-    if(avatarDataObj === null){   
-       if (userRole === 'student'){     
-            // select a avatar at random from all the student avatars
-            const student_avatars = Object.values(avatars);
-            const randomIndex = Math.floor(Math.random() * student_avatars.length);
-            randomAvatar = student_avatars[randomIndex];
-       }else if(userRole === 'company'){
-            const company_avatars = Object.values(avatarsc);
-            const randomIndex = Math.floor(Math.random() * company_avatars.length);
-            randomAvatar = company_avatars[randomIndex];
-       }
-    }        
-    console.log(avatarDataObj, 'avatarobj');
-    useEffect(() => {
-        if (randomAvatar) {
-            // Set image state with that random selected avatar, if randomAvatar is set, 
-            // that means the user didn't upload an image
-            setImg(randomAvatar);  
-            console.log(randomAvatar, 'randomav');      
-        } else {
-            // Else, it means the user has an image. Decode the binary image data to base64
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const base64Image = event.target.result;
-                // Set the img state to the base64 image string
-                setImg(base64Image);
-            };
-            // Read the Blob data as a data URL (base64)
-            reader.readAsDataURL(avatarDataObj);
+    //wait until the fetch call is done
+   
+        //then check if there is no user image we supply the user with a default avatar
+        if(avatarDataObj === null){   
+        if (userRole === 'student'){     
+                // select a avatar at random from all the student avatars
+                const student_avatars = Object.values(avatars);
+                const randomIndex = Math.floor(Math.random() * student_avatars.length);
+                randomAvatar = student_avatars[randomIndex];
+        }else if(userRole === 'company'){
+                const company_avatars = Object.values(avatarsc);
+                const randomIndex = Math.floor(Math.random() * company_avatars.length);
+                randomAvatar = company_avatars[randomIndex];
         }
-    }, [randomAvatar, avatarDataObj]);
+    }  
+   
+        
+        useEffect(() => {
+            if(avatarLoaded === true){
+                if (randomAvatar) {
+                    // Set image state with that random selected avatar, if randomAvatar is set, 
+                    // that means the user didn't upload an image
+                    setImg(randomAvatar);  
+                    console.log(randomAvatar, 'randomav');      
+                } else {
+                    // Else, it means the user has an image. Decode the binary image data to base64
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const base64Image = event.target.result;
+                        // Set the img state to the base64 image string
+                        setImg(base64Image);
+                    };
+                    // Read the Blob data as a data URL (base64)
+                    reader.readAsDataURL(avatarDataObj);
+                }
+            }
+        }, [randomAvatar, avatarDataObj, avatarLoaded]);
+    
 
     
     return(

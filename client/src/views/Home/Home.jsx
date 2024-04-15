@@ -183,6 +183,9 @@ function Home(){
                         { searchResult && searchResult.length && <Render_mini companies={searchResult} /> }
                     </div>
                 </div>
+
+                <Spacer_bottom />
+                
             </div>
         </div>
         </>

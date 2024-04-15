@@ -3,9 +3,6 @@ import { useNavigate,  } from "react-router-dom";
 import * as avatarsc from '../../assets/company_default_avatars/index';
 import props from 'prop-types';
 import My_own_slider from "./My_own_slider.jsx";
-/* import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css"; */
 import { briefcase, locationBlack, userSml } from '../../assets/Icons/index.js';
 import { heartlight } from '../../assets/Icons/dropdownicons/index.js';
 import style from './slider.module.css';
