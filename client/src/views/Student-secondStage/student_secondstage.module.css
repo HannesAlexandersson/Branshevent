@@ -52,24 +52,57 @@
 
 /*DATE START*/
 .date_wrapper{
-    display: flex;
+   /*  display: flex;
+    flex-direction: column;
     height: 1.5625rem;
     align-items: flex-start;
     gap: 0.5rem;
     align-self: stretch;
     justify-content: flex-start;
-    margin-left: 2rem;
+    margin-left: 2rem; */
+
+    gap: 0.5rem;
+    display: flex;
+    justify-content: center;
+    margin-left: 0rem;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.student_date_btn{
+    display: flex;
+    height: 1rem;
+    min-width: 10.0625rem;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 22.5rem;
+    background: var(--Blue-100);
+    color: var(--secondary-font-clr);
+}
+.student_date_btn > p > span{
+    color: var(--secondary-font-clr);
+    text-align: center;    
+    font-family: var(--default-font);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem; 
+    letter-spacing: 0.07813rem;
+    text-transform: uppercase;
 }
 .date_return_text_wrapper{
     display: flex;
-    flex-direction: column;
-    align-items: baseline;
+    flex-direction: row;
+  /*   align-items: baseline; */
+    gap: .5rem;
 }
 .date_return_text{
     font-family: var(--default-font);
     color: var(--default-font-clr);
     font-size: .775em;
     padding: .175rem;
+
 }
 .date_icon{
 
@@ -77,10 +110,28 @@
 .date_wrapper p{
     margin: 0;
 }
-
+.redInfo{
+    cursor: pointer;
+}
+.redInfo:hover + .tooltip{
+    visibility: visible;
+}
+.tooltip{
+    visibility: hidden; 
+    position: absolute;
+    border: 1px solid var(--secondary-BG);
+    background: var(--default-BG);
+    color: var(--primary-accent);
+    padding: 5px;
+    border-radius: 22.5rem;
+    z-index: 1; 
+    left:50%;
+    padding: .475rem;
+}
 .date_btn_wrapper{
     display: flex;
-    gap: 0.275rem;
+   /*  gap: 0.275rem; */
+   gap: 5.275rem;
 }
 .date.btn{
     color: var(--secondary-font-clr);
@@ -233,9 +284,8 @@
         display: flex;
         justify-content: center;
         margin-left: 0rem;
-      
-        flex-direction: row;
-        align-items: center;
+        flex-direction: column;
+        align-items: flex-start;
     }
     
 }

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import validator from 'validator';
-import { calendarIcon, add, backArrow, nextArrow, image } from '../../assets/Icons/index.js';
+import { calendarIcon, add, backArrow, nextArrow, image, redInfo } from '../../assets/Icons/index.js';
 import { Progressbar, White_btn, Red_btn, Skip_btn, StartDate_picker, EndDate_picker, Onlineprofile, Spacer_bottom, Add_image  } from '../../components';
 import { Nav, } from '../index.js';
 import 'react-datepicker/dist/react-datepicker.css'
@@ -11,8 +11,8 @@ function Student_second_stage(){
     const [isChecked, setIsChecked] = useState(false);
     const [currentStep, setCurrentStep] = useState(4);
     const [description, setDescription] = useState('');    
-    const [startDate, setStartDate] = useState(null); 
-    const [endDate, setEndDate] = useState(null);
+    const [startDate, setStartDate] = useState('11/25/2024'); 
+    const [endDate, setEndDate] = useState('05/30/2025');
     const navigate = useNavigate();
     const totalSteps = 7;
     const placeholderText = "A short description about you";   
@@ -54,14 +54,15 @@ function Student_second_stage(){
     };
 
     // Function to handle the selected end date
-    const handleEndDateSelect = (endDate) => {
-        setEndDate(endDate); // Update endDate state using the setEndDate prop
-    };
+    /* const handleEndDateSelect = (endDate) => {    
+      
+       setEndDate(endDate);
+    }; */
     
     // Function to handle the selected start date
-    const handleStartDateSelect = (startDate) => {
-        setStartDate(startDate); // Update startDate state using the setStartDate prop
-    };
+   /*  const handleStartDateSelect = (startDate) => {
+        setStartDate(startDate); 
+    }; */
 
     //format the date input the format we want
     const formatDate = (date) => {
@@ -135,10 +136,11 @@ function Student_second_stage(){
                 </div>
 
                 <div className={style.date_wrapper}>
-                    <img src={calendarIcon} className={style.date_icon} />
-                    <p className='date-text'>Application period:</p>
                     <div className={style.date_return_text_wrapper}>
-                    {startDate && typeof startDate === 'object' ? (
+                        <img src={calendarIcon} className={style.date_icon} />
+                        <p className='date-text'>Application period:</p>
+                    </div>
+                  {/*   {startDate && typeof startDate === 'object' ? (
                         <p className={style.date_return_text}>Start Date: {startDate.toLocaleDateString()}</p>
                             ) : (
                         <p className={style.date_return_text}>Start Date: {startDate}</p>
@@ -146,14 +148,22 @@ function Student_second_stage(){
                         <p className={style.date_return_text}>End Date: {endDate.toLocaleDateString()}</p>
                             ) : (
                         <p className={style.date_return_text}>End Date: {endDate}</p>
-                            )}
+                            )} */}
+                    
+                
+
+                    <div className={style.date_btn_wrapper}>
+                        <div className={style.student_date_btn}>
+                            <p><span>11/25/2024</span>-<span>05/30/2025</span></p>
+                        </div>
+                        <img className={style.redInfo} src={redInfo} alt="red info button" />                        
+                        <span className={style.tooltip}>Student dates are fixed to current dates</span>                        
                     </div>
                 </div>
-
-                <div className={style.date_btn_wrapper}>
+               {/*  <div className={style.date_btn_wrapper}>
                     <StartDate_picker onSelectStartDate={handleStartDateSelect}>START DATE</StartDate_picker>
                     <EndDate_picker onSelectEndDate={handleEndDateSelect}>END DATE</EndDate_picker>
-                </div>
+                </div> */}
 
                 <div className={style.checkboxWrapper}>
 

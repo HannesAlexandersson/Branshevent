@@ -10,9 +10,15 @@ function Student_finish(){
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(7);
     const totalSteps = 7;
-    const token = localStorage.getItem('token');
-    const decodedToken = JSON.parse(atob(token.split('.')[1]));
-console.log(decodedToken.userType);
+
+    if(localStorage.getItem('token') !== null){
+        const token = localStorage.getItem('token');
+        const decodedToken = JSON.parse(atob(token.split('.')[1]));
+        console.log(decodedToken.userType);
+    }else{
+        console.log('error, token not loaded yet');
+    }
+    
     const handleNextStep = () => {
         
 
