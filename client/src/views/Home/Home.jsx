@@ -26,7 +26,7 @@ function Home(){
     const [shouldGetFavorites, setShouldGetFavorites] = useState(true);
 
     const token = localStorage.getItem('token');
-    const userType = sessionStorage.getItem('userType');
+    const userType = localStorage.getItem('userType');
     
     useEffect(() => {
         const fetchData = async () => {

@@ -6,6 +6,7 @@ import tagsArray from '../../tagArray.js';
 import * as avatarsc from '../../assets/company_default_avatars/index';
 import { Nav } from '../index.js';
 import style from './company_summary.module.css';
+import { registerCompany } from '../../apiFunctions/company';
 
 function Company_summary(){
     const navigate = useNavigate();
@@ -160,7 +161,7 @@ function Company_summary(){
         linkedin: compOnlineProfiles.LinkedIn,
         gdpr: compGdpr,
     };
-    SendDataToServer(requestData, endpoint)
+    registerCompany(requestData);
     
     
      

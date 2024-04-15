@@ -53,7 +53,7 @@ router.post('/login', (req, res) => {
         console.log('Student authenticated successfully');
         //creating a token to encrypt data and send back to the client for future authentication
         const token = jwt.sign({id: result.id, userType: "student"}, SECRET, {expiresIn: 864000});
-        return res.status(200).send({ token: token, userData: result })
+        return res.status(200).send({ token: token, userData: result, userType: 'student' })
     } else {
         // Passwords do not match
         console.log('Incorrect password');
@@ -131,11 +131,11 @@ router.post('/registration', (req, res) => {
                 console.log('Tags added successfully');
     
                 const token = jwt.sign({id: studentId, userType: "student"}, SECRET, {expiresIn: 864000});
-                return res.status(200).send({ token: token })
+                return res.status(200).send({ token: token, userType: 'student' })
             });
         } else {
           const token = jwt.sign({id: studentId, userType: "student"}, SECRET, {expiresIn: 864000});
-          return res.status(200).send({ token: token })
+          return res.status(200).send({ token: token, userType: 'student' })
 
         }
     });

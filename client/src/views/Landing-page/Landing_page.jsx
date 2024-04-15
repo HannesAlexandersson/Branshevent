@@ -59,7 +59,7 @@ function Landing_page(){
                     <span style={{ fontWeight: 'bold' }}>WELCOME TO </span>
                     <span style={{ fontWeight: 'normal' }}>INDUSTRY MEETUP</span>
                   </h1>
-                  <p>Perfect place for you to find the perfect intern or internship within Web development or Digital Design!</p>
+                  <p>Perfect place for you to find the perfect intern or internship within Web Development or Digital Design!</p>
                 
                   {sessionStorage.getItem('loggedIn') !== 'true' && (
                 <div className={styles.join_event_btn_wrapper}>
