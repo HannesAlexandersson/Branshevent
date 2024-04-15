@@ -5,7 +5,6 @@ import { briefcase, locationBlack, search, sliders, userSml } from '../../assets
 import style from './home.module.css';
 import { Mini_card, Quiz_wrapper, Spacer_bottom, Simple_slider } from '../../components/index.js';
 import Render_mini from '../../components/Render_mini/Render_mini.jsx';
-import { getAllUsedTags } from '../../apiFunctions/tags.jsx';
 import Multiselect from 'multiselect-react-dropdown';
 import { searchCompanies } from '../../apiFunctions/company.jsx';
 import { searchStudents } from '../../apiFunctions/student.jsx';
@@ -25,8 +24,11 @@ function Home(){
     const [favorites, setFavorites] = useState([]);
     const [shouldGetFavorites, setShouldGetFavorites] = useState(true);
 
-    const userRole = sessionStorage.getItem('userType');
     const token = localStorage.getItem('token');
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    console.log(decodedToken.userType);
+    const userRole = decodedToken.userType;
+
     
     useEffect(() => {
         const fetchData = async () => {

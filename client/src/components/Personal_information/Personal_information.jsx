@@ -7,9 +7,9 @@ import Tags_name_from_server from '../TagsFromServer/Tags_name_from_server';
 import tagsArray from '../../tagArray';
 import Update_company from '../Update/Update_company.jsx';
 import Update_student from '../Update/Update_student.jsx';
-import get_a_company from '../get_a_company/get_a_company.jsx';
 
-function Personal_information({ userData }){
+
+function Personal_information({ userData }){    
     const [userDataObj, setUserDataObj] = useState({});
     const [tags, setTags] = useState([]);
     const [editMode, setEditMode] = useState({
@@ -25,23 +25,25 @@ function Personal_information({ userData }){
            
             const parsedData = JSON.parse(userData);
             setUserDataObj(parsedData);
-           
+          /*  console.log(parsedData.app_start, 'inside hook pI'); */
             }
-   
-       
+          
     }, [userData]);
     
-
-
-    
-
-   
-    let userRole;
-    if (userDataObj && userDataObj.company_name !== undefined) {
-        userRole = 'company';
-    }else{        
+    /* console.log(userData, 'p info userdata');
+    console.log(userDataObj, 'p info userObj'); */
+    const token = localStorage.getItem('token');
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    const id = decodedToken.id;
+    let userRole;    
+    /* console.log(decodedToken.id); */
+    //set the userole
+    if(decodedToken.userType === 'student'){
         userRole = 'student';
-    }  
+    }else if(decodedToken.userType === 'company' ){
+        userRole = 'company';
+    }
+   
 
     const handleEditToggle = (section) => {
         if (!editMode[section]) {
@@ -81,8 +83,7 @@ function Personal_information({ userData }){
     const updateCompanyData = (section) => {
         // logic to send updated company data to the server
         console.log('Updating company data...');
-        const endpoint = 'api/company/update';
-        const token = localStorage.getItem('token');
+        const endpoint = 'api/company/update';        
         const updatedData = {
             company_name: userDataObj.company_name,
             first_name: userDataObj.first_name,
@@ -103,8 +104,7 @@ function Personal_information({ userData }){
     const updateStudentData = (section) => {
         //logic to send updated student data to the server
         console.log('Updating student data...');
-        const endpoint = 'api/student/update'
-        const token = localStorage.getItem('token');
+        const endpoint = 'api/student/update'       
         const updatedData = {
             first_name: userDataObj.first_name,
             last_name: userDataObj.last_name,
@@ -124,11 +124,7 @@ function Personal_information({ userData }){
         Update_student(updatedData, endpoint, token);
         
     };
-
-    // get the id from the user, and the token
-    const id = userDataObj.id;
-    
-    const token = localStorage.getItem('token');
+  
     useEffect(() => {
         const fetchTags = async (id, token, userRole) => {
             try {
@@ -165,6 +161,22 @@ function Personal_information({ userData }){
     
     const tagIdsFromServer = tags; 
     const selectedTagNames = getSelectedTagNames(tagIdsFromServer);
+    //initialize date variables
+    let unformatedDateStart = new Date();
+    let unformatedDateEnd = new Date();
+    let formattedStartDate;
+    let formattedEndDate;
+    //if the userdata have date set format the dates
+    if (userDataObj && userDataObj.app_start && userDataObj.app_end) {
+        unformatedDateStart = new Date(userDataObj.app_start);
+        unformatedDateEnd = new Date(userDataObj.app_end);
+    }
+    //formate the user dates to our desired display format(ie we take away the time and only display date)
+    formattedStartDate = unformatedDateStart.toISOString().split('T')[0]; 
+    formattedEndDate = unformatedDateEnd.toISOString().split('T')[0];
+    //set the display variables to the formatted dates
+    const app_start = formattedStartDate;
+    const app_end = formattedEndDate;
 
 
 
@@ -358,13 +370,24 @@ function Personal_information({ userData }){
                                         value={userDataObj.email}
                                     />
                                     <label className={style.label} htmlFor='password'>PASSWORD</label>
+                                    {editMode.password ? (
                                     <input 
+                                        className={style.inputfield}
+                                        type="password"                                                                                
+                                        onChange={(e) => setUserDataObj({ ...userDataObj, address: e.target.value })}
+                                        value={userDataObj.password}
+                                    />
+                                    ) : (
+                                        <input 
                                         className={style.inputfield}
                                         type="password"
                                         disabled                                        
                                         value={userDataObj.password}
                                     />
-                                    <button className={style.change_pass_btn}>CHANGE PASSWORD</button>
+                                    )}                                   
+                                    <button className={style.change_pass_btn} onClick={() => handleEditToggle('password')}>  
+                                        {editMode.password ? <>CHANGE PASSWORD</> : <>SAVE PASSWORD</>}                                           
+                                    </button>
                                 </form>
 
                             </div>
@@ -414,7 +437,7 @@ function Personal_information({ userData }){
                                 type="text"
                                 name="application-periodStart"
                                 onChange={(e) => setUserDataObj({ ...userDataObj, app_start: e.target.value })}
-                                value={userDataObj.app_start}
+                                value={app_start}
                                 />
                                 ):(
                                     <input 
@@ -422,7 +445,7 @@ function Personal_information({ userData }){
                                     type="text"
                                     name="application-periodStart"
                                     disabled
-                                    value={userDataObj.app_start}
+                                    value={app_start}
                                     />
                                 )}
                                  {editMode.description ? (
@@ -431,7 +454,7 @@ function Personal_information({ userData }){
                                 type="text"
                                 name="application-periodEnd"
                                 onChange={(e) => setUserDataObj({ ...userDataObj, app_end: e.target.value })}
-                                value={userDataObj.app_end}
+                                value={app_end}
                                 />
                                  ):(
                                     <input 
@@ -439,7 +462,7 @@ function Personal_information({ userData }){
                                     type="text"
                                     name="application-periodEnd"
                                     disabled
-                                    value={userDataObj.app_end}
+                                    value={app_end}
                                     />
                                  )}
                                 <label className={style.label} htmlFor='online-profiles'>ONLINE PROFILE</label>
@@ -536,13 +559,14 @@ function Personal_information({ userData }){
                                         <p className={style.checkbox_loc_title}>HOW DO I WORK</p>
                                         <div className={style.box_container}>
                                         <div className={style.box_row}>
-                                            {userDataObj.location === 'office' ? (
+                                            {userDataObj.work_place === 'office' ? (
                                                 <div>                                                
                                                 <input 
                                                     disabled
                                                     type="checkbox"
                                                     name="office"
-                                                    checked
+                                                    checked       
+                                                    className={style.checkis}                                             
                                                     />
                                                     <label htmlFor='office'>IN OFFICE</label>
                                                 </div>
@@ -558,7 +582,7 @@ function Personal_information({ userData }){
                                             )}
                                             </div>
                                             <div className={style.box_row}>
-                                            {userDataObj.location === 'remote' ? (
+                                            {userDataObj.work_place === 'remote' ? (
                                                 <div>
                                               
                                             <input 
@@ -566,6 +590,7 @@ function Personal_information({ userData }){
                                                 type="checkbox"
                                                 name="remote"
                                                 checked
+                                                className={style.checkis}
                                                 />
                                                   <label htmlFor='remote'>REMOTELY</label>
                                                 </div>
@@ -579,13 +604,14 @@ function Personal_information({ userData }){
                                                 </div>)}
                                             </div>
                                               <div className={style.box_row}>
-                                                {userDataObj.location === 'both' ? (
+                                                {userDataObj.work_place === 'both' ? (
                                                     <div>                                                        
                                                     <input 
                                                         disabled
                                                         type="checkbox"
                                                         name="both"
                                                         checked
+                                                        className={style.checkis}
                                                         />
                                                         <label htmlFor='both'>BOTH</label>
                                                     </div>
@@ -611,6 +637,7 @@ function Personal_information({ userData }){
                                             {userDataObj.work_place === 'office' ? (
                                                 <div>                                                
                                                 <input 
+                                                className={style.checkis}
                                                   disabled
                                                     type="checkbox"
                                                     name="office"
@@ -638,6 +665,7 @@ function Personal_information({ userData }){
                                                 type="checkbox"
                                                 name="remote"
                                                 checked
+                                                className={style.checkis}
                                                 />
                                                   <label htmlFor='remote'>REMOTELY</label>
                                                 </div>
@@ -658,6 +686,7 @@ function Personal_information({ userData }){
                                                         type="checkbox"
                                                         name="both"
                                                         checked
+                                                        className={style.checkis}
                                                         />
                                                         <label htmlFor='both'>BOTH</label>
                                                     </div>

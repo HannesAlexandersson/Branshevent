@@ -40,3 +40,39 @@
     letter-spacing: 0.03125rem;
 }
 
+
+
+.errorPopup {
+    z-index: 100;
+    color: red;
+    font-size: 1.2em;
+    display: flex;
+    font-weight: 900;
+    position: fixed;
+    top: 22%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 10px;
+    border: 1px solid red;
+    border-radius: 1rem;
+    align-items: center;
+    flex-direction: column;
+}
+.btn_close_wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+    
+}
+.closeButton{
+    background: var(--Grey-80);
+    border: none;
+    cursor: pointer;
+}
+.error_txt_wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}

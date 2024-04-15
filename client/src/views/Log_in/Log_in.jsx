@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {  get_user_data } from '../../components/index';
+import {  Spacer_bottom, get_user_data } from '../../components/index';
 import { Nav } from '../index';
 import style from './login.module.css';
 
@@ -149,6 +149,7 @@ function Log_in(){
                 </div>
             </div>
 
+            <Spacer_bottom />
            
         </div>
     </>

@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Progressbar, Red_btn, Spacer_bottom, White_btn,SendDataToServer } from '../../components';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import tagsArray from '../../tagArray.js';
-
+import * as avatarsc from '../../assets/company_default_avatars/index';
 import { Nav } from '../index.js';
 import style from './company_summary.module.css';
 
@@ -11,7 +11,7 @@ function Company_summary(){
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(6);
     const totalSteps = 7;
-   
+    const [img, setImg] = useState(null);
     let applicationStartdate;
     let applicationEnddate;
     const hasDates = applicationStartdate && applicationEnddate;
@@ -96,8 +96,7 @@ function Company_summary(){
         companyAddress = 'not set';
     }
 
-    if (sessionStorage.getItem('gdprChecked') !== null) {
-       if(sessionStorage.getItem('gdprChecked') === true)
+    if (sessionStorage.getItem('gdprChecked') !== null) {       
        compGdpr = true;
     } else {
         compGdpr = 'not set';
@@ -107,6 +106,7 @@ function Company_summary(){
         companyImage = localStorage.getItem('image');
     } else {
         companyImage = 'not set';
+        console.log('company image not set');
     }
 
     if (sessionStorage.getItem('startDate') !== null) {
@@ -170,6 +170,24 @@ function Company_summary(){
     sessionStorage.setItem('loggedin', true);
     navigate('/company-finish');
    } 
+
+
+   useEffect(() => { 
+    if(companyImage === null){
+        const company_avatars = Object.values(avatarsc);
+        const randomIndex = Math.floor(Math.random() * company_avatars.length);
+        const randomAvatar = company_avatars[randomIndex];
+        setImg(randomAvatar);
+    }else{
+        setImg(companyImage);
+    }
+
+    
+    
+}, [companyImage]); 
+
+
+
   
     return(
         <>
@@ -240,20 +258,33 @@ function Company_summary(){
                             <div className={style.comp_name}>
                                 <h2>Online profile</h2>
                                 <div className={style.profile_container}>
-                                {compOnlineProfiles ? (Object.keys(compOnlineProfiles).map((platform, index) => (                                    
-                                    <div key={index} className={style.profile_sack}>
-                                        <p className={style.profiles_sack_child}>{platform}: {compOnlineProfiles[platform] !== "" ? <p className={style.profiles_sack_child}>{compOnlineProfiles[platform]}</p> : "Not provided"}</p>
-                                    </div>    
-                                        ))
-                                    ) : ( <p>Not set</p>  )}
+                                    {compOnlineProfiles.CompanyWebsite ? (
+                                    <div className={style.profile_sack}>
+                                        <p className={style.profiles_sack_child}>Website: {compOnlineProfiles.CompanyWebsite}</p>
+                                    </div>
+                                ):(
+                                    <p>Website: Not set</p>
+                                )}
+                                {compOnlineProfiles.CompanyWebsite ? (
+                                    <div className={style.profile_sack}>
+                                        <p className={style.profiles_sack_child}>LinkedIn: {compOnlineProfiles.LinkedIn}</p>
+                                        </div>
+                                ):(
+                                    <p>LinkedIn: Not set</p>
+                                )}
+                               
                                 </div>
                             </div>
 
                             <div className={style.comp_name}>
                                 <h2>Image attached</h2>
                                 <div className={style.image_wrapper}>
-                                    <img src={companyImage} alt="user uploaded image" className={style.user_image}/>
-                                </div>
+                                    {companyImage === null ? (
+                                        <img src={companyImage} alt="user uploaded image" className={style.user_image}/>
+                                    ) : (
+                                        <img src={img} alt="default company avatar" className={style.user_image}/>
+                                    )}
+                                    </div>
                             </div>
                         </div>
                     </div>

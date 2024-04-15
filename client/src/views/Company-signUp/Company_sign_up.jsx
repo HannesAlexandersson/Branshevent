@@ -22,6 +22,8 @@ function Company_sign_up(){
         email: '',
         phoneNumber: ''
     });
+    const [errors, setErrors] = useState({});
+    const [showPopup, setShowPopup] = useState(false);
     
     
     useEffect(() => {
@@ -43,6 +45,9 @@ function Company_sign_up(){
         if (isChecked) {
             // Set a session variable to indicate that GDPR is checked
             sessionStorage.setItem('gdprChecked', true);
+        }else {
+            alert("You must agree to GDPR to register!");
+            return; 
         } 
 
         // Retrieve sanitized and validated form data
@@ -52,20 +57,30 @@ function Company_sign_up(){
         if (currentStep < totalSteps) {//add 1 to the progressbar prop           
             setCurrentStep(currentStep + 1); 
         }
+
+        const isValid = validateForm();
+
+        if (isValid) {
        
            
         // Save company data to session storage
         sessionStorage.setItem('companyData', JSON.stringify(formData));
 
         navigate('/company-account');//route the user to the next step
+        }else {
+            // Display error popup
+            setShowPopup(true);
+        }
     };
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);        
     };
 
-    const isNextButtonDisabled = !isChecked;
-    console.log(isNextButtonDisabled);
+    const handleClosePopup = () => {
+        setShowPopup(false);
+    };
+   
     
     const handleChange = (name, value) => {
         // Update form data state with sanitized input value
@@ -74,6 +89,52 @@ function Company_sign_up(){
             [name]: value.trim() 
         }));
     };
+
+    const validateForm = () => {
+        let isValid = true;
+        const newErrors = {};
+
+         // Validate first name
+         if (!formData.firstName.trim()) {
+            newErrors.firstName = 'Company name is required';
+            isValid = false;
+        }
+
+        // Validate first name
+        if (!formData.firstName.trim()) {
+            newErrors.firstName = 'First name is required';
+            isValid = false;
+        }
+
+        // Validate last name
+        if (!formData.lastName.trim()) {
+            newErrors.lastName = 'Last name is required';
+            isValid = false;
+        }
+
+        // Validate email
+        if (!formData.email.trim()) {
+            newErrors.email = 'Email is required';
+            isValid = false;
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            newErrors.email = 'Email is invalid';
+            isValid = false;
+        }
+
+        // Validate phone number
+        if (!formData.phoneNumber.trim()) {
+            newErrors.phoneNumber = 'Phone number is required';
+            isValid = false;
+        } else if (!/^\d+$/.test(formData.phoneNumber.trim())) {
+            newErrors.phoneNumber = 'Phone number is invalid';
+            isValid = false;
+        }
+        setErrors(newErrors);
+        return isValid;
+    };
+
+    const isNextButtonDisabled = !isChecked;
+    console.log(isNextButtonDisabled);
 
     return(
         <>            
@@ -84,10 +145,15 @@ function Company_sign_up(){
             <Progressbar currentStep={currentStep} totalSteps={totalSteps} />
 
                 <Form 
-                    id="companySignupForm"                    
+                    id="companySignupForm" 
+                    handleSubmit={handleSubmit}                   
                     handleChange={handleChange} 
                     formData={formData}
-                    />                
+                    errors={errors} 
+                    validateForm={validateForm} 
+                    showPopup={showPopup} 
+                    onClose={handleClosePopup}
+                />                
 
                 
                     <Gdpr

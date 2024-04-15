@@ -33,3 +33,4 @@ export { default as office } from './office.svg';
 export { default as search } from './search.svg';
 export { default as sliders } from './sliders-horizontal.svg';
 export { default as save } from './save.svg';
+export { default as redInfo } from './redInfo.svg';

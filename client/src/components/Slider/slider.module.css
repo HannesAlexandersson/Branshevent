@@ -131,12 +131,16 @@
     width: 100%;
   }
   .nxt_prev{
-    border: 1px solid var(--secondary-BG);
-    background-color: var(--default-BG);
+    /* border: 1px solid var(--secondary-BG); */
+    border:none;
+    background-color: var(---Grey-40);
     font-family: var(--default-font);
     color: var(--primary-accent);
     border-radius: 5rem;
     cursor: pointer;
+  }
+  .nxt_prev:hover{
+    background-color: var(--Grey-60);
   }
   .prev_nxt_cont{
     bottom: 50%;

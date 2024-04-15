@@ -75,9 +75,6 @@ object-fit: contain;
     flex-direction: row;
     gap: .5rem;
 }
-.user_details > img{
-    scale: 0.6;
-}
 .user_name_wrapper{
 
 }
@@ -94,8 +91,7 @@ object-fit: contain;
 .role_details{
     display: flex;
     flex-direction: row;
-    gap: 1.5rem;
-    padding-left: 1rem;
+    gap: 2.5rem;
 }
 .user_role{
 

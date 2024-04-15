@@ -11,8 +11,7 @@ function get_a_student(token, id){
         },       
     })
     .then(response => {
-        if (response.ok) {
-            console.log('Data received successfully');            
+        if (response.ok) {                       
             return response.json(); 
         } else {
             console.error('Failed to fetch data');

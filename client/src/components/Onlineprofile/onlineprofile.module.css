@@ -11,6 +11,7 @@
     font-family: var(--default-font);
     border: 1px solid var(--secondary-BG);
     background: var(--default-BG);
+    cursor: pointer;
 }
 .add_profiles_btn > p{
     color: var(--btn-font-clr);

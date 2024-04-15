@@ -144,7 +144,17 @@ function Student_signup_firststage(){
                 <Progressbar currentStep={currentStep} totalSteps={totalSteps}/>
             
 
-                <Student_form id="studentSignupForm" handleSubmit={handleSubmit} handleOccupationChange={handleOccupationChange} handleChange={handleChange} formData={formData} errors={errors} validateForm={validateForm} showPopup={showPopup} onClose={handleClosePopup}/> 
+                <Student_form 
+                    id="studentSignupForm" 
+                    handleSubmit={handleSubmit} 
+                    handleOccupationChange={handleOccupationChange} 
+                    handleChange={handleChange} 
+                    formData={formData} 
+                    errors={errors} 
+                    validateForm={validateForm} 
+                    showPopup={showPopup} 
+                    onClose={handleClosePopup}
+                /> 
                     
 
                 <Gdpr

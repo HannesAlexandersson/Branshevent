@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import { Nav } from '../index';
-import { Personal_information, Personal_preview, Red_btn, Spacer_bottom, get_a_company, get_user_data } from '../../components';
+import { Personal_information, Personal_preview, Red_btn, Spacer_bottom, get_a_company, } from '../../components';
 
 import style from './account.module.css';
 import get_a_student from '../../components/get_a_company/get_a_student';
@@ -21,37 +21,63 @@ function Account(){
     const decodedToken = JSON.parse(atob(token.split('.')[1]));
     
     let userRole; 
-    let id;
+    let id = decodedToken.id;
+    /* console.log(decodedToken.id); */
     //set the userole
     if(decodedToken.userType === 'student'){
         userRole = 'student';
     }else if(decodedToken.userType === 'company' ){
         userRole = 'company';
     }
+//the hook fetch the data CONFIRMED
+    useEffect(() => {
+        if (decodedToken.userType === 'student') {
+            get_a_student(token, id)
+                .then((rows) => {
+                    setUserData(JSON.stringify(rows));                    
+                })
+                .catch((error) => {
+                    console.error('Error fetching student data:', error);
+                });
+            }else if(decodedToken.userType === 'company'){
+                get_a_company(token, id)
+                .then((rows) => {
+                    setUserData(JSON.stringify(rows));
+                    console.log(JSON.stringify(rows), 'inside get a company');
+                })
+                .catch((error) => {
+                    console.error('Error fetching company data:', error);
+                });
+            }else{
+                console.log('error fetching userdata');
+            }
+        }, []);
+
+    
     //get the userdata and set the userData state to the fetched data
-    if(userRole === 'student'){
+   /*  if(userRole === 'student'){
         id = decodedToken.id;
 
         get_a_student(token, id)
         .then((userData) => {
            
-            setUserData(JSON.stringify(userData));
-           
-          })
-    }else if(userRole === 'company'){
+            setUserData(userData);
+         
+          }) */
+ /*    }else if(userRole === 'company'){
         id = decodedToken.id;
 
         get_a_company(token, id)
         .then((userData) => {
 
-            setUserData(JSON.stringify(userData));
+            setUserData(userData);
             
         })
-    }
+    } */
    
 
     // Function to toggle between displaying personal information and profile preview
-    const handleButtonClick = (component) => {
+    /* const handleButtonClick = (component) => {
         if (component === 'personalInfo') {
             
             setShowPersonalInfo(true);
@@ -62,7 +88,7 @@ function Account(){
         }
 
         
-    };
+    }; */
 
     const handleLogOut = () => {
         // Clear localStorage when user loggs out
@@ -73,7 +99,9 @@ function Account(){
             
         navigate('/log-in');
     }
+   /* console.log(userData, 'account userdata'); */
     return (
+    
         <div className={style.main}>
             <Nav />
 
@@ -109,8 +137,8 @@ function Account(){
             </div>
 
            
-            {showPersonalInfo && <Personal_information userData={userData}/>}           
-            {showProfilePreview && <Personal_preview userData={userData}/>}
+            {userData && showPersonalInfo && <Personal_information userData={userData} />}
+            {showProfilePreview && <Personal_preview userData={userData} />}
 
             
 

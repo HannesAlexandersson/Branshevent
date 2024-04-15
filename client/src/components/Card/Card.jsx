@@ -1,17 +1,15 @@
 import { useState } from 'react';
 import { About, Contact, QR_Code } from '../index.js';
 import { briefcase, circle_user_round, locationBlack, userSml } from '../../assets/Icons';
-
 import { account } from '../../assets/Icons/dropdownicons';
 import style from './card.module.css';
 
-function Card({userRole, student, company, img, }){
-    
+function Card({userRole, student, company, img, }){    
     const [showAbout, setShowAbout] = useState(true); 
     const [showContact, setShowContact] = useState(false); 
     const [showQRCode, setShowQRCode] = useState(false);
     
-   //userRole, firstName, lastname, compname, company, occupation, img, phone, email, lastName 
+   
      // Function to toggle between displaying the submenus
      const handleButtonClick = (component) => {
         if (component === 'About') {
@@ -33,6 +31,10 @@ function Card({userRole, student, company, img, }){
 
     
 
+/* we get userData as props from either company view or the accountpage, so it can either be 
+ a student that want to view a company, or a student that want to watch their own details, 
+ or a company watching their own details or another company etc etc, so we need to know who is
+ watching what */
 
     let userData;
     if (student) {
@@ -42,9 +44,9 @@ function Card({userRole, student, company, img, }){
     }else if(company){
         userData = company;
     }
-    /* console.log(userData); */
     
-
+    
+    
     return(
         <>
             <div className={style.redBox}>
@@ -57,15 +59,16 @@ function Card({userRole, student, company, img, }){
                         
                     <div className={style.user_account}>
 
-                    {userRole === 'student' && (
+                    {student && (
                         <div className={style.user_details}>
                             <img src={circle_user_round} />
                             <div className={style.user_name_wrapper}>                                
-                                <h1 className={style.user_header}>{userData.firstName} {userData.lastname}</h1>
+                                <h1 className={style.user_header}>{userData.first_name} {userData.last_name}</h1>
                             </div>
                         </div>                        
                     )}
-                     {userRole === 'company' && (
+
+                     {company && (
                         <div className={style.user_details}>
                             <img src={briefcase} />
                             <div className={style.user_name_wrapper}>                                
@@ -74,7 +77,7 @@ function Card({userRole, student, company, img, }){
                         </div>
                     )}
 
-                    {userRole === 'student' && (
+                    {student && (
                         <div>
                             <div className={style.role_details}>
                                 <img src={briefcase} />
@@ -82,7 +85,8 @@ function Card({userRole, student, company, img, }){
                             </div>
                         </div>
                         )}
-                     {userRole === 'company' && (
+
+                     {company && (
                         <div>
                             <div className={style.role_details}>
                                 <div className={style.usher}>
@@ -110,7 +114,7 @@ function Card({userRole, student, company, img, }){
                                     setShowQRCode(false);
                                 }}
                             >
-                                {userRole === 'student' ? 'About me' : 'About us'}
+                                {student ? 'About me' : 'About us'}
                             </button>
 
                             <button
@@ -135,9 +139,9 @@ function Card({userRole, student, company, img, }){
                                 QR code
                             </button>
                         </div>
-                            
-                            {showAbout && <About userData={userData}/>}           
-                            {showContact && <Contact userData={userData} />}
+                      
+                            {userData && showAbout && <About userData={userData}/>}           
+                            {userData&& showContact && <Contact userData={userData} />}
                             {showQRCode && <QR_Code  firstName={userData.first_name} lastName={userData.last_name} phone={userData.phone_number} email={userData.email}/>}
                     </div>
 
@@ -145,5 +149,7 @@ function Card({userRole, student, company, img, }){
         </>
     );
 }
-
+/*
+    
+*/
 export default Card
