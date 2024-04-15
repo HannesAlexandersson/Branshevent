@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Nav } from '../index.js';
 import get_company_all from "../../components/getcompanyAll/get_company_all.jsx";
-import { briefcase, locationBlack, search, sliders, userSml } from '../../assets/Icons/index.js';
+import { search, sliders } from '../../assets/Icons/index.js';
 import style from './home.module.css';
-import { Mini_card, Quiz_wrapper, Spacer_bottom, Simple_slider } from '../../components/index.js';
+import { Quiz_wrapper, Spacer_bottom, Simple_slider } from '../../components/index.js';
 import Render_mini from '../../components/Render_mini/Render_mini.jsx';
 import Multiselect from 'multiselect-react-dropdown';
 import { searchCompanies } from '../../apiFunctions/company.jsx';
+import { getAllUsedTags } from '../../apiFunctions/tags.jsx';
 import { searchStudents } from '../../apiFunctions/student.jsx';
 import { getFavorites, toggleFavorite } from '../../apiFunctions/favorites.jsx';
 
@@ -25,10 +26,7 @@ function Home(){
     const [shouldGetFavorites, setShouldGetFavorites] = useState(true);
 
     const token = localStorage.getItem('token');
-    const decodedToken = JSON.parse(atob(token.split('.')[1]));
-    console.log(decodedToken.userType);
-    const userRole = decodedToken.userType;
-
+    const userType = sessionStorage.getItem('userType');
     
     useEffect(() => {
         const fetchData = async () => {
@@ -73,9 +71,8 @@ function Home(){
     // do search
     useEffect(() => {
         let fetchData;
-        const userRole = sessionStorage.getItem("userRole");
 
-        if(userRole == "student") {
+        if(userType == "student") {
             fetchData = async () => {
                 try {
                     const companyData = await searchCompanies(searchString, selectedTags, selectedWorkplace)
@@ -86,7 +83,7 @@ function Home(){
             };
             fetchData();
             
-        } else if (userRole == "company") {
+        } else if (userType == "company") {
             fetchData = async () => {
                 try {
                     const studentData = await searchStudents(searchString, selectedTags, selectedWorkplace)
@@ -98,7 +95,7 @@ function Home(){
             fetchData();
         }
 
-    }, [userRole, selectedTags.length, searchString, selectedWorkplace]);
+    }, [userType, selectedTags.length, searchString, selectedWorkplace]);
     
     const handleFilter = () => {
         setShowFilter(!showFilter);
@@ -110,6 +107,8 @@ function Home(){
     }
 
     async function handleToggleFavorites(favoriteId, isFavorite) {
+        console.log('asda');
+        console.log(favoriteId, isFavorite);
         await toggleFavorite(favoriteId, isFavorite);
         setShouldGetFavorites(!shouldGetFavorites);
     }
@@ -127,7 +126,7 @@ function Home(){
                         className={style.searchbar_input} 
                         type="text" 
                         id="search-input" 
-                        placeholder={`Search ${(sessionStorage.getItem('userRole') == 'student' ? 'Companies' : 'Students')}`} />
+                        placeholder={`Search ${(userType == 'student' ? 'Companies' : 'Students')}`} />
                         <img src={search} />
                     </div>
                 </div>
@@ -160,7 +159,7 @@ function Home(){
 
                 <Spacer_bottom />
 
-                {userRole === 'student' && (
+                {userType === 'student' && (
                     <Quiz_wrapper />
                 )}               
                 

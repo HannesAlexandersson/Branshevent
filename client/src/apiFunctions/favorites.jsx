@@ -1,11 +1,11 @@
 import apiUrl from "./config";
 import { removeFavoriteCompany } from "./student";
 const token = localStorage.getItem("token");
-const userRole = sessionStorage.getItem("userRole");
+const userType = sessionStorage.getItem("userType");
 
 
 export async function getFavorites() {
-    const endpointUrl = (userRole === "student") ? 'student/getFavorites' : 'company/getFavorites';
+    const endpointUrl = (userType === "student") ? 'student/getFavorites' : 'company/getFavorites';
  
     return fetch(apiUrl + endpointUrl, { 
         method: 'GET',
@@ -32,7 +32,7 @@ export async function toggleFavorite(favoriteId, isFavorite) {
 
     // Construct the endpoint depending on what type of user we are, and if we want to add or remove the favorite
     let endpointUrl;
-    if(userRole === "student") {
+    if(userType === "student") {
         endpointUrl = 'student/';  
     } else {
         endpointUrl = 'company/';
@@ -43,6 +43,8 @@ export async function toggleFavorite(favoriteId, isFavorite) {
     } else {
         endpointUrl += 'addToFavorite';
     }
+
+    console.log(endpointUrl);
 
     return fetch(apiUrl + endpointUrl, { 
         method: 'POST',

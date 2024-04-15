@@ -11,7 +11,7 @@ function Render_mini({ companies, onHeartClick, favorites} ){
   
   // in order to know if we are looking for company_id or student_id later on, we need to decide what key to use
   let favoriteMatchKey
-  if (sessionStorage.getItem("userRole") === "student") { 
+  if (sessionStorage.getItem("userType") === "student") { 
     favoriteMatchKey = 'company_id' 
   } else { 
     favoriteMatchKey = 'student_id';

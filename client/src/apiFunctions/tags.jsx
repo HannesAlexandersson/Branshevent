@@ -3,7 +3,6 @@ const token = localStorage.getItem("token");
 
 
 export async function getAllTags() {
-    
 
     return fetch(apiUrl + 'tags/all', {
         method: 'GET',

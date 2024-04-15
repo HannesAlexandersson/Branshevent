@@ -192,6 +192,7 @@ router.get('/getFavorites', authMiddleware, (req, res) => {
 
 //add favorite company
 router.post('/addToFavorite', authMiddleware, (req, res) => {
+  
   //const studentId = req.params.studentId;
   const companyId = req.body.favoriteId;
   const query = 'INSERT INTO Favorite_company (student_id, company_id) VALUES (?, ?)';
