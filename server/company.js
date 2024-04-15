@@ -73,22 +73,6 @@ router.post('/login', (req, res) => {
 // })
 
 
-//get by ID
-router.get('/:companyId', authMiddleware, (req, res) => {
-  const companyId = req.params.companyId;
-  const query = 'SELECT * FROM Company WHERE id = ?';
-
-  db.get(query, [companyId], (err, rows) => {
-    if (err) {
-      console.error(err.message);
-      return res.status(500).json({ error: 'Internal Server Error' });
-    }
-    res.json(rows);
-  });
-});
-
-
-
 //registration
 router.post('/registration', (req, res) => {
   const { 
@@ -188,22 +172,48 @@ router.post('/update', authMiddleware, (req, res) => {
   });
 })
 
+router.get('/getFavorites', (req, res) => {
+  const query = 'SELECT * FROM Favorite_student WHERE company_id = ?';
 
+  db.all(query, [req.id], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(rows);
+  });
+});
 
 //add favorite student
-router.get('/addToFavorite/:companyId/:studentId', authMiddleware, (req, res) => {
-  const studentId = req.params.studentId;
-  const companyId = req.params.companyId;
-  const query = 'INSERT INTO Favorite_student (company_id, student_id) VALUES (?, ?)';
+router.post('/addToFavorite', authMiddleware, (req, res) => {
+  const student_id = req.body.favoriteId;
+  const query = 'INSERT INTO Favorite_student (student_id, company_id) VALUES (?, ?)';
 
-  db.get(query, [companyId, studentId], (err, rows) => {
+  db.get(query, [student_id, req.id], (err, rows) => {
     if(err) {
       console.error(err.message);
       return res.status(500).json({ error: 'Internal Server Error' });
     }
-    return res.status(200).send("Favorite student added successfull");
+    return res.status(200).send("Favorite company added successfull");
   });
 })
+
+
+//remove favorite student
+router.post('/removeFromFavorite', authMiddleware, (req, res) => {
+  
+  const student_id = req.body.favoriteId;
+  const query = 'DELETE FROM Favorite_student WHERE student_id = ? AND company_id = ?';
+
+  db.get(query, [student_id, req.id], (err, rows) => {
+    if(err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    return res.status(200).send("Favorite company removed successfull");
+  });
+})
+
 
 
 
@@ -310,24 +320,75 @@ router.post('/searchByTags', authMiddleware, (req, res) => {
 //get tags by id
 router.get('/:companyId/tags', (req, res) => {
   const companyId = req.params.companyId;
-const query = `
-  SELECT tag_id 
-  FROM Company_tags 
-  WHERE company_id = ?;
-`;
+  const query = `
+    SELECT tag_id 
+    FROM Company_tags 
+    WHERE company_id = ?;
+  `;
 
-db.all(query, [companyId], (err, rows) => {
-  if (err) {
-    console.error('Error retrieving tags:', err);
-    res.status(500).json({ error: 'Internal server error' });
-  } else {
-    // extract tag IDs from the query result
-    const tagIds = rows.map(row => row.tag_id);
-    res.json(tagIds);
-    console.log('tags succesfully sent to client');
+  db.all(query, [companyId], (err, rows) => {
+    if (err) {
+      console.error('Error retrieving tags:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      // extract tag IDs from the query result
+      const tagIds = rows.map(row => row.tag_id);
+      res.json(tagIds);
+      console.log('tags succesfully sent to client');
+    }
+  });
+});
+
+//get by ID
+router.get('/:companyId', authMiddleware, (req, res) => {
+  const companyId = req.params.companyId;
+  const query = 'SELECT * FROM Company WHERE id = ?';
+
+  db.get(query, [companyId], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(rows);
+  });
+});
+
+
+//Search companies
+router.post('/search', (req, res) => {
+
+  const searchString = req.body.searchString;
+  const workPlace = req.body.workPlace;
+  const tags = req.body.tags;
+
+  let query = 'SELECT Company.* FROM Company, Company_tags';
+  let joinWord = 'WHERE';
+
+  if (searchString) {
+    query = query + ` ${joinWord} company_name LIKE '%${searchString}%' `;
+    joinWord = 'AND';
   }
-});
-});
+
+  if (workPlace) {
+    query = query + ` ${joinWord} work_place IN ('${workPlace.join("', '")}')`;
+    joinWord = 'AND';
+  }
+
+  if (tags) {
+    query = query + ` ${joinWord} Company_tags.tag_id IN (${tags}) AND Company.id = Company_tags.company_id`;
+  }
+
+  query = query + ' GROUP BY Company.id';
+
+
+  db.all(query, (err, companies) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(companies);
+  })
+})
 
 
 export default router;
