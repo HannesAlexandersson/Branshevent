@@ -23,9 +23,13 @@ const corsOptions = {
   };
   
 server.use(cors(corsOptions));
+//need to set the limit before the first parser is encounterd or else it sets the limit to 1mb
+server.use(express.json({limit: '50mb'}));
+server.use(express.urlencoded({limit: '50mb'}))
 server.use(express.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json())
+
 
 server.use('/api/company/', companyRoutes);
 server.use('/api/student/', studentRoutes);

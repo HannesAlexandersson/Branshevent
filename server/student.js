@@ -4,6 +4,8 @@ import jwt from 'jsonwebtoken';
 import { SECRET, SALT } from './config.js';
 import { authMiddleware } from './authMiddleware.js';
 import bcrypt from 'bcrypt';
+import  {saveStudentImageToFilesystem, generateRandomFilename} from './saveStudentAvatar.js';
+
 
 const router = express.Router();
 const db = new sqlite3.Database('branchEvent.db');
@@ -88,6 +90,9 @@ router.get('/:studentId', authMiddleware, (req, res) => {
 
 
 
+
+
+
 //registration
 router.post('/registration', (req, res) => {
     const { 
@@ -106,22 +111,59 @@ router.post('/registration', (req, res) => {
       behance, 
       work_place, 
       app_start, 
-      app_end } = req.body;
+      app_end,
+      avatar } = req.body;
+      
+    
+    // Handle saving image in the background so it doesnt disturb the rest  of the reg process even if there is a problem with saving the image
+    let filename = '';
+    let avatar_id;
+    if (avatar) {
+      const imageData = avatar;
+      filename = generateRandomFilename();
+      
+      
+      try {          
+          saveStudentImageToFilesystem(imageData, filename, (err, imagePath) => {
+              if (err) {
+                  console.error('Error saving image:', err);
+                  console.log('The image may not have been saved properly.');
+              } else {
+                  console.log('Image saved successfully:', imagePath);
+              }
+          });
+      } catch (e) {
+          console.error('Error saving image:', e);
+          console.log('The image may not have been saved properly.');
+      }
+  }
+      
     
     bcrypt.hash(password, SALT, (err, hashed_password) => {
       if (err) {
         console.error('Error hashing password', err.message);
         return res.status(500).json({ error: 'Internal Server Error' });
       }
-      console.log(work_place);
+      
+      if (filename) {
+        //insert the avatar to the avatar table
+        db.run('INSERT INTO Student_avatar (name) VALUES (?)', [filename], function(insertErr) {
+          if (insertErr) {
+              console.error('Error inserting filename into database:', insertErr);
+          } 
+          console.log('Filename inserted into database successfully');          
+          // Retrieve the generated avatar ID
+          avatar_id = this.lastID;
+          console.log(avatar_id);
+     
  
     const query = `
-    INSERT INTO Student (first_name, last_name, email, password, occupation, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_start, app_end) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`; 
+    INSERT INTO Student (first_name, last_name, email, password, occupation, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_start, app_end, avatar_id) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`; 
 
     
     //1. create the student
-    db.run(query, [first_name, last_name, email, hashed_password, occupation, phone_number, gdpr,description, github, portfolio, linkedin, behance, work_place, app_start, app_end], function(err) {
+    db.run(query, [first_name, last_name, email, hashed_password, occupation, phone_number, gdpr,description, github, portfolio, linkedin, behance, work_place, app_start, app_end, avatar_id], function(err) {
       console.log(work_place);
         if(err){
             console.error('Error inserting student', err.message);
@@ -152,8 +194,23 @@ router.post('/registration', (req, res) => {
           return res.status(200).send({ token: token })
 
         }
+
+        //3.insert the student id to the avatar table 
+        if (studentId && avatar_id) {
+          db.run('UPDATE Student_avatar SET student_id = ? WHERE id = ?', [studentId, avatar_id], (updateErr) => {
+              if (updateErr) {
+                  console.error('Error updating avatar table:', updateErr);
+              } else {
+                  console.log('User ID inserted into avatar table successfully');
+              }
+          });
+      }
+   
     });
+  }); //
+}//
   });
+  
 });
 
 

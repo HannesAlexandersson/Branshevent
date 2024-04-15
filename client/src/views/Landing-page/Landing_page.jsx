@@ -10,6 +10,7 @@ function Landing_page(){
   const location = useLocation();  
   if(!sessionStorage.getItem('loggedIn') || sessionStorage.getItem('loggedIn') !== 'true'){
     sessionStorage.clear();//clear session
+    localStorage.clear();
   }
   useEffect(() => {
     // We only want to have overflow hidden on the landing page so:

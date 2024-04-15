@@ -37,6 +37,8 @@ function Student_summary(){
     let studentLinkedIn;
     let studentBehance;
     let studentOccupation;
+    let student_avatar;
+    let binaryData; 
 
     if( sessionStorage.getItem('studentData') !== null){
     studentFormData = JSON.parse(sessionStorage.getItem('studentData'));
@@ -100,6 +102,7 @@ function Student_summary(){
         studentLocation = sessionStorage.getItem('selectedLocation');
     }else {
         studentLocation = 'not set';
+        console.log('not set image');
     }
     
     if (sessionStorage.getItem('password') !== null) {
@@ -111,15 +114,9 @@ function Student_summary(){
     if (localStorage.getItem('image') !== null) {
         studentImage = localStorage.getItem('image');
     }else {
-        studentImage = 'not set';
+        studentImage = null;
     }
-
-    if (sessionStorage.getItem('studentToken') !== null){
-        TOKEN = sessionStorage.getItem('token');
-    }else{
-        console.log('NO TOKEN RECEVIED')
-    }
-
+    
     if (sessionStorage.getItem('gdprChecked') !== null){
         studentGdpr = true;
     }else{
@@ -146,19 +143,26 @@ function Student_summary(){
 
    const handleNextStep = () => {
 
+//handle useruploaded image to server: 
+if( studentImage !== 'not set'){
     const imageData = studentImage;
-
-    let binaryData;
+    let binaryDataBefore;  
+     
+    
+    
+    
     //decode the user provided image, if there is a error set the var to a emoty string. 
     try {
-        const base64Parts = imageData.split(",");
-        binaryData = atob(base64Parts[1]);        
+        const base64Parts = imageData.split(",");  
+        binaryData = atob(base64Parts[1]); 
+        console.log(binaryData, 'image binary');     
     } catch (error) {
-        binaryData = '';
+        binaryData = 'empty';
+        
         console.error('Error decoding base64 string:', error);
     }
-
-
+    
+}
 
     const endpoint = 'api/student/registration';
     
@@ -180,7 +184,7 @@ function Student_summary(){
         app_end: studentEndDate,
         tags: formattedTags,
         occupation: studentOrientation,
-        avatar: binaryData
+        avatar: binaryData,
     };
 //    const {  work_place, app_starts, app_ends, occupation } = req.body;
 
@@ -210,16 +214,7 @@ function Student_summary(){
     }
 }, [studentImage]);
 
-  /*  useEffect(() => {
-       if(randomAvatar){
-       
-       setImg(randomAvatar);
-       
-       }
-
-   }, [randomAvatar]); */
-
-
+ 
     return(
         <>
             <div className={style.main}>
@@ -306,9 +301,9 @@ function Student_summary(){
                                 <h2>Image attached</h2>
                                 <div className={style.image_wrapper}>
                                     {studentImage === null ? ( 
-                                        <img src={studentImage} alt="user uploaded image" className={style.user_image}/>
-                                    ): (
                                         <img src={img} alt="default student avatar" className={style.user_image}/>
+                                    ): (
+                                        <img src={studentImage} alt="user uploaded image" className={style.user_image}/>
                                     )}
                                 </div>
                             </div>
