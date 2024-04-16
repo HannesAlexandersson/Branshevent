@@ -14,6 +14,7 @@ function Personal_preview(){
     const [userDataObj, setUserDataObj] = useState({});  //this was {}
     const [avatarDataObj, setAvatarDataObj] = useState(null);  
     const [avatarLoaded, setAvatarLoaded] = useState(false);
+    const [dataLoaded, setDataLoaded] = useState(false);
     
     const token = localStorage.getItem('token');           
     const decodedToken = JSON.parse(atob(token.split('.')[1]));
@@ -48,7 +49,7 @@ function Personal_preview(){
           });
         } else if (decodedToken.userType === 'company') {             
           Promise.all([                               
-            Get_avatars(id, token, 'companyAvatars/'),           
+            Get_avatars(id, token, 'companyAvatars/'),                       
           ])
           .then(([avatarData]) => {          
             setAvatarDataObj(avatarData);     
@@ -63,10 +64,11 @@ function Personal_preview(){
       useEffect(() => { 
         if (decodedToken.userType === 'student') {
           Promise.all([
-            get_a_student(token, id),                               
+            get_a_student(token, id),                                          
           ])
           .then(([userData]) => {
-            setUserDataObj(userData);           
+            setUserDataObj(userData);   
+            setDataLoaded(true);         
           })
           .catch((error) => {
             console.error('Error fetching student data:', error);
@@ -76,7 +78,8 @@ function Personal_preview(){
             get_a_company(token, id),                        
           ])
           .then(([userData]) => {           
-            setUserDataObj(userData);             
+            setUserDataObj(userData); 
+            setDataLoaded(true);             
           })
           .catch((error) => {
             console.error('Error fetching company data:', error);
@@ -98,26 +101,28 @@ function Personal_preview(){
     }, [userDataObj, userType]);
  
     useEffect(() => {
+      if(dataLoaded === true && avatarLoaded === true){
+      
       //then check if there is no user image, we supply the user with a default avatar
         if(avatarDataObj === null){   
-          if (userRole === 'student'){   
-            
+          if (userRole === 'student'){               
                   // select a avatar at random from all the student avatarsCONFIRMED
                   const student_avatars = Object.values(avatars);
                   const randomIndex = Math.floor(Math.random() * student_avatars.length);
                   randomAvatar = student_avatars[randomIndex];
           }else if(userRole === 'company'){
-            
+            console.log('random');
                   const company_avatars = Object.values(avatarsc);
                   const randomIndex = Math.floor(Math.random() * company_avatars.length);
                   randomAvatar = company_avatars[randomIndex];
           }
         }  
-      
+      }
     }, [avatarLoaded]);
    
     //set the img state to either the default random avatar or the user avatar
-    useEffect(() => {                        
+    useEffect(() => {   
+      if(dataLoaded){                   
             if (randomAvatar) {             
                 // Set image state with that random selected avatar, if randomAvatar is set, 
                 // that means the user didn't upload an image
@@ -131,9 +136,10 @@ function Personal_preview(){
                     setImg(base64Image);
                 };
                 // Read the Blob data as a data URL (base64)
-                reader.readAsDataURL(avatarDataObj);
-            }        
-    }, [randomAvatar]);
+                reader.readAsDataURL(avatarDataObj);                
+            }     
+          }   
+    }, [randomAvatar, avatarDataObj]);
 
 
     
@@ -143,9 +149,11 @@ function Personal_preview(){
                 <p className={style.sub_header}>Here you can see what your account looks like to others.</p>
 
                 
+                {img && (
                 <Card 
-                   {...(userRole === 'student' ? { student, img: img } : { company, img: img })}
+                    {...(userRole === 'student' ? { student, img: img } : { company, img: img })}
                 />
+            )}
             </div>
         </>
     );

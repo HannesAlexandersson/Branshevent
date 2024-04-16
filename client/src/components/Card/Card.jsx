@@ -38,7 +38,7 @@ function Card({ student, company, img, }){
     }
     
     
-    console.log(userData, 'card')
+    
     return(
         <>
             <div className={style.redBox}>
