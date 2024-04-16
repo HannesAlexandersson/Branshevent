@@ -139,6 +139,8 @@ router.post('/registration', (req, res) => {
           // Retrieve the generated avatar ID
           avatar_id = this.lastID;
           console.log(avatar_id);
+        });
+      }
      
  
     const query = `
@@ -191,10 +193,7 @@ router.post('/registration', (req, res) => {
       }
    
     });
-  }); //
-}//
-  });
-  
+  }); 
 });
 
 
