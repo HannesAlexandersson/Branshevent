@@ -4,9 +4,11 @@ import style from './contact.module.css';
 function Contact({ userData }){
     const [companyContact, setCompanyContact] = useState(null);
     const [studentContact, setStudentContact] = useState(null);
+    const [contactLoaded, setContactLoaded] = useState(false);
+    const [userRole, setUserRole] = useState('');
 
    
-    
+   
     const token = localStorage.getItem('token');    
     const parts = token.split('.');    
     const payload = JSON.parse(atob(parts[1]));   
@@ -27,48 +29,44 @@ function Contact({ userData }){
     let studentlinkedin;
     let studentemail;
     let studentPhone;
-
-
-    let userRole;
-    // if the userData contains a property that name is company name then the user is a company else a stuedtn
-    if (userData && userData.company_name !== undefined) {
-        userRole = 'company';
-        company = userData;
-
-         //useEffect hook to set the company data from the provided prop 
-        useEffect(() => {
-            if (company) {
-                setCompanyContact(company);
-            }
-        }, [company]);
-    }else{
-        userRole = 'student';
-        student = userData;
-
-         //useEffect hook to set the company data from the provided prop 
-         useEffect(() => {
-            if (student) {
-                setStudentContact(student);
-            }
-        }, [student]);
-    }
     
-   //set the vars
-    if (companyContact) {
-        companywebsite = companyContact.company_website || 'not set';
-        companyPhone = companyContact.phone_number || 'not set';
-        companyemail = companyContact.email || 'not set';
-        companylinkedin = companyContact.linkedin || 'not set';
-        companyAddress = companyContact.address || 'not set';
-    }else if(studentContact){
-        studentlinkedin = studentContact.linkedin || 'not set';
-       studentGithub = studentContact.github || 'not set';
-       studentPortfolio= studentContact.portfolio || 'not set';
-       studentBehance = studentContact.behance || 'not set';
-       studentPhone = studentContact.phone_number || 'not set';
-       studentemail = studentContact.email || 'not set';
-    }
-  
+
+     //set the company data from the provided prop , if the userData contains a property that name is company name then the user is a company else a stuedtn
+     
+     useEffect(() => {
+        /* console.log('contact hook', userData); CONFIRMED*/       
+        if (userData && userData.company_name !== undefined) {
+           /*  console.log('contact hook inside if', userData); CONFIRMED*/
+           setUserRole('company');           
+            setCompanyContact(userData);
+            setContactLoaded(true);
+        } else {
+            setUserRole('student');
+            setStudentContact(userData); 
+            setContactLoaded(true);
+        }
+        
+    }, [userData]);
+    
+
+    if(contactLoaded !== null){
+        
+    //set the vars
+        if (companyContact) {           
+            companywebsite = companyContact.company_website;           
+            companyPhone = companyContact.phone_number;           
+            companyemail = companyContact.email;
+            companylinkedin = companyContact.linkedin;
+            companyAddress = companyContact.address;
+        }else if(studentContact){
+            studentlinkedin = studentContact.linkedin;
+            studentGithub = studentContact.github;
+            studentPortfolio= studentContact.portfolio;
+            studentBehance = studentContact.behance;
+            studentPhone = studentContact.phone_number;
+            studentemail = studentContact.email;
+        }
+    } 
     return(
         <>
             <div className={style.contact_wrapper}>

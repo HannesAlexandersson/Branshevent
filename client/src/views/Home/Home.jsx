@@ -107,8 +107,6 @@ function Home(){
     }
 
     async function handleToggleFavorites(favoriteId, isFavorite) {
-        console.log('asda');
-        console.log(favoriteId, isFavorite);
         await toggleFavorite(favoriteId, isFavorite);
         setShouldGetFavorites(!shouldGetFavorites);
     }
@@ -183,6 +181,9 @@ function Home(){
                         <Render_mini companies={searchResult} onHeartClick={handleToggleFavorites} favorites={favorites}/>
                     </div>
                 </div>
+
+                <Spacer_bottom />
+                
             </div>
         </div>
         </>

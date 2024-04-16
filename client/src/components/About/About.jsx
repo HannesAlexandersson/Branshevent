@@ -8,7 +8,7 @@ import tagsArray from '../../tagArray';
 import get_student_tags from '../get-student-tags/get_student_tags.jsx';
 import get_a_student from '../../components/get_a_company/get_a_student.jsx';
 
-function About( { userData } ){
+function About(){
     /* const [userDataObj, setUserDataObj] = useState({}); */
     const [companyAbout, setCompanyAbout] = useState(null);
     const [studentAbout, setStudentAbout] = useState(null);
@@ -150,7 +150,7 @@ function About( { userData } ){
     
     const app_start = formattedStartDate;
     const app_end = formattedEndDate;
-    console.log(selectedTagNames, 'about student');
+    
 
     return(
         <>

@@ -41,3 +41,4 @@ export { default as get_a_company } from './get_a_company/get_a_company.jsx';
 export { default as Company_about } from './Company_about/Company_about.jsx';
 export { default as Company_contact } from './Company_contact/Company_contact.jsx';
 export { default as Company_card } from './Company_card/Company_card.jsx';
+export { default as Get_avatars } from './get_student_avatar/Get_avatars.jsx';

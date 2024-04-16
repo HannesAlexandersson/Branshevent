@@ -4,6 +4,8 @@ import jwt from 'jsonwebtoken';
 import { SECRET, SALT } from './config.js';
 import { authMiddleware } from './authMiddleware.js';
 import bcrypt from 'bcrypt';
+import  {saveCompanyImageToFilesystem, generateRandomCompFilename} from './saveCompanyAvatar.js';
+
 
 
 const router = express.Router();
@@ -35,7 +37,7 @@ router.post('/login', (req, res) => {
   db.get(query, [email], (err, result) => {
     if(err){
       console.log(err.message);
-      return res.status(500).json({error : 'internal server error'});
+      return res.status(500).json({error : 'Internal Server Error'});
     }
     if (!result) {
       console.log('Login fail : No company found');
@@ -90,7 +92,31 @@ router.post('/registration', (req, res) => {
     description, 
     company_website, 
     linkedin, 
-    gdpr } = req.body;
+    gdpr,
+    avatar } = req.body;
+
+    // Handle saving image in the background so it doesnt disturb the rest  of the reg process even if there is a problem with saving the image
+    let filename = '';
+    let avatar_id;
+    if (avatar) {
+      const imageData = avatar;
+      filename = generateRandomCompFilename();     
+      
+      try {          
+          saveCompanyImageToFilesystem(imageData, filename, (err, imagePath) => {
+              if (err) {
+                  console.error('Error saving image:', err);
+                  console.log('The image may not have been saved properly.');
+              } else {
+                  console.log('Image saved successfully:', imagePath);
+              }
+              });
+          } catch (e) {
+              console.error('Error saving image:', e);
+              console.log('The image may not have been saved properly.');
+          }
+        }
+
 
   bcrypt.hash(password, SALT, (err, hashed_password) => {
     if (err) {
@@ -98,12 +124,25 @@ router.post('/registration', (req, res) => {
       return res.status(500).json({ error: 'Internal Server Error' });
     }
 
+    if (filename) {
+      //insert the avatar to the avatar table
+      db.run('INSERT INTO Company_avatar (name) VALUES (?)', [filename], function(insertErr) {
+        if (insertErr) {
+            console.error('Error inserting filename into database:', insertErr);
+        } 
+        console.log('Filename inserted into database successfully');          
+        // Retrieve the generated avatar ID
+        avatar_id = this.lastID;
+        console.log(avatar_id);
+
+
+
   const query = `
-  INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password, description, open_for_lia, app_start, app_end, work_place, address, company_website, linkedin, gdpr) 
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password, description, open_for_lia, app_start, app_end, work_place, address, company_website, linkedin, gdpr, avatar_id) 
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   //1. Create a company
-  db.run(query, [company_name, first_name, last_name, phone_number, email, hashed_password, description, open_for_lia, app_start, app_end, work_place, address, company_website, linkedin, gdpr], function(err) {
+  db.run(query, [company_name, first_name, last_name, phone_number, email, hashed_password, description, open_for_lia, app_start, app_end, work_place, address, company_website, linkedin, gdpr, avatar_id], function(err) {
       if(err){
           console.log(err.message);
           return res.status(500).json({ error : 'Internal Server Error' });
@@ -125,15 +164,31 @@ router.post('/registration', (req, res) => {
             console.log('Tags added successfully');
         
             const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
-            return res.status(200).send({ token: token, userType: 'company' });
+            return res.status(200).send({ token: token })
+              });
+          } else {
+            const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
+            return res.status(200).send({ token: token })
+          }
+
+          //3.insert the student id to the avatar table 
+          if (companyId && avatar_id) {
+            db.run('UPDATE Company_avatar SET company_id = ? WHERE id = ?', [companyId, avatar_id], (updateErr) => {
+                if (updateErr) {
+                    console.error('Error updating avatar table:', updateErr);
+                } else {
+                    console.log('User ID inserted into avatar table successfully');
+                }
+              });
+          }
+
+
         });
-    } else {
-      const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
-      return res.status(200).send({ token: token, userType: 'company'})
-    }
-  });
+    }); //
+  }//
 });
-})
+
+});
 
 
 
@@ -171,6 +226,8 @@ router.post('/update', authMiddleware, (req, res) => {
   });
 })
 
+
+//get favorites
 router.get('/getFavorites', authMiddleware, (req, res) => {
   const query = 'SELECT * FROM Favorite_student WHERE company_id = ?';
 
@@ -182,6 +239,31 @@ router.get('/getFavorites', authMiddleware, (req, res) => {
     res.json(rows);
   });
 });
+
+
+
+//get favorites with data
+router.get('/getFavoritesWithData', authMiddleware, (req, res) => {
+  const query = `
+  SELECT
+  Student.first_name AS first_name,
+  Student.last_name AS last_name,
+  Student.work_place AS work_place,
+  Student.avatar_id AS avatar_id,
+  Student.id AS id
+  FROM Student
+  INNER JOIN Favorite_student ON Favorite_student.student_id = Student.id
+  WHERE Favorite_student.company_id = ?`;
+
+  db.all(query, [req.id], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(rows);
+  });
+});
+
 
 //add favorite student
 router.post('/addToFavorite', authMiddleware, (req, res) => {
@@ -271,7 +353,7 @@ router.get('/searchByName/:companyName', authMiddleware, (req, res) => {
 });
 
 
-//search by tag & id
+//search by name and tags
 router.post('/searchByNameAndTags', authMiddleware, (req, res) => {
 
   const tags = req.body.tags;
@@ -388,6 +470,47 @@ router.post('/search', (req, res) => {
     res.json(companies);
   })
 })
+
+
+//get student avatar
+router.get('/companyAvatars', (req, res) => {
+  //client provide the id of comp wich avatar we want to fetch
+  const { companyId } = req.params;
+  //query to find the com first, and their avatar id.
+  const query = `SELECT avatar_id FROM Company WHERE id = ?`;
+
+  db.get(query, [companyId], (err, row) => {
+    if (err) {
+      console.error('Error querying database:', err);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+    if (!row) {
+      return res.status(404).json({ error: 'company not found' });
+    }
+    //we have the avatar id
+    const { avatar_id } = row;
+    //we query the avatar table
+    const avatarQuery = `SELECT filename FROM Company_avatar WHERE id = ?`;
+
+    db.get(avatarQuery, [avatar_id], (avatarErr, avatarRow) => {
+      if (avatarErr) {
+        console.error('Error querying database:', avatarErr);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+      if (!avatarRow) {
+        return res.status(404).json({ error: 'Avatar not found' });
+      }
+      //the name is the same as the filename in the avatarfolder
+      const { filename } = avatarRow;
+      const imagePath = path.join(companyAvatarFolderPath, filename);
+
+      //send the image file to the client
+      res.sendFile(imagePath);
+    });
+  });
+});
 
 
 export default router;
