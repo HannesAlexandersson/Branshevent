@@ -45,6 +45,7 @@
     border-radius: 1rem 1rem 0rem 0rem;
     background: var(--grey);
     position: relative;
+    overflow: hidden;
   }
   .img_display_area > img{
     width: 100%;
@@ -158,6 +159,6 @@
       width: 100%;
     }
     .img_display_area > img{
-      object-fit: contain;
+      object-fit: cover;
     }
   }
