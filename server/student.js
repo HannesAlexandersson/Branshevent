@@ -11,7 +11,6 @@ const router = express.Router();
 const db = new sqlite3.Database('branchEvent.db');
 
 
-
 //get all students
 router.get('/all', (req, res) => {
     const query = 'SELECT * FROM Student';
@@ -24,7 +23,6 @@ router.get('/all', (req, res) => {
       res.json(rows);
     });
   });
-
 
 
 //login
@@ -63,18 +61,6 @@ router.post('/login', (req, res) => {
   }
   });
 });
-
-
-// //test token route
-// router.get('/testToken', authMiddleware, (req, res) => {
-//     return res.status(200).send({ userType : req.userType });
-// })
-
-
-
-
-
-
 
 
 //registration
@@ -142,11 +128,9 @@ router.post('/registration', (req, res) => {
         });
       }
      
- 
     const query = `
     INSERT INTO Student (first_name, last_name, email, password, occupation, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_start, app_end, avatar_id) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`; 
-
     
     //1. create the student
     db.run(query, [first_name, last_name, email, hashed_password, occupation, phone_number, gdpr,description, github, portfolio, linkedin, behance, work_place, app_start, app_end, avatar_id], function(err) {
@@ -159,7 +143,6 @@ router.post('/registration', (req, res) => {
         console.log('Student created successfully');
         const studentId = this.lastID;
 
-        
         //2. get the student_id and add the tags to the db
         if(tags.length > 0) {
             const tagString = tags.map(tag_id => `(${tag_id}, ${studentId})`).join(`,`);  // 19 => (19, 2)
@@ -265,6 +248,7 @@ router.get('/getFavoritesWithData', authMiddleware, (req, res) => {
   });
 });
 
+
 //add favorite company
 router.post('/addToFavorite', authMiddleware, (req, res) => {
   
@@ -311,7 +295,6 @@ router.get('/getByName/:studentName', authMiddleware, (req, res) => {
     res.json(student);
   });
 });
-
 
 
 //get student by tags
@@ -399,7 +382,6 @@ router.post('/searchByNameAndTags', authMiddleware, (req, res) => {
     res.json(students);
   });
 });
-
 
 
 //Search students

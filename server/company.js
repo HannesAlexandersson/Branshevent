@@ -7,10 +7,8 @@ import bcrypt from 'bcrypt';
 import  {saveCompanyImageToFilesystem, generateRandomCompFilename} from './saveCompanyAvatar.js';
 
 
-
 const router = express.Router();
 const db = new sqlite3.Database('branchEvent.db');
-
 
 
 //get all companies
@@ -25,7 +23,6 @@ router.get('/all', (req, res) => {
       res.json(rows);
     });
   });
-
 
 
 //login
@@ -65,13 +62,6 @@ router.post('/login', (req, res) => {
   }
   });
 })
-
-
-
-// //test token route
-// router.get('/testToken', authMiddleware, (req, res) => {
-//   return res.status(200).send({ userType : req.userType });
-// })
 
 
 //registration
@@ -116,7 +106,6 @@ router.post('/registration', (req, res) => {
             console.log('The image may not have been saved properly.');
         }
     }
-
 
   bcrypt.hash(password, SALT, (err, hashed_password) => {
     if (err) {
@@ -189,8 +178,6 @@ router.post('/registration', (req, res) => {
 });
 
 
-
-
 //update a company
 router.post('/update', authMiddleware, (req, res) => {
   const { 
@@ -238,7 +225,6 @@ router.get('/getFavorites', authMiddleware, (req, res) => {
     res.json(rows);
   });
 });
-
 
 
 //get favorites with data
@@ -295,8 +281,6 @@ router.post('/removeFromFavorite', authMiddleware, (req, res) => {
 })
 
 
-
-
 //get by name
 router.get('/getByName/:companyName', authMiddleware, (req, res) => {
   const companyName = req.params.companyName;
@@ -310,7 +294,6 @@ router.get('/getByName/:companyName', authMiddleware, (req, res) => {
     res.json(company);
   });
 });
-
 
 
 //get by tags
@@ -331,7 +314,6 @@ router.get('/getByTags/:tags', authMiddleware, (req, res) => {
     res.json(companies);
   });
 });
-
 
 
 //search by name
@@ -396,7 +378,6 @@ router.post('/searchByTags', authMiddleware, (req, res) => {
 });
 
 
-
 //get tags by id
 router.get('/:companyId/tags', (req, res) => {
   const companyId = req.params.companyId;
@@ -418,6 +399,7 @@ router.get('/:companyId/tags', (req, res) => {
     }
   });
 });
+
 
 //get by ID
 router.get('/:companyId', authMiddleware, (req, res) => {
