@@ -119,8 +119,7 @@ function Company_summary(){
         const company_avatars = Object.values(avatarsc);
         const randomIndex = Math.floor(Math.random() * company_avatars.length);
         const randomAvatar = company_avatars[randomIndex];       
-        companyImage = getBase64FromImage(randomAvatar);
-        
+        companyImage = randomAvatar;   
     }
 
     if (sessionStorage.getItem('startDate') !== null) {
