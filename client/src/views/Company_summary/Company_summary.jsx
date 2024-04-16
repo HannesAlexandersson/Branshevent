@@ -6,6 +6,7 @@ import tagsArray from '../../tagArray.js';
 import * as avatarsc from '../../assets/company_default_avatars/index';
 import { Nav } from '../index.js';
 import style from './company_summary.module.css';
+import { register } from '../../apiFunctions/user';
 
 function Company_summary(){
     const navigate = useNavigate();
@@ -181,10 +182,8 @@ function Company_summary(){
         gdpr: compGdpr,
         avatar: binaryData,
     };
-    SendDataToServer(requestData, endpoint);
+    register(requestData, 'company');
     
-    
-     
     if (currentStep < totalSteps) {
         setCurrentStep(currentStep + 1);
     }

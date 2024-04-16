@@ -3,10 +3,6 @@ import { Company_finish, Landing, Sign_in, Company_sign_up, Company_account, Com
 import Error from './views/Error/Error.jsx';
 import './App.css';
 
-
-
-
-
 function App() {  
   
   return (

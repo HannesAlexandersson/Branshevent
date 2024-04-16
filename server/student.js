@@ -51,11 +51,9 @@ router.post('/login', (req, res) => {
       }
 
     if (bcryptResult) {
-        //passwords match - user authenticated
-        console.log('Student authenticated successfully');
-        //creating a token to encrypt data and send back to the client for future authentication
+        result.password = null;
         const token = jwt.sign({id: result.id, userType: "student"}, SECRET, {expiresIn: 864000});
-        return res.status(200).send({ token: token, userData: result })
+        return res.status(200).send({ token: token, userData: result, userType: 'student' })
     } else {
         // Passwords do not match
         console.log('Incorrect password');
@@ -73,20 +71,6 @@ router.post('/login', (req, res) => {
 // })
 
 
-
-//get student by ID
-router.get('/:studentId', authMiddleware, (req, res) => {
-  const studentId = req.params.studentId;
-  const query = 'SELECT * FROM Student WHERE id = ?';
-
-  db.get(query, [studentId], (err, rows) => {
-    if(err) {
-      console.error(err.message);
-      return res.status(500).json({ error: 'Internal Server Error' });
-    }
-    res.json(rows);
-  });
-});
 
 
 
@@ -187,11 +171,11 @@ router.post('/registration', (req, res) => {
                 console.log('Tags added successfully');
     
                 const token = jwt.sign({id: studentId, userType: "student"}, SECRET, {expiresIn: 864000});
-                return res.status(200).send({ token: token })
+                return res.status(200).send({ token: token, userType: 'student' })
             });
         } else {
           const token = jwt.sign({id: studentId, userType: "student"}, SECRET, {expiresIn: 864000});
-          return res.status(200).send({ token: token })
+          return res.status(200).send({ token: token, userType: 'student' })
 
         }
 
@@ -249,14 +233,27 @@ router.post('/update', authMiddleware, (req, res) => {
 })
 
 
+//get favorites
+router.get('/getFavorites', authMiddleware, (req, res) => {
+  const query = 'SELECT * FROM Favorite_company WHERE student_id = ?';
 
-//add favorite companies
-router.get('/addToFavorite/:studentId/:companyId', authMiddleware, (req, res) => {
-  const studentId = req.params.studentId;
-  const companyId = req.params.companyId;
+  db.all(query, [req.id], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(rows);
+  });
+});
+
+//add favorite company
+router.post('/addToFavorite', authMiddleware, (req, res) => {
+  
+  //const studentId = req.params.studentId;
+  const companyId = req.body.favoriteId;
   const query = 'INSERT INTO Favorite_company (student_id, company_id) VALUES (?, ?)';
 
-  db.get(query, [studentId, companyId], (err, rows) => {
+  db.get(query, [req.id, companyId], (err, rows) => {
     if(err) {
       console.error(err.message);
       return res.status(500).json({ error: 'Internal Server Error' });
@@ -265,6 +262,21 @@ router.get('/addToFavorite/:studentId/:companyId', authMiddleware, (req, res) =>
   });
 })
 
+
+//remove favorite company
+router.post('/removeFromFavorite', authMiddleware, (req, res) => {
+  
+  const companyId = req.body.favoriteId;
+  const query = 'DELETE FROM Favorite_company WHERE student_id = ? AND company_id = ?';
+
+  db.get(query, [req.id, companyId], (err, rows) => {
+    if(err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    return res.status(200).send("Favorite company removed successfull");
+  });
+})
 
 
 //get student by name
@@ -321,6 +333,7 @@ router.get('/searchByName/:studentName', authMiddleware, (req, res) => {
 });
 
 
+//get student's tags
 router.get('/:studentId/tags', (req, res) => {
   const studentId = req.params.studentId;
 
@@ -370,14 +383,14 @@ router.post('/searchByNameAndTags', authMiddleware, (req, res) => {
 
 
 
-//Search route
+//Search students
 router.post('/search', (req, res) => {
 
   const searchString = req.body.searchString;
   const workPlace = req.body.workPlace;
   const tags = req.body.tags;
 
-  let query = 'SELECT Student.* FROM Student, Student_tags';
+  let query = 'SELECT Student.*, Student_avatar.name as avatar_name FROM Student, Student_tags LEFT JOIN Student_avatar ON (Student_avatar.student_id = Student.id) ';
   let joinWord = 'WHERE';
 
   if (searchString) {
@@ -396,7 +409,7 @@ router.post('/search', (req, res) => {
 
   query = query + ' GROUP BY Student.id';
 
-
+console.log(query);
   db.all(query, (err, students) => {
     if (err) {
       console.error(err.message);
@@ -405,6 +418,21 @@ router.post('/search', (req, res) => {
     res.json(students);
   })
 })
+
+
+//get student by ID
+router.get('/:studentId', authMiddleware, (req, res) => {
+  const studentId = req.params.studentId;
+  const query = 'SELECT * FROM Student WHERE id = ?';
+
+  db.get(query, [studentId], (err, rows) => {
+    if(err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(rows);
+  });
+});
 
 
 export default router;

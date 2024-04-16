@@ -7,6 +7,7 @@ import { Nav } from '../index.js';
 
 import tagsArray from '../../tagArray.js';
 import style from './student_summary.module.css';
+import { register } from '../../apiFunctions/user';
 
 
 
@@ -188,11 +189,7 @@ if( studentImage !== 'not set'){
     };
 //    const {  work_place, app_starts, app_ends, occupation } = req.body;
 
-    SendDataToServer(requestData, endpoint);
-   
-
-
-    
+    register(requestData, 'student');
      
     if (currentStep < totalSteps) {
         setCurrentStep(currentStep + 1);

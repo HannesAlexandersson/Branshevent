@@ -8,6 +8,7 @@ export { default as nextArrow } from './item_arrow-forward.svg';
 export { default as close } from './close.svg';
 export { default as pencil } from './pencil.svg';
 export { default as add } from './add.svg';
+export { default as heartRed } from './heartRed.svg';
 export { default as user_round } from './user_round.svg';
 export { default as circle_user_round } from './circle_user_round.png';
 export { default as closeRed } from './closeRed.svg';

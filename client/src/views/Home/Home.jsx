@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Nav } from '../index.js';
 import get_company_all from "../../components/getcompanyAll/get_company_all.jsx";
-import { briefcase, locationBlack, search, sliders, userSml } from '../../assets/Icons/index.js';
+import { search, sliders } from '../../assets/Icons/index.js';
 import style from './home.module.css';
-import { heartlight } from '../../assets/Icons/dropdownicons/index.js';
-import { Mini_card, Quiz_wrapper, Spacer_bottom, Simple_slider } from '../../components/index.js';
+import { Quiz_wrapper, Spacer_bottom, Simple_slider } from '../../components/index.js';
 import Render_mini from '../../components/Render_mini/Render_mini.jsx';
 import Multiselect from 'multiselect-react-dropdown';
-import { searchCompaniesByName, searchCompaniesByNameAndTags, searchCompaniesByTags } from '../../apiFunctions/company.jsx';
+import { searchCompanies } from '../../apiFunctions/company.jsx';
+import { getAllUsedTags } from '../../apiFunctions/tags.jsx';
 import { searchStudents } from '../../apiFunctions/student.jsx';
+import { getFavorites, toggleFavorite } from '../../apiFunctions/favorites.jsx';
+
+
+
 
 function Home(){
     const [showFilter, setShowFilter] = useState(false);
@@ -18,13 +22,24 @@ function Home(){
     const [selectedTags, setSelectedTags] = useState('');
     const [searchString, setSearchString] = useState('');
     const [selectedWorkplace, setSelectedWorkplace] = useState('');
+    const [favorites, setFavorites] = useState([]);
+    const [shouldGetFavorites, setShouldGetFavorites] = useState(true);
 
     const token = localStorage.getItem('token');
-    const decodedToken = JSON.parse(atob(token.split('.')[1]));
-    console.log(decodedToken.userType);
-    const userRole = decodedToken.userType;
-
+    const userType = localStorage.getItem('userType');
     
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const favoriteData = await getFavorites();
+                setFavorites(favoriteData);
+            } catch (error) {
+                console.error("Error fetching favorite data:", error);
+            }
+        };
+        fetchData();
+    }, [shouldGetFavorites]);
+
     // get inital companies/student
     useEffect(() => {
         const fetchData = async () => {
@@ -56,31 +71,19 @@ function Home(){
     // do search
     useEffect(() => {
         let fetchData;
-        const userRole = sessionStorage.getItem("userRole");
-        console.log(userRole, "palsdaölsdk");
 
-        if(userRole == "student") {
+        if(userType == "student") {
             fetchData = async () => {
                 try {
-                    let companyData;
-                    if(!searchString.length && (!selectedTags || !selectedTags.length)) {
-                        const token = localStorage.getItem('token');
-                        companyData = await get_company_all(token);
-                    }
-                    else if (searchString.length && selectedTags && selectedTags.length){
-                        companyData = await searchCompaniesByNameAndTags(searchString, selectedTags);
-                    } else if (!selectedTags || !selectedTags.length && searchString) {
-                        companyData = await searchCompaniesByName(searchString);
-                    } else if (!searchString && selectedTags && selectedTags.length) {
-                        companyData = await searchCompaniesByTags(selectedTags);
-                    }
+                    const companyData = await searchCompanies(searchString, selectedTags, selectedWorkplace)
                     setSearchResult(companyData);
                 } catch (error) {
                     console.error("Error fetching company data:", error);
                 }
             };
             fetchData();
-        } else if (userRole == "company") {
+            
+        } else if (userType == "company") {
             fetchData = async () => {
                 try {
                     const studentData = await searchStudents(searchString, selectedTags, selectedWorkplace)
@@ -92,7 +95,7 @@ function Home(){
             fetchData();
         }
 
-    }, [userRole, selectedTags.length, searchString, selectedWorkplace]);
+    }, [userType, selectedTags.length, searchString, selectedWorkplace]);
     
     const handleFilter = () => {
         setShowFilter(!showFilter);
@@ -101,6 +104,11 @@ function Home(){
 
     const handleAnimationEnd = () => {
         setAnimationReverted(true); // Set animation reverted state after animation ends
+    }
+
+    async function handleToggleFavorites(favoriteId, isFavorite) {
+        await toggleFavorite(favoriteId, isFavorite);
+        setShouldGetFavorites(!shouldGetFavorites);
     }
 
 
@@ -113,11 +121,10 @@ function Home(){
                     <div className={style.searchbar}>
                         <input 
                         onChange={(event) => setSearchString(event.target.value)}
-
                         className={style.searchbar_input} 
                         type="text" 
                         id="search-input" 
-                        placeholder={`Search ${(sessionStorage.getItem('userRole') == 'student' ? 'Companies' : 'Students')}`} />
+                        placeholder={`Search ${(userType == 'student' ? 'Companies' : 'Students')}`} />
                         <img src={search} />
                     </div>
                 </div>
@@ -143,14 +150,6 @@ function Home(){
                             ]} displayValue='name' placeholder='Preferred workplace'
                                     onSelect={(selectedWorkplace) => setSelectedWorkplace(selectedWorkplace.map(workPlace => workPlace.value))} 
                                     onRemove={(selectedWorkplace) => setSelectedWorkplace(selectedWorkplace.map(workPlace => workPlace.value))} />
-                            {/* Dropdown for workplace 
-                            <select className={style.dropdown} defaultValue={""}>
-                                <option value="" disabled hidden>Workplace</option>
-                                <option value="office">Office</option>
-                                <option value="remote">Remote</option>
-                                <option value="both">Both</option>
-                            </select>
-                            */}
                         </div>
                         )}
                     </div>
@@ -158,11 +157,10 @@ function Home(){
 
                 <Spacer_bottom />
 
-                {userRole === 'student' && (
+                {userType === 'student' && (
                     <Quiz_wrapper />
                 )}               
                 
-
                 <div className={style.new_companies_slider}>
 
                     <div className={style.new_companies_slide_card}>
@@ -170,7 +168,7 @@ function Home(){
                             <p>New companies</p>
                         </div>
                         <div className={style.slide_container}>
-                            { searchResult && searchResult.length && <Simple_slider companies={searchResult} />}         
+                            <Simple_slider companies={searchResult} />       
                         </div>
                     </div>
 
@@ -180,7 +178,7 @@ function Home(){
                     <p>All companies attending</p>
 
                     <div className={style.mini_cards_containter}>
-                        { searchResult && searchResult.length && <Render_mini companies={searchResult} /> }
+                        <Render_mini companies={searchResult} onHeartClick={handleToggleFavorites} favorites={favorites}/>
                     </div>
                 </div>
 

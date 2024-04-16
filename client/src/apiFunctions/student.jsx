@@ -1,8 +1,7 @@
 import apiUrl from "./config";
-const token = localStorage.getItem("token");
-
 
 export async function searchStudentByNameAndTags(searchString, tags) {
+    const token = localStorage.getItem("token");
     
     return fetch(apiUrl + 'student/searchByNameAndTags', {
         method: 'POST',
@@ -28,6 +27,7 @@ export async function searchStudentByNameAndTags(searchString, tags) {
 };
 
 export async function searchStudentByName(searchString) {
+    const token = localStorage.getItem("token");
     
     return fetch(apiUrl + 'student/searchByName/' + searchString, {
         method: 'GET',
@@ -49,6 +49,7 @@ export async function searchStudentByName(searchString) {
 };
 
 export async function searchStudentByTags(tags) {
+    const token = localStorage.getItem("token");
     
     return fetch(apiUrl + 'student/getByTags/' + tags, {
         method: 'GET',
@@ -70,8 +71,8 @@ export async function searchStudentByTags(tags) {
 };
 
 
-export async function getAllStudents(token) {
-
+export async function getAllStudents() {
+    const token = localStorage.getItem("token");
 
     return fetch(apiUrl + 'student/all/', { 
         method: 'GET',
@@ -95,9 +96,10 @@ export async function getAllStudents(token) {
     });
 }
   
-export async function searchStudents(searchString, tags, workPlace){
 
-    console.log(searchString, tags, workPlace);
+export async function searchStudents(searchString, tags, workPlace){
+    const token = localStorage.getItem("token");
+
     return fetch(apiUrl + 'student/search/', { 
         method: 'POST',
         headers: {
@@ -113,6 +115,59 @@ export async function searchStudents(searchString, tags, workPlace){
     .then(response => {
         if (response.ok) {
             console.log('Data received successfully');            
+            return response.json(); 
+        } else {
+            console.error('Failed to fetch data');
+            throw new Error('Failed to fetch data'); 
+        }
+    })    
+    .catch(error => {
+        console.error('Error:', error);
+        throw error; // Rethrow the error to be caught in the calling function
+    });
+}
+
+
+export async function addFavoriteCompany(companyId){
+    const token = localStorage.getItem("token");
+
+    return fetch(apiUrl + 'student/addToFavorite', { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', 
+            'Authorization': 'Bearer ' + token, 
+        },     
+        body: JSON.stringify({ companyId: companyId })   
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Data received successfully');            
+            return response.json(); 
+        } else {
+            console.error('Failed to fetch data');
+            throw new Error('Failed to fetch data'); 
+        }
+    })    
+    .catch(error => {
+        console.error('Error:', error);
+        throw error; // Rethrow the error to be caught in the calling function
+    });
+}
+
+export async function removeFavoriteCompany(companyId){
+    const token = localStorage.getItem("token");
+
+    return fetch(apiUrl + 'student/removeFromFavorite', { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', 
+            'Authorization': 'Bearer ' + token, 
+        },   
+        body: JSON.stringify({ companyId })    
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Data removed successfully');            
             return response.json(); 
         } else {
             console.error('Failed to fetch data');

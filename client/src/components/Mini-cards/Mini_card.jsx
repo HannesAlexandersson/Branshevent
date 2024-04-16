@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { locationBlack, userSml } from '../../assets/Icons';
-import { heart, heartlight } from '../../assets/Icons/dropdownicons';
+import { heartRed, locationBlack, userSml } from '../../assets/Icons';
+import { heartlight } from '../../assets/Icons/dropdownicons';
 import * as avatarsc from '../../assets/company_default_avatars/index';
 import style from './mini_card.module.css';
 import Get_avatars from "../get_student_avatar/Get_avatars";
 
-function Mini_card({ companyName, firstName, lastName, work_place, avatarID, onClick, }){
+function Mini_card({ companyName, firstName, lastName, work_place, avatarID, onClick, favorite, onHeartClick}){
     const [img, setImg] = useState(null);
     const [avatarDataObj, setAvatarDataObj] = useState(null);  
     const [avatarLoaded, setAvatarLoaded] = useState(false);
@@ -13,7 +13,7 @@ function Mini_card({ companyName, firstName, lastName, work_place, avatarID, onC
    /*  let randomAvatar;
     const company_avatars = Object.values(avatarsc); */
     const token = localStorage.getItem('token');
-
+    console.log(avatarID);
     useEffect(() => {
         Promise.all([
             Get_avatars(avatarID, token, 'cavatars/')
@@ -51,10 +51,10 @@ function Mini_card({ companyName, firstName, lastName, work_place, avatarID, onC
     
     return(
             <>
-                <div className={style.mini_card_wrapper} onClick={onClick}>
+                <div className={style.mini_card_wrapper} >
                     <div className={style.mini_card_img_wrapper}>
                         <div className={style.img_heart_wrap}>
-                            <img src={heartlight} className={style.heart} />
+                            <img src={ favorite && heartRed || heartlight } className={style.heart} onClick={onHeartClick}/>
                         </div>
                         <img className={style.img} src={img} />
                     </div>
