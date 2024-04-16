@@ -1,4 +1,4 @@
-export { default as studAvatar } from './user.png';
+//export { default as studAvatar } from './user.png';
 /* export { default as avatar2 } from './default2.svg';
 export { default as avatar3 } from './default3.svg';
 export { default as avatar4 } from './default4.svg';

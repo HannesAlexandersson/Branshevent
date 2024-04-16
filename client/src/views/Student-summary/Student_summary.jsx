@@ -119,8 +119,7 @@ function Student_summary(){
        /*  studentImage = localStorage.getItem('image'); */
        setStudentImage(localStorage.getItem('image'));
        console.log(studentImage);
-    }else {
-       
+    }/* else {
         fetch(avatar)
             .then(response => response.blob())           
             .then(blob => {
@@ -140,7 +139,7 @@ function Student_summary(){
             });
            
             }
-    
+    */
     if (sessionStorage.getItem('gdprChecked') !== null){
         studentGdpr = true;
     }else{
@@ -316,7 +315,7 @@ if( studentImage !== 'not set'){
                                 <h2>Image attached</h2>
                                 <div className={style.image_wrapper}>                                   
                                 {studentImage === 'not set' ? ( 
-                                        <img src={img} alt="default student avatar" className={style.user_image}/>
+                                        <img src={'src/assets/student_default_avatars/enterprise.png'} alt="default student avatar" className={style.user_image}/>
                                     ): (
                                         <img src={studentImage} alt="user uploaded image" className={style.user_image}/>
                                     )}
