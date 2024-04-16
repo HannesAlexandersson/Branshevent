@@ -107,8 +107,6 @@ function Home(){
     }
 
     async function handleToggleFavorites(favoriteId, isFavorite) {
-        console.log('asda');
-        console.log(favoriteId, isFavorite);
         await toggleFavorite(favoriteId, isFavorite);
         setShouldGetFavorites(!shouldGetFavorites);
     }
