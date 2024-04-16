@@ -10,13 +10,26 @@ import Slide_show from './Slide_show.jsx';
   
   function MyOwnSlider({ companies, handleViewCompany }) {
     const [imgMap, setImgMap] = useState({});
+    const [ updatedCompanies, SetUpdateCompanies] = useState([]);
   
+    //fetch the avatars from the db
     useEffect(() => {
       const fetchAvatars = async () => {
         const token = localStorage.getItem('token');
         const imgUrls = {};
-        
-        for (const company of companies) {
+        //assign a new property to falg if the avatar is user avatar or a default avatar
+        const updatedCompanies = companies.map(company => {
+          if (company.avatar_id) {
+            return { ...company, hasUserUploadedAvatar: true };
+          } else {
+            return { ...company, hasUserUploadedAvatar: false };
+          }
+        });
+
+        //iterate over the list of companies
+        for (const company of updatedCompanies) {
+          console.log('has upload',company.hasUserUploadedAvatar, 'company:', company);
+          //each object in the list that have a avatar_id set gets their avatars fetched
           if (company.avatar_id) {
             try {
               const avatarData = await Get_avatars(company.id, token, 'companyAvatars/');
@@ -24,13 +37,13 @@ import Slide_show from './Slide_show.jsx';
             } catch (error) {
               console.error('Error fetching company data:', error);
             }
-          } else {
+          } else { //the others gets a random default avatar assigned to them
             const companyAvatars = Object.values(avatarsc);
             const randomIndex = Math.floor(Math.random() * companyAvatars.length);
             imgUrls[company.id] = companyAvatars[randomIndex];
           }
         }
-        
+        SetUpdateCompanies(updatedCompanies);
         setImgMap(imgUrls);
       };
   
@@ -39,12 +52,16 @@ import Slide_show from './Slide_show.jsx';
     {/* <div className={style.slider_container_child}> */}
     return (
       <Slide_show companies={companies}  >
-        {companies.map((company) => (
+        {updatedCompanies.map((company) => (
           <div key={company.id} className={style.redBox} onClick={() => handleViewCompany(company.id)}>
             <div className={style.img_wrapper}>
-              <div className={style.img_display_area}>
-                {/* Render avatar image or default avatar image */}
-                <img src={imgMap[company.id]} alt="company image / default avatar image" />
+              <div className={style.img_display_area}> 
+              {/*apply different style wether its a user uploaded image or a default avatar*/}                             
+                <img 
+                  src={imgMap[company.id]} 
+                  alt="company image / default avatar image" 
+                  style={{ objectFit: company.hasUserUploadedAvatar ? 'cover' : 'fill' }}
+                />
                 <div className={style.icon_container}>
                   <img src={heartlight} alt="heart icon" />
                 </div>
