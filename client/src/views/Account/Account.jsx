@@ -11,6 +11,7 @@ function Account(){
     const [showPersonalInfo, setShowPersonalInfo] = useState(true); // set to true to mount the state fromt he start
     const [showProfilePreview, setShowProfilePreview] = useState(false); // set to default false to hide the preview until iser clicks the btn
     const [userData, setUserData] = useState(null);
+    const [userDataLoaded, setUserDataLoaded] = useState(false);
     const navigate = useNavigate();
 
    
@@ -29,29 +30,32 @@ function Account(){
     }else if(decodedToken.userType === 'company' ){
         userRole = 'company';
     }
+   
 //the hook fetch the data CONFIRMED
     useEffect(() => {
         if (decodedToken.userType === 'student') {
             get_a_student(token, id)
                 .then((rows) => {
-                    setUserData(JSON.stringify(rows));                    
+                    setUserData(JSON.stringify(rows));  
+                    setUserDataLoaded(true);                  
                 })
                 .catch((error) => {
                     console.error('Error fetching student data:', error);
                 });
-            }else if(decodedToken.userType === 'company'){
-                get_a_company(token, id)
-                .then((rows) => {
-                    setUserData(JSON.stringify(rows));
-                    console.log(JSON.stringify(rows), 'inside get a company');
-                })
-                .catch((error) => {
-                    console.error('Error fetching company data:', error);
-                });
-            }else{
-                console.log('error fetching userdata');
-            }
-        }, []);
+        }else if(decodedToken.userType === 'company'){
+            get_a_company(token, id)
+            .then((rows) => {
+                setUserData(JSON.stringify(rows));    
+                setUserDataLoaded(true); 
+                console.log('inside account fetch userdata for comp');   
+            })
+            .catch((error) => {
+                console.error('Error fetching company data:', error);
+            });
+        }else{
+            console.log('error fetching userdata');
+        }
+        }, [decodedToken.userType, id, token]);/*it was empty */
 
     
    
@@ -104,7 +108,7 @@ function Account(){
 
            
             {userData && showPersonalInfo && <Personal_information userData={userData} />}
-            {showProfilePreview && <Personal_preview userData={userData} />}
+            {showProfilePreview && <Personal_preview  />}
 
             
 

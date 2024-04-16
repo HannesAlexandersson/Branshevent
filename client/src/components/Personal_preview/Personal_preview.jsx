@@ -7,11 +7,11 @@ import { account } from '../../assets/Icons/dropdownicons';
 import style from './personal_preview.module.css';
 import get_a_student from '../get_a_company/get_a_student.jsx';
 
-function Personal_preview( {userData} ){
+function Personal_preview(){
     const [img , setImg ] = useState(null);
     const [company, setCompany] = useState({});
     const [student, setStudent] = useState({});
-    const [userDataObj, setUserDataObj] = useState({});  
+    const [userDataObj, setUserDataObj] = useState({});  //this was {}
     const [avatarDataObj, setAvatarDataObj] = useState(null);  
     const [avatarLoaded, setAvatarLoaded] = useState(false);
     
@@ -22,7 +22,7 @@ function Personal_preview( {userData} ){
     const userType = decodedToken.userType;
     
     let userRole; 
-   let randomAvatar;
+    let randomAvatar;
     
     
     //set the userole
@@ -31,46 +31,62 @@ function Personal_preview( {userData} ){
     }else if(decodedToken.userType === 'company' ){
         userRole = 'company';
     }
-// company/companyAvatars, student/studentAvatars
-//NEW REMOVE IF DONT WORK AND USE OLD
-    useEffect(() => {        
+
+//we fetch the users data and their avatar
+
+    useEffect(() => {      
         if (decodedToken.userType === 'student') {
-          Promise.all([
-            get_a_student(token, id),
-            Get_avatars(id, token, 'studentAvatars/'),           
+          Promise.all([           
+            Get_avatars(id, token, 'studentAvatars/'),                    
           ])
-          .then(([userData, avatarData]) => {
-            setUserDataObj(userData);
+          .then(([avatarData]) => {           
             setAvatarDataObj(avatarData);
             setAvatarLoaded(true);
           })
           .catch((error) => {
+            console.error('Error fetching student avatar:', error);
+          });
+        } else if (decodedToken.userType === 'company') {             
+          Promise.all([                               
+            Get_avatars(id, token, 'companyAvatars/'),           
+          ])
+          .then(([avatarData]) => {          
+            setAvatarDataObj(avatarData);     
+            setAvatarLoaded(true);                  
+          })
+          .catch((error) => {
+            console.error('Error fetching company avatar:', error);
+          });
+        }
+      }, []);
+
+      useEffect(() => { 
+        if (decodedToken.userType === 'student') {
+          Promise.all([
+            get_a_student(token, id),                               
+          ])
+          .then(([userData]) => {
+            setUserDataObj(userData);           
+          })
+          .catch((error) => {
             console.error('Error fetching student data:', error);
           });
-        } else if (decodedToken.userType === 'company') {
+        } else if (decodedToken.userType === 'company') {             
           Promise.all([
-            get_a_company(token, id),
-            Get_avatars(id, token, 'companyAvatars/')
+            get_a_company(token, id),                        
           ])
-          .then(([userData, avatarData]) => {
-            setUserDataObj(userData);
-            setAvatarDataObj(avatarData);     
-            setAvatarLoaded(true);       
+          .then(([userData]) => {           
+            setUserDataObj(userData);             
           })
           .catch((error) => {
             console.error('Error fetching company data:', error);
           });
-        } else {
-          console.log('error fetching userdata');
         }
       }, []);
-
-
-          
-   
-   
-    useEffect(() => {
-        if(userDataObj){
+      
+      //set the fetched data to the state of either company or student depending on userrole
+      useEffect(() => {
+        if(userDataObj){          
             if (userType === 'company'){               
                 setCompany(userDataObj);
                
@@ -80,45 +96,48 @@ function Personal_preview( {userData} ){
             } 
         }
     }, [userDataObj, userType]);
-    
-    //wait until the fetch call is done
-   
-        //then check if there is no user image we supply the user with a default avatar
+ 
+    useEffect(() => {
+      //then check if there is no user image, we supply the user with a default avatar
         if(avatarDataObj === null){   
-        if (userRole === 'student'){     
-                // select a avatar at random from all the student avatars
-                const student_avatars = Object.values(avatars);
-                const randomIndex = Math.floor(Math.random() * student_avatars.length);
-                randomAvatar = student_avatars[randomIndex];
-        }else if(userRole === 'company'){
-                const company_avatars = Object.values(avatarsc);
-                const randomIndex = Math.floor(Math.random() * company_avatars.length);
-                randomAvatar = company_avatars[randomIndex];
-        }
-    }  
+          if (userRole === 'student'){   
+            
+                  // select a avatar at random from all the student avatarsCONFIRMED
+                  const student_avatars = Object.values(avatars);
+                  const randomIndex = Math.floor(Math.random() * student_avatars.length);
+                  randomAvatar = student_avatars[randomIndex];
+          }else if(userRole === 'company'){
+            
+                  const company_avatars = Object.values(avatarsc);
+                  const randomIndex = Math.floor(Math.random() * company_avatars.length);
+                  randomAvatar = company_avatars[randomIndex];
+          }
+        }  
+      
+    }, [avatarLoaded]);
    
-        
-        useEffect(() => {
-            if(avatarLoaded === true){
-                if (randomAvatar) {
-                    // Set image state with that random selected avatar, if randomAvatar is set, 
-                    // that means the user didn't upload an image
-                    setImg(randomAvatar);  
-                    console.log(randomAvatar, 'randomav');      
-                } else {
-                    // Else, it means the user has an image. Decode the binary image data to base64
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        const base64Image = event.target.result;
-                        // Set the img state to the base64 image string
-                        setImg(base64Image);
-                    };
-                    // Read the Blob data as a data URL (base64)
-                    reader.readAsDataURL(avatarDataObj);
-                }
-            }
-        }, [randomAvatar, avatarDataObj, avatarLoaded]);
-    
+    //set the img state to either the default random avatar or the user avatar
+    useEffect(() => {
+      console.log('avatar hook img')//confirmed      
+              
+            if (randomAvatar) {
+              console.log('if random avatar hook set img')
+                // Set image state with that random selected avatar, if randomAvatar is set, 
+                // that means the user didn't upload an image
+                setImg(randomAvatar);                      
+            } else {
+                // Else, it means the user has an image. Decode the binary image data to base64
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const base64Image = event.target.result;
+                    // Set the img state to the base64 image string
+                    setImg(base64Image);
+                };
+                // Read the Blob data as a data URL (base64)
+                reader.readAsDataURL(avatarDataObj);
+            }        
+    }, [randomAvatar]);
+
 
     
     return(

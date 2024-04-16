@@ -6,7 +6,7 @@ function Contact({ userData }){
     const [studentContact, setStudentContact] = useState(null);
 
    
-    
+    console.log(userData, 'contact')
     const token = localStorage.getItem('token');    
     const parts = token.split('.');    
     const payload = JSON.parse(atob(parts[1]));   
@@ -27,31 +27,25 @@ function Contact({ userData }){
     let studentlinkedin;
     let studentemail;
     let studentPhone;
-
-
     let userRole;
-    // if the userData contains a property that name is company name then the user is a company else a stuedtn
-    if (userData && userData.company_name !== undefined) {
-        userRole = 'company';
-        company = userData;
 
-         //useEffect hook to set the company data from the provided prop 
-        useEffect(() => {
-            if (company) {
-                setCompanyContact(company);
-            }
-        }, [company]);
-    }else{
-        userRole = 'student';
-        student = userData;
+     //useEffect hook to set the company data from the provided prop , if the userData contains a property that name is company name then the user is a company else a stuedtn
+     useEffect(() => {
+        if (userData && userData.company_name !== undefined) {
+            userRole = 'company';
+            company = userData;
+        }else{
+            userRole = 'student';
+            student = userData;
+        }
 
-         //useEffect hook to set the company data from the provided prop 
-         useEffect(() => {
-            if (student) {
-                setStudentContact(student);
-            }
-        }, [student]);
-    }
+        if (company) {
+            setCompanyContact(company);
+        }else if (student){
+            setStudentContact(student);
+        }
+    }, [company, student]);
+
     
    //set the vars
     if (companyContact) {
@@ -62,11 +56,11 @@ function Contact({ userData }){
         companyAddress = companyContact.address || 'not set';
     }else if(studentContact){
         studentlinkedin = studentContact.linkedin || 'not set';
-       studentGithub = studentContact.github || 'not set';
-       studentPortfolio= studentContact.portfolio || 'not set';
-       studentBehance = studentContact.behance || 'not set';
-       studentPhone = studentContact.phone_number || 'not set';
-       studentemail = studentContact.email || 'not set';
+        studentGithub = studentContact.github || 'not set';
+        studentPortfolio= studentContact.portfolio || 'not set';
+        studentBehance = studentContact.behance || 'not set';
+        studentPhone = studentContact.phone_number || 'not set';
+        studentemail = studentContact.email || 'not set';
     }
   
     return(

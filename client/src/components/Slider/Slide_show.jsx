@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import props from 'prop-types';
 import style from './slider.module.css'; // Make sure to import your CSS file
 
-function Slide_show({ companies, children }) {
+function Slide_show({ companies, children, onClick }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToNextSlide = () => {
@@ -17,7 +17,7 @@ function Slide_show({ companies, children }) {
 
   return (
     <div className={style.slider_container_child}>
-      {children[currentIndex]}
+      {children[currentIndex] }
       <div className={style.prev_nxt_cont}>
         <button className={style.nxt_prev} onClick={goToPrevSlide}>&lt;-</button>
         <button className={style.nxt_prev} onClick={goToNextSlide}>-&gt;</button>

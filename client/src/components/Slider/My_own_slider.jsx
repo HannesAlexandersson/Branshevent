@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate,  } from "react-router-dom";
 import { briefcase, locationBlack, userSml } from '../../assets/Icons/index.js';
 import { heartlight } from '../../assets/Icons/dropdownicons/index.js';
 import style from './slider.module.css';
@@ -8,9 +9,10 @@ import Slide_show from './Slide_show.jsx';
 
 
   
-  function MyOwnSlider({ companies, handleViewCompany }) {
+  function MyOwnSlider({ companies, onClick }) {
     const [imgMap, setImgMap] = useState({});
     const [ updatedCompanies, SetUpdateCompanies] = useState([]);
+    const navigate = useNavigate();  
   
     //fetch the avatars from the db
     useEffect(() => {
@@ -49,7 +51,11 @@ import Slide_show from './Slide_show.jsx';
   
       fetchAvatars();
     }, [companies]);
-    {/* <div className={style.slider_container_child}> */}
+
+    const handleViewCompany = (companyId) => {
+      navigate('/view-company', { state: { companyId, companies } });
+    };
+    
     return (
       <Slide_show companies={companies}  >
         {updatedCompanies.map((company) => (
@@ -79,7 +85,7 @@ import Slide_show from './Slide_show.jsx';
                 </div>
                 <div className={style.name_loc_wrapper}>                                
                   <img src={locationBlack} alt="location icon" />
-                  <p>{company.location}</p>
+                  <p>{company.address}</p>
                 </div>
               </div>
             </div>
