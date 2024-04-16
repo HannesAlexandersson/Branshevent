@@ -30,14 +30,6 @@ function Company_card({ userData, img, }){
     };
    
 
-    
-/* let userData;
-if(company){
-        userData = company;
-    } */
-    
-    
-
     return(
         <>
             <div className={style.redBox}>

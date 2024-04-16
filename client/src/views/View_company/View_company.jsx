@@ -6,11 +6,17 @@ import * as avatarsc from '../../assets/company_default_avatars/index';
 import style from './view_company.module.css';
 import { backArrow, briefcase, circle_user_round, } from '../../assets/Icons';
 import { account, accountBlack } from '../../assets/Icons/dropdownicons/index.js';
+import Get_avatars from '../../components/get_student_avatar/Get_avatars.jsx';
 
 function View_company(){
     const [showCompanyAbout, setShowCompanyAbout] = useState(true); 
-    const [showCompanyContact, setShowCompanyContact] = useState(false); 
+    const [showCompanyContact, setShowCompanyContact] = useState(false);    
+    const [avatarDataObj, setAvatarDataObj] = useState(null);  
+    const [avatarLoaded, setAvatarLoaded] = useState(false);
     const [img, setImg] = useState(null);
+
+    //we get the token for db service
+    const token = localStorage.getItem('token');
   
    //we provide the viewpage with the company id from home page and the list of all companies.
     const { state } = useLocation();
@@ -22,18 +28,42 @@ function View_company(){
     const company = companies.find(company => company.id === companyId);
     //then set a var to company, we use this "userData" in about and details view for the personal information so it needs to be the same format even tho its not "personal" this time  
     const userData = company;
+
+    //we fetch the avatar if the company have one
+    useEffect(() => {
+        Promise.all([
+            Get_avatars(companyId, token, 'companyAvatars/')
+        ])
+        .then(([avatarData]) => {
+            setAvatarDataObj(avatarData);
+            setAvatarLoaded(true);
+        })
+        .catch((error) => {
+            console.error('Error fetching company data:', error);
+        });
+    }, [companyId, token]);
     
-    
-    
-    //if the user havent uploaded a image we use a default random avatar generate a random default avatar    
-    useEffect(() => {        
+    useEffect(() => {
+        if (avatarLoaded) {
+            
+            if (avatarDataObj) { 
+                console.log('hej blob');               
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                const base64Image = event.target.result;
+                setImg(base64Image);
+                };
+                reader.readAsDataURL(avatarDataObj);
+            } 
+        }
+            
+        // No avatar image, set default image
         const company_avatars = Object.values(avatarsc);
         const randomIndex = Math.floor(Math.random() * company_avatars.length);
         const randomAvatar = company_avatars[randomIndex];
-
-        console.log('useffect avatar viewcomp');
         setImg(randomAvatar);
-    }, []); 
+        
+    }, [avatarDataObj, avatarLoaded]);
 
     
     const companyName = company.company_name; 

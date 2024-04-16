@@ -11,6 +11,7 @@ function Account(){
     const [showPersonalInfo, setShowPersonalInfo] = useState(true); // set to true to mount the state fromt he start
     const [showProfilePreview, setShowProfilePreview] = useState(false); // set to default false to hide the preview until iser clicks the btn
     const [userData, setUserData] = useState(null);
+    const [userDataLoaded, setUserDataLoaded] = useState(false);
     const navigate = useNavigate();
 
    
@@ -22,73 +23,42 @@ function Account(){
     
     let userRole; 
     let id = decodedToken.id;
-    /* console.log(decodedToken.id); */
+    
     //set the userole
     if(decodedToken.userType === 'student'){
         userRole = 'student';
     }else if(decodedToken.userType === 'company' ){
         userRole = 'company';
     }
+   
 //the hook fetch the data CONFIRMED
     useEffect(() => {
         if (decodedToken.userType === 'student') {
             get_a_student(token, id)
                 .then((rows) => {
-                    setUserData(JSON.stringify(rows));                    
+                    setUserData(JSON.stringify(rows));  
+                    setUserDataLoaded(true);                  
                 })
                 .catch((error) => {
                     console.error('Error fetching student data:', error);
                 });
-            }else if(decodedToken.userType === 'company'){
-                get_a_company(token, id)
-                .then((rows) => {
-                    setUserData(JSON.stringify(rows));
-                    console.log(JSON.stringify(rows), 'inside get a company');
-                })
-                .catch((error) => {
-                    console.error('Error fetching company data:', error);
-                });
-            }else{
-                console.log('error fetching userdata');
-            }
-        }, []);
+        }else if(decodedToken.userType === 'company'){
+            get_a_company(token, id)
+            .then((rows) => {
+                setUserData(JSON.stringify(rows));    
+                setUserDataLoaded(true); 
+                console.log('inside account fetch userdata for comp');   
+            })
+            .catch((error) => {
+                console.error('Error fetching company data:', error);
+            });
+        }else{
+            console.log('error fetching userdata');
+        }
+        }, [decodedToken.userType, id, token]);/*it was empty */
 
     
-    //get the userdata and set the userData state to the fetched data
-   /*  if(userRole === 'student'){
-        id = decodedToken.id;
-
-        get_a_student(token, id)
-        .then((userData) => {
-           
-            setUserData(userData);
-         
-          }) */
- /*    }else if(userRole === 'company'){
-        id = decodedToken.id;
-
-        get_a_company(token, id)
-        .then((userData) => {
-
-            setUserData(userData);
-            
-        })
-    } */
    
-
-    // Function to toggle between displaying personal information and profile preview
-    /* const handleButtonClick = (component) => {
-        if (component === 'personalInfo') {
-            
-            setShowPersonalInfo(true);
-            setShowProfilePreview(false);
-        } else if (component === 'profilePreview') {
-            setShowPersonalInfo(false);
-            setShowProfilePreview(true);
-        }
-
-        
-    }; */
 
     const handleLogOut = () => {
         // Clear localStorage when user loggs out
@@ -99,7 +69,7 @@ function Account(){
             
         navigate('/log-in');
     }
-   /* console.log(userData, 'account userdata'); */
+   
     return (
     
         <div className={style.main}>
@@ -138,7 +108,7 @@ function Account(){
 
            
             {userData && showPersonalInfo && <Personal_information userData={userData} />}
-            {showProfilePreview && <Personal_preview userData={userData} />}
+            {showProfilePreview && <Personal_preview  />}
 
             
 

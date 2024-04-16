@@ -4,7 +4,7 @@ import { briefcase, circle_user_round, locationBlack, userSml } from '../../asse
 import { account } from '../../assets/Icons/dropdownicons';
 import style from './card.module.css';
 
-function Card({userRole, student, company, img, }){    
+function Card({ student, company, img, }){    
     const [showAbout, setShowAbout] = useState(true); 
     const [showContact, setShowContact] = useState(false); 
     const [showQRCode, setShowQRCode] = useState(false);
@@ -29,24 +29,16 @@ function Card({userRole, student, company, img, }){
     };
    
 
-    
-
-/* we get userData as props from either company view or the accountpage, so it can either be 
- a student that want to view a company, or a student that want to watch their own details, 
- or a company watching their own details or another company etc etc, so we need to know who is
- watching what */
-
+    // to be able to use the same variables when rendering the data we need to set the userData "global" variabel to whatever the current user is student/company
     let userData;
     if (student) {
-        userData = student;
-
-      
+        userData = student;      
     }else if(company){
         userData = company;
     }
     
     
-    
+    console.log(userData, 'card')
     return(
         <>
             <div className={style.redBox}>

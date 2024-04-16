@@ -181,6 +181,9 @@ function Home(){
                         <Render_mini companies={searchResult} onHeartClick={handleToggleFavorites} favorites={favorites}/>
                     </div>
                 </div>
+
+                <Spacer_bottom />
+                
             </div>
         </div>
         </>

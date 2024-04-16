@@ -17,25 +17,26 @@ function Company_summary(){
     let applicationEnddate;
     const hasDates = applicationStartdate && applicationEnddate;
 
-    let  companyParsed, 
-    companyUsername, 
-    companyPassword, 
-    companyFormData, 
-    companyAddress, 
-    compOnlineProfiles, 
-    companyTags, 
-    companyStartDate,
-    companyEndDate,
-    companyLocation, 
-    compAddress,
-    companyDescription,
-    compWebsite,
-    compLinkedin,   
-    companyLIA,  
-    compGdpr,
-    companyImage,
-    storedDate,
-    storedEnd;
+    let  companyParsed;
+    let companyUsername; 
+    let companyPassword; 
+    let companyFormData; 
+    let companyAddress;
+    let compOnlineProfiles; 
+    let companyTags;
+    let companyStartDate
+    let companyEndDate;
+    let companyLocation; 
+    let compAddress
+    let companyDescription;
+    let compWebsite;
+    let compLinkedin;   
+    let companyLIA;
+    let compGdpr;
+    let companyImage;
+    let storedDate;
+    let storedEnd;
+    let binaryData;
 
     if (sessionStorage.getItem('username') !== null) {
         companyUsername = sessionStorage.getItem('username');
@@ -106,8 +107,8 @@ function Company_summary(){
     if (localStorage.getItem('image') !== null) {
         companyImage = localStorage.getItem('image');
     } else {
-        companyImage = 'not set';
-        console.log('company image not set');
+        companyImage = null;
+        
     }
 
     if (sessionStorage.getItem('startDate') !== null) {
@@ -142,6 +143,25 @@ function Company_summary(){
     console.log(formattedTags);
 
    const handleNextStep = () => {
+
+    //handle useruploaded image to server: 
+    if( companyImage !== null){
+        const imageData = companyImage;
+
+        
+        //decode the user provided image, if there is a error set the var to a emoty string. 
+        try {
+            const base64Parts = imageData.split(",");  
+            binaryData = atob(base64Parts[1]); 
+                
+        } catch (error) {
+            binaryData = 'empty';        
+            console.error('Error decoding base64 string:', error);
+        }
+    
+    }
+
+
     const endpoint = 'api/company/registration';
     const requestData = {
         company_name: companyFormData.companyName,
@@ -160,8 +180,13 @@ function Company_summary(){
         company_website: compOnlineProfiles.CompanyWebsite,
         linkedin: compOnlineProfiles.LinkedIn,
         gdpr: compGdpr,
+        avatar: binaryData,
     };
+<<<<<<< HEAD
     register(requestData, 'company');
+=======
+    SendDataToServer(requestData, endpoint);
+>>>>>>> Hannes-branch
     
     
      
@@ -181,11 +206,9 @@ function Company_summary(){
         setImg(randomAvatar);
     }else{
         setImg(companyImage);
-    }
-
+    }    
     
-    
-}, [companyImage]); 
+}, []); 
 
 
 
@@ -280,7 +303,7 @@ function Company_summary(){
                             <div className={style.comp_name}>
                                 <h2>Image attached</h2>
                                 <div className={style.image_wrapper}>
-                                    {companyImage === null ? (
+                                    {companyImage ? (
                                         <img src={companyImage} alt="user uploaded image" className={style.user_image}/>
                                     ) : (
                                         <img src={img} alt="default company avatar" className={style.user_image}/>
