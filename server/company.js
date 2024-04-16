@@ -98,44 +98,12 @@ router.post('/registration', (req, res) => {
     // Handle saving image in the background so it doesnt disturb the rest  of the reg process even if there is a problem with saving the image
     let filename = '';
     let avatar_id;
-    if (avatar) {
-      const imageData = avatar;
-      filename = generateRandomCompFilename();     
-      
-      try {          
-        saveCompanyImageToFilesystem(imageData, filename, (err, imagePath) => {
-            if (err) {
-                console.error('Error saving image:', err);
-                console.log('The image may not have been saved properly.');
-            } else {
-                console.log('Image saved successfully:', imagePath);
-            }
-            });
-        } catch (e) {
-            console.error('Error saving image:', e);
-            console.log('The image may not have been saved properly.');
-        }
-    }
 
 
   bcrypt.hash(password, SALT, (err, hashed_password) => {
     if (err) {
       console.error('Error hashing password', err.message);
       return res.status(500).json({ error: 'Internal Server Error' });
-    }
-
-    if (filename) {
-      //insert the avatar to the avatar table
-      db.run('INSERT INTO Company_avatar (name) VALUES (?)', [filename], function(insertErr) {
-        if (insertErr) {
-            console.error('Error inserting filename into database:', insertErr);
-        } 
-        console.log('Filename inserted into database successfully');          
-        // Retrieve the generated avatar ID
-        avatar_id = this.lastID;
-        console.log(avatar_id);
-
-      });
     }
 
   const query = `
@@ -166,22 +134,46 @@ router.post('/registration', (req, res) => {
         
             const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
             return res.status(200).send({ token: token, userType: "company", companyId });
-              });
-          } else {
-            const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
-            return res.status(200).send({ token: token, userType: "company", companyId });
-          }
+          });
+        } else {
+          const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
+          return res.status(200).send({ token: token, userType: "company", companyId });
+        }
 
           //3.insert the student id to the avatar table 
-          if (companyId && avatar_id) {
-            db.run('UPDATE Company_avatar SET company_id = ? WHERE id = ?', [companyId, avatar_id], (updateErr) => {
-                if (updateErr) {
-                    console.error('Error updating avatar table:', updateErr);
-                } else {
-                    console.log('User ID inserted into avatar table successfully');
-                }
-              });
-          }
+          if (avatar) {
+            const imageData = avatar;
+            filename = generateRandomCompFilename();
+            try {          
+              saveCompanyImageToFilesystem(imageData, filename, (err, imagePath) => {
+                    if (err) {
+                        console.error('Error saving image:', err);
+                        console.log('The image may not have been saved properly.');
+                    } else {
+                        console.log('Image saved successfully:', imagePath);
+                        
+                          //insert the avatar to the avatar table
+                        db.run('INSERT INTO Company_avatar (name, company_id) VALUES (?, ?)', [filename, companyId], function(insertErr) {
+                          if (insertErr) {
+                              console.error('Error inserting filename into database:', insertErr);
+                          } 
+                          console.log('Filename inserted into database successfully');          
+                          // Retrieve the generated avatar ID
+                          avatar_id = this.lastID;
+                          db.run('UPDATE Company SET avatar_id = ? WHERE id = ?', [avatar_id, companyId], (updateErr) => {
+                            if (updateErr) {
+                                console.error('Error updating avatar table:', updateErr);
+                            } else {
+                                console.log('User ID inserted into avatar table successfully');
+                            }
+                        });
+                    });
+                }});
+            } catch (e) {
+                console.error('Error saving image:', e);
+                console.log('The image may not have been saved properly.');
+            }
+        }
 
 
         });
