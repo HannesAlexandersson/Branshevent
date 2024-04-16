@@ -17,12 +17,10 @@ const studentAvatarFolderPath = path.join(directoryPath, 'Student_avatars');
 const companyAvatarFolderPath = path.join(directoryPath, 'Company_avatars');
 //get student avatar
 router.get('/studentAvatars/:studentId', (req, res) => {
-    console.log('hello');
     //client provide the id of student wich avatar we want to fetch
     const { studentId } = req.params;
     //query to find the student first, and their avatar id.
     const query = `SELECT avatar_id FROM Student WHERE id = ?`;
-  console.log(studentId, 'before');
     db.get(query, [studentId], (err, row) => {
       if (err) {
         console.error('Error querying database:', err);
@@ -32,10 +30,8 @@ router.get('/studentAvatars/:studentId', (req, res) => {
       if (!row) {
         return res.status(404).json({ error: 'Student not found' });
       }
-      console.log(studentId, 'before studid');
       //we have the avatar id
       const { avatar_id } = row;
-      console.log(avatar_id, 'avatarid');
       //we query the avatar table
       const avatarQuery = `SELECT name FROM Student_avatar WHERE id = ?`;
   
@@ -63,7 +59,6 @@ router.get('/studentAvatars/:studentId', (req, res) => {
 
   //get company avatar
 router.get('/companyAvatars/:companyId', (req, res) => {
-    console.log('hello');   
     const { companyId } = req.params;
     
     const query = `SELECT avatar_id FROM Company WHERE id = ?`;

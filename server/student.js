@@ -124,7 +124,6 @@ router.post('/registration', (req, res) => {
           console.log('Filename inserted into database successfully');          
           // Retrieve the generated avatar ID
           avatar_id = this.lastID;
-          console.log(avatar_id);
         });
       }
      
@@ -134,7 +133,6 @@ router.post('/registration', (req, res) => {
     
     //1. create the student
     db.run(query, [first_name, last_name, email, hashed_password, occupation, phone_number, gdpr,description, github, portfolio, linkedin, behance, work_place, app_start, app_end, avatar_id], function(err) {
-      console.log(work_place);
         if(err){
             console.error('Error inserting student', err.message);
             return res.status(500).json({ error : 'Internal Server Error' });
@@ -205,7 +203,6 @@ router.post('/update', authMiddleware, (req, res) => {
 
   db.run(updateQuery, [first_name, last_name, email, password, phone_number, description, github, portfolio, linkedin, occupation, behance, work_place, app_start, app_end, req.id], function(err) {
     if(err){
-      console.log(req.id);
         console.log(err.message);
         return res.status(500).json({ error : 'Internal Server Error' });
     }
@@ -311,7 +308,6 @@ router.get('/getByTags/:tags', authMiddleware, (req, res) => {
       console.error(err.message);
       return res.status(500).json({ error: 'Internal Server Error' });
     }
-    console.log(students);
     res.json(students);
   });
 });
@@ -410,7 +406,6 @@ router.post('/search', (req, res) => {
 
   query = query + ' GROUP BY Student.id';
 
-console.log(query);
   db.all(query, (err, students) => {
     if (err) {
       console.error(err.message);

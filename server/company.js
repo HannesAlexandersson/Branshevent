@@ -42,7 +42,6 @@ router.post('/login', (req, res) => {
     }
 
     if (result) {
-      console.log(password, result.password);
       bcrypt.compare(password, result.password, (bcryptErr, bcryptResult) => { //you where using result here, that reset result to the result of the encryption witch was true or false only
       if (bcryptErr) {
         console.error('Error comparing passwords:', bcryptErr);
@@ -122,7 +121,6 @@ router.post('/registration', (req, res) => {
         console.log('Filename inserted into database successfully');          
         // Retrieve the generated avatar ID
         avatar_id = this.lastID;
-        console.log(avatar_id);
 
       });
     }
@@ -310,7 +308,6 @@ router.get('/getByTags/:tags', authMiddleware, (req, res) => {
       console.error(err.message);
       return res.status(500).json({ error: 'Internal Server Error' });
     }
-    console.log(companies);
     res.json(companies);
   });
 });

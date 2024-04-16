@@ -9,10 +9,8 @@ import bodyParser from 'body-parser';
 import { PORT } from './config.js';
 
 
-
 const server = express();
 const port = PORT;
-
 
 
 //cross origin resource sharing settings to make the API work
@@ -37,7 +35,6 @@ server.use('/api/student/', studentRoutes);
 server.use('/api/user/', userRoutes);
 server.use('/api/tags', tagRoutes);
 server.use('/api/avatars/', avatarRoutes);
-
 
 
 server.listen(port, () => {
