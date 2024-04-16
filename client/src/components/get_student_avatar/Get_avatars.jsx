@@ -15,7 +15,7 @@ function Get_avatars( id, token, endpoint){
     .then(response => {
         if (response.ok) {
             console.log('Data received successfully');            
-            return response.blob(); // Change to response.blob() to get binary data
+            return response.blob(); 
         } else {
             console.error('Failed to fetch data');
             throw new Error('Failed to fetch data'); 

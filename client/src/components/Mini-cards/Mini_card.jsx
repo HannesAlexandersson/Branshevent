@@ -30,8 +30,7 @@ function Mini_card({ companyName, firstName, lastName, work_place, avatarID, onC
     useEffect(() => {
         if (avatarLoaded) {
             
-            if (avatarDataObj) { 
-                console.log('hej blob');               
+            if (avatarDataObj) {               
                 const reader = new FileReader();
                 reader.onload = function(event) {
                 const base64Image = event.target.result;
