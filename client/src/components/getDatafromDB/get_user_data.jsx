@@ -1,7 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 
 function get_user_data(endpoint, email, password, token) {
-    const baseUrl = 'http://localhost:3000/';
+    const baseUrl = 'https://liameetup.vercel.app/';
     const endpointUrl = endpoint;
     const url = baseUrl + endpointUrl;
 
