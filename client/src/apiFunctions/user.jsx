@@ -18,7 +18,7 @@ export async function register(userData, userType) {
         .then(data => {       
             localStorage.setItem('token', data.token);//store the JTW token
             localStorage.setItem('userType', data.userType);     
-            sessionStorage.setItem('userId', userId); //store the user id
+            sessionStorage.setItem('userId', data.id); //store the user id
             sessionStorage.setItem('loggedIn', 'true');//set logged in to true
         })
         .catch(error => {

@@ -164,11 +164,11 @@ router.post('/registration', (req, res) => {
             console.log('Tags added successfully');
         
             const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
-            return res.status(200).send({ token: token })
+            return res.status(200).send({ token: token, userType: "company", companyId });
               });
           } else {
             const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
-            return res.status(200).send({ token: token })
+            return res.status(200).send({ token: token, userType: "company", companyId });
           }
 
           //3.insert the student id to the avatar table 
