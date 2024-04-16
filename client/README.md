@@ -7,7 +7,7 @@ Project with DD
 //react routing, npm install react-router-dom,
 //react date-picker, npm install react-datepicker,
 //validate/sanitize html, npm install validator sanitize-html
-//create qr codes, npm install qrcode
+//create qr codes, npm install qrcode.react
 //react slider, npm install react-slick --save AND npm install slick-carousel FOR css
 // multiselect dropdown, npm install multiselect-react-dropdown
   

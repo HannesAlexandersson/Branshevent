@@ -117,11 +117,8 @@ function Personal_preview(){
     }, [avatarLoaded]);
    
     //set the img state to either the default random avatar or the user avatar
-    useEffect(() => {
-      console.log('avatar hook img')//confirmed      
-              
-            if (randomAvatar) {
-              console.log('if random avatar hook set img')
+    useEffect(() => {                        
+            if (randomAvatar) {             
                 // Set image state with that random selected avatar, if randomAvatar is set, 
                 // that means the user didn't upload an image
                 setImg(randomAvatar);                      
