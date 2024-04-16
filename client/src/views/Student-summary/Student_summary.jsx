@@ -124,8 +124,8 @@ function Student_summary(){
     }else {
         const student_avatars = Object.values(avatars);
         const randomIndex = Math.floor(Math.random() * student_avatars.length);
-        randomAvatar = student_avatars[randomIndex];
-        studentImage = getBase64FromImage(randomAvatar);
+        const randomAvatar = student_avatars[randomIndex];
+        studentImage = randomAvatar; //getBase64FromImage(randomAvatar);
     }
     
     if (sessionStorage.getItem('gdprChecked') !== null){
@@ -204,18 +204,17 @@ console.log(requestData.avatar);
     sessionStorage.setItem('loggedin', true);
     navigate('/student-finish');
    } 
-   let randomAvatar;
    useEffect(() => { 
     if(studentImage === null){
         const student_avatars = Object.values(avatars);
         const randomIndex = Math.floor(Math.random() * student_avatars.length);        
-        randomAvatar = student_avatars[randomIndex];
+        const randomAvatar = student_avatars[randomIndex];
 
         setImg(randomAvatar);
-    }else{
+    } else {
         setImg(studentImage);
     }
-}, [studentImage]);
+}, []);
 
  
     return(
