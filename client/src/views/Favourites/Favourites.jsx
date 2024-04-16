@@ -36,7 +36,7 @@ function Favourites(){
         };
     
         fetchData();
-        }, []);
+        }, [shouldGetFavorites]);
 
 
     
