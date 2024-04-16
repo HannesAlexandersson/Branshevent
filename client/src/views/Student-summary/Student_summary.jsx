@@ -19,13 +19,17 @@ function getBase64FromImage(imageFile) {
 }
 
 
+
 function Student_summary(){
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(6);   
     const totalSteps = 7;
     const [img , setImg ] = useState(null);
-    
+    const [rImg , setRImg ] = useState(null);
+    const [userHasImg, setUserHasImg] = useState(false);
 
+   
+    let randomAvatar;
     const reqData = [];
     let TOKEN;
     let studentDescription = '';
@@ -47,6 +51,51 @@ function Student_summary(){
     let studentOccupation;
     let student_avatar;
     let binaryData; 
+    let randomBeforeUrlavatar;
+
+    useEffect(() => {
+        // Check if the student has an image in localStorage
+        const studentImage = localStorage.getItem('image');
+        if (studentImage) {
+            setImg(studentImage);
+            setUserHasImg(true);
+        } else {
+            // If no image is found, generate a random avatar
+            const student_avatars = Object.values(avatars);
+            const randomIndex = Math.floor(Math.random() * student_avatars.length);
+            randomAvatar = student_avatars[randomIndex];
+            console.log(randomAvatar)
+            setImg(randomAvatar);
+        }
+    }, []);
+
+    useEffect(() => {
+        // If the user doesn't have an image and a random avatar is used,
+        // convert the random avatar to base64 and store it
+        if (!userHasImg) {
+            getBase64FromImage(img)
+                .then(base64Image => {
+                    // Store the base64 image in localStorage
+                    localStorage.setItem('image', base64Image);
+                })
+                .catch(error => {
+                    console.error('Error converting image to base64:', error);
+                });
+        }
+    }, [img, userHasImg]);
+    
+    getBase64FromImage(img)
+    .then(base64String => {
+        console.log("Base64 representation of the SVG image:", base64String);
+        // Use the base64String as needed
+    })
+    .catch(error => {
+        console.error("Error converting image to base64:", error);
+    });
+    
+    
+
+    
 
     if( sessionStorage.getItem('studentData') !== null){
     studentFormData = JSON.parse(sessionStorage.getItem('studentData'));
@@ -119,14 +168,7 @@ function Student_summary(){
         studentPassword = 'not set';
     }
     
-    if (localStorage.getItem('image') !== null) {
-        studentImage = localStorage.getItem('image');
-    }else {
-        const student_avatars = Object.values(avatars);
-        const randomIndex = Math.floor(Math.random() * student_avatars.length);
-        randomAvatar = student_avatars[randomIndex];
-        studentImage = getBase64FromImage(randomAvatar);
-    }
+    
     
     if (sessionStorage.getItem('gdprChecked') !== null){
         studentGdpr = true;
@@ -147,7 +189,7 @@ function Student_summary(){
     
     let taagId = tagIds.join(',');
     const formattedTags = taagId.split(",").map(tag => parseInt(tag.trim()));
-    console.log(formattedTags);
+   
     
    
 
@@ -156,8 +198,7 @@ function Student_summary(){
 
 //handle useruploaded image to server: 
 if( studentImage !== 'not set'){
-    const imageData = studentImage;
-    let binaryDataBefore;  
+    const imageData = studentImage;     
      
     //decode the user provided image, if there is a error set the var to a emoty string. 
     try {
@@ -194,7 +235,7 @@ if( studentImage !== 'not set'){
         avatar: binaryData,
     };
 //    const {  work_place, app_starts, app_ends, occupation } = req.body;
-console.log(requestData.avatar);
+    console.log(requestData.avatar);
     register(requestData, 'student');
      
     if (currentStep < totalSteps) {
@@ -204,18 +245,8 @@ console.log(requestData.avatar);
     sessionStorage.setItem('loggedin', true);
     navigate('/student-finish');
    } 
-   let randomAvatar;
-   useEffect(() => { 
-    if(studentImage === null){
-        const student_avatars = Object.values(avatars);
-        const randomIndex = Math.floor(Math.random() * student_avatars.length);        
-        randomAvatar = student_avatars[randomIndex];
-
-        setImg(randomAvatar);
-    }else{
-        setImg(studentImage);
-    }
-}, [studentImage]);
+   
+  
 
  
     return(
