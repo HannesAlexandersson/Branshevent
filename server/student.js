@@ -390,7 +390,7 @@ router.post('/search', (req, res) => {
   const workPlace = req.body.workPlace;
   const tags = req.body.tags;
 
-  let query = 'SELECT Student.* FROM Student, Student_tags';
+  let query = 'SELECT Student.*, Student_avatar.name as avatar_name FROM Student, Student_tags LEFT JOIN Student_avatar ON (Student_avatar.student_id = Student.id) ';
   let joinWord = 'WHERE';
 
   if (searchString) {
@@ -409,7 +409,7 @@ router.post('/search', (req, res) => {
 
   query = query + ' GROUP BY Student.id';
 
-
+console.log(query);
   db.all(query, (err, students) => {
     if (err) {
       console.error(err.message);

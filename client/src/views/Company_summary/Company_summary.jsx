@@ -182,14 +182,8 @@ function Company_summary(){
         gdpr: compGdpr,
         avatar: binaryData,
     };
-<<<<<<< HEAD
     register(requestData, 'company');
-=======
-    SendDataToServer(requestData, endpoint);
->>>>>>> Hannes-branch
     
-    
-     
     if (currentStep < totalSteps) {
         setCurrentStep(currentStep + 1);
     }

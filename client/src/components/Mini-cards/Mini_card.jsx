@@ -1,31 +1,19 @@
-<<<<<<< HEAD
-
-import { locationBlack, userSml, heartRed } from '../../assets/Icons';
-import { heart, heartlight } from '../../assets/Icons/dropdownicons';
-import * as avatarsc from '../../assets/company_default_avatars/index';
-import style from './mini_card.module.css';
-import { addFavoriteCompany, removeFavoriteCompany } from '../../apiFunctions/student.jsx';
-
-function Mini_card({ companyName, firstName, lastName, location, avatar, onHeartClick, favorite}){
-   
-=======
 import { useEffect, useState } from 'react';
-import { locationBlack, userSml } from '../../assets/Icons';
-import { heart, heartlight } from '../../assets/Icons/dropdownicons';
+import { heartRed, locationBlack, userSml } from '../../assets/Icons';
+import { heartlight } from '../../assets/Icons/dropdownicons';
 import * as avatarsc from '../../assets/company_default_avatars/index';
 import style from './mini_card.module.css';
 import Get_avatars from "../get_student_avatar/Get_avatars";
 
-function Mini_card({ companyName, firstName, lastName, work_place, avatarID, onClick, }){
+function Mini_card({ companyName, firstName, lastName, work_place, avatarID, onClick, favorite, onHeartClick}){
     const [img, setImg] = useState(null);
     const [avatarDataObj, setAvatarDataObj] = useState(null);  
     const [avatarLoaded, setAvatarLoaded] = useState(false);
->>>>>>> Hannes-branch
     const compName = companyName;
    /*  let randomAvatar;
     const company_avatars = Object.values(avatarsc); */
     const token = localStorage.getItem('token');
-
+    console.log(avatarID);
     useEffect(() => {
         Promise.all([
             Get_avatars(avatarID, token, 'cavatars/')

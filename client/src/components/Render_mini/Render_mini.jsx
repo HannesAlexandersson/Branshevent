@@ -11,9 +11,7 @@ function Render_mini({ companies, onHeartClick, favorites} ){
   const handleViewCompany = (companyId) => {
     navigate('/view-company', { state: { companyId, companies } });
   };
-<<<<<<< HEAD
 
-  
   // in order to know if we are looking for company_id or student_id later on, we need to decide what key to use
   let favoriteMatchKey
   if (localStorage.getItem("userType") === "student") { 
@@ -31,31 +29,13 @@ function Render_mini({ companies, onHeartClick, favorites} ){
           firstName={company.first_name}
           lastName={company.last_name}
           location={company.location}
-          avatar={company.avatar_id}
+          avatarID={company.avatar_id}
           onHeartClick={() => onHeartClick(company.id, (favorites.find((favorite) => favorite[favoriteMatchKey] == company.id)))}
           favorite={(favorites.find((favorite) => favorite[favoriteMatchKey] == company.id))}
         />
       ))}
     </div>
   );
-=======
-    return(
-       
-            <div className={style.mini_cards_containter}>
-              
-              {companies.map((company) => (
-                <Mini_card  onClick={() => handleViewCompany(company.id)}
-                  key={company.id}
-                  avatarID={company.avatar_id}
-                  companyName={company.company_name}
-                  firstName={company.first_name}
-                  lastName={company.last_name}
-                  location={company.work_place}                 
-                />
-              ))}
-            </div>
-    );
->>>>>>> Hannes-branch
 }
 
 export default Render_mini
