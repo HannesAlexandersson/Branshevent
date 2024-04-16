@@ -26,6 +26,8 @@ function Add_image(){
     const [selectedImage, setSelectedImage] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
 
+    
+  
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file && isFileAllowed(file)) {
@@ -41,6 +43,8 @@ function Add_image(){
         //  is it PNG or JPEG?
         return fileType === 'image/png' || fileType === 'image/jpeg';
     };
+
+    
 
     const handleUpload = () => {
         // if a image is uploaded
