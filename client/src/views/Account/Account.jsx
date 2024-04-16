@@ -67,7 +67,7 @@ function Account(){
         // Clear sessionStorage hen user loggs out
         sessionStorage.clear();
             
-        navigate('/log-in');
+        navigate('/login');
     }
    
     return (

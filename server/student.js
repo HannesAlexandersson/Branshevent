@@ -139,6 +139,8 @@ router.post('/registration', (req, res) => {
           // Retrieve the generated avatar ID
           avatar_id = this.lastID;
           console.log(avatar_id);
+        });
+      }
      
  
     const query = `
@@ -171,11 +173,11 @@ router.post('/registration', (req, res) => {
                 console.log('Tags added successfully');
     
                 const token = jwt.sign({id: studentId, userType: "student"}, SECRET, {expiresIn: 864000});
-                return res.status(200).send({ token: token, userType: 'student' })
+                return res.status(200).send({ token: token, userType: 'student', id: studentId })
             });
         } else {
           const token = jwt.sign({id: studentId, userType: "student"}, SECRET, {expiresIn: 864000});
-          return res.status(200).send({ token: token, userType: 'student' })
+          return res.status(200).send({ token: token, userType: 'student', id: studentId })
 
         }
 
@@ -191,10 +193,7 @@ router.post('/registration', (req, res) => {
       }
    
     });
-  }); //
-}//
-  });
-  
+  }); 
 });
 
 
@@ -236,6 +235,26 @@ router.post('/update', authMiddleware, (req, res) => {
 //get favorites
 router.get('/getFavorites', authMiddleware, (req, res) => {
   const query = 'SELECT * FROM Favorite_company WHERE student_id = ?';
+
+  db.all(query, [req.id], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(rows);
+  });
+});
+
+//get favorites with data
+router.get('/getFavoritesWithData', authMiddleware, (req, res) => {
+  const query = `
+  SELECT
+  Company.company_name AS company_name,
+  Company.avatar_id AS avatar_id,
+  Company.id AS id
+  FROM Company
+  INNER JOIN Favorite_company ON Favorite_company.company_id = Company.id
+  WHERE Favorite_company.student_id = ?`;
 
   db.all(query, [req.id], (err, rows) => {
     if (err) {

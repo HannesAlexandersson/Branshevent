@@ -149,9 +149,6 @@ if( studentImage !== 'not set'){
     const imageData = studentImage;
     let binaryDataBefore;  
      
-    
-    
-    
     //decode the user provided image, if there is a error set the var to a emoty string. 
     try {
         const base64Parts = imageData.split(",");  
@@ -159,7 +156,6 @@ if( studentImage !== 'not set'){
         console.log(binaryData, 'image binary');     
     } catch (error) {
         binaryData = 'empty';
-        
         console.error('Error decoding base64 string:', error);
     }
     

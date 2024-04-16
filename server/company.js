@@ -103,19 +103,19 @@ router.post('/registration', (req, res) => {
       filename = generateRandomCompFilename();     
       
       try {          
-          saveCompanyImageToFilesystem(imageData, filename, (err, imagePath) => {
-              if (err) {
-                  console.error('Error saving image:', err);
-                  console.log('The image may not have been saved properly.');
-              } else {
-                  console.log('Image saved successfully:', imagePath);
-              }
-              });
-          } catch (e) {
-              console.error('Error saving image:', e);
-              console.log('The image may not have been saved properly.');
-          }
+        saveCompanyImageToFilesystem(imageData, filename, (err, imagePath) => {
+            if (err) {
+                console.error('Error saving image:', err);
+                console.log('The image may not have been saved properly.');
+            } else {
+                console.log('Image saved successfully:', imagePath);
+            }
+            });
+        } catch (e) {
+            console.error('Error saving image:', e);
+            console.log('The image may not have been saved properly.');
         }
+    }
 
 
   bcrypt.hash(password, SALT, (err, hashed_password) => {
@@ -135,7 +135,8 @@ router.post('/registration', (req, res) => {
         avatar_id = this.lastID;
         console.log(avatar_id);
 
-
+      });
+    }
 
   const query = `
   INSERT INTO Company (company_name, first_name, last_name, phone_number, email, password, description, open_for_lia, app_start, app_end, work_place, address, company_website, linkedin, gdpr, avatar_id) 
@@ -164,11 +165,11 @@ router.post('/registration', (req, res) => {
             console.log('Tags added successfully');
         
             const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
-            return res.status(200).send({ token: token })
+            return res.status(200).send({ token: token, userType: "company", companyId });
               });
           } else {
             const token = jwt.sign({id: companyId, userType: "company"}, SECRET, {expiresIn: 864000});
-            return res.status(200).send({ token: token })
+            return res.status(200).send({ token: token, userType: "company", companyId });
           }
 
           //3.insert the student id to the avatar table 
@@ -185,10 +186,8 @@ router.post('/registration', (req, res) => {
 
         });
     }); //
-  }//
 });
 
-});
 
 
 
