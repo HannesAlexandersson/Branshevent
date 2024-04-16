@@ -28,8 +28,7 @@ function Favourites(){
     useEffect(() => {
         const fetchData = async () => {
             try {
-            const token = localStorage.getItem("token");
-            const companyData = await get_company_all(token);
+            const companyData = await getFavorites(true);
             setCompanies(companyData);
             } catch (error) {
             console.error("Error fetching company data:", error);
@@ -59,6 +58,9 @@ function Favourites(){
         await toggleFavorite(favoriteId, isFavorite);
         setShouldGetFavorites(!shouldGetFavorites);
     }
+
+
+    
 
      
  

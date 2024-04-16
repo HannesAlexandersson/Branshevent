@@ -35,7 +35,7 @@ router.post('/login', (req, res) => {
   db.get(query, [email], (err, result) => {
     if(err){
       console.log(err.message);
-      return res.status(500).json({error : 'internal server error'});
+      return res.status(500).json({error : 'Internal Server Error'});
     }
     if (!result) {
       console.log('Login fail : No company found');
@@ -171,6 +171,8 @@ router.post('/update', authMiddleware, (req, res) => {
   });
 })
 
+
+//get favorites
 router.get('/getFavorites', authMiddleware, (req, res) => {
   const query = 'SELECT * FROM Favorite_student WHERE company_id = ?';
 
@@ -182,6 +184,31 @@ router.get('/getFavorites', authMiddleware, (req, res) => {
     res.json(rows);
   });
 });
+
+
+
+//get favorites with data
+router.get('/getFavoritesWithData', authMiddleware, (req, res) => {
+  const query = `
+  SELECT
+  Student.first_name AS first_name,
+  Student.last_name AS last_name,
+  Student.work_place AS work_place,
+  Student.avatar_id AS avatar_id,
+  Student.id AS id
+  FROM Student
+  INNER JOIN Favorite_student ON Favorite_student.student_id = Student.id
+  WHERE Favorite_student.company_id = ?`;
+
+  db.all(query, [req.id], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.json(rows);
+  });
+});
+
 
 //add favorite student
 router.post('/addToFavorite', authMiddleware, (req, res) => {
@@ -271,7 +298,7 @@ router.get('/searchByName/:companyName', authMiddleware, (req, res) => {
 });
 
 
-//search by tag & id
+//search by name and tags
 router.post('/searchByNameAndTags', authMiddleware, (req, res) => {
 
   const tags = req.body.tags;

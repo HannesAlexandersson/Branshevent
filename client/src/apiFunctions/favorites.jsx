@@ -1,9 +1,13 @@
 import apiUrl from "./config";
 
-export async function getFavorites() {
+export async function getFavorites(withData) {
     const userType = localStorage.getItem("userType");
     const token = localStorage.getItem("token");
-    const endpointUrl = (userType === "student") ? 'student/getFavorites' : 'company/getFavorites';
+    let endpointUrl = (userType === "student") ? 'student/getFavorites' : 'company/getFavorites';
+    if (withData) {
+        endpointUrl += 'WithData';
+    }
+    
     return fetch(apiUrl + endpointUrl, { 
         method: 'GET',
         headers: {
