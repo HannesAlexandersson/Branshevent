@@ -67,8 +67,9 @@ function Account(){
         // Clear localStorage when user loggs out
         localStorage.clear();        
         // Clear sessionStorage hen user loggs out
-        sessionStorage.clear();      
-        navigate('/log-in');       
+        sessionStorage.clear();
+            
+        navigate('/log-in');
     }
    
     return (
