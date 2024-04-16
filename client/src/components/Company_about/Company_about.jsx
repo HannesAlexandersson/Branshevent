@@ -98,7 +98,11 @@ function Company_about( { userData } ){
             <div className={style.work_details_wrapper}>
                         <div className={style.work_subheader}>
                             <img src={wrench} />
-                            <p className={style.work_subheader_txt}>We work with</p>
+                            {companyAbout.company_name === null ? (
+                                <p className={style.work_subheader_txt}>I work with</p>
+                            ) : (
+                                <p className={style.work_subheader_txt}>We work with</p>
+                            )}
                         </div>
 
                         <Tags_name_from_server selectedTagNames={selectedTagNames} />

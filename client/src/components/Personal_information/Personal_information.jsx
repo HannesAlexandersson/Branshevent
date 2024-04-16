@@ -25,18 +25,17 @@ function Personal_information({ userData }){
            
             const parsedData = JSON.parse(userData);
             setUserDataObj(parsedData);
-          /*  console.log(parsedData.app_start, 'inside hook pI'); */
+         
             }
           
     }, [userData]);
     
-    /* console.log(userData, 'p info userdata');
-    console.log(userDataObj, 'p info userObj'); */
+    
     const token = localStorage.getItem('token');
     const decodedToken = JSON.parse(atob(token.split('.')[1]));
     const id = decodedToken.id;
     let userRole;    
-    /* console.log(decodedToken.id); */
+    
     //set the userole
     if(decodedToken.userType === 'student'){
         userRole = 'student';
@@ -60,7 +59,7 @@ function Personal_information({ userData }){
     };
     const saveChangesToDatabase = (section) => {
     console.log('Saving changes to database...');
-    console.log('Updated data:', userDataObj);
+    
 
     // Update the database based on the user's role
     if (userRole === 'company') {

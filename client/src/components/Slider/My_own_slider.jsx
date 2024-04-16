@@ -7,11 +7,7 @@ import Get_avatars from '../../components/get_student_avatar/Get_avatars.jsx';
 import * as avatarsc from '../../assets/company_default_avatars/index';
 import Slide_show from './Slide_show.jsx';
 
-/*  } else { //the others gets a random default avatar assigned to them
-              const companyAvatars = Object.values(avatarsc);
-              const randomIndex = Math.floor(Math.random() * companyAvatars.length);
-              imgUrls[company.id] = companyAvatars[randomIndex];
-            } */
+
   
   function MyOwnSlider({ companies, onClick }) {
     const [imgMap, setImgMap] = useState({});
@@ -40,20 +36,18 @@ import Slide_show from './Slide_show.jsx';
         for (const company of updatedCompanies) {          
           //each object in the list that have a avatar_id set gets their avatars fetched
           if (company.avatar_id) {
-            if ('occupation' in company){//NEW TO KNOW WHAT USER IS LOOKING AT
-              console.log('inside getstudentavatars');
+            if ('occupation' in company){
+              
               try {
                 const avatarData = await Get_avatars(company.id, token, 'studentAvatars/');
-                imgUrls[company.id] = URL.createObjectURL(avatarData); 
-                console.log(imgUrls, 'img list');               
+                imgUrls[company.id] = URL.createObjectURL(avatarData);                              
               } catch (error) {
                 console.error('Error fetching company data:', error);
               }           
-            }else if ('company_name' in company){//NEW             
+            }else if ('company_name' in company){             
               try {//
                 const avatarData = await Get_avatars(company.id, token, 'companyAvatars/');
-                imgUrls[company.id] = URL.createObjectURL(avatarData);
-                console.log(imgUrls, 'img list');
+                imgUrls[company.id] = URL.createObjectURL(avatarData);                
               } catch (error) {
                 console.error('Error converting blob company data:', error);
               }  
@@ -75,7 +69,7 @@ import Slide_show from './Slide_show.jsx';
     const handleViewCompany = (companyId) => {
       navigate('/view-company', { state: { companyId, companies } });
     };
-    console.log(imgMap, 'img map'); 
+     
     return (
       <Slide_show companies={companies}  >
         {updatedCompanies.map((company) => (
@@ -93,10 +87,18 @@ import Slide_show from './Slide_show.jsx';
               </div>
             </div>
             <div className={style.text_area}>
-              <div className={style.name_box}>
-                <img src={briefcase} alt="briefcase icon" />
-                <p>{company.company_name}</p>
+              {'company_name' in company ? (
+                <div className={style.name_box}>
+                  <img src={briefcase} alt="briefcase icon" />
+                  <p>{company.company_name}</p>
+                </div>
+              ) : (
+                <div className={style.name_box}>
+                  <img src={briefcase} alt="briefcase icon" />
+                  <p>{company.occupation}</p>
               </div>
+              )}
+             
               <div className={style.name_box}>
                 <div className={style.name_loc_wrapper}>
                   <img src={userSml} alt="user icon" />

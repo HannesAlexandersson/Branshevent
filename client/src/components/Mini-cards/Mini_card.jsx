@@ -51,7 +51,7 @@ function Mini_card({ companyName, firstName, lastName, work_place, avatarID, onC
     
     return(
             <>
-                <div className={style.mini_card_wrapper} >
+                <div className={style.mini_card_wrapper} onClick={onClick}>
                     <div className={style.mini_card_img_wrapper}>
                         <div className={style.img_heart_wrap}>
                             <img src={ favorite && heartRed || heartlight } className={style.heart} onClick={onHeartClick}/>

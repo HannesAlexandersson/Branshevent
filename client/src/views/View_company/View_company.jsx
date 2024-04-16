@@ -4,8 +4,8 @@ import { Nav } from '../index.js';
 import { Company_card, QR_Code, White_btn, Company_about, Company_contact, Spacer_bottom } from '../../components/index.js';
 import * as avatarsc from '../../assets/company_default_avatars/index';
 import style from './view_company.module.css';
-import { backArrow, briefcase, circle_user_round, } from '../../assets/Icons';
-import { account, accountBlack } from '../../assets/Icons/dropdownicons/index.js';
+import { backArrow, briefcase } from '../../assets/Icons';
+import {  accountBlack } from '../../assets/Icons/dropdownicons/index.js';
 import Get_avatars from '../../components/get_student_avatar/Get_avatars.jsx';
 
 function View_company(){

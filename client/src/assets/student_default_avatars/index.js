@@ -1,6 +1,7 @@
-export { default as studAvatar } from './user.png';
-/* export { default as avatar2 } from './default2.svg';
+export { default as avatar1 } from './default1.svg';
+ export { default as avatar2 } from './default2.svg';
 export { default as avatar3 } from './default3.svg';
+/*
 export { default as avatar4 } from './default4.svg';
 export { default as avatar5 } from './default5.svg';
 export { default as avatar6 } from './default6.svg';

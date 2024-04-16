@@ -71,8 +71,7 @@ function Personal_preview(){
               Get_avatars(id, token, 'studentAvatars/'),                                  
             ])
             .then(([avatarData]) => {           
-              setAvatarLoaded(true);
-              console.log('avatarload true');
+              setAvatarLoaded(true);             
               setAvatarDataObj(avatarData);
             })
             .catch((error) => {
@@ -84,7 +83,7 @@ function Personal_preview(){
             ])
             .then(([avatarData]) => {          
               setAvatarLoaded(true);          
-              console.log('avatarload true');        
+                   
               setAvatarDataObj(avatarData);     
             })
             .catch((error) => {
@@ -93,7 +92,7 @@ function Personal_preview(){
           }
         }else{
           setAvatarLoaded(true);
-          console.log('avatar loaded to true');
+         
         }
       }, [userDataObj.avatar_id]);
 
@@ -113,19 +112,18 @@ function Personal_preview(){
     }, [userDataObj, userType]);
  
     useEffect(() => {
-      console.log('before setting random');
+      
       if(dataLoaded === true){
-        console.log('avatarload && dataloaded true');
+       
       //then check if there is no user image, we supply the user with a default avatar
         if(avatarDataObj === null){   
           if (userRole === 'student'){  
-            console.log('random student');             
+                         
                   // select a avatar at random from all the student avatarsCONFIRMED
                   const student_avatars = Object.values(avatars);
                   const randomIndex = Math.floor(Math.random() * student_avatars.length);
                   randomAvatar = student_avatars[randomIndex];
-          }else if(userRole === 'company'){
-            console.log('random company');
+          }else if(userRole === 'company'){          
                   const company_avatars = Object.values(avatarsc);
                   const randomIndex = Math.floor(Math.random() * company_avatars.length);
                   randomAvatar = company_avatars[randomIndex];
@@ -137,14 +135,14 @@ function Personal_preview(){
     //set the img state to either the default random avatar or the user avatar
     useEffect(() => {   
       if(dataLoaded){       
-        console.log('set img if dataload');            
+                   
             if (randomAvatar) {             
                 // Set image state with that random selected avatar, if randomAvatar is set, 
                 // that means the user didn't upload an image
-                console.log('set img random');
+               
                 setImg(randomAvatar);                      
             } else if (avatarDataObj) {
-              console.log('set img real');
+             
                 // Else, it means the user has an image. Decode the binary image data to base64
                 const reader = new FileReader();
                 reader.onload = function(event) {

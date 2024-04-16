@@ -2,14 +2,11 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Progressbar, Red_btn, Spacer_bottom, White_btn, SendDataToServer, Onlineprofile } from '../../components';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
-/* import * as avatars from '../../assets/student_default_avatars/index.js'; */
-import avatar from './user.png';
+import * as avatars from '../../assets/student_default_avatars/index.js';
 import { Nav } from '../index.js';
-
 import tagsArray from '../../tagArray.js';
 import style from './student_summary.module.css';
 import { register } from '../../apiFunctions/user';
-
 
 
 
@@ -19,7 +16,6 @@ function Student_summary(){
     const [currentStep, setCurrentStep] = useState(6);   
     const totalSteps = 7;
     const [img , setImg ] = useState(null);
-    const [studentImage, setStudentImage] = useState('not set');
     
 
     const reqData = [];
@@ -32,7 +28,7 @@ function Student_summary(){
     let studentParsed;
     let studentLocation;
     let studentPassword;
-    /* let studentImage; */
+    let studentImage;
     let studentFormData;
     let studentGdpr;
     let studentStartDate;
@@ -106,7 +102,7 @@ function Student_summary(){
         studentLocation = sessionStorage.getItem('selectedLocation');
     }else {
         studentLocation = 'not set';
-        console.log('not set image');
+        
     }
     
     if (sessionStorage.getItem('password') !== null) {
@@ -116,30 +112,10 @@ function Student_summary(){
     }
     
     if (localStorage.getItem('image') !== null) {
-       /*  studentImage = localStorage.getItem('image'); */
-       setStudentImage(localStorage.getItem('image'));
-       console.log(studentImage);
+        studentImage = localStorage.getItem('image');
     }else {
-       
-        fetch(avatar)
-            .then(response => response.blob())           
-            .then(blob => {
-                console.log(blob);
-                const reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = () => {
-                    const base64String = reader.result.split(',')[1];//
-                    console.log(reader.result, 'reader');
-                    console.log('Base64 String:', base64String);
-                    setStudentImage(base64String);
-                    console.log(studentImage, 'set student img');
-                };
-            })
-            .catch(error => {
-                console.error('Error converting PNG to base64:', error);
-            });
-           
-            }
+        studentImage = null;
+    }
     
     if (sessionStorage.getItem('gdprChecked') !== null){
         studentGdpr = true;
@@ -168,15 +144,14 @@ function Student_summary(){
    const handleNextStep = () => {
 
 //handle useruploaded image to server: 
-if( studentImage !== 'not set'){
+if( studentImage !== null){
     const imageData = studentImage;
-   
+    let binaryDataBefore;  
      
     //decode the user provided image, if there is a error set the var to a emoty string. 
     try {
         const base64Parts = imageData.split(",");  
-        binaryData = atob(base64Parts[1]); 
-        console.log(binaryData, 'image binary');     
+        binaryData = atob(base64Parts[1]);              
     } catch (error) {
         binaryData = 'empty';
         console.error('Error decoding base64 string:', error);
@@ -217,7 +192,6 @@ if( studentImage !== 'not set'){
     sessionStorage.setItem('loggedin', true);
     navigate('/student-finish');
    } 
-   
    let randomAvatar;
    useEffect(() => { 
     if(studentImage === null){
@@ -315,7 +289,7 @@ if( studentImage !== 'not set'){
                             <div className={style.comp_name}>
                                 <h2>Image attached</h2>
                                 <div className={style.image_wrapper}>                                   
-                                {studentImage === 'not set' ? ( 
+                                {studentImage === null ? ( 
                                         <img src={img} alt="default student avatar" className={style.user_image}/>
                                     ): (
                                         <img src={studentImage} alt="user uploaded image" className={style.user_image}/>
