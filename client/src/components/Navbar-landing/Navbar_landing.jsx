@@ -13,7 +13,7 @@ function Navbar_landing(){
     const day = '24 APRIL';
     //dropdown logic:
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);    
-
+   
     
 
     const toggleDropdown = () => {

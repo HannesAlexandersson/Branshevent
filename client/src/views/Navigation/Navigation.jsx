@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Outlet, Link, } from 'react-router-dom';
+import { useNavigate, Outlet, Link } from 'react-router-dom';
 import { home, event, account, yrgo, heart, heartlight } from '../../assets/Icons/dropdownicons/index.js';
 import styles from './navigation.module.css';
 import Ylogo from '../../assets/Logos/yrgo-logoRed.svg';
@@ -52,6 +52,8 @@ function Navigation(){
     const formatPathname = (pathname) => {
       return pathname.replace(/^\/+|\/+$/g, '');
   };
+
+  
     return(
       <LocationContext.Provider value={{ pathname: formatPathname(pathname), pageTitle }}>
         <div className={styles.main_nav}>

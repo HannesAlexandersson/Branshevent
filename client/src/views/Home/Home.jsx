@@ -165,7 +165,11 @@ function Home(){
 
                     <div className={style.new_companies_slide_card}>
                         <div className={style.new_cmp_head}>
+                        {userType === 'student' ? (
                             <p>New companies</p>
+                        ) : (
+                            <p>New students</p>
+                        )}
                         </div>
                         <div className={style.slide_container}>
                             <Simple_slider companies={searchResult} />       
@@ -175,7 +179,11 @@ function Home(){
                 </div>
 
                 <div className={style.attending_comps}>
+                   {userType === 'student' ? (
                     <p>All companies attending</p>
+                     ):(
+                        <p>All students attending</p>
+                     )}
 
                     <div className={style.mini_cards_containter}>
                         <Render_mini companies={searchResult} onHeartClick={handleToggleFavorites} favorites={favorites}/>

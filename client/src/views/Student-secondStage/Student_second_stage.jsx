@@ -53,17 +53,7 @@ function Student_second_stage(){
         setIsChecked(!isChecked);
     };
 
-    // Function to handle the selected end date
-    /* const handleEndDateSelect = (endDate) => {    
-      
-       setEndDate(endDate);
-    }; */
-    
-    // Function to handle the selected start date
-   /*  const handleStartDateSelect = (startDate) => {
-        setStartDate(startDate); 
-    }; */
-
+   
     //format the date input the format we want
     const formatDate = (date) => {
         if (typeof date === 'object') {

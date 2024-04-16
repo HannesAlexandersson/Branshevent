@@ -130,6 +130,7 @@ router.post('/registration', (req, res) => {
       }
       
       if (filename) {
+        
         //insert the avatar to the avatar table
         db.run('INSERT INTO Student_avatar (name) VALUES (?)', [filename], function(insertErr) {
           if (insertErr) {
@@ -138,19 +139,19 @@ router.post('/registration', (req, res) => {
           console.log('Filename inserted into database successfully');          
           // Retrieve the generated avatar ID
           avatar_id = this.lastID;
-          console.log(avatar_id);
+          console.log(avatar_id, 'avatarid');
         });
       }
-     
+      console.log(avatar_id, 'innanquery');
+
  
     const query = `
     INSERT INTO Student (first_name, last_name, email, password, occupation, phone_number, gdpr, description, github, portfolio, linkedin, behance, work_place, app_start, app_end, avatar_id) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`; 
-
     
     //1. create the student
     db.run(query, [first_name, last_name, email, hashed_password, occupation, phone_number, gdpr,description, github, portfolio, linkedin, behance, work_place, app_start, app_end, avatar_id], function(err) {
-      console.log(work_place);
+      console.log(avatar_id, 'insert student');
         if(err){
             console.error('Error inserting student', err.message);
             return res.status(500).json({ error : 'Internal Server Error' });

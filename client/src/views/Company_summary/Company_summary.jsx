@@ -8,6 +8,15 @@ import { Nav } from '../index.js';
 import style from './company_summary.module.css';
 import { register } from '../../apiFunctions/user';
 
+function getBase64FromImage(imageFile) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(imageFile);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
 function Company_summary(){
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(6);
@@ -107,7 +116,10 @@ function Company_summary(){
     if (localStorage.getItem('image') !== null) {
         companyImage = localStorage.getItem('image');
     } else {
-        companyImage = null;
+        const company_avatars = Object.values(avatarsc);
+        const randomIndex = Math.floor(Math.random() * company_avatars.length);
+        const randomAvatar = company_avatars[randomIndex];       
+        companyImage = getBase64FromImage(randomAvatar);
         
     }
 

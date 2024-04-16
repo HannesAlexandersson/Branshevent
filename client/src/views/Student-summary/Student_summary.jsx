@@ -9,7 +9,14 @@ import tagsArray from '../../tagArray.js';
 import style from './student_summary.module.css';
 import { register } from '../../apiFunctions/user';
 
-
+function getBase64FromImage(imageFile) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(imageFile);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
 
 
 function Student_summary(){
@@ -115,7 +122,10 @@ function Student_summary(){
     if (localStorage.getItem('image') !== null) {
         studentImage = localStorage.getItem('image');
     }else {
-        studentImage = null;
+        const student_avatars = Object.values(avatars);
+        const randomIndex = Math.floor(Math.random() * student_avatars.length);
+        randomAvatar = student_avatars[randomIndex];
+        studentImage = getBase64FromImage(randomAvatar);
     }
     
     if (sessionStorage.getItem('gdprChecked') !== null){
@@ -153,7 +163,7 @@ if( studentImage !== 'not set'){
     try {
         const base64Parts = imageData.split(",");  
         binaryData = atob(base64Parts[1]); 
-        console.log(binaryData, 'image binary');     
+           
     } catch (error) {
         binaryData = 'empty';
         console.error('Error decoding base64 string:', error);
@@ -184,7 +194,7 @@ if( studentImage !== 'not set'){
         avatar: binaryData,
     };
 //    const {  work_place, app_starts, app_ends, occupation } = req.body;
-
+console.log(requestData.avatar);
     register(requestData, 'student');
      
     if (currentStep < totalSteps) {
