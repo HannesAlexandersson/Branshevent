@@ -140,7 +140,7 @@ function Company_summary(){
     
     let taagId = tagIds.join(',');
     const formattedTags = taagId.split(",").map(tag => parseInt(tag.trim()));
-    console.log(formattedTags);
+   
 
    const handleNextStep = () => {
 
@@ -203,6 +203,7 @@ function Company_summary(){
     }    
     
 }, []); 
+
 
 
 

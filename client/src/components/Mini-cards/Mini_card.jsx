@@ -13,7 +13,7 @@ function Mini_card({ companyName, firstName, lastName, work_place, avatarID, onC
    /*  let randomAvatar;
     const company_avatars = Object.values(avatarsc); */
     const token = localStorage.getItem('token');
-    console.log(avatarID);
+    /* console.log(avatarID); */
     useEffect(() => {
         Promise.all([
             Get_avatars(avatarID, token, 'cavatars/')
@@ -30,7 +30,7 @@ function Mini_card({ companyName, firstName, lastName, work_place, avatarID, onC
     useEffect(() => {
         if (avatarLoaded) {
             
-            if (avatarDataObj) {               
+            if (avatarDataObj) {                               
                 const reader = new FileReader();
                 reader.onload = function(event) {
                 const base64Image = event.target.result;
@@ -51,7 +51,7 @@ function Mini_card({ companyName, firstName, lastName, work_place, avatarID, onC
     
     return(
             <>
-                <div className={style.mini_card_wrapper} >
+                <div className={style.mini_card_wrapper} onClick={onClick}>
                     <div className={style.mini_card_img_wrapper}>
                         <div className={style.img_heart_wrap}>
                             <img src={ favorite && heartRed || heartlight } className={style.heart} onClick={onHeartClick}/>

@@ -29,7 +29,7 @@ function Company_card({ userData, img, }){
         }
     };
    
-
+    console.log(userData.website);
     return(
         <>
             <div className={style.redBox}>
@@ -47,8 +47,12 @@ function Company_card({ userData, img, }){
                   
                     <div className={style.user_details}>
                         <img src={briefcase} />
-                        <div className={style.user_name_wrapper}>                                
+                        <div className={style.user_name_wrapper}>
+                        {userData.company_name === null ? (                                
+                            <h1 className={style.user_header}>{userData.occupation}</h1>
+                        ):(
                             <h1 className={style.user_header}>{userData.company_name}</h1>
+                        )}
                         </div>
                     </div>
                    

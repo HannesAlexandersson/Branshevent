@@ -4,7 +4,6 @@ import { Progressbar, Red_btn, Spacer_bottom, White_btn, SendDataToServer, Onlin
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
 import * as avatars from '../../assets/student_default_avatars/index.js';
 import { Nav } from '../index.js';
-
 import tagsArray from '../../tagArray.js';
 import style from './student_summary.module.css';
 import { register } from '../../apiFunctions/user';
@@ -103,7 +102,7 @@ function Student_summary(){
         studentLocation = sessionStorage.getItem('selectedLocation');
     }else {
         studentLocation = 'not set';
-        console.log('not set image');
+        
     }
     
     if (sessionStorage.getItem('password') !== null) {
@@ -137,7 +136,7 @@ function Student_summary(){
     
     let taagId = tagIds.join(',');
     const formattedTags = taagId.split(",").map(tag => parseInt(tag.trim()));
-    console.log(formattedTags);
+    
     
    
 
@@ -145,15 +144,14 @@ function Student_summary(){
    const handleNextStep = () => {
 
 //handle useruploaded image to server: 
-if( studentImage !== 'not set'){
+if( studentImage !== null){
     const imageData = studentImage;
     let binaryDataBefore;  
      
     //decode the user provided image, if there is a error set the var to a emoty string. 
     try {
         const base64Parts = imageData.split(",");  
-        binaryData = atob(base64Parts[1]); 
-        console.log(binaryData, 'image binary');     
+        binaryData = atob(base64Parts[1]);              
     } catch (error) {
         binaryData = 'empty';
         console.error('Error decoding base64 string:', error);
@@ -206,8 +204,6 @@ if( studentImage !== 'not set'){
         setImg(studentImage);
     }
 }, [studentImage]);
-
- 
     return(
         <>
             <div className={style.main}>
@@ -292,8 +288,8 @@ if( studentImage !== 'not set'){
                             </div>
                             <div className={style.comp_name}>
                                 <h2>Image attached</h2>
-                                <div className={style.image_wrapper}>
-                                    {studentImage === null ? ( 
+                                <div className={style.image_wrapper}>                                   
+                                {studentImage === null ? ( 
                                         <img src={img} alt="default student avatar" className={style.user_image}/>
                                     ): (
                                         <img src={studentImage} alt="user uploaded image" className={style.user_image}/>
@@ -302,7 +298,7 @@ if( studentImage !== 'not set'){
                             </div>
                         </div>
                     </div>
-
+                    
                     <div className={style.container_last}>
                         <div className={style.red_ball}>
                             3

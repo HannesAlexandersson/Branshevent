@@ -34,9 +34,9 @@ function Contact({ userData }){
      //set the company data from the provided prop , if the userData contains a property that name is company name then the user is a company else a stuedtn
      
      useEffect(() => {
-        /* console.log('contact hook', userData); CONFIRMED*/       
+              
         if (userData && userData.company_name !== undefined) {
-           /*  console.log('contact hook inside if', userData); CONFIRMED*/
+           
            setUserRole('company');           
             setCompanyContact(userData);
             setContactLoaded(true);

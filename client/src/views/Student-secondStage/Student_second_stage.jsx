@@ -1,11 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import validator from 'validator';
 import { calendarIcon, add, backArrow, nextArrow, image, redInfo } from '../../assets/Icons/index.js';
-import { Progressbar, White_btn, Red_btn, Skip_btn, StartDate_picker, EndDate_picker, Onlineprofile, Spacer_bottom, Add_image  } from '../../components';
+import { Progressbar, White_btn, Red_btn, Skip_btn, Onlineprofile, Spacer_bottom, Add_image  } from '../../components';
 import { Nav, } from '../index.js';
 import 'react-datepicker/dist/react-datepicker.css'
 import style from './student_secondstage.module.css';
+
+ 
 
 function Student_second_stage(){       
     const [isChecked, setIsChecked] = useState(false);
@@ -16,6 +17,7 @@ function Student_second_stage(){
     const navigate = useNavigate();
     const totalSteps = 7;
     const placeholderText = "A short description about you";   
+
     
 
     useEffect(() => {
@@ -53,17 +55,7 @@ function Student_second_stage(){
         setIsChecked(!isChecked);
     };
 
-    // Function to handle the selected end date
-    /* const handleEndDateSelect = (endDate) => {    
-      
-       setEndDate(endDate);
-    }; */
-    
-    // Function to handle the selected start date
-   /*  const handleStartDateSelect = (startDate) => {
-        setStartDate(startDate); 
-    }; */
-
+   
     //format the date input the format we want
     const formatDate = (date) => {
         if (typeof date === 'object') {
@@ -79,6 +71,9 @@ function Student_second_stage(){
     };
 
     const handleNextStep = () => {
+       /*  if(localStorage.getItem('image') === null){
+           saveImageToLocalStorage(studAvatar);
+        } */
         // Perform validation the user inputted description, If its empty prompt the user for input
         if (description.trim() === '') {
             alert('Please provide a description for your company.');

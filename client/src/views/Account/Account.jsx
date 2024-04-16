@@ -11,10 +11,10 @@ function Account(){
     const [showPersonalInfo, setShowPersonalInfo] = useState(true); // set to true to mount the state fromt he start
     const [showProfilePreview, setShowProfilePreview] = useState(false); // set to default false to hide the preview until iser clicks the btn
     const [userData, setUserData] = useState(null);
-    const [userDataLoaded, setUserDataLoaded] = useState(false);
+    /* const [userDataLoaded, setUserDataLoaded] = useState(false); */
     const navigate = useNavigate();
 
-   
+    
     
   
      // first we need to find out what userrole is here
@@ -30,14 +30,16 @@ function Account(){
     }else if(decodedToken.userType === 'company' ){
         userRole = 'company';
     }
+  
    
 //the hook fetch the data CONFIRMED
     useEffect(() => {
+        
         if (decodedToken.userType === 'student') {
             get_a_student(token, id)
                 .then((rows) => {
                     setUserData(JSON.stringify(rows));  
-                    setUserDataLoaded(true);                  
+                  /*   setUserDataLoaded(true);  */                 
                 })
                 .catch((error) => {
                     console.error('Error fetching student data:', error);
@@ -46,8 +48,7 @@ function Account(){
             get_a_company(token, id)
             .then((rows) => {
                 setUserData(JSON.stringify(rows));    
-                setUserDataLoaded(true); 
-                console.log('inside account fetch userdata for comp');   
+              /*   setUserDataLoaded(true); */                  
             })
             .catch((error) => {
                 console.error('Error fetching company data:', error);
@@ -55,15 +56,16 @@ function Account(){
         }else{
             console.log('error fetching userdata');
         }
+   
         }, [decodedToken.userType, id, token]);/*it was empty */
 
     
    
 
     const handleLogOut = () => {
+       
         // Clear localStorage when user loggs out
-        localStorage.clear();
-
+        localStorage.clear();        
         // Clear sessionStorage hen user loggs out
         sessionStorage.clear();
             

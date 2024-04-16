@@ -75,7 +75,7 @@ router.get('/companyAvatars/:companyId', (req, res) => {
       }
   
       if (!row) {
-        return res.status(404).json({ error: 'Student not found' });
+        return res.status(404).json({ error: 'company id not found' });
       }
       //we have the avatar id
       const { avatar_id } = row;

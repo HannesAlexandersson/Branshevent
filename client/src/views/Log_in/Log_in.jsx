@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {  Spacer_bottom } from '../../components/index';
 import { Nav } from '../index';
 import style from './login.module.css';
@@ -13,6 +13,8 @@ function Log_in(){
     const [errors, setErrors] = useState('');
     const [userType, setUserType] = useState('');
     sessionStorage.clear;
+    localStorage.clear;
+    
 
     const handleUsernameChange = (event) => {
         setEmail(event.target.value);
