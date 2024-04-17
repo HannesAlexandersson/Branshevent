@@ -44,6 +44,15 @@ function Personal_information({ userData }){
     }
    
 
+    const userDataObj = JSON.parse(userData);
+    let userRole;
+    if ('company_name' in userDataObj) {
+        userRole = 'company';
+    }else{
+        userRole = 'student';
+    }
+    
+
     const handleEditToggle = (section) => {
         if (!editMode[section]) {
             // If not in edit mode, switch to edit mode
@@ -123,7 +132,6 @@ function Personal_information({ userData }){
         Update_student(updatedData, endpoint, token);
         
     };
-  
     useEffect(() => {
         const fetchTags = async (id, token, userRole) => {
             try {
@@ -176,8 +184,6 @@ function Personal_information({ userData }){
     //set the display variables to the formatted dates
     const app_start = formattedStartDate;
     const app_end = formattedEndDate;
-
-
 
     return(
         <>
@@ -259,7 +265,9 @@ function Personal_information({ userData }){
                                         type="text"
                                         name="firstname"
                                         className={style.inputfield}
+
                                         onChange={(e) => setUserDataObj({ ...userDataObj, first_name: e.target.value })}
+
                                         value={userDataObj.first_name}
                                     />
                                     ) : ( 
@@ -337,7 +345,10 @@ function Personal_information({ userData }){
                                             type="text"
                                             name="companyAddress"
                                             className={style.inputfield}
+
                                             onChange={(e) => setUserDataObj({ ...userDataObj, address: e.target.value })}
+
+                    
                                             value={userDataObj.address}
                                         />
                                     ) : ( 
@@ -380,7 +391,8 @@ function Personal_information({ userData }){
                                         <input 
                                         className={style.inputfield}
                                         type="password"
-                                        disabled                                        
+
+                                        disabled                                                                               
                                         value={userDataObj.password}
                                     />
                                     )}                                   
@@ -435,8 +447,13 @@ function Personal_information({ userData }){
                                 className={style.inputfield}
                                 type="text"
                                 name="application-periodStart"
+
                                 onChange={(e) => setUserDataObj({ ...userDataObj, app_start: e.target.value })}
                                 value={app_start}
+
+                                disabled
+                                value={userDataObj.app_start}
+
                                 />
                                 ):(
                                     <input 
@@ -452,8 +469,13 @@ function Personal_information({ userData }){
                                 className={style.inputfield}
                                 type="text"
                                 name="application-periodEnd"
+
                                 onChange={(e) => setUserDataObj({ ...userDataObj, app_end: e.target.value })}
                                 value={app_end}
+
+                                
+                                
+
                                 />
                                  ):(
                                     <input 
@@ -486,6 +508,7 @@ function Personal_information({ userData }){
                             )}
 
                                 {userRole === 'student' ? (
+
                                     <div>
                                         <label className={style.label} htmlFor='online-profiles'>Github</label>
                                         {editMode.onlineProfiles ? (
@@ -527,6 +550,9 @@ function Personal_information({ userData }){
                                             />
                                         )}
                                     </div>
+
+                                   
+
                                 )}
                                
                             </div>

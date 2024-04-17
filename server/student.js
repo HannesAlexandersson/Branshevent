@@ -346,6 +346,8 @@ router.get('/searchByName/:studentName', authMiddleware, (req, res) => {
 router.get('/:studentId/tags', (req, res) => {
   const studentId = req.params.studentId;
 
+
+
   // query to retrieve tag IDs associated with the given company ID to render the tags
   const query = `
     SELECT tag_id 
@@ -353,7 +355,10 @@ router.get('/:studentId/tags', (req, res) => {
     WHERE student_id = ?;
   `;
 
+
   db.all(query, [studentId], (err, rows) => {
+
+
     if (err) {
       console.error('Error retrieving tags:', err);
       res.status(500).json({ error: 'Internal server error' });
@@ -365,6 +370,7 @@ router.get('/:studentId/tags', (req, res) => {
     }
   });
 });
+
 
 
 //search by tag & id
@@ -442,6 +448,8 @@ router.get('/:studentId', authMiddleware, (req, res) => {
     res.json(rows);
   });
 });
+
+
 
 
 export default router;
