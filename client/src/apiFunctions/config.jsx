@@ -1,4 +1,4 @@
-const apiUrl = 'https://liameetup.vercel.app/'
+const apiUrl = 'https://liameetup.vercel.app/api/'
 
 
 export default apiUrl;
