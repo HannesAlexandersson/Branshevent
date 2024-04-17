@@ -1,7 +1,7 @@
 // https://liameetup.vercel.app/api/
 //http://localhost:3000/api/avatars/
 function Get_avatars( id, token, endpoint){    
-    const baseUrl = 'https://liameetup.vercel.app/api/avatars/';
+    const baseUrl = ' https://brancheventapi.azurewebsites.net/api/avatars/';
     const providedEndpoint = endpoint;
     const userId = id;
     const url = baseUrl + providedEndpoint + userId;

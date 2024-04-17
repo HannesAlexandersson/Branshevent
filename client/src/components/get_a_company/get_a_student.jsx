@@ -2,7 +2,7 @@
 //https://liameetup.vercel.app/api/
 function get_a_student(token, id){
     const companyId = id;
-    const baseUrl = 'https://liameetup.vercel.app/api/student/';
+    const baseUrl = ' https://brancheventapi.azurewebsites.net/api/student/';
     const url = baseUrl + companyId;
 
     return fetch(url, { 

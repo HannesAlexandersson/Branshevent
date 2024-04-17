@@ -3,7 +3,7 @@
 //https://liameetup.vercel.app/api/
 function get_company_tags( id, token){
     const companyId = id;
-    const baseUrl = 'https://liameetup.vercel.app/api/company/';
+    const baseUrl = ' https://brancheventapi.azurewebsites.net/api/company/';
     const end = '/tags';
     const url = baseUrl + companyId + end;
    

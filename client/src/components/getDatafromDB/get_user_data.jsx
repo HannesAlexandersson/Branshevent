@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode";
 //https://liameetup.vercel.app/api/
 //http://localhost:3000/api/
 function get_user_data(endpoint, email, password, token) {
-    const baseUrl = 'https://liameetup.vercel.app/api/';
+    const baseUrl = ' https://brancheventapi.azurewebsites.net//api/';
     const endpointUrl = endpoint;
     const url = baseUrl + endpointUrl;
 

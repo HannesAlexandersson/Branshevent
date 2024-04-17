@@ -2,7 +2,7 @@
 //http://localhost:3000/api/company/all
 //https://liameetup.vercel.app/api/
 function get_company_all( token ) {
-    const url = 'https://liameetup.vercel.app/api/company/all';
+    const url = ' https://brancheventapi.azurewebsites.net/api/company/all';
     
 
     return fetch(url, { 

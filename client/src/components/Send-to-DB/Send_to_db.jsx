@@ -2,7 +2,7 @@
 
 //https://liameetup.vercel.app/
 function SendDataToServer(userData, endpoint) {
-const baseUrl = 'https://liameetup.vercel.app/';
+const baseUrl = ' https://brancheventapi.azurewebsites.net/';
 const endpointUrl =  endpoint;
 const url = baseUrl + endpointUrl;
 fetch(url, { 

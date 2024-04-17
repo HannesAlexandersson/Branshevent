@@ -1,8 +1,8 @@
 //http://localhost:3000/api/
-//https://liameetup.vercel.app/api/
+//https://liameetup.vercel.app/api/onrender.com
 function get_a_company(token, id){
     const companyId = id;
-    const baseUrl = 'https://liameetup.vercel.app/api/company/';
+    const baseUrl = ' https://brancheventapi.azurewebsites.net/api/company/';
     const url = baseUrl + companyId;
 
     return fetch(url, { 

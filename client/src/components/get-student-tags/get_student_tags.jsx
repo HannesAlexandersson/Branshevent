@@ -2,7 +2,7 @@
 //https://liameetup.vercel.app/api/
 function get_student_tags( id, token){
     const companyId = id;
-    const baseUrl = 'https://liameetup.vercel.app/api/student/';
+    const baseUrl = ' https://brancheventapi.azurewebsites.net/api/student/';
     const end = '/tags';
     const url = baseUrl + companyId + end;
    

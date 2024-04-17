@@ -1,7 +1,7 @@
 //https://liameetup.vercel.app/
 //http://localhost:3000/
 function Update_company(updatedData, endpoint, token) {
-    const baseUrl = 'https://liameetup.vercel.app/';
+    const baseUrl = ' https://brancheventapi.azurewebsites.net/';
     const endpointUrl = endpoint;
     const url = baseUrl + endpointUrl;
     fetch(url, { 
