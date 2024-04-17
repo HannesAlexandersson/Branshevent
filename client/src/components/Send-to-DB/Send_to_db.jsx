@@ -1,8 +1,8 @@
+//http://localhost:3000/
 
-
-
+//https://liameetup.vercel.app/
 function SendDataToServer(userData, endpoint) {
-const baseUrl = 'http://localhost:3000/';
+const baseUrl = 'https://liameetup.vercel.app/';
 const endpointUrl =  endpoint;
 const url = baseUrl + endpointUrl;
 fetch(url, { 
