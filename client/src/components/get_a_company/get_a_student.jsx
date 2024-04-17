@@ -1,6 +1,6 @@
 function get_a_student(token, id){
     const companyId = id;
-    const baseUrl = 'http://localhost:3000/api/student/';
+    const baseUrl = 'https://liameetup.vercel.app/api/student/';
     const url = baseUrl + companyId;
 
     return fetch(url, { 
