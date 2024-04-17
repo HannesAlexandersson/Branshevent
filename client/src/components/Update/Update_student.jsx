@@ -3,7 +3,7 @@
 
 
 function Update_student(updatedData, endpoint, token) {
-    const baseUrl = 'http://localhost:3000/api/';
+    const baseUrl = 'http://localhost:3000/';
     const endpointUrl = endpoint;
     const url = baseUrl + endpointUrl;
     fetch(url, { 
