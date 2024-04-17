@@ -1,6 +1,6 @@
 // company/companyAvatars, student/studentAvatars
 function Get_avatars( id, token, endpoint){    
-    const baseUrl = 'https://liameetup.vercel.app/api/avatars/';
+    const baseUrl = 'http://localhost:3000/api/api/avatars/';
     const providedEndpoint = endpoint;
     const userId = id;
     const url = baseUrl + providedEndpoint + userId;
