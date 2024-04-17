@@ -45,6 +45,7 @@
     border-radius: 1rem 1rem 0rem 0rem;
     background: var(--grey);
     position: relative;
+    overflow: hidden;
   }
   .img_display_area > img{
     width: 100%;
@@ -131,12 +132,16 @@
     width: 100%;
   }
   .nxt_prev{
-    border: 1px solid var(--secondary-BG);
-    background-color: var(--default-BG);
+    /* border: 1px solid var(--secondary-BG); */
+    border:none;
+    background-color: var(---Grey-40);
     font-family: var(--default-font);
     color: var(--primary-accent);
     border-radius: 5rem;
     cursor: pointer;
+  }
+  .nxt_prev:hover{
+    background-color: var(--Grey-60);
   }
   .prev_nxt_cont{
     bottom: 50%;
@@ -154,6 +159,6 @@
       width: 100%;
     }
     .img_display_area > img{
-      object-fit: contain;
+      object-fit: cover;
     }
   }

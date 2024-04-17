@@ -10,10 +10,10 @@
     height: 100%;
 }
 .img_display_area > img{
-border-radius: 1rem 1rem 0rem 0rem;
-/* align-self: stretch; */
-width: 100%;
-object-fit: contain;
+    border-radius: 1rem 1rem 0rem 0rem;
+    /* align-self: stretch; */
+    width: 100%;
+    object-fit: cover;
 }
 .menu_btns{
     display: flex;
@@ -75,6 +75,9 @@ object-fit: contain;
     flex-direction: row;
     gap: .5rem;
 }
+.user_details > img{
+    scale: 0.6;
+}
 .user_name_wrapper{
 
 }
@@ -91,7 +94,8 @@ object-fit: contain;
 .role_details{
     display: flex;
     flex-direction: row;
-    gap: 2.5rem;
+    gap: 1.5rem;
+    padding-left: 1rem;
 }
 .user_role{
 

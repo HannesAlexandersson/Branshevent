@@ -6,6 +6,9 @@ import Nav from '../Navigation/Navigation.jsx';
 import styles from './company_second_stage.module.css';
 
 
+
+
+
 function Company_second_stage(){
     const [currentStep, setCurrentStep] = useState(4);
     const totalSteps = 7;
@@ -71,6 +74,11 @@ function Company_second_stage(){
 
     
     const handleNextStep = () => {
+      /*   if(localStorage.getItem('image') === null){
+            saveImageToLocalStorage(compAvatar);
+         } */
+
+
         // Perform validation
         if (description.trim() === '') {
             alert('Please provide a description for your company.');
@@ -96,13 +104,13 @@ function Company_second_stage(){
 
         // Save checkbox state to session storage
         if (isNotLookingChecked) {
-            sessionStorage.setItem('noInterns', 'true');
+            sessionStorage.setItem('open_for_lia', 'noInterns');
         }
         if(isDatePendingChecked){
-            sessionStorage.setItem('applicationDatePending', 'true');
+            sessionStorage.setItem('open_for_lia','applicationDatePending');
         }
         if(isContinuousChecked){
-            sessionStorage.setItem('haveOpenings', 'true')
+            sessionStorage.setItem('open_for_lia','haveOpenings')
         }
        
        // Only navigate if all validation checks pass

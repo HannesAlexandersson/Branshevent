@@ -16,6 +16,8 @@ function Onlineprofile(){
     });
     const [errorMessage, setErrorMessage] = useState('');
 
+    let userRole = sessionStorage.getItem('userRole');
+    console.log(userRole);
 
     useEffect(() => {
         // Load form data from sessionStorage to be able to 'prefill' the form if user backtracks
@@ -101,6 +103,7 @@ function Onlineprofile(){
             {showPopup && (
                 <div className={style.popup}>
                     <div className={style.form}>
+                    {userRole === 'company' && (
                         <input
                             type="text"
                             value={profiles.CompanyWebsite}
@@ -108,6 +111,7 @@ function Onlineprofile(){
                             placeholder="Company website URL"
                             className={style.input}
                         />
+                    )}
                         <input
                             type="text"
                             value={profiles.LinkedIn}
@@ -115,6 +119,7 @@ function Onlineprofile(){
                             placeholder="LinkedIn URL"
                             className={style.input}
                         />
+                        {userRole === 'student' && (
                         <input
                             type="text"
                             value={profiles.GitHub}
@@ -122,6 +127,8 @@ function Onlineprofile(){
                             placeholder="GitHub URL"
                             className={style.input}
                         />
+                        )}
+                        {userRole === 'student' && (
                         <input
                             type="text"
                             value={profiles.Portfolio}
@@ -129,6 +136,8 @@ function Onlineprofile(){
                             placeholder="Portfolio URL"
                             className={style.input}
                         />
+                        )}
+                        {userRole === 'student' && (
                         <input
                             type="text"
                             value={profiles.Behance}
@@ -136,6 +145,7 @@ function Onlineprofile(){
                             placeholder="Behance URL"
                             className={style.input}
                         />
+                        )}
                         {errorMessage && <p className={style.error}>{errorMessage}</p>}
                         <div className={style.button_wrapper}>
                             <Red_btn className={style.popup_button} onClick={handleSubmit}>Add</Red_btn>

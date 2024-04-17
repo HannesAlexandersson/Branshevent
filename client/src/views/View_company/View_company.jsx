@@ -1,46 +1,79 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { Nav } from '../index.js';
-import { Card, QR_Code, White_btn, About, Contact } from '../../components/index.js';
+import { Company_card, QR_Code, White_btn, Company_about, Company_contact, Spacer_bottom } from '../../components/index.js';
 import * as avatarsc from '../../assets/company_default_avatars/index';
 import style from './view_company.module.css';
-import { backArrow, briefcase, circle_user_round, } from '../../assets/Icons';
-import { account, accountBlack } from '../../assets/Icons/dropdownicons/index.js';
+import { backArrow, briefcase } from '../../assets/Icons';
+import {  accountBlack } from '../../assets/Icons/dropdownicons/index.js';
+import Get_avatars from '../../components/get_student_avatar/Get_avatars.jsx';
 
 function View_company(){
-    const [showAbout, setShowAbout] = useState(true); 
-    const [showContact, setShowContact] = useState(false); 
+    const [showCompanyAbout, setShowCompanyAbout] = useState(true); 
+    const [showCompanyContact, setShowCompanyContact] = useState(false);    
+    const [avatarDataObj, setAvatarDataObj] = useState(null);  
+    const [avatarLoaded, setAvatarLoaded] = useState(false);
     const [img, setImg] = useState(null);
-  
-    const locations = useLocation();
-    const { companyId, companies } = locations.state;
 
+    //we get the token for db service
+    const token = localStorage.getItem('token');
+  
+   //we provide the viewpage with the company id from home page and the list of all companies.
+    const { state } = useLocation();
+    const { companyId, companies } = state;
+   
+   
+
+    // then we get the correct company from companies using the company id and compare to the companylist
     const company = companies.find(company => company.id === companyId);
-    
-    //if the user havent uploaded a image we use a default random avatar, but we dont want the avatar to re render. so 
-    // we put it in a hook and with an empty dependencie array it only renders once, thus setting the img var only once
+    //then set a var to company, we use this "userData" in about and details view for the personal information so it needs to be the same format even tho its not "personal" this time  
+    const userData = company;
+
+    //we fetch the avatar if the company have one
     useEffect(() => {
-        // Get the random avatar image
+        Promise.all([
+            Get_avatars(companyId, token, 'companyAvatars/')
+        ])
+        .then(([avatarData]) => {
+            setAvatarDataObj(avatarData);
+            setAvatarLoaded(true);
+        })
+        .catch((error) => {
+            console.error('Error fetching company data:', error);
+        });
+    }, [companyId, token]);
+    
+    useEffect(() => {
+        if (avatarLoaded) {
+            
+            if (avatarDataObj) { 
+                console.log('hej blob');               
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                const base64Image = event.target.result;
+                setImg(base64Image);
+                };
+                reader.readAsDataURL(avatarDataObj);
+            } 
+        }
+            
+        // No avatar image, set default image
         const company_avatars = Object.values(avatarsc);
         const randomIndex = Math.floor(Math.random() * company_avatars.length);
         const randomAvatar = company_avatars[randomIndex];
-
-        // Set image state
         setImg(randomAvatar);
-    }, []); 
+        
+    }, [avatarDataObj, avatarLoaded]);
 
-  
+    
     const companyName = company.company_name; 
     const firstName = company.first_name; 
     const lastName = company.last_name; 
     const phone = company.phone_number;
     const email = company.email;
-    const description = company.description;
-    const location = company.location;
-    const startDate =  company.app_start; 
-    const endDate = company.app_end; 
-    const userData = sessionStorage.getItem('userData');
-    const userRole = userData.userType;
+    
+    
+    const userRole = sessionStorage.getItem('userType');
 
 
 
@@ -49,12 +82,12 @@ function View_company(){
      const handleButtonClick = (component) => {
         if (component === 'About') {
             
-            setShowAbout(true);
-            setShowContact(false)
+            setShowCompanyAbout(true);
+            setShowCompanyContact(false)
           
         } else if (component === 'Contact') {
-            setShowAbout(false);
-            setShowContact(true)
+            setShowCompanyAbout(false);
+            setShowCompanyContact(true)
            
         }
     };
@@ -68,7 +101,7 @@ function View_company(){
             <div className={style.main}>
                 <Nav />
 
-                <Card company={company} firstName={firstName} lastname={lastName} email={email} phone={phone} img={img} />
+                <Company_card userData={userData} img={img} />
 
                 <div className={style.footer_btns}>
                     <Link to="/home">
@@ -122,20 +155,20 @@ function View_company(){
 
                                 <div className={style.menu_btns}>
                                     <button
-                                        className={`${style.info_btn} ${showAbout ? style.selected : ''}`}
+                                        className={`${style.info_btn} ${showCompanyAbout ? style.selected : ''}`}
                                         onClick={() => {
-                                            setShowAbout(true);
-                                            setShowContact(false);                                       
+                                            setShowCompanyAbout(true);
+                                            setShowCompanyContact(false);                                       
                                         }}
                                     >
                                         {userRole === 'student' ? 'About me' : 'About us'}
                                     </button>
 
                                     <button
-                                        className={`${style.profile_preview_btn} ${showContact ? style.selected : ''}`}
+                                        className={`${style.profile_preview_btn} ${showCompanyContact ? style.selected : ''}`}
                                         onClick={() => {
-                                            setShowAbout(false);
-                                            setShowContact(true);                                        
+                                            setShowCompanyAbout(false);
+                                            setShowCompanyContact(true);                                        
                                         }}
                                     >
                                         Contact
@@ -143,17 +176,18 @@ function View_company(){
 
                                 
                                 </div>
-                                    
-                                    {showAbout && <About company={company}/>}           
-                                    {showContact && <Contact company={company}/>}
-                                    
+                                    <div className={style.big_screen}>
+                                        {showCompanyAbout && <Company_about userData={userData}/>}           
+                                        {showCompanyContact && <Company_contact userData={userData}/>}
+                                    </div>
                                 </div>
 
                             </div>
                         </div>
 
+                        
                     </div>
-                    
+                    <Spacer_bottom />
                 </div>
 
             </div>

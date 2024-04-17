@@ -2,7 +2,7 @@
 
 
 function get_company_all( token ) {
-    const url = 'http://localhost:3000/api/company/all';
+    const url = 'https://liameetup.vercel.app/api/company/all';
     
 
     return fetch(url, { 

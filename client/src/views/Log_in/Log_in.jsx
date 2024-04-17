@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import {  get_user_data } from '../../components/index';
+import { useNavigate } from 'react-router-dom';
+import {  Spacer_bottom } from '../../components/index';
 import { Nav } from '../index';
 import style from './login.module.css';
+import { login } from '../../apiFunctions/user.jsx'
 
 
 function Log_in(){
@@ -12,6 +13,8 @@ function Log_in(){
     const [errors, setErrors] = useState('');
     const [userType, setUserType] = useState('');
     sessionStorage.clear;
+    localStorage.clear;
+    
 
     const handleUsernameChange = (event) => {
         setEmail(event.target.value);
@@ -35,52 +38,15 @@ function Log_in(){
         }
     }
 
-    const signInStudent = () => {
-        const endpoint = 'api/student/login';
-        get_user_data(endpoint, email, password)
-        .then(data => {          
-            sessionStorage.setItem('loggedIn', 'true');
-            console.log('Successfully logged in');
-
-            if(sessionStorage.getItem('loggedIn') === 'true'){
-                navigate('/home');
-            }
-        })
-        .catch(error => {
-            // If the request fails, set the error status, wich will be renderd to the user
-            if (error.response && (error.response.status === 401 || error.response.status === 403)) {                
-                console.error('Invalid credentials');                
-                setErrors('Incorrect username or password');
-            } else {
-                
-                console.error('Error:', error);
-            }
-        });
+    async function signInStudent() {
+        const promise = login(email, password, 'student');
+        promise.then(() => navigate("/home"));
     }
     
-    const signInCompany = () => {
-        const endpoint = 'api/company/login';
-        get_user_data(endpoint, email, password)
-        .then(data => {          
-            sessionStorage.setItem('loggedIn', 'true');
-            console.log('Successfully logged in');
-            //when a succesulfull log in happens, we set the loggedin to true to navigate to next page
-            if(sessionStorage.getItem('loggedIn') === 'true'){
-                navigate('/home');
-            }
-        })
-        .catch(error => {
-            // If the request fails, check the error status
-            if (error.response && (error.response.status === 401 || error.response.status === 403)) {                
-                console.error('Invalid credentials');                
-                setErrors('Incorrect username or password');
-            } else {
-                
-                console.error('Error:', error);
-            }
-        });
-              
-} 
+     async function signInCompany () {
+        const promise = login(email, password, 'company');
+        promise.then(() => navigate("/home"));
+    } 
 
     //if user press sign up we take them to the registration form
     const handleSignUp = () => {
@@ -149,6 +115,7 @@ function Log_in(){
                 </div>
             </div>
 
+            <Spacer_bottom />
            
         </div>
     </>

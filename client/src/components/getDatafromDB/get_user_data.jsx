@@ -1,14 +1,15 @@
 import { jwtDecode } from "jwt-decode";
 
-function get_user_data(endpoint, email, password) {
-    const baseUrl = 'http://localhost:3000/';
+function get_user_data(endpoint, email, password, token) {
+    const baseUrl = 'https://liameetup.vercel.app/';
     const endpointUrl = endpoint;
     const url = baseUrl + endpointUrl;
 
     return fetch(url, { 
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',            
+            'Content-Type': 'application/json',     
+            'Authorization': 'Bearer ' + token,        
         },
         body: JSON.stringify({ email, password }),
     })

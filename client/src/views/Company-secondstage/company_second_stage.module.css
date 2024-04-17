@@ -21,3 +21,6 @@
     display: flex;
     gap: .275rem;
 }
+.footer_btn_wrapper *{
+    cursor: pointer;
+}

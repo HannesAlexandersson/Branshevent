@@ -47,6 +47,7 @@
 .work_subheader{
     display: flex;
     flex-direction: row;
+    gap: .5rem;
 }
 .work_subheader_txt{
     color: var(--Blue-80);
@@ -106,4 +107,14 @@ letter-spacing: 0.00938rem;
 }
 .chk_label{
     
+}
+.app_period_display_container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: .5rem;
+}
+.dattes{
+    display: flex;
+    flex-direction: column;
 }

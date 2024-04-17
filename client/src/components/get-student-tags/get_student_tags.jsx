@@ -1,8 +1,8 @@
 
 
-function get_company_tags( id, token){
+function get_student_tags( id, token){
     const companyId = id;
-    const baseUrl = 'http://localhost:3000/api/student/student/';
+    const baseUrl = 'https://liameetup.vercel.app/api/student/';
     const end = '/tags';
     const url = baseUrl + companyId + end;
    
@@ -29,4 +29,4 @@ function get_company_tags( id, token){
 
     
 }
-export default get_company_tags
+export default get_student_tags

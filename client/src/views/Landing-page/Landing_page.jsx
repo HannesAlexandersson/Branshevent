@@ -8,17 +8,15 @@ import styles from './landing.module.css';
 
 function Landing_page(){
   const location = useLocation();  
-  
-  sessionStorage.clear();//clear session
+  if(!sessionStorage.getItem('loggedIn') || sessionStorage.getItem('loggedIn') !== 'true'){
+    sessionStorage.clear();//clear session
+    localStorage.clear();
+  }
   useEffect(() => {
     // We only want to have overflow hidden on the landing page so:
     const isLandingPage = location.pathname === '/'; // check to see if we are on the landing page or not
-    // Apply the class if we are on the landing page, and remove it when we are not.  
-   /*  if (isLandingPage) {
-      document.body.classList.add('overflow-hidden');
-    } else {
-      document.body.classList.remove('overflow-hidden');
-    } */
+     
+   
     // default is to remove the overflow hidden property
     return () => {
       document.body.classList.remove('overflow-hidden');
@@ -62,13 +60,15 @@ function Landing_page(){
                     <span style={{ fontWeight: 'bold' }}>WELCOME TO </span>
                     <span style={{ fontWeight: 'normal' }}>INDUSTRY MEETUP</span>
                   </h1>
-                  <p>Perfect place for you to find the perfect intern or internship within Web development or Digital Design!</p>
+                  <p>Perfect place for you to find the perfect intern or internship within Web Development or Digital Design!</p>
                 
+                  {sessionStorage.getItem('loggedIn') !== 'true' && (
                 <div className={styles.join_event_btn_wrapper}>
                   <Link to="/sign-in">
                     <button className={styles.join_the_event} onClick={handleJoinEvent}>JOIN THE EVENT</button>
                   </Link>
                 </div>
+                )}
                 
                 </Main_header>
 
@@ -92,7 +92,7 @@ function Landing_page(){
                   </div>
                   <div className={styles.locTime_box}>
                     <img src={clock} />
-                    <p>Wednesday April Kl 15:00-17:00</p>
+                    <p>Wednesday April 24th, 15:00-17:00</p>
                   </div>
                 </div>
 
@@ -105,14 +105,14 @@ function Landing_page(){
                     <p>
                       Welcome to Yrgo&apos;s mingle-event to find future coworkers or interns during the LIA-period. 
                       You will be able to meet Web-developers and Digital Designers from Yrgo who want to show you what 
-                      they have worked with during the year, and we hope you find a match.
+                      they have worked with during the year. We hope you find a suitable match.
                     </p>
                   </div>
                 
                 </div>
 
                 <div className={styles.top_sidebar}>
-                  <h5>The Web-developers and Digital Designers welcome you!</h5>
+                  <h5>The Web Developers and Digital Designers welcome you!</h5>
                 </div>
 
 
@@ -173,10 +173,12 @@ function Landing_page(){
         </Draggable> 
           
       </div>
-
-      <div className={styles.join}>
-        <Join_btn onClick={handleJoinEvent}>Join the Event</Join_btn>
-      </div>
+      {sessionStorage.getItem('loggedIn') !== 'true' && (
+        <div className={styles.join}>
+          <Join_btn onClick={handleJoinEvent}>Join the Event</Join_btn>
+        </div>
+      )}
+      
       <Gradient/>
       
     </>

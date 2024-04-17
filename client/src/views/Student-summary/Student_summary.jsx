@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Progressbar, Red_btn, Spacer_bottom, White_btn, SendDataToServer } from '../../components';
+import { Progressbar, Red_btn, Spacer_bottom, White_btn, SendDataToServer, Onlineprofile } from '../../components';
 import { backArrow, nextArrow } from '../../assets/Icons/index.js';
-
+import * as avatars from '../../assets/student_default_avatars/index.js';
 import { Nav } from '../index.js';
-
 import tagsArray from '../../tagArray.js';
 import style from './student_summary.module.css';
+import { register } from '../../apiFunctions/user';
 
 
 
@@ -15,12 +15,12 @@ function Student_summary(){
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(6);   
     const totalSteps = 7;
-
+    const [img , setImg ] = useState(null);
     
 
     const reqData = [];
     let TOKEN;
-    let studentDescription;
+    let studentDescription = '';
     let studentUsername;
     let studentOrientation;
     let studentOnlineProfiles;
@@ -30,6 +30,16 @@ function Student_summary(){
     let studentPassword;
     let studentImage;
     let studentFormData;
+    let studentGdpr;
+    let studentStartDate;
+    let studentEndDate;
+    let studentGithub;
+    let studentLinkedIn;
+    let studentBehance;
+    let studentOccupation;
+    let student_avatar;
+    let binaryData; 
+
     if( sessionStorage.getItem('studentData') !== null){
     studentFormData = JSON.parse(sessionStorage.getItem('studentData'));
     }else {
@@ -42,8 +52,18 @@ function Student_summary(){
     }
 
     let liaStartdate = sessionStorage.getItem("startDate");
+    studentStartDate = new Date(liaStartdate);
     let liaEnddate = sessionStorage.getItem("endDate");    
+    studentEndDate = new Date(liaEnddate);
     const hasDates = liaStartdate && liaEnddate;
+
+   
+
+    if (sessionStorage.getItem('occupation') !== null) {
+        studentOccupation = sessionStorage.getItem('studentDescription');
+    }else{
+        studentDescription = 'not set';
+    }
 
    
     if (sessionStorage.getItem('studentDescription') !== null) {
@@ -72,9 +92,7 @@ function Student_summary(){
     
     if (sessionStorage.getItem('selectedTags') !== null) {
         studentTags = JSON.parse(sessionStorage.getItem('selectedTags'));
-        studentParsed = sessionStorage.getItem('selectedTags');
-       
-       
+        studentParsed = sessionStorage.getItem('selectedTags');     
         
     }else {
         studentTags = {tag: 'not set'};
@@ -84,6 +102,7 @@ function Student_summary(){
         studentLocation = sessionStorage.getItem('selectedLocation');
     }else {
         studentLocation = 'not set';
+        
     }
     
     if (sessionStorage.getItem('password') !== null) {
@@ -95,14 +114,15 @@ function Student_summary(){
     if (localStorage.getItem('image') !== null) {
         studentImage = localStorage.getItem('image');
     }else {
-        studentImage = 'not set';
+        studentImage = null;
+    }
+    
+    if (sessionStorage.getItem('gdprChecked') !== null){
+        studentGdpr = true;
+    }else{
+        console.log('NOT set ')
     }
 
-    if (sessionStorage.getItem('studentToken') !== null){
-        TOKEN = sessionStorage.getItem('token');
-    }else{
-        console.log('NO TOKEN RECEVIED')
-    }
     const getSelectedTagIds = () => {
         // Filter the tagsArray to find tags that match the names in studentTags
         const selectedTagIds = tagsArray
@@ -116,10 +136,29 @@ function Student_summary(){
     
     let taagId = tagIds.join(',');
     const formattedTags = taagId.split(",").map(tag => parseInt(tag.trim()));
-    console.log(formattedTags);
+    
     
    
+
+
    const handleNextStep = () => {
+
+//handle useruploaded image to server: 
+if( studentImage !== null){
+    const imageData = studentImage;
+    let binaryDataBefore;  
+     
+    //decode the user provided image, if there is a error set the var to a emoty string. 
+    try {
+        const base64Parts = imageData.split(",");  
+        binaryData = atob(base64Parts[1]);              
+    } catch (error) {
+        binaryData = 'empty';
+        console.error('Error decoding base64 string:', error);
+    }
+    
+}
+
     const endpoint = 'api/student/registration';
     
     
@@ -129,14 +168,22 @@ function Student_summary(){
         email: studentFormData.email,
         password: studentPassword,
         phone_number: studentFormData.phoneNumber,
+        gdpr: studentGdpr,
         description: studentDescription,
+        github: studentOnlineProfiles.GitHub,
+        portfolio: studentOnlineProfiles.Portfolio,
+        linkedin: studentOnlineProfiles.LinkedIn,
+        behance: studentOnlineProfiles.Behance,        
         work_place: studentLocation,
-        tags: formattedTags
+        app_start: studentStartDate,
+        app_end: studentEndDate,
+        tags: formattedTags,
+        occupation: studentOrientation,
+        avatar: binaryData,
     };
-    SendDataToServer(requestData, endpoint);
-   
+//    const {  work_place, app_starts, app_ends, occupation } = req.body;
 
-    
+    register(requestData, 'student');
      
     if (currentStep < totalSteps) {
         setCurrentStep(currentStep + 1);
@@ -145,7 +192,18 @@ function Student_summary(){
     sessionStorage.setItem('loggedin', true);
     navigate('/student-finish');
    } 
-  
+   let randomAvatar;
+   useEffect(() => { 
+    if(studentImage === null){
+        const student_avatars = Object.values(avatars);
+        const randomIndex = Math.floor(Math.random() * student_avatars.length);        
+        randomAvatar = student_avatars[randomIndex];
+
+        setImg(randomAvatar);
+    }else{
+        setImg(studentImage);
+    }
+}, [studentImage]);
     return(
         <>
             <div className={style.main}>
@@ -230,13 +288,17 @@ function Student_summary(){
                             </div>
                             <div className={style.comp_name}>
                                 <h2>Image attached</h2>
-                                <div className={style.image_wrapper}>
-                                    <img src={studentImage} alt="user uploaded image" className={style.user_image}/>
+                                <div className={style.image_wrapper}>                                   
+                                {studentImage === null ? ( 
+                                        <img src={img} alt="default student avatar" className={style.user_image}/>
+                                    ): (
+                                        <img src={studentImage} alt="user uploaded image" className={style.user_image}/>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    
                     <div className={style.container_last}>
                         <div className={style.red_ball}>
                             3

@@ -1,63 +1,79 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import { Nav } from '../index';
-import { Personal_information, Personal_preview, Red_btn, Spacer_bottom } from '../../components';
+import { Personal_information, Personal_preview, Red_btn, Spacer_bottom, get_a_company, } from '../../components';
 
 import style from './account.module.css';
+import get_a_student from '../../components/get_a_company/get_a_student';
 
 //need an endpoint to server to fetch user data here
 function Account(){
     const [showPersonalInfo, setShowPersonalInfo] = useState(true); // set to true to mount the state fromt he start
     const [showProfilePreview, setShowProfilePreview] = useState(false); // set to default false to hide the preview until iser clicks the btn
+    const [userData, setUserData] = useState(null);
+    /* const [userDataLoaded, setUserDataLoaded] = useState(false); */
     const navigate = useNavigate();
 
-    const userRole = sessionStorage.getItem('userType'); 
-    let userData = []; 
-    let company= [];
-    let student= [];
-    let id;
-    let token;
-    if(userRole === 'company'){
-         id = sessionStorage.getItem('id');
-         token = localStorage.getItem('token');
-        //get_a_company(id, token);
-         userData = sessionStorage.getItem('userData');
-        
-    }else if(userRole === 'student'){
-         id = sessionStorage.getItem('id');
-         token = localStorage.getItem('token');
-         userData = sessionStorage.getItem('userData');
-         
+    
+    
+  
+     // first we need to find out what userrole is here
+    const token = localStorage.getItem('token');
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    
+    let userRole; 
+    let id = decodedToken.id;
+    
+    //set the userole
+    if(decodedToken.userType === 'student'){
+        userRole = 'student';
+    }else if(decodedToken.userType === 'company' ){
+        userRole = 'company';
     }
-
-
-
-
-
-    // Function to toggle between displaying personal information and profile preview
-    const handleButtonClick = (component) => {
-        if (component === 'personalInfo') {
-            
-            setShowPersonalInfo(true);
-            setShowProfilePreview(false);
-        } else if (component === 'profilePreview') {
-            setShowPersonalInfo(false);
-            setShowProfilePreview(true);
-        }
-
+  
+   
+//the hook fetch the data CONFIRMED
+    useEffect(() => {
         
-    };
+        if (decodedToken.userType === 'student') {
+            get_a_student(token, id)
+                .then((rows) => {
+                    setUserData(JSON.stringify(rows));  
+                  /*   setUserDataLoaded(true);  */                 
+                })
+                .catch((error) => {
+                    console.error('Error fetching student data:', error);
+                });
+        }else if(decodedToken.userType === 'company'){
+            get_a_company(token, id)
+            .then((rows) => {
+                setUserData(JSON.stringify(rows));    
+              /*   setUserDataLoaded(true); */                  
+            })
+            .catch((error) => {
+                console.error('Error fetching company data:', error);
+            });
+        }else{
+            console.log('error fetching userdata');
+        }
+   
+        }, [decodedToken.userType, id, token]);/*it was empty */
+
+    
+   
 
     const handleLogOut = () => {
-        // Clear localStorage
-        localStorage.clear();
-
-        // Clear sessionStorage
+       
+        // Clear localStorage when user loggs out
+        localStorage.clear();        
+        // Clear sessionStorage hen user loggs out
         sessionStorage.clear();
             
         navigate('/log-in');
     }
+   
     return (
+    
         <div className={style.main}>
             <Nav />
 
@@ -93,8 +109,8 @@ function Account(){
             </div>
 
            
-            {showPersonalInfo && <Personal_information userData={userData}/>}           
-            {showProfilePreview && <Personal_preview userData={userData}/>}
+            {userData && showPersonalInfo && <Personal_information userData={userData} />}
+            {showProfilePreview && <Personal_preview  />}
 
             
 

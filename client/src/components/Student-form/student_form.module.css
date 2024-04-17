@@ -70,7 +70,7 @@
     display: flex;
     font-weight: 900;
     position: fixed;
-    top: 10%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
@@ -90,6 +90,7 @@
 .closeButton{
     background: var(--Grey-80);
     border: none;
+    cursor: pointer;
 }
 .error_txt_wrapper{
     display: flex;

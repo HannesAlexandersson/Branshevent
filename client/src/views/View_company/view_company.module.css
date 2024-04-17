@@ -14,14 +14,21 @@
     width: 100%;
     
     position: fixed;
-    bottom: 5%;
+    bottom: 3%;
     align-items: center;
     z-index: 99;
 }
 .secondary{
     display: none;
 }
+.big_screen{
+    display: none;
+}
 @media (min-width: 1024px){
+    .big_screen{
+        display: flex;
+        flex-direction: column;
+    }
     .main{
         display: none;
     }
@@ -75,15 +82,16 @@
     }
     .sec_img_container{
         display: flex;
-        padding: 0;        
+        padding: 0;
         border-radius: 1rem 1rem 0rem 0rem;
         height: 13.3125rem;
+        width: 100%;
     }
     .sec_img_container > img{
         border-radius: 1rem 1rem 0rem 0rem;
         /* align-self: stretch; */
         width: 100%;
-        object-fit: contain;
+        object-fit: fill;
     }
     .sec_name_container{
         display: flex;
