@@ -8,7 +8,6 @@ export { default as Sign_in } from './Sign-in/Sign_in.jsx';
 export { default as Student_signup_firststage } from './Student-signup-first/Student_signup_firststage.jsx';
 export { default as Student_second_stage } from './Student-secondStage/Student_second_stage.jsx';
 export { default as Student_third_stage } from './Student-third-stage/Student_third_stage.jsx';
-export { default as Test } from './Test-toDb/Test.jsx';
 export { default as Company_summary } from './Company_summary/Company_summary.jsx';
 export { default as Company_finish } from './Company-finish/Company_finish.jsx';
 export { default as Student_account } from './Student-account/Student_account.jsx';

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Company_finish, Landing, Sign_in, Company_sign_up, Company_account, Company_second_stage, Company_signup_third, Company_summary, Student_signup_firststage, Student_second_stage, Student_third_stage, Test, Student_account, Student_summary, Student_finish, Account, Home, Favourites, View_company, Error_second, Log_in } from './views/index.js';
+import { Company_finish, Landing, Sign_in, Company_sign_up, Company_account, Company_second_stage, Company_signup_third, Company_summary, Student_signup_firststage, Student_second_stage, Student_third_stage, Student_account, Student_summary, Student_finish, Account, Home, Favourites, View_company, Error_second, Log_in } from './views/index.js';
 import Error from './views/Error/Error.jsx';
 import './App.css';
 
@@ -31,9 +31,7 @@ function App() {
 
         <Route path="/account" element={<Account />} />
 
-        <Route path="/error" element={<Error_second />} />
-
-        <Route path="/test-to-DB" element={<Test />} />
+        <Route path="/error" element={<Error_second />} />        
         
 
         {/* Fallback routes for handling errors */}       
